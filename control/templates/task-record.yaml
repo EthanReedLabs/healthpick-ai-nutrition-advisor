@@ -1,0 +1,25 @@
+schema_version: 1
+task_id: REPLACE-ME
+phase_id: PHASE-00
+outcome: passed
+started_at: "YYYY-MM-DDTHH:MM:SS+08:00"
+completed_at: "YYYY-MM-DDTHH:MM:SS+08:00"
+recorded_at: "YYYY-MM-DDTHH:MM:SS+08:00"
+backfilled: false
+owner: ROLE
+summary: 一句话说明真正完成了什么。
+deliverables:
+  - path/to/deliverable
+acceptance_checks:
+  - name: 可证伪的验收断言
+    result: pass
+    evidence:
+      - path/to/current-run-evidence.json
+issues: []
+residual_actions: []
+review:
+  status: pending_final_review
+  reviewer: Project Lead
+  reviewed_at: null
+  notes: 待最终总纲验收复核
+

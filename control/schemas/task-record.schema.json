@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://healthpick.local/schemas/task-record.schema.json",
+  "title": "TaskCompletionRecord",
+  "type": "object",
+  "required": ["schema_version", "task_id", "phase_id", "outcome", "started_at", "completed_at", "recorded_at", "backfilled", "owner", "summary", "deliverables", "acceptance_checks", "issues", "residual_actions", "review"],
+  "properties": {
+    "schema_version": {"const": 1},
+    "task_id": {"type": "string", "minLength": 1},
+    "phase_id": {"type": "string", "pattern": "^PHASE-[0-9]{2}$"},
+    "outcome": {"enum": ["passed", "pass_with_action", "blocked"]},
+    "started_at": {"type": "string", "minLength": 1},
+    "completed_at": {"type": "string", "minLength": 1},
+    "recorded_at": {"type": "string", "minLength": 1},
+    "backfilled": {"type": "boolean"},
+    "owner": {"type": "string", "minLength": 1},
+    "summary": {"type": "string", "minLength": 1},
+    "deliverables": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+    "acceptance_checks": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["name", "result", "evidence"],
+        "properties": {
+          "name": {"type": "string", "minLength": 1},
+          "result": {"enum": ["pass", "pass_with_action", "fail", "not_run"]},
+          "evidence": {"type": "array", "minItems": 1, "items": {"type": "string"}}
+        }
+      }
+    },
+    "issues": {"type": "array", "items": {"type": "string"}},
+    "residual_actions": {"type": "array", "items": {"type": "string"}},
+    "review": {
+      "type": "object",
+      "required": ["status", "reviewer", "reviewed_at", "notes"],
+      "properties": {
+        "status": {"enum": ["pending_final_review", "accepted", "rejected"]},
+        "reviewer": {"type": "string", "minLength": 1},
+        "reviewed_at": {"type": ["string", "null"]},
+        "notes": {"type": "string"}
+      }
+    }
+  }
+}

@@ -1,0 +1,33 @@
+schema_version: 1
+task_id: P03-03
+phase_id: PHASE-03
+outcome: pass_with_action
+started_at: "2026-08-21T19:13:25+08:00"
+completed_at: "2026-08-21T19:19:33.626820+08:00"
+recorded_at: "2026-08-21"
+backfilled: false
+owner: API/KNOWLEDGE
+summary: 确定性意图路由、67-Chunk 关键词索引、A/B/C 来源硬隔离、mixed 配额与检索 trace 已实现并通过实际知识 smoke；向量与二人复核仍受既有外部行动约束。
+deliverables:
+  - apps/api/healthpick_api/routing/router.py
+  - apps/api/healthpick_api/retrieval/loader.py
+  - apps/api/healthpick_api/retrieval/keyword.py
+  - apps/api/healthpick_api/retrieval/models.py
+  - tests/api/test_retrieval.py
+  - scripts/smoke_retrieval.py
+acceptance_checks:
+  - name: A/B/C 路由与来源硬隔离专项测试
+    result: pass
+    evidence: [docs/evidence/phase-03-api-pytest.xml, docs/evidence/phase-03-retrieval-quality.md]
+  - name: 实际 67 个 Chunk 的五类查询 smoke
+    result: pass
+    evidence: [docs/evidence/phase-03-retrieval-runtime.json]
+  - name: 检索 trace 与页码分段可审计
+    result: pass
+    evidence: [docs/evidence/phase-03-retrieval-runtime.json]
+  - name: 未就绪 embedding 不被声明为已运行
+    result: pass
+    evidence: [.env.example, docs/evidence/phase-03-retrieval-runtime.json]
+issues: [ISSUE-003, ISSUE-006, ISSUE-019]
+residual_actions: [ACTION-03, ACTION-06]
+review: {status: pending_final_review, reviewer: Project Lead, reviewed_at: null, notes: 待 embedding manifest、缺字复核和最终总纲验收}

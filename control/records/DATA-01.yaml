@@ -1,0 +1,18 @@
+schema_version: 1
+task_id: DATA-01
+phase_id: PHASE-02
+outcome: passed
+started_at: "2026-08-21T16:58:24+08:00"
+completed_at: "2026-08-21T17:24:17+08:00"
+recorded_at: "2026-08-21 (backfilled after Phase 02)"
+backfilled: true
+owner: KNOWLEDGE
+summary: A/B/C 18 页已按 hash 校验、原生文本解析并完成页面视觉核对。
+deliverables: [knowledge/normalized/pages/A.pages.jsonl, knowledge/normalized/pages/B.pages.jsonl, knowledge/normalized/pages/C.pages.jsonl]
+acceptance_checks:
+  - {name: 页数 A=5 B=8 C=5 且文本非空, result: pass, evidence: [docs/evidence/phase-02-knowledge-validation.json]}
+  - {name: 18 张页面视觉证据存在, result: pass, evidence: [docs/evidence/phase-02-baseline-record.md]}
+issues: [ISSUE-006]
+residual_actions: []
+review: {status: pending_final_review, reviewer: Project Lead, reviewed_at: null, notes: 缺字符号问题由 ACTION-07 独立承接}
+

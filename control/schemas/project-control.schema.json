@@ -1,0 +1,112 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://healthpick.local/schemas/project-control.schema.json",
+  "title": "HealthPickProjectControl",
+  "type": "object",
+  "required": ["schema_version", "project", "current_phase", "phases", "tasks", "actions", "issues", "final_gates", "release"],
+  "properties": {
+    "schema_version": {"const": 1},
+    "project": {"type": "string", "minLength": 1},
+    "current_phase": {"type": "string", "pattern": "^PHASE-[0-9]{2}$"},
+    "phases": {
+      "type": "array",
+      "minItems": 8,
+      "items": {
+        "type": "object",
+        "required": ["id", "title", "status", "required", "exit_record"],
+        "properties": {
+          "id": {"type": "string", "pattern": "^PHASE-[0-9]{2}$"},
+          "title": {"type": "string", "minLength": 1},
+          "status": {"enum": ["not_started", "ready", "in_progress", "pass_with_action", "passed", "blocked"]},
+          "required": {"type": "boolean"},
+          "exit_record": {"type": ["string", "null"]}
+        }
+      }
+    },
+    "tasks": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["id", "phase", "title", "priority", "required", "owner", "status", "dependencies", "record", "evidence", "residual_actions"],
+        "properties": {
+          "id": {"type": "string", "pattern": "^[A-Z0-9-]+$"},
+          "phase": {"type": "string", "pattern": "^PHASE-[0-9]{2}$"},
+          "title": {"type": "string", "minLength": 1},
+          "priority": {"enum": ["P0", "P1", "P2", "GATE"]},
+          "required": {"type": "boolean"},
+          "owner": {"type": "string", "minLength": 1},
+          "status": {"enum": ["not_started", "ready", "in_progress", "pass_with_action", "passed", "blocked", "deferred"]},
+          "dependencies": {"type": "array", "uniqueItems": true, "items": {"type": "string"}},
+          "record": {"type": ["string", "null"]},
+          "evidence": {"type": "array", "uniqueItems": true, "items": {"type": "string"}},
+          "residual_actions": {"type": "array", "uniqueItems": true, "items": {"type": "string"}}
+        }
+      }
+    },
+    "actions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "title", "owner", "deadline", "status", "blocks", "evidence"],
+        "properties": {
+          "id": {"type": "string", "pattern": "^ACTION-[0-9]{2}$"},
+          "title": {"type": "string", "minLength": 1},
+          "owner": {"type": "string", "minLength": 1},
+          "deadline": {"type": "string", "minLength": 1},
+          "status": {"enum": ["open", "in_progress", "closed", "waived"]},
+          "blocks": {"type": "array", "items": {"type": "string"}},
+          "evidence": {"type": "array", "items": {"type": "string"}}
+        }
+      }
+    },
+    "issues": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "discovered_at", "phase", "task_ids", "severity", "status", "blocks_final", "symptom", "cause", "resolution", "evidence", "action_ids"],
+        "properties": {
+          "id": {"type": "string", "pattern": "^ISSUE-[0-9]{3}$"},
+          "discovered_at": {"type": "string", "minLength": 1},
+          "phase": {"type": "string", "pattern": "^PHASE-[0-9]{2}$"},
+          "task_ids": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+          "severity": {"enum": ["low", "medium", "high", "critical"]},
+          "status": {"enum": ["open", "mitigated", "resolved"]},
+          "blocks_final": {"type": "boolean"},
+          "symptom": {"type": "string", "minLength": 1},
+          "cause": {"type": ["string", "null"]},
+          "resolution": {"type": ["string", "null"]},
+          "evidence": {"type": "array", "items": {"type": "string"}},
+          "action_ids": {"type": "array", "items": {"type": "string"}}
+        }
+      }
+    },
+    "final_gates": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["id", "title", "status", "required_task_ids", "evidence"],
+        "properties": {
+          "id": {"type": "string", "pattern": "^FINAL-[0-9]{2}$"},
+          "title": {"type": "string", "minLength": 1},
+          "status": {"enum": ["not_started", "in_progress", "passed", "blocked"]},
+          "required_task_ids": {"type": "array", "items": {"type": "string"}},
+          "evidence": {"type": "array", "items": {"type": "string"}}
+        }
+      }
+    },
+    "release": {
+      "type": "object",
+      "required": ["commit", "tag", "public_url", "compose_probe", "final_signoff"],
+      "properties": {
+        "commit": {"type": ["string", "null"]},
+        "tag": {"type": ["string", "null"]},
+        "public_url": {"type": ["string", "null"]},
+        "compose_probe": {"type": ["string", "null"]},
+        "final_signoff": {"type": ["string", "null"]}
+      }
+    }
+  }
+}
+

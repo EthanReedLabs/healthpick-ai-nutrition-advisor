@@ -1,0 +1,18 @@
+schema_version: 1
+task_id: P01-08
+phase_id: PHASE-01
+outcome: pass_with_action
+started_at: "2026-08-21T16:47:07+08:00"
+completed_at: "2026-08-21T16:50:46+08:00"
+recorded_at: "2026-08-21 (backfilled after Phase 02)"
+backfilled: true
+owner: LEAD
+summary: Phase 01 核心门禁通过；五项外部资源以限时行动保留。
+deliverables: [docs/evidence/phase-01-baseline-record.md]
+acceptance_checks:
+  - {name: G1-G7/G9 核心门禁, result: pass, evidence: [docs/evidence/phase-01-baseline-record.md]}
+  - {name: 外部运行资源, result: pass_with_action, evidence: [docs/evidence/phase-01-baseline-record.md]}
+issues: [ISSUE-001, ISSUE-002, ISSUE-003, ISSUE-004, ISSUE-005]
+residual_actions: [ACTION-01, ACTION-02, ACTION-03, ACTION-04, ACTION-05]
+review: {status: pending_final_review, reviewer: Project Lead, reviewed_at: null, notes: 所有 residual actions 关闭后才能升级 passed}
+

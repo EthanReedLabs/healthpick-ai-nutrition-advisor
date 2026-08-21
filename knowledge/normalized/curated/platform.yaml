@@ -1,0 +1,78 @@
+schema_version: 1
+review_status: review_required
+first_pass_reviewer: Codex
+first_pass_date: "2026-08-21"
+items:
+  - id: free_tier
+    pages: [1]
+    section: 2.1 个人用户服务
+    fact_type: subscription
+    title: 免费版
+    value: {price_cny: 0, ai_questions_per_day: 20, features: [基础膳食评估, 通用营养知识查询, 社区健康资讯浏览]}
+  - id: standard_tier
+    pages: [2]
+    section: 2.1 个人用户服务
+    fact_type: subscription
+    title: 标准版
+    value: {monthly_cny: 59, annual_cny: 599, annual_saving_cny: 109, plan_update_weeks: 2, nutritionist_qna_per_month: 2, features: [个性化7日饮食方案, 营养素追踪分析, 食材采购清单, 三餐打卡与AI点评]}
+  - id: professional_tier
+    pages: [2]
+    section: 2.1 个人用户服务
+    fact_type: subscription
+    title: 专业版
+    value: {monthly_cny: 199, annual_cny: 1999, annual_saving_cny: 389, nutritionist_followup_per_month: 1, features: [体检报告解读, 慢病风险筛查, 运动营养方案, 睡眠与饮食关联分析, 智能设备接入]}
+  - id: enterprise_pricing
+    pages: [2]
+    section: 2.2 企业用户服务
+    fact_type: enterprise_pricing
+    title: 企业健康管家
+    value: {minimum_company_size: 100, tiers: [{employees: 100-300, annual_cny: 58000}, {employees: 300-1000, annual_cny: 150000}, {employees: 1000以上, annual_cny: 定制报价}]}
+  - id: add_on_services
+    pages: [3]
+    section: 2.3 增值服务
+    fact_type: add_on_pricing
+    title: 增值服务价格
+    value: {services: [{name: 营养师1对1咨询60分钟, price: 299元/次}, {name: 家庭健康管理3人以内, price: 399元/月}, {name: 健康食材包配送, price: 199元/周起}, {name: 企业健康讲座90分钟, price: 8000元/场}, {name: 体检报告深度解读, price: 199元/份}]}
+  - id: platform_architecture_claim
+    pages: [3]
+    section: 3.1 AI膳食顾问技术架构
+    fact_type: capability_claim
+    title: 白皮书所述技术架构
+    value: {layers: [知识层, 推理层, 交互层], capabilities: [多轮对话理解, 食物图像识别, 个性化推荐, 知识库溯源]}
+  - id: privacy_claims
+    pages: [3]
+    section: 3.2 数据安全与隐私
+    fact_type: compliance_claim
+    title: 白皮书所述安全与隐私
+    value: {claims: [AES-256加密存储, 等保三级认证, 遵守个人信息保护法与数据安全法, 数据不出境, 支持一键导出与删除]}
+  - id: partner_claims
+    pages: [3]
+    section: 3.3 合作伙伴生态
+    fact_type: partner_claim
+    title: 白皮书所列合作生态
+    value: {categories: [医疗机构, 智能硬件, 食材供应链, 企业客户], externally_verified: false}
+  - id: success_case_claims
+    pages: [4]
+    section: 第四章成功案例
+    fact_type: case_claim
+    title: 白皮书成功案例
+    value: {cases: [{type: 个人减脂, period_months: 3, weight_change_kg: -6.5}, {type: 个人增肌, period_months: 3, weight_change_kg: 6}, {type: 企业健康, period_months: 6, company_size: 800}], externally_verified: false}
+  - id: api_pricing
+    pages: [4]
+    section: 5.1 API开放平台
+    fact_type: api_pricing
+    title: API套餐
+    value: {tiers: [{name: 开发者版, monthly_calls: 10000, price: 免费}, {name: 初创版, monthly_calls: 100000, price: 999元/月}, {name: 企业版, monthly_calls: 1000000, price: 7999元/月}, {name: 定制版, monthly_calls: 不限, price: 定制报价}]}
+  - id: cooperation_contact
+    pages: [5]
+    section: 5.2 渠道合作
+    fact_type: contact
+    title: 合作联系
+    value: {email: partnership@healthpick.com}
+  - id: general_contact
+    pages: [5]
+    section: 第六章联系我们
+    fact_type: contact
+    title: 平台联系信息
+    value: {website: www.healthpick.com, hotline: 400-888-9999, hotline_hours: 工作日9:00-21:00, enterprise_email: partnership@healthpick.com, media_email: media@healthpick.com}
+

@@ -1,0 +1,18 @@
+schema_version: 1
+task_id: P01-03
+phase_id: PHASE-01
+outcome: passed
+started_at: "2026-08-21T16:47:07+08:00"
+completed_at: "2026-08-21T16:50:46+08:00"
+recorded_at: "2026-08-21 (backfilled after Phase 02)"
+backfilled: true
+owner: KNOWLEDGE
+summary: 四份来源 hash、版本、页数和 A/B/C 角色边界已固定。
+deliverables: [knowledge/manifests/sources.yaml, docs/evidence/phase-01-baseline-record.md]
+acceptance_checks:
+  - {name: 四份来源 SHA-256 一致, result: pass, evidence: [docs/evidence/phase-01-baseline-record.md]}
+  - {name: C 禁止进入营养用途, result: pass, evidence: [knowledge/manifests/sources.yaml]}
+issues: []
+residual_actions: []
+review: {status: pending_final_review, reviewer: Project Lead, reviewed_at: null, notes: 待最终总纲验收复核}
+

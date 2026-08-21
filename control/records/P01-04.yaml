@@ -1,0 +1,17 @@
+schema_version: 1
+task_id: P01-04
+phase_id: PHASE-01
+outcome: passed
+started_at: "2026-08-21T16:47:07+08:00"
+completed_at: "2026-08-21T16:50:46+08:00"
+recorded_at: "2026-08-21 (backfilled after Phase 02)"
+backfilled: true
+owner: DEVOPS/API
+summary: 已建立不含真实 Secret 的环境变量模板和 Provider/数据库/部署配置契约。
+deliverables: [.env.example, docs/decisions/ADR-002-development-and-deployment-baseline.md]
+acceptance_checks:
+  - {name: 环境变量字段与安全规则完整, result: pass, evidence: [.env.example, docs/decisions/ADR-002-development-and-deployment-baseline.md]}
+issues: []
+residual_actions: []
+review: {status: pending_final_review, reviewer: Project Lead, reviewed_at: null, notes: 待最终总纲验收复核}
+

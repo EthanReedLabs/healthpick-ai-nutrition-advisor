@@ -1,0 +1,33 @@
+schema_version: 1
+task_id: P03-05
+phase_id: PHASE-03
+outcome: pass_with_action
+started_at: "2026-08-21T19:23:01+08:00"
+completed_at: "2026-08-21T19:32:13.6235555+08:00"
+recorded_at: "2026-08-21"
+backfilled: false
+owner: API
+summary: 路由、检索、引用校验、Provider、进程内有界会话与 SSE 序列已形成 fail-closed Chat API；Mock 进程级闭环和 Web SSE final 解析均通过。
+deliverables:
+  - apps/api/healthpick_api/chat/pipeline.py
+  - apps/api/healthpick_api/chat/conversation.py
+  - apps/api/healthpick_api/chat/sse.py
+  - apps/api/healthpick_api/main.py
+  - tests/api/test_chat_sse.py
+  - apps/web/src/lib/api.ts
+acceptance_checks:
+  - name: SSE 事件、模式、来源、错误和会话专项回归
+    result: pass
+    evidence: [docs/evidence/phase-03-api-pytest.xml, docs/evidence/phase-03-chat-quality.md]
+  - name: Uvicorn 进程级 health/OpenAPI/SSE smoke
+    result: pass
+    evidence: [docs/evidence/phase-03-api-runtime.json]
+  - name: Web 解析 final 事件并渲染引用
+    result: pass
+    evidence: [docs/evidence/phase-03-web-vitest.xml, docs/evidence/phase-03-chat-quality.md]
+  - name: Real 缺配置与无引用输出在 SSE 前 fail-closed
+    result: pass
+    evidence: [tests/api/test_chat_sse.py, docs/evidence/phase-03-api-pytest.xml]
+issues: [ISSUE-006]
+residual_actions: [ACTION-06]
+review: {status: pending_final_review, reviewer: Project Lead, reviewed_at: null, notes: 真实 LLM 浏览器证据由 ACTION-02/P03-07 留存；P04 安全规则后续补齐}

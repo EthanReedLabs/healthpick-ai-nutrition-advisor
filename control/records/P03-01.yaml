@@ -1,0 +1,33 @@
+schema_version: 1
+task_id: P03-01
+phase_id: PHASE-03
+outcome: passed
+started_at: "2026-08-21T18:29:35+08:00"
+completed_at: "2026-08-21T18:37:06.3118596+08:00"
+recorded_at: "2026-08-21"
+backfilled: false
+owner: API
+summary: FastAPI 基础、健康检查、显式运行模式、统一错误契约、Chat 占位契约和可导出 OpenAPI 已实现并通过进程级验证。
+deliverables:
+  - apps/api/healthpick_api/main.py
+  - apps/api/healthpick_api/config.py
+  - apps/api/healthpick_api/models.py
+  - packages/shared/openapi/healthpick.openapi.json
+  - scripts/export_openapi.py
+  - tools/smoke_api.ps1
+acceptance_checks:
+  - name: API 合约与安全配置自动测试 8 项
+    result: pass
+    evidence: [docs/evidence/phase-03-api-pytest.xml]
+  - name: 本地 Uvicorn health/OpenAPI/Chat-503 真实探针
+    result: pass
+    evidence: [docs/evidence/phase-03-api-p03-01-runtime.json]
+  - name: Mock/Real 模式透明且 production 禁止 Mock
+    result: pass
+    evidence: [docs/evidence/phase-03-api-pytest.xml, docs/evidence/phase-03-api-p03-01-runtime.json]
+  - name: 项目依赖锁定且 TestClient 无弃用警告
+    result: pass
+    evidence: [docs/evidence/phase-03-api-dependency-sync.md, uv.lock]
+issues: [ISSUE-009, ISSUE-012, ISSUE-013]
+residual_actions: []
+review: {status: pending_final_review, reviewer: Project Lead, reviewed_at: null, notes: 待最终总纲验收复核}

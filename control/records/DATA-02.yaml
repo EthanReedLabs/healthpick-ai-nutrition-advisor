@@ -1,0 +1,18 @@
+schema_version: 1
+task_id: DATA-02
+phase_id: PHASE-02
+outcome: passed
+started_at: "2026-08-21T16:58:24+08:00"
+completed_at: "2026-08-21T17:24:17+08:00"
+recorded_at: "2026-08-21 (backfilled after Phase 02)"
+backfilled: true
+owner: KNOWLEDGE/API
+summary: 已生成 67 个稳定、唯一、页内且带路由边界的 Chunk。
+deliverables: [knowledge/normalized/chunks/A.chunks.jsonl, knowledge/normalized/chunks/B.chunks.jsonl, knowledge/normalized/chunks/C.chunks.jsonl]
+acceptance_checks:
+  - {name: ID 唯一且不跨页, result: pass, evidence: [docs/evidence/phase-02-knowledge-validation.json, docs/evidence/phase-02-pytest.xml]}
+  - {name: C Chunk 只允许 platform, result: pass, evidence: [docs/evidence/phase-02-pytest.xml]}
+issues: []
+residual_actions: []
+review: {status: pending_final_review, reviewer: Project Lead, reviewed_at: null, notes: 待最终总纲验收复核}
+

@@ -1,0 +1,28 @@
+schema_version: 1
+task_id: P03-04
+phase_id: PHASE-03
+outcome: pass_with_action
+started_at: "2026-08-21T19:19:34+08:00"
+completed_at: "2026-08-21T19:23:00+08:00"
+recorded_at: "2026-08-21"
+backfilled: false
+owner: API
+summary: 引用生成、证据上下文定界、内联 Chunk 标记与 fail-closed 完整性校验已实现；真实证据通过、篡改证据拒绝的双向 smoke 通过。
+deliverables:
+  - apps/api/healthpick_api/evidence/citations.py
+  - apps/api/healthpick_api/evidence/validator.py
+  - tests/api/test_evidence.py
+  - scripts/smoke_evidence.py
+acceptance_checks:
+  - name: 引用元数据、摘录、来源边界和内联标记 13 项专项测试
+    result: pass
+    evidence: [docs/evidence/phase-03-api-pytest.xml, docs/evidence/phase-03-citation-quality.md]
+  - name: 实际引用通过且篡改页码 fail-closed
+    result: pass
+    evidence: [docs/evidence/phase-03-citation-runtime.json]
+  - name: Prompt 上下文使用明确 EVIDENCE 起止定界
+    result: pass
+    evidence: [apps/api/healthpick_api/evidence/citations.py, docs/evidence/phase-03-citation-runtime.json]
+issues: [ISSUE-006]
+residual_actions: [ACTION-06]
+review: {status: pending_final_review, reviewer: Project Lead, reviewed_at: null, notes: 待缺字符号二人复核和最终总纲验收}

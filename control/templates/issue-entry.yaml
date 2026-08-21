@@ -1,0 +1,12 @@
+- id: ISSUE-000
+  discovered_at: "YYYY-MM-DDTHH:MM:SS+08:00"
+  phase: PHASE-00
+  task_ids: [TASK-ID]
+  severity: medium
+  status: open
+  blocks_final: true
+  symptom: 实际观察到的现象，不写推测。
+  cause: null
+  resolution: null
+  evidence: []
+  action_ids: []

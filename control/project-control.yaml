@@ -1,0 +1,370 @@
+schema_version: 1
+project: HealthPick AI Smart Nutrition Advisor
+current_phase: PHASE-04
+
+phases:
+  - {id: PHASE-01, title: 基线与范围冻结, status: pass_with_action, required: true, exit_record: docs/evidence/phase-01-baseline-record.md}
+  - {id: PHASE-02, title: 知识数据生产化, status: pass_with_action, required: true, exit_record: docs/evidence/phase-02-baseline-record.md}
+  - {id: PHASE-03, title: 最薄动态问答闭环, status: pass_with_action, required: true, exit_record: docs/evidence/phase-03-baseline-record.md}
+  - {id: PHASE-04, title: 推荐与医疗安全, status: ready, required: true, exit_record: null}
+  - {id: PHASE-05, title: P0 完整与本地部署, status: not_started, required: true, exit_record: null}
+  - {id: PHASE-06, title: P1 产品化能力, status: not_started, required: true, exit_record: null}
+  - {id: PHASE-07, title: 评测冲分与功能冻结, status: not_started, required: true, exit_record: null}
+  - {id: PHASE-08, title: 发布演示与最终验收, status: not_started, required: true, exit_record: null}
+
+tasks:
+  - {id: P01-01, phase: PHASE-01, title: 冻结需求范围与追踪矩阵, priority: P0, required: true, owner: LEAD, status: passed, dependencies: [], record: control/records/P01-01.yaml, evidence: [docs/01-requirements-traceability.md, docs/evidence/phase-01-ownership-baseline.md], residual_actions: []}
+  - {id: P01-02, phase: PHASE-01, title: 冻结技术与部署决策, priority: P0, required: true, owner: LEAD/API, status: passed, dependencies: [P01-01], record: control/records/P01-02.yaml, evidence: [docs/decisions/ADR-001-technology-stack.md, docs/decisions/ADR-002-development-and-deployment-baseline.md], residual_actions: []}
+  - {id: P01-03, phase: PHASE-01, title: 建立来源与角色基线, priority: P0, required: true, owner: KNOWLEDGE, status: passed, dependencies: [], record: control/records/P01-03.yaml, evidence: [knowledge/manifests/sources.yaml, docs/evidence/phase-01-baseline-record.md], residual_actions: []}
+  - {id: P01-04, phase: PHASE-01, title: 建立环境变量契约, priority: P0, required: true, owner: DEVOPS/API, status: passed, dependencies: [P01-02], record: control/records/P01-04.yaml, evidence: [.env.example, docs/decisions/ADR-002-development-and-deployment-baseline.md], residual_actions: []}
+  - {id: P01-05, phase: PHASE-01, title: 建立仓库与行尾策略, priority: P0, required: true, owner: DEVOPS, status: passed, dependencies: [], record: control/records/P01-05.yaml, evidence: [.gitignore, .gitattributes, docs/evidence/phase-01-baseline-record.md], residual_actions: []}
+  - {id: P01-06, phase: PHASE-01, title: 冻结最小 API 契约, priority: P0, required: true, owner: WEB/API, status: passed, dependencies: [P01-01, P01-02], record: control/records/P01-06.yaml, evidence: [docs/phases/phase-01-baseline-freeze.md], residual_actions: []}
+  - {id: P01-07, phase: PHASE-01, title: 冻结风险触发器与降级路径, priority: P0, required: true, owner: LEAD, status: passed, dependencies: [P01-02], record: control/records/P01-07.yaml, evidence: [docs/phases/phase-01-baseline-freeze.md, docs/evidence/phase-01-baseline-record.md], residual_actions: []}
+  - {id: P01-08, phase: PHASE-01, title: 执行 Phase 01 退出验收, priority: GATE, required: true, owner: LEAD, status: pass_with_action, dependencies: [P01-01, P01-02, P01-03, P01-04, P01-05, P01-06, P01-07], record: control/records/P01-08.yaml, evidence: [docs/evidence/phase-01-baseline-record.md], residual_actions: [ACTION-01, ACTION-02, ACTION-03, ACTION-04, ACTION-05]}
+  - {id: P01-09, phase: PHASE-01, title: 建立 Phase 02 READY 任务板, priority: P0, required: true, owner: LEAD, status: passed, dependencies: [P01-08], record: control/records/P01-09.yaml, evidence: [docs/phases/phase-02-ready-task-board.md, docs/phases/phase-02-knowledge-ingestion.md], residual_actions: []}
+
+  - {id: DATA-01, phase: PHASE-02, title: 页级解析与视觉核对, priority: P0, required: true, owner: KNOWLEDGE, status: passed, dependencies: [P01-03], record: control/records/DATA-01.yaml, evidence: [knowledge/normalized/pages/A.pages.jsonl, knowledge/normalized/pages/B.pages.jsonl, knowledge/normalized/pages/C.pages.jsonl, docs/evidence/phase-02-knowledge-validation.json], residual_actions: []}
+  - {id: DATA-02, phase: PHASE-02, title: 生成稳定页内 Chunk, priority: P0, required: true, owner: KNOWLEDGE/API, status: passed, dependencies: [DATA-01], record: control/records/DATA-02.yaml, evidence: [knowledge/normalized/chunks/A.chunks.jsonl, knowledge/normalized/chunks/B.chunks.jsonl, knowledge/normalized/chunks/C.chunks.jsonl, docs/evidence/phase-02-pytest.xml], residual_actions: []}
+  - {id: DATA-03, phase: PHASE-02, title: 生成 A/B 结构化事实, priority: P0, required: true, owner: KNOWLEDGE, status: pass_with_action, dependencies: [DATA-01], record: control/records/DATA-03.yaml, evidence: [knowledge/normalized/facts/food_facts.jsonl, knowledge/normalized/facts/plan_rules.jsonl, docs/evidence/phase-02-second-person-review-checklist.md], residual_actions: [ACTION-06, ACTION-07]}
+  - {id: DATA-04, phase: PHASE-02, title: 生成 C 平台事实并隔离, priority: P0, required: true, owner: KNOWLEDGE, status: pass_with_action, dependencies: [DATA-01], record: control/records/DATA-04.yaml, evidence: [knowledge/normalized/facts/platform_facts.jsonl, docs/evidence/phase-02-knowledge-validation.json], residual_actions: [ACTION-06]}
+  - {id: DATA-05, phase: PHASE-02, title: 建立知识 Schema 与 migration, priority: P0, required: true, owner: API, status: pass_with_action, dependencies: [DATA-02, DATA-03, DATA-04], record: control/records/DATA-05.yaml, evidence: [knowledge/schemas/page.schema.json, infra/migrations/001_knowledge_base.sql, docs/evidence/phase-02-knowledge-validation.json], residual_actions: [ACTION-01, ACTION-03]}
+  - {id: DATA-06, phase: PHASE-02, title: 执行导入与隔离 smoke, priority: GATE, required: true, owner: API/QA_DOCS, status: pass_with_action, dependencies: [DATA-05], record: control/records/DATA-06.yaml, evidence: [docs/evidence/phase-02-knowledge-validation.json, docs/evidence/phase-02-pytest.xml, docs/evidence/phase-02-baseline-record.md], residual_actions: [ACTION-01, ACTION-03, ACTION-06]}
+
+  - {id: GOV-01, phase: PHASE-03, title: 建立统一任务控制面与最终验收门禁, priority: GATE, required: true, owner: LEAD/QA_DOCS, status: passed, dependencies: [P01-09, DATA-06], record: control/records/GOV-01.yaml, evidence: [control/project-control.yaml, docs/governance/README.md, docs/governance/FINAL_ACCEPTANCE_MASTER.md, docs/evidence/control-plane-validation.json, docs/evidence/current-pytest.xml], residual_actions: []}
+  - {id: P03-01, phase: PHASE-03, title: FastAPI 骨架健康检查与 OpenAPI, priority: P0, required: true, owner: API, status: passed, dependencies: [P01-06], record: control/records/P03-01.yaml, evidence: [docs/evidence/phase-03-api-pytest.xml, docs/evidence/phase-03-api-p03-01-runtime.json, packages/shared/openapi/healthpick.openapi.json], residual_actions: []}
+  - {id: P03-02, phase: PHASE-03, title: LLM Provider 适配与真实或 Mock 调用, priority: P0, required: true, owner: API, status: passed, dependencies: [P03-01], record: control/records/P03-02.yaml, evidence: [docs/evidence/phase-03-provider-quality.md, docs/evidence/phase-03-provider-runtime.json, docs/evidence/phase-03-api-pytest.xml], residual_actions: []}
+  - {id: P03-03, phase: PHASE-03, title: A/B/C 路由与检索适配, priority: P0, required: true, owner: API/KNOWLEDGE, status: pass_with_action, dependencies: [DATA-02, DATA-06, P03-01], record: control/records/P03-03.yaml, evidence: [docs/evidence/phase-03-retrieval-quality.md, docs/evidence/phase-03-retrieval-runtime.json, docs/evidence/phase-03-api-pytest.xml], residual_actions: [ACTION-03, ACTION-06]}
+  - {id: P03-04, phase: PHASE-03, title: 引用生成与证据校验, priority: P0, required: true, owner: API, status: pass_with_action, dependencies: [P03-03], record: control/records/P03-04.yaml, evidence: [docs/evidence/phase-03-citation-quality.md, docs/evidence/phase-03-citation-runtime.json, docs/evidence/phase-03-api-pytest.xml], residual_actions: [ACTION-06]}
+  - {id: P03-05, phase: PHASE-03, title: 会话与 SSE Chat API, priority: P0, required: true, owner: API, status: pass_with_action, dependencies: [P03-02, P03-04], record: control/records/P03-05.yaml, evidence: [docs/evidence/phase-03-chat-quality.md, docs/evidence/phase-03-api-runtime.json, docs/evidence/phase-03-api-pytest.xml, docs/evidence/phase-03-web-vitest.xml], residual_actions: [ACTION-06]}
+  - {id: P03-06, phase: PHASE-03, title: Next.js 聊天与引用界面骨架, priority: P0, required: true, owner: WEB, status: passed, dependencies: [P01-06], record: control/records/P03-06.yaml, evidence: [docs/evidence/phase-03-web-quality.md, docs/evidence/phase-03-web-vitest.xml, docs/evidence/phase-03-web-runtime.json, output/playwright/phase-03-desktop-1440x1000.png, output/playwright/phase-03-tablet-1024x900.png, output/playwright/phase-03-mobile-390x844.png], residual_actions: []}
+  - {id: P03-07, phase: PHASE-03, title: 浏览器动态问答最薄闭环, priority: GATE, required: true, owner: WEB/API/QA_DOCS, status: pass_with_action, dependencies: [P03-05, P03-06], record: control/records/P03-07.yaml, evidence: [docs/evidence/phase-03-browser-closed-loop.json, output/playwright/phase-03-dynamic-mock-closed-loop.png, output/playwright/phase-03-dynamic-platform-c-only.png], residual_actions: [ACTION-02, ACTION-03, ACTION-06]}
+  - {id: P03-08, phase: PHASE-03, title: Phase 03 退出验收, priority: GATE, required: true, owner: LEAD, status: pass_with_action, dependencies: [P03-07], record: control/records/P03-08.yaml, evidence: [docs/evidence/phase-03-baseline-record.md, docs/evidence/phase-03-api-pytest.xml, docs/evidence/phase-03-web-vitest.xml, docs/evidence/phase-03-browser-closed-loop.json], residual_actions: [ACTION-02, ACTION-03, ACTION-06]}
+
+  - {id: P04-01, phase: PHASE-04, title: 健康档案与约束模型, priority: P0, required: true, owner: API/WEB, status: ready, dependencies: [P03-08], record: null, evidence: [], residual_actions: []}
+  - {id: P04-02, phase: PHASE-04, title: 确定性推荐候选与方案解释, priority: P0, required: true, owner: API/KNOWLEDGE, status: not_started, dependencies: [P04-01, DATA-03], record: null, evidence: [], residual_actions: []}
+  - {id: P04-03, phase: PHASE-04, title: 禁忌硬过滤与风险分级, priority: P0, required: true, owner: API/KNOWLEDGE, status: not_started, dependencies: [P04-01], record: null, evidence: [], residual_actions: []}
+  - {id: P04-04, phase: PHASE-04, title: 输出校验拒答与免责声明, priority: P0, required: true, owner: API, status: not_started, dependencies: [P04-02, P04-03], record: null, evidence: [], residual_actions: []}
+  - {id: P04-05, phase: PHASE-04, title: 方案卡片与安全提示 UI, priority: P0, required: true, owner: WEB, status: not_started, dependencies: [P04-01, P03-06], record: null, evidence: [], residual_actions: []}
+  - {id: P04-06, phase: PHASE-04, title: 推荐安全黄金集与 API 测试, priority: GATE, required: true, owner: QA_DOCS, status: not_started, dependencies: [P04-04, P04-05], record: null, evidence: [], residual_actions: []}
+  - {id: P04-07, phase: PHASE-04, title: Phase 04 退出验收, priority: GATE, required: true, owner: LEAD, status: not_started, dependencies: [P04-06], record: null, evidence: [], residual_actions: []}
+
+  - {id: P05-01, phase: PHASE-05, title: 多轮记忆与会话持久化 CRUD, priority: P0, required: true, owner: API/WEB, status: not_started, dependencies: [P04-07], record: null, evidence: [], residual_actions: []}
+  - {id: P05-02, phase: PHASE-05, title: 输入边界统一错误与超时处理, priority: P0, required: true, owner: API/WEB, status: not_started, dependencies: [P03-07], record: null, evidence: [], residual_actions: []}
+  - {id: P05-03, phase: PHASE-05, title: 三档响应式与交互状态完成, priority: P0, required: true, owner: WEB, status: not_started, dependencies: [P04-05, P05-02], record: null, evidence: [], residual_actions: []}
+  - {id: P05-04, phase: PHASE-05, title: Docker Compose 数据库迁移与 seed, priority: P0, required: true, owner: DEVOPS/API, status: not_started, dependencies: [DATA-05, P05-01], record: null, evidence: [], residual_actions: []}
+  - {id: P05-05, phase: PHASE-05, title: 全部 P0 追踪矩阵与回归闭环, priority: GATE, required: true, owner: QA_DOCS, status: not_started, dependencies: [P05-01, P05-02, P05-03, P05-04], record: null, evidence: [], residual_actions: []}
+  - {id: P05-06, phase: PHASE-05, title: Phase 05 退出验收, priority: GATE, required: true, owner: LEAD, status: not_started, dependencies: [P05-05], record: null, evidence: [], residual_actions: []}
+
+  - {id: P06-01, phase: PHASE-06, title: 匿名身份账号与数据迁移, priority: P1, required: true, owner: API/WEB, status: not_started, dependencies: [P05-06], record: null, evidence: [], residual_actions: []}
+  - {id: P06-02, phase: PHASE-06, title: 历史搜索重命名删除体验, priority: P1, required: true, owner: API/WEB, status: not_started, dependencies: [P06-01], record: null, evidence: [], residual_actions: []}
+  - {id: P06-03, phase: PHASE-06, title: 来源透明页模型信息与检索 trace, priority: P1, required: true, owner: API/WEB, status: not_started, dependencies: [P03-04, P05-06], record: null, evidence: [], residual_actions: []}
+  - {id: P06-04, phase: PHASE-06, title: 用户数据导出与删除, priority: P1, required: true, owner: API/WEB, status: not_started, dependencies: [P06-01], record: null, evidence: [], residual_actions: []}
+  - {id: P06-05, phase: PHASE-06, title: Phase 06 退出验收, priority: GATE, required: true, owner: LEAD, status: not_started, dependencies: [P06-02, P06-03, P06-04], record: null, evidence: [], residual_actions: []}
+
+  - {id: P07-01, phase: PHASE-07, title: 构建完整黄金安全串库评测集, priority: P1, required: true, owner: QA_DOCS/KNOWLEDGE, status: not_started, dependencies: [P06-05], record: null, evidence: [], residual_actions: []}
+  - {id: P07-02, phase: PHASE-07, title: 运行评测并达到冻结阈值, priority: GATE, required: true, owner: QA_DOCS, status: not_started, dependencies: [P07-01], record: null, evidence: [], residual_actions: []}
+  - {id: P07-03, phase: PHASE-07, title: 主备模型切换与故障演练, priority: P1, required: true, owner: API/DEVOPS, status: not_started, dependencies: [P03-02, P05-06], record: null, evidence: [], residual_actions: []}
+  - {id: P07-04, phase: PHASE-07, title: 评测概览与透明度展示, priority: P2, required: true, owner: WEB, status: not_started, dependencies: [P07-02, P06-03], record: null, evidence: [], residual_actions: []}
+  - {id: P07-05, phase: PHASE-07, title: 关键体验与可访问性打磨, priority: P1, required: true, owner: WEB/QA_DOCS, status: not_started, dependencies: [P06-05], record: null, evidence: [], residual_actions: []}
+  - {id: P07-06, phase: PHASE-07, title: 功能冻结与 Phase 07 验收, priority: GATE, required: true, owner: LEAD, status: not_started, dependencies: [P07-02, P07-03, P07-04, P07-05], record: null, evidence: [], residual_actions: []}
+
+  - {id: P08-01, phase: PHASE-08, title: 全回归性能安全与密钥扫描, priority: GATE, required: true, owner: QA_DOCS/DEVOPS, status: not_started, dependencies: [P07-06], record: null, evidence: [], residual_actions: []}
+  - {id: P08-02, phase: PHASE-08, title: 公网部署与 Compose 干净环境复现, priority: P0, required: true, owner: DEVOPS, status: not_started, dependencies: [P05-04, P08-01], record: null, evidence: [], residual_actions: []}
+  - {id: P08-03, phase: PHASE-08, title: 文档 AI 披露许可证与隐私冻结, priority: P0, required: true, owner: QA_DOCS/LEAD, status: not_started, dependencies: [P08-01], record: null, evidence: [], residual_actions: []}
+  - {id: P08-04, phase: PHASE-08, title: 演示资产与双次连续演练, priority: GATE, required: true, owner: LEAD/QA_DOCS, status: not_started, dependencies: [P08-02, P08-03], record: null, evidence: [], residual_actions: []}
+  - {id: P08-05, phase: PHASE-08, title: Release tag 匿名克隆与提交候选冻结, priority: GATE, required: true, owner: DEVOPS/LEAD, status: not_started, dependencies: [P08-02, P08-03, P08-04], record: null, evidence: [], residual_actions: []}
+  - {id: P08-06, phase: PHASE-08, title: 公网七天可用性责任与监测, priority: P0, required: true, owner: DEVOPS/LEAD, status: not_started, dependencies: [P08-05], record: null, evidence: [], residual_actions: []}
+  - {id: P08-07, phase: PHASE-08, title: 执行最终总纲验收并签署, priority: GATE, required: true, owner: LEAD, status: not_started, dependencies: [P08-05, P08-06], record: null, evidence: [], residual_actions: []}
+
+actions:
+  - {id: ACTION-01, title: Docker/PostgreSQL/pgvector 运行态恢复, owner: DEVOPS/LEAD, deadline: T+12, status: open, blocks: [DATA-05, DATA-06, P05-04, P08-02], evidence: []}
+  - {id: ACTION-02, title: LLM provider/model/quota smoke, owner: API/LEAD, deadline: T+6, status: open, blocks: [P03-02, P03-07], evidence: []}
+  - {id: ACTION-03, title: Embedding model/dimensions/中文 smoke, owner: API/LEAD, deadline: T+6, status: open, blocks: [DATA-05, DATA-06, P03-03], evidence: []}
+  - {id: ACTION-04, title: 建立远端 Git 仓库及最小权限, owner: DEVOPS/LEAD, deadline: T+12, status: open, blocks: [P08-02, P08-05], evidence: []}
+  - {id: ACTION-05, title: Render 区域预算与七天可用性确认, owner: DEVOPS/LEAD, deadline: T+12, status: open, blocks: [P08-02, P08-06], evidence: []}
+  - {id: ACTION-06, title: 80 条结构化事实第二人逐条复核, owner: KNOWLEDGE/LEAD, deadline: T+12, status: open, blocks: [DATA-03, DATA-04, DATA-06, P04-02], evidence: []}
+  - {id: ACTION-07, title: 取得缺字符号修正版来源或维持排除, owner: LEAD, deadline: T+18, status: open, blocks: [DATA-03, P04-02], evidence: []}
+
+issues:
+  - id: ISSUE-001
+    discovered_at: "2026-08-21T16:47:07+08:00"
+    phase: PHASE-01
+    task_ids: [P01-08, DATA-05, DATA-06]
+    severity: high
+    status: open
+    blocks_final: true
+    symptom: 本机没有 Docker 和 psql，数据库与 pgvector 无法运行验收。
+    cause: null
+    resolution: 已启用文件级降级路径，运行态仍待恢复。
+    evidence: [docs/evidence/phase-01-baseline-record.md, docs/evidence/phase-02-knowledge-validation.json]
+    action_ids: [ACTION-01]
+  - id: ISSUE-002
+    discovered_at: "2026-08-21T16:47:07+08:00"
+    phase: PHASE-01
+    task_ids: [P01-08, P03-02, P03-07]
+    severity: high
+    status: open
+    blocks_final: true
+    symptom: 未配置真实 LLM provider/model/quota，无法证明动态模型闭环。
+    cause: null
+    resolution: 开发阶段允许 Mock adapter，最终必须执行脱敏真实 smoke。
+    evidence: [docs/evidence/phase-01-baseline-record.md]
+    action_ids: [ACTION-02]
+  - id: ISSUE-003
+    discovered_at: "2026-08-21T16:47:07+08:00"
+    phase: PHASE-01
+    task_ids: [P01-08, DATA-05, P03-03, P03-07]
+    severity: high
+    status: open
+    blocks_final: true
+    symptom: Embedding 模型和维度未知，不能建立可信生产向量索引。
+    cause: null
+    resolution: 先使用结构化事实与关键词检索，禁止猜测向量维度。
+    evidence: [docs/evidence/phase-02-knowledge-validation.json]
+    action_ids: [ACTION-03]
+  - id: ISSUE-004
+    discovered_at: "2026-08-21T16:47:07+08:00"
+    phase: PHASE-01
+    task_ids: [P01-08, P08-05]
+    severity: high
+    status: open
+    blocks_final: true
+    symptom: Git 仓库没有远端，无法完成匿名克隆和提交候选验收。
+    cause: null
+    resolution: 等待参赛者授权建立远端仓库。
+    evidence: [docs/evidence/phase-01-baseline-record.md]
+    action_ids: [ACTION-04]
+  - id: ISSUE-005
+    discovered_at: "2026-08-21T16:47:07+08:00"
+    phase: PHASE-01
+    task_ids: [P01-08, P08-02, P08-06]
+    severity: high
+    status: open
+    blocks_final: true
+    symptom: Render 账号、区域、预算和七天可用性尚未确认。
+    cause: null
+    resolution: 等待参赛者授权账号与可能产生费用的操作。
+    evidence: [docs/evidence/phase-01-baseline-record.md]
+    action_ids: [ACTION-05]
+  - id: ISSUE-006
+    discovered_at: "2026-08-21T17:08:00+08:00"
+    phase: PHASE-02
+    task_ids: [DATA-01, DATA-03, P03-03, P03-04, P03-05, P03-07]
+    severity: high
+    status: mitigated
+    blocks_final: true
+    symptom: A-p02、A-p04、B-p01、B-p05、B-p07、B-p08 的原始 PDF 存在缺字符号，影响 8 个 Chunk。
+    cause: 源文件渲染和文本层均缺字，不是解析器丢字。
+    resolution: 未猜测符号；受影响规则标记 unknown_glyph 和 review_required，并阻止生产放行。
+    evidence: [docs/evidence/phase-02-knowledge-validation.json, docs/evidence/phase-02-second-person-review-checklist.md]
+    action_ids: [ACTION-07]
+  - id: ISSUE-007
+    discovered_at: "2026-08-21T17:13:00+08:00"
+    phase: PHASE-02
+    task_ids: [DATA-06, GOV-01, P03-02]
+    severity: low
+    status: open
+    blocks_final: false
+    symptom: Windows 环境缺少 tzdata，ZoneInfo 生成报告时间失败。
+    cause: 项目不应为固定中国时区依赖外部 IANA tzdata 包。
+    resolution: 改用 timezone(timedelta(hours=8)) 生成固定 UTC+08 时间，随后校验通过。
+    evidence: [scripts/validate_knowledge.py, docs/evidence/phase-02-knowledge-validation.json]
+    action_ids: []
+  - id: ISSUE-008
+    discovered_at: "2026-08-21T17:14:00+08:00"
+    phase: PHASE-02
+    task_ids: [DATA-06]
+    severity: medium
+    status: resolved
+    blocks_final: false
+    symptom: 首轮业务校验出现 food name 字段映射错误和向量维度静态检查误报。
+    cause: 生成字段使用 food_name；向量正则匹配到了非向量语境文本。
+    resolution: 校验器改为 food_name，并将向量检查锚定真实 vector(number) DDL；后续 errors=0。
+    evidence: [scripts/validate_knowledge.py, docs/evidence/phase-02-knowledge-validation.json]
+    action_ids: []
+  - id: ISSUE-009
+    discovered_at: "2026-08-21T17:18:00+08:00"
+    phase: PHASE-02
+    task_ids: [DATA-06, GOV-01, P03-01, P03-06]
+    severity: low
+    status: open
+    blocks_final: false
+    symptom: Windows 沙箱偶发在创建 PowerShell 子进程前返回 CreateProcessAsUserW 拒绝访问，并行和后续串行调用均曾出现。
+    cause: Windows 沙箱间歇性拒绝创建 PowerShell 子进程，精确的运行器根因尚未确认。
+    resolution: Phase 02 通过串行重跑恢复；GOV-01 复发后改由获批的项目脚本前缀在沙箱外运行，同一脚本随后 structural_status=PASS、errors=0。环境问题保留为非最终阻断的开放记录。
+    evidence: [docs/evidence/phase-02-knowledge-validation.json, docs/evidence/phase-02-pytest.xml, docs/evidence/control-plane-validation.json]
+    action_ids: []
+  - id: ISSUE-010
+    discovered_at: "2026-08-21T17:22:00+08:00"
+    phase: PHASE-02
+    task_ids: [DATA-06]
+    severity: low
+    status: resolved
+    blocks_final: false
+    symptom: pytest.exe 收集测试时找不到根目录 scripts 模块。
+    cause: pytest 启动路径未显式加入仓库根目录。
+    resolution: 在 pyproject.toml 添加 pytest pythonpath=[\".\"]，随后 11/11 通过。
+    evidence: [pyproject.toml, docs/evidence/phase-02-pytest.xml]
+    action_ids: []
+  - id: ISSUE-011
+    discovered_at: "2026-08-21T17:24:00+08:00"
+    phase: PHASE-02
+    task_ids: [DATA-06]
+    severity: low
+    status: resolved
+    blocks_final: false
+    symptom: 当前 PowerShell 中 rg 不可用，第一次密钥审计结果因此无效。
+    cause: rg 未安装或不在当前 shell PATH，未做全局环境修改。
+    resolution: 改用 Select-String 重新扫描，真实密钥文件命中为 0。
+    evidence: [docs/evidence/phase-02-baseline-record.md]
+    action_ids: []
+  - id: ISSUE-012
+    discovered_at: "2026-08-21T18:31:00+08:00"
+    phase: PHASE-03
+    task_ids: [P03-01, P03-02]
+    severity: low
+    status: resolved
+    blocks_final: false
+    symptom: uv sync 无法创建 hardlink，并警告将回退为完整复制。
+    cause: 当前 uv 缓存与项目环境之间不支持所需 hardlink 操作。
+    resolution: 接受 uv 的完整复制回退；依赖安装成功、锁文件生成且 API 测试通过，无需修改全局环境。
+    evidence: [docs/evidence/phase-03-api-dependency-sync.md, uv.lock, docs/evidence/phase-03-api-pytest.xml]
+    action_ids: []
+  - id: ISSUE-013
+    discovered_at: "2026-08-21T18:34:00+08:00"
+    phase: PHASE-03
+    task_ids: [P03-01]
+    severity: medium
+    status: resolved
+    blocks_final: false
+    symptom: FastAPI TestClient 运行时提示基于 httpx 的通道已弃用，应安装 httpx2。
+    cause: Starlette 1.6.0 已迁移 TestClient 传输层；项目最初仍显式依赖旧 httpx。
+    resolution: 开发依赖替换为 httpx2>=2,<3，uv 重锁后同一 8 项测试无警告通过。
+    evidence: [pyproject.toml, uv.lock, docs/evidence/phase-03-api-dependency-sync.md, docs/evidence/phase-03-api-pytest.xml]
+    action_ids: []
+  - id: ISSUE-014
+    discovered_at: "2026-08-21T18:42:00+08:00"
+    phase: PHASE-03
+    task_ids: [P03-06]
+    severity: low
+    status: open
+    blocks_final: false
+    symptom: create-next-app 安装的 ESLint 9.39.5 输出版本已弃用提示。
+    cause: ESLint 10 已发布，但 Next 16.3.2 固定的 eslint-plugin-import、jsx-a11y 和 react peer 范围仍拒绝 ESLint 10。
+    resolution: 项目精确固定兼容的 ESLint 9.39.5；npm ls 依赖树、Lint 和 Build 均通过，待 Next 插件链支持 ESLint 10 后升级复验。
+    evidence: [apps/web/package.json, apps/web/package-lock.json, docs/evidence/phase-03-web-quality.md]
+    action_ids: []
+  - id: ISSUE-015
+    discovered_at: "2026-08-21T18:55:17+08:00"
+    phase: PHASE-03
+    task_ids: [P03-06]
+    severity: low
+    status: resolved
+    blocks_final: false
+    symptom: Vitest 首次运行时后续用例发现前一用例残留 DOM，并伴随 Vite 配置加载警告。
+    cause: 测试装配未显式执行 cleanup，且 Web package 未声明 ESM。
+    resolution: afterEach 显式 cleanup，并将 apps/web 声明为 type=module；同一 3 项测试无警告通过。
+    evidence: [apps/web/src/components/chat-workspace.test.tsx, apps/web/package.json, docs/evidence/phase-03-web-vitest.xml]
+    action_ids: []
+  - id: ISSUE-016
+    discovered_at: "2026-08-21T18:58:27+08:00"
+    phase: PHASE-03
+    task_ids: [P03-01, P03-06]
+    severity: medium
+    status: resolved
+    blocks_final: false
+    symptom: localhost:3000 和 8000 已被其他本机服务占用，首次预览触发错误页面及 CORS 拦截。
+    cause: localhost 在本机解析到已有 IPv6 监听者，且 8000 由系统 HTTP 服务监听；项目首版默认端口与既有服务冲突。
+    resolution: 项目开发契约统一为 127.0.0.1:3000 与 127.0.0.1:8010，更新配置、环境样例和启动文档；隔离预览无意外控制台错误通过。
+    evidence: [.env.example, apps/api/healthpick_api/config.py, apps/api/README.md, apps/web/README.md, docs/evidence/phase-03-web-runtime.json]
+    action_ids: []
+  - id: ISSUE-017
+    discovered_at: "2026-08-21T18:57:00+08:00"
+    phase: PHASE-03
+    task_ids: [P03-06, P03-07]
+    severity: low
+    status: open
+    blocks_final: false
+    symptom: 内置浏览器连接在页面操作前因宿主请求缺失 sandboxPolicy 元数据失败。
+    cause: Codex 宿主与内置浏览器连接器的沙箱元数据不完整，非项目代码错误。
+    resolution: 按浏览器技能降级使用 playwright-cli 完成相同三视口、交互和截图验收；宿主连接问题保留为非最终阻断记录。
+    evidence: [docs/evidence/phase-03-web-runtime.json, output/playwright/phase-03-desktop-1440x1000.png, output/playwright/phase-03-tablet-1024x900.png, output/playwright/phase-03-mobile-390x844.png]
+    action_ids: []
+  - id: ISSUE-018
+    discovered_at: "2026-08-21T19:09:00+08:00"
+    phase: PHASE-03
+    task_ids: [P03-02]
+    severity: low
+    status: resolved
+    blocks_final: false
+    symptom: Provider 首轮异步测试未执行，且 Real 缺配置用例受本地环境变量污染。
+    cause: 项目没有 pytest-asyncio；Settings 测试只禁用了 .env 文件，没有显式覆盖进程环境中的 LLM 字段。
+    resolution: 复用 FastAPI 已依赖的 AnyIO pytest 插件并固定 asyncio backend；缺配置用例显式清空三项 Real 参数，同一 8 项专项测试通过。
+    evidence: [tests/api/test_providers.py, docs/evidence/phase-03-api-pytest.xml]
+    action_ids: []
+  - id: ISSUE-019
+    discovered_at: "2026-08-21T19:11:00+08:00"
+    phase: PHASE-03
+    task_ids: [P03-01, P03-02, P03-03]
+    severity: low
+    status: resolved
+    blocks_final: false
+    symptom: 计划中的 Python 风格门禁无法运行，因为 Ruff 未声明为项目依赖；安装后首次发现 4 个 lint 与 7 个 format 差异。
+    cause: Phase 01/02 仅配置 pytest，未把 Ruff 和规则写入可复现的开发依赖。
+    resolution: 项目锁定 Ruff 0.16.4，配置 E/F/I/UP/B 规则并机械修复既有格式；check、format check 和 16 项 API 回归均通过。
+    evidence: [pyproject.toml, uv.lock, docs/evidence/phase-03-provider-quality.md, docs/evidence/phase-03-api-pytest.xml]
+    action_ids: []
+  - id: ISSUE-020
+    discovered_at: "2026-08-21T19:35:00+08:00"
+    phase: PHASE-03
+    task_ids: [P03-06, P03-07]
+    severity: medium
+    status: resolved
+    blocks_final: false
+    symptom: Web 资料边界卡片误把 B 描述为平台说明、C 描述为补充资料，与实际 A/B 核心营养、C 平台专用策略相反。
+    cause: P03-06 视觉占位文案未逐项绑定 sources.yaml 的 source_role 和 allowed_uses。
+    resolution: 卡片改为 A 健康膳食指南、B 个性化饮食方案、C 平台服务白皮书，并明确 C 仅用于平台功能与规则；P03-07 浏览器快照重新核验。
+    evidence: [knowledge/manifests/sources.yaml, apps/web/src/components/chat-workspace.tsx]
+    action_ids: []
+  - id: ISSUE-021
+    discovered_at: "2026-08-21T19:37:00+08:00"
+    phase: PHASE-03
+    task_ids: [P03-06, P03-07]
+    severity: medium
+    status: resolved
+    blocks_final: false
+    symptom: 动态回答截图中 A/B 引用卡整块被染成深绿或蓝色，正文对比度下降。
+    cause: 资料边界徽章使用全局 source-a/source-b/source-c 背景选择器，与引用卡的来源类名冲突。
+    resolution: 背景色选择器限定为 sources-card 后代；引用卡恢复浅色背景，仅用左边线区分来源，并重新执行浏览器视觉验收。
+    evidence: [apps/web/src/app/globals.css, output/playwright/phase-03-dynamic-mock-closed-loop.png]
+    action_ids: []
+  - id: ISSUE-022
+    discovered_at: "2026-08-21T19:47:30+08:00"
+    phase: PHASE-03
+    task_ids: [P03-08]
+    severity: medium
+    status: resolved
+    blocks_final: false
+    symptom: Phase 03 退出查漏时 README 仍宣称核心应用代码尚未开始，与控制面和实际交付冲突。
+    cause: P03-01～07 完成后未同步更新仓库对外首页的当前阶段摘要。
+    resolution: README 更新 Phase 03 交付、50/4 测试、浏览器隔离结果与 Phase 04 READY 状态，并链接 Phase 03 验收记录。
+    evidence: [README.md, docs/evidence/phase-03-baseline-record.md, control/project-control.yaml]
+    action_ids: []
+final_gates:
+  - {id: FINAL-01, title: 注册范围内全部任务关闭且无 PASS WITH ACTION, status: not_started, required_task_ids: [P08-07], evidence: []}
+  - {id: FINAL-02, title: 全部任务完成记录已复核接受, status: not_started, required_task_ids: [P08-07], evidence: []}
+  - {id: FINAL-03, title: P0/P1 需求追踪与客观证据完整, status: not_started, required_task_ids: [P05-05, P06-05, P08-03], evidence: []}
+  - {id: FINAL-04, title: 知识准确引用隔离与医疗安全全绿, status: not_started, required_task_ids: [DATA-06, P04-06, P07-02], evidence: []}
+  - {id: FINAL-05, title: 自动测试回归性能安全和隐私全绿, status: not_started, required_task_ids: [P07-02, P08-01], evidence: []}
+  - {id: FINAL-06, title: 公网 HTTPS 与 Compose 干净环境复现通过, status: not_started, required_task_ids: [P08-02], evidence: []}
+  - {id: FINAL-07, title: 文档 AI 披露演示和提交资产齐全, status: not_started, required_task_ids: [P08-03, P08-04], evidence: []}
+  - {id: FINAL-08, title: Release commit/tag/hash/匿名克隆一致, status: not_started, required_task_ids: [P08-05], evidence: []}
+  - {id: FINAL-09, title: 七天可用性责任和监测已确认, status: not_started, required_task_ids: [P08-06], evidence: []}
+  - {id: FINAL-10, title: Project Lead 最终签署且不存在开放阻断, status: not_started, required_task_ids: [P08-07], evidence: []}
+
+release:
+  commit: null
+  tag: null
+  public_url: null
+  compose_probe: null
+  final_signoff: null

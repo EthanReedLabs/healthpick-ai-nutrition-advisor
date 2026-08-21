@@ -1,0 +1,32 @@
+schema_version: 1
+task_id: P03-06
+phase_id: PHASE-03
+outcome: passed
+started_at: "2026-08-21T18:38:00+08:00"
+completed_at: "2026-08-21T19:03:00+08:00"
+recorded_at: "2026-08-21"
+backfilled: false
+owner: WEB
+summary: Next.js 营养问答工作台、OpenAPI 生成类型、显式 API/Mock 状态、稳定错误展示和三档响应式布局已实现，并通过质量门禁与真实浏览器验收。
+deliverables:
+  - apps/web/src/components/chat-workspace.tsx
+  - apps/web/src/lib/api.ts
+  - apps/web/src/lib/api-schema.d.ts
+  - apps/web/src/app/globals.css
+  - apps/web/src/components/chat-workspace.test.tsx
+acceptance_checks:
+  - name: ESLint、TypeScript、组件测试、生产构建和依赖审计
+    result: pass
+    evidence: [docs/evidence/phase-03-web-quality.md, docs/evidence/phase-03-web-vitest.xml]
+  - name: OpenAPI 单一契约生成 Web 类型
+    result: pass
+    evidence: [packages/shared/openapi/healthpick.openapi.json, apps/web/src/lib/api-schema.d.ts]
+  - name: 1440、1024、390 三视口真实浏览器布局
+    result: pass
+    evidence: [docs/evidence/phase-03-web-runtime.json, output/playwright/phase-03-desktop-1440x1000.png, output/playwright/phase-03-tablet-1024x900.png, output/playwright/phase-03-mobile-390x844.png]
+  - name: Chat 未接入时显式 503 且不伪造模型回复
+    result: pass
+    evidence: [docs/evidence/phase-03-web-runtime.json, output/playwright/phase-03-mobile-explicit-not-ready.png]
+issues: [ISSUE-009, ISSUE-014, ISSUE-015, ISSUE-016, ISSUE-017, ISSUE-020, ISSUE-021]
+residual_actions: []
+review: {status: pending_final_review, reviewer: Project Lead, reviewed_at: null, notes: 待最终总纲验收复核}

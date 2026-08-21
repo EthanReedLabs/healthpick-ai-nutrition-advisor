@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://healthpick.local/schemas/chunk.schema.json",
+  "title": "KnowledgeChunk",
+  "type": "object",
+  "required": ["schema_version", "chunk_id", "page_id", "source_code", "source_role", "source_sha256", "page", "section", "content", "allowed_routes", "forbidden_routes", "review_status"],
+  "properties": {
+    "schema_version": {"const": 1},
+    "chunk_id": {"type": "string", "pattern": "^[ABC]-p[0-9]{2}-c[0-9]{2}$"},
+    "page_id": {"type": "string", "pattern": "^[ABC]-p[0-9]{2}$"},
+    "source_code": {"enum": ["A", "B", "C"]},
+    "source_role": {"enum": ["core_nutrition", "auxiliary_platform"]},
+    "source_sha256": {"type": "string", "pattern": "^[A-F0-9]{64}$"},
+    "page": {"type": "integer", "minimum": 1},
+    "section": {"type": "string", "minLength": 1},
+    "content": {"type": "string", "minLength": 1, "maxLength": 800},
+    "allowed_routes": {"type": "array", "minItems": 1, "items": {"enum": ["nutrition", "recommendation", "contraindication", "platform"]}},
+    "forbidden_routes": {"type": "array", "minItems": 1, "items": {"enum": ["nutrition", "recommendation", "contraindication", "platform"]}},
+    "review_status": {"enum": ["verified", "review_required", "rejected"]}
+  },
+  "additionalProperties": true
+}
+

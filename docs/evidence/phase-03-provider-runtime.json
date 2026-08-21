@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "task_id": "P03-02",
+  "checked_at": "2026-08-21T19:13:24.290239+08:00",
+  "configured_mode": "mock",
+  "provider": "healthpick_mock",
+  "model": "mock-healthpick-v1",
+  "result_mode": "mock",
+  "disclosure": "mock_only",
+  "content_prefix": "[MOCK RESPONSE — NOT REAL MODEL OUTPUT]",
+  "real_adapter": {
+    "implemented": true,
+    "external_call_executed": false,
+    "external_call_action": "ACTION-02"
+  },
+  "result": "pass"
+}

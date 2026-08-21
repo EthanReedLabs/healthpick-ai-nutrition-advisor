@@ -1,0 +1,64 @@
+{
+  "schema_version": 1,
+  "task_id": "P03-06",
+  "checked_at": "2026-08-21T19:43:30+08:00",
+  "target": "http://127.0.0.1:3000",
+  "api_target": "http://127.0.0.1:8010",
+  "runtime_modes": {
+    "llm": "mock",
+    "embedding": "disabled",
+    "retrieval": "keyword"
+  },
+  "browser": {
+    "primary": "in-app browser",
+    "primary_result": "host_metadata_unavailable",
+    "fallback": "playwright-cli",
+    "fallback_result": "pass",
+    "runtime_surface": "Next.js production build"
+  },
+  "checks": [
+    {
+      "viewport": "desktop",
+      "width": 1440,
+      "height": 1000,
+      "result": "pass",
+      "layout": "left navigation + chat workspace + context rail",
+      "screenshot": "output/playwright/phase-03-desktop-1440x1000.png"
+    },
+    {
+      "viewport": "tablet",
+      "width": 1024,
+      "height": 900,
+      "result": "pass",
+      "layout": "left navigation + chat workspace",
+      "screenshot": "output/playwright/phase-03-tablet-1024x900.png"
+    },
+    {
+      "viewport": "mobile",
+      "width": 390,
+      "height": 844,
+      "result": "pass",
+      "layout": "mobile header + single-column chat workspace",
+      "document_width": 390,
+      "horizontal_overflow": false,
+      "screenshot": "output/playwright/phase-03-mobile-390x844.png"
+    },
+    {
+      "name": "explicit_not_ready_boundary",
+      "result": "pass",
+      "http_status": 503,
+      "error_code": "chat_not_ready",
+      "assertion": "UI states that it does not use preset text as a model answer",
+      "screenshot": "output/playwright/phase-03-mobile-explicit-not-ready.png"
+    }
+  ],
+  "console": {
+    "production_viewport_errors": 0,
+    "production_viewport_warnings": 0,
+    "before_submit_errors": 0,
+    "after_submit_expected_503_resource_error": 1,
+    "unexpected_errors": 0
+  },
+  "resolved_ui_issues": ["ISSUE-020", "ISSUE-021"],
+  "result": "pass"
+}

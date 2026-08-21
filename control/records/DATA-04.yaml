@@ -1,0 +1,18 @@
+schema_version: 1
+task_id: DATA-04
+phase_id: PHASE-02
+outcome: pass_with_action
+started_at: "2026-08-21T16:58:24+08:00"
+completed_at: "2026-08-21T17:24:17+08:00"
+recorded_at: "2026-08-21 (backfilled after Phase 02)"
+backfilled: true
+owner: KNOWLEDGE
+summary: 已生成 12 条 C 平台事实，全部限定为平台问答用途。
+deliverables: [knowledge/normalized/facts/platform_facts.jsonl]
+acceptance_checks:
+  - {name: C 允许营养用途为 0, result: pass, evidence: [docs/evidence/phase-02-knowledge-validation.json, docs/evidence/phase-02-pytest.xml]}
+  - {name: 第二人逐条复核, result: pass_with_action, evidence: [docs/evidence/phase-02-second-person-review-checklist.md]}
+issues: []
+residual_actions: [ACTION-06]
+review: {status: pending_final_review, reviewer: Project Lead, reviewed_at: null, notes: ACTION-06 关闭后重新生成和校验}
+

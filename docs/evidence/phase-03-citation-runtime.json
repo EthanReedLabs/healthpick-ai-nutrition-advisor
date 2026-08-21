@@ -1,0 +1,34 @@
+{
+  "schema_version": 1,
+  "task_id": "P03-04",
+  "checked_at": "2026-08-21T19:23:43.288430+08:00",
+  "query": "膳食纤维有什么营养作用？",
+  "route": "nutrition",
+  "citation": {
+    "chunk_id": "A-p01-c04",
+    "source": "A",
+    "title": "2026秋季健康膳食指南",
+    "page": 1,
+    "section": "1.2 微量营养素与膳食纤维",
+    "excerpt_chars": 160,
+    "excerpt_is_exact_substring": true
+  },
+  "context_delimiters": {
+    "start": "[EVIDENCE A-p01-c04]",
+    "end": "[END EVIDENCE A-p01-c04]"
+  },
+  "valid_case": {
+    "valid": true,
+    "referenced_chunk_ids": [
+      "A-p01-c04"
+    ],
+    "error_codes": []
+  },
+  "tampered_page_case": {
+    "valid": false,
+    "error_codes": [
+      "citation_metadata_mismatch"
+    ]
+  },
+  "result": "pass"
+}

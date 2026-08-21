@@ -1,0 +1,17 @@
+schema_version: 1
+task_id: P01-06
+phase_id: PHASE-01
+outcome: passed
+started_at: "2026-08-21T16:47:07+08:00"
+completed_at: "2026-08-21T16:50:46+08:00"
+recorded_at: "2026-08-21 (backfilled after Phase 02)"
+backfilled: true
+owner: WEB/API
+summary: 健康检查、会话、SSE Chat、历史、删除和来源定位的最小契约已冻结。
+deliverables: [docs/phases/phase-01-baseline-freeze.md]
+acceptance_checks:
+  - {name: 请求响应引用安全和错误字段明确, result: pass, evidence: [docs/phases/phase-01-baseline-freeze.md]}
+issues: []
+residual_actions: []
+review: {status: pending_final_review, reviewer: Project Lead, reviewed_at: null, notes: Phase 03 需固化为 OpenAPI 后再次验证}
+

@@ -1,0 +1,41 @@
+# Local secrets
+.env
+.env.*
+!.env.example
+
+# JavaScript / Next.js
+node_modules/
+.next/
+out/
+coverage/
+playwright-report/
+test-results/
+.playwright-cli/
+
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.venv/
+htmlcov/
+
+# Build and runtime
+dist/
+build/
+*.log
+tmp/
+.tmp/
+
+# Local databases and generated evaluation output
+*.sqlite
+*.sqlite3
+evals/reports/*
+!evals/reports/.gitkeep
+
+# OS / editors
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/

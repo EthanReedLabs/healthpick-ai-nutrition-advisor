@@ -1,0 +1,35 @@
+schema_version: 1
+task_id: GOV-01
+phase_id: PHASE-03
+outcome: passed
+started_at: "2026-08-21"
+completed_at: "2026-08-21"
+recorded_at: "2026-08-21"
+backfilled: false
+owner: LEAD/QA_DOCS
+summary: 已建立覆盖 Phase 01～08 的中心任务注册表、逐任务记录、问题日志、状态门禁、可读控制板和最终总纲验收。
+deliverables:
+  - control/project-control.yaml
+  - control/schemas/project-control.schema.json
+  - control/schemas/task-record.schema.json
+  - scripts/control_plane.py
+  - docs/governance/README.md
+  - docs/governance/FINAL_ACCEPTANCE_MASTER.md
+  - docs/governance/CONTROL_BOARD.md
+  - docs/governance/ISSUE_LOG.md
+acceptance_checks:
+  - name: 注册表 Schema、唯一 ID、依赖图和证据路径校验
+    result: pass
+    evidence: [docs/evidence/control-plane-validation.json]
+  - name: 已完成任务均有独立完成记录
+    result: pass
+    evidence: [docs/evidence/control-plane-validation.md]
+  - name: 未完成总项目不会误判为通过
+    result: pass
+    evidence: [docs/evidence/control-plane-validation.json]
+  - name: 控制面回归测试
+    result: pass
+    evidence: [docs/evidence/current-pytest.xml]
+issues: [ISSUE-009]
+residual_actions: []
+review: {status: pending_final_review, reviewer: Project Lead, reviewed_at: null, notes: 待最终总纲验收复核}

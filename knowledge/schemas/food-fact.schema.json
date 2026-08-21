@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://healthpick.local/schemas/food-fact.schema.json",
+  "title": "FoodFact",
+  "type": "object",
+  "required": ["schema_version", "fact_id", "food_name", "category", "basis", "nutrients", "source_code", "source_role", "source_sha256", "page", "section", "review_status", "first_pass_review"],
+  "properties": {
+    "schema_version": {"const": 1},
+    "fact_id": {"type": "string", "pattern": "^food-A-[a-z0-9_]+$"},
+    "food_name": {"type": "string", "minLength": 1},
+    "category": {"enum": ["meat_seafood", "soy_dairy", "grain_tuber", "vegetable_fungus"]},
+    "basis": {"type": "object", "required": ["amount", "unit"]},
+    "nutrients": {"type": "object", "minProperties": 4},
+    "source_code": {"const": "A"},
+    "source_role": {"const": "core_nutrition"},
+    "source_sha256": {"type": "string", "pattern": "^[A-F0-9]{64}$"},
+    "page": {"type": "integer", "minimum": 1, "maximum": 5},
+    "section": {"type": "string", "minLength": 1},
+    "review_status": {"enum": ["verified", "review_required", "rejected"]},
+    "first_pass_review": {"type": "object"},
+    "second_person_review": {
+      "type": "object",
+      "required": ["reviewer", "date", "notes"],
+      "properties": {
+        "reviewer": {"type": "string", "minLength": 1},
+        "date": {"type": "string", "format": "date"},
+        "notes": {"type": "string", "minLength": 1}
+      }
+    }
+  },
+  "additionalProperties": true
+}

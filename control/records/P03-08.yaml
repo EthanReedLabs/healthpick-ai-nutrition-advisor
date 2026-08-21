@@ -1,0 +1,29 @@
+schema_version: 1
+task_id: P03-08
+phase_id: PHASE-03
+outcome: pass_with_action
+started_at: "2026-08-21T19:39:31+08:00"
+completed_at: "2026-08-21T19:44:00+08:00"
+recorded_at: "2026-08-21"
+backfilled: false
+owner: LEAD
+summary: Phase 03 代码、自动测试、真实进程、生产构建、三视口和浏览器动态闭环已完成总查漏；Real LLM、vector 与原文二人复核保留为最终阻断行动。
+deliverables:
+  - docs/evidence/phase-03-baseline-record.md
+  - docs/evidence/control-plane-validation.json
+acceptance_checks:
+  - name: P03-01～07 均有独立完成记录和客观证据
+    result: pass
+    evidence: [control/records/P03-01.yaml, control/records/P03-02.yaml, control/records/P03-03.yaml, control/records/P03-04.yaml, control/records/P03-05.yaml, control/records/P03-06.yaml, control/records/P03-07.yaml]
+  - name: API/Web 全量代码门禁
+    result: pass
+    evidence: [docs/evidence/phase-03-api-pytest.xml, docs/evidence/phase-03-web-vitest.xml, docs/evidence/phase-03-chat-quality.md]
+  - name: 生产构建三视口与浏览器动态闭环
+    result: pass
+    evidence: [docs/evidence/phase-03-web-runtime.json, docs/evidence/phase-03-browser-closed-loop.json]
+  - name: Real、vector、review 未完成项透明登记
+    result: pass_with_action
+    evidence: [docs/evidence/phase-03-baseline-record.md, control/project-control.yaml]
+issues: [ISSUE-002, ISSUE-003, ISSUE-006, ISSUE-009, ISSUE-014, ISSUE-017, ISSUE-022]
+residual_actions: [ACTION-02, ACTION-03, ACTION-06]
+review: {status: pending_final_review, reviewer: Project Lead, reviewed_at: null, notes: 阶段工程门禁通过；三个外部行动待最终总纲验收}

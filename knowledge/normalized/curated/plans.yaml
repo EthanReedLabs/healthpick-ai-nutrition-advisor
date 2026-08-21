@@ -1,0 +1,285 @@
+schema_version: 1
+review_status: review_required
+first_pass_reviewer: Codex
+first_pass_date: "2026-08-21"
+items:
+  - id: macro_energy
+    source: A
+    pages: [1]
+    section: 1.1 三大宏量营养素
+    rule_type: nutrition_principle
+    title: 三大宏量营养素供能
+    content: {carbohydrate_kcal_per_g: 4, protein_kcal_per_g: 4, fat_kcal_per_g: 9}
+  - id: added_sugar_limit
+    source: A
+    pages: [1]
+    section: 1.1 三大宏量营养素
+    rule_type: limit
+    title: 每日添加糖限制
+    content: {metric: added_sugar, operator: "<=", value: 25, unit: g_per_day}
+  - id: adult_protein
+    source: A
+    pages: [1]
+    section: 1.1 三大宏量营养素
+    rule_type: nutrient_target
+    title: 成年人与运动人群蛋白质
+    content: {adult_g_per_kg: [1.0, 1.2], active_g_per_kg: [1.5, 2.0]}
+  - id: dietary_fiber
+    source: A
+    pages: [1]
+    section: 1.2 微量营养素与膳食纤维
+    rule_type: nutrient_target
+    title: 每日膳食纤维
+    content: {range: [25, 30], unit: g_per_day}
+  - id: plate_211
+    source: A
+    pages: [1, 2]
+    section: 2.1 「211 餐盘法则」
+    rule_type: plate_method
+    title: 211 餐盘
+    content:
+      vegetables: {parts: 2, plate_fraction: 0.5, examples: [西兰花, 菠菜, 胡萝卜, 南瓜]}
+      protein: {parts: 1, plate_fraction: 0.25, examples: [鸡胸肉, 鱼, 豆腐, 鸡蛋, 瘦牛肉]}
+      carbohydrate: {parts: 1, plate_fraction: 0.25, examples: [糙米, 红薯, 藜麦, 燕麦, 全麦面包]}
+      healthy_fat: {amount: 约1拇指大小, examples: [坚果, 橄榄油, 牛油果]}
+  - id: meal_energy_split
+    source: A
+    pages: [2]
+    section: 2.3 三餐热量分配建议
+    rule_type: meal_distribution
+    title: 三餐热量配比
+    content: {breakfast: {percent: 30, kcal: [450, 600]}, lunch: {percent: 40, kcal: [600, 800]}, dinner: {percent: 30, kcal: [450, 600]}}
+  - id: fat_loss_guidance
+    source: A
+    pages: [4]
+    section: 4.1 减脂人群
+    rule_type: goal_guidance
+    title: 减脂一般原则
+    content: {energy_delta_kcal: [-500, -300], protein_g_per_kg: [1.2, 1.6], added_sugar: {operator: "<", value: 25, unit: g_per_day}, cooking_oil: {operator: "<", value: 25, unit: g_per_day}, water_ml_per_day: [2000, 2500], eating_order: [蔬菜, 蛋白质, 碳水]}
+  - id: muscle_gain_guidance
+    source: A
+    pages: [4]
+    section: 4.2 增肌人群
+    rule_type: goal_guidance
+    title: 增肌一般原则
+    content: {energy_delta_kcal: [300, 500], protein_g_per_kg: [1.6, 2.2], post_training_minutes: 30, fat_energy_percent: [20, 30], meals_per_day: [5, 6]}
+  - id: glucose_control_guidance
+    source: A
+    pages: [4]
+    section: 4.3 控糖人群
+    rule_type: risk_guidance
+    title: 控糖一般原则
+    content: {prefer_gi: {operator: "<", value: 55}, avoid_gi: {operator: ">", value: 70}, meal_pattern: 三餐加两次加餐, fruit_amount_value: 200, fruit_amount_unit: g_per_day, fruit_comparator: unknown_missing_glyph, avoid: [果汁, 蜂蜜, 白糖, 精制糕点]}
+    unknown_glyph: true
+  - id: blood_pressure_guidance
+    source: A
+    pages: [4]
+    section: 4.4 控压人群
+    rule_type: risk_guidance
+    title: 控压一般原则
+    content: {salt: {operator: "<", value: 5, unit: g_per_day}, pattern: DASH, alcohol_g_per_day: {male: {operator: "<", value: 25}, female: {operator: "<", value: 15}}, avoid: [腌制食品, 加工肉类, 浓汤宝, 方便面调料包]}
+  - id: gout_contraindication
+    source: A
+    pages: [4]
+    section: 5.2 真正需要注意的饮食禁忌
+    rule_type: contraindication
+    title: 痛风或高尿酸
+    content: {limit: 嘌呤, avoid: [动物内脏, 浓肉汤, 沙丁鱼, 啤酒]}
+  - id: kidney_contraindication
+    source: A
+    pages: [4]
+    section: 5.2 真正需要注意的饮食禁忌
+    rule_type: contraindication
+    title: 肾病
+    content: {protein_g_per_kg: [0.6, 0.8], limits: [盐, 钾], requires_professional: true}
+  - id: gluten_contraindication
+    source: A
+    pages: [4]
+    section: 5.2 真正需要注意的饮食禁忌
+    rule_type: contraindication
+    title: Gluten 不耐受或乳糜泻
+    content: {strictly_avoid: [小麦, 大麦, 黑麦, 其制品]}
+  - id: pregnancy_contraindication
+    source: A
+    pages: [4]
+    section: 5.2 真正需要注意的饮食禁忌
+    rule_type: contraindication
+    title: 孕期
+    content: {avoid: [生鱼片, 溏心蛋, 酒], caffeine: {operator: "<", value: 200, unit: mg_per_day}, requires_professional: true}
+  - id: lactation_contraindication
+    source: A
+    pages: [5]
+    section: 5.2 真正需要注意的饮食禁忌
+    rule_type: contraindication
+    title: 哺乳期
+    content: {avoid_high_mercury_fish: [鲨鱼, 剑鱼, 方头鱼], caution: 过敏原传递, requires_professional: true}
+  - id: medical_disclaimer
+    source: A
+    pages: [5]
+    section: 5.3 AI 膳食顾问免责声明
+    rule_type: safety_boundary
+    title: 医疗免责声明
+    content: {not_medical_diagnosis_or_treatment: true, professional_guidance_for: [糖尿病, 肾病, 肝病, 心血管疾病, 孕期, 哺乳期, 术后恢复期]}
+  - id: plan_scope
+    source: B
+    pages: [1]
+    section: 第一章方案体系概述
+    rule_type: safety_boundary
+    title: 方案适用范围
+    content: {age_range: [18, 55], applies_to: 一般健康成年人, professional_guidance_for: [确诊糖尿病, 肾病, 心血管疾病, 孕期, 哺乳期]}
+  - id: fat_loss_eligibility
+    source: B
+    pages: [1]
+    section: 2.1 方案定位与目标人群
+    rule_type: eligibility
+    title: 轻盈减脂目标人群
+    content: {bmi_values_shown: [24, 28], bmi_comparators: unknown_missing_glyph, waist_cm_values: {male: 85, female: 80}, waist_comparators: unknown_missing_glyph, no_diet_contraindication_disease: true}
+    unknown_glyph: true
+  - id: fat_loss_targets
+    source: B
+    pages: [1]
+    section: 2.2 每日营养素目标
+    rule_type: nutrient_target
+    title: 轻盈减脂每日目标
+    content:
+      female: {energy_kcal: [1200, 1500], protein_g: [60, 75], carbohydrate_g: [120, 150], fat_g: [35, 45]}
+      male: {energy_kcal: [1500, 1800], protein_g: [75, 90], carbohydrate_g: [150, 180], fat_g: [40, 50]}
+      fiber_value_g: 25
+      fiber_comparator: unknown_missing_glyph
+      sodium: {operator: "<", value: 2000, unit: mg}
+      speed_kg_per_week: [0.5, 1]
+      cycle_weeks: [8, 12]
+    unknown_glyph: true
+  - id: monday_meal_plan
+    source: B
+    pages: [2]
+    section: 2.3 7 日循环食谱
+    rule_type: meal_day
+    title: 周一食谱
+    content: {total_kcal: 1350, breakfast: [燕麦片40克+牛奶200毫升+蓝莓50克+核桃10克, 煮鸡蛋1个], lunch: [糙米饭80克（生重）, 香煎鸡胸肉120克（橄榄油5克）, 蒜蓉西兰花200克, 番茄蛋花汤1碗], dinner: [蒸红薯150克, 清蒸鳕鱼100克, 凉拌黄瓜木耳], snack_optional: [无糖希腊酸奶100克或小苹果1个]}
+  - id: tuesday_meal_plan
+    source: B
+    pages: [2]
+    section: 2.3 7 日循环食谱
+    rule_type: meal_day
+    title: 周二食谱
+    content: {total_kcal: 1380, breakfast: [全麦面包2片+牛油果半个+水煮蛋1个, 黑咖啡1杯（无糖无奶）], lunch: [藜麦饭80克（生重）, 清蒸虾仁150克, 白灼菜心200克, 紫菜蛋花汤1碗], dinner: [蒸山药150克, 番茄炖北豆腐, 凉拌菠菜100克], snack_optional: [猕猴桃1个+杏仁10克]}
+  - id: wednesday_meal_plan
+    source: B
+    pages: [2, 3]
+    section: 2.3 7 日循环食谱
+    rule_type: meal_day
+    title: 周三食谱
+    content: {total_kcal: 1320, breakfast: [紫薯150克, 水煮蛋1个+脱脂牛奶200毫升, 小番茄5颗], lunch: [杂粮饭80克, 青椒炒鸡胸肉, 清炒冬瓜200克, 丝瓜蛋汤1碗], dinner: [玉米1根约200克, 凉拌鸡丝80克, 蒜蓉生菜200克], snack_optional: [无糖豆浆200毫升]}
+  - id: thursday_meal_plan
+    source: B
+    pages: [3]
+    section: 2.3 7 日循环食谱
+    rule_type: meal_day
+    title: 周四食谱
+    content: {total_kcal: 1400, breakfast: [燕麦粥+奇亚籽5克, 水煮蛋1个+脱脂牛奶200毫升], lunch: [糙米饭80克（生重）, 清蒸鲈鱼150克, 蒜蓉油麦菜200克, 海带豆腐汤], dinner: [蒸南瓜200克, 香煎三文鱼80克, 凉拌木耳黄瓜], snack_optional: [柚子约100克]}
+  - id: friday_meal_plan
+    source: B
+    pages: [3, 4]
+    section: 2.3 7 日循环食谱
+    rule_type: meal_day
+    title: 周五食谱
+    content: {total_kcal: 1360, breakfast: [全麦馒头约80克, 煎蛋1个+无糖豆浆250毫升, 小黄瓜1根], lunch: [红薯饭80克, 白灼虾150克, 清炒荷兰豆150克, 冬瓜虾皮汤1碗], dinner: [蒸芋头150克, 凉拌瘦牛肉80克, 上汤娃娃菜200克], snack_optional: [蓝莓50克+核桃10克]}
+  - id: saturday_meal_plan
+    source: B
+    pages: [4]
+    section: 2.3 7 日循环食谱
+    rule_type: meal_day
+    title: 周六食谱
+    content: {total_kcal: 1420, breakfast: [无糖希腊酸奶150克+燕麦30克+香蕉半根+坚果10克], lunch: [杂粮饭80克, 番茄炖瘦牛腩100克, 清炒芦笋150克], dinner: [蒸玉米1根+蒸南瓜100克, 清蒸虾仁100克, 凉拌海带丝100克], snack_optional: [小苹果1个]}
+  - id: sunday_meal_plan
+    source: B
+    pages: [4, 5]
+    section: 2.3 7 日循环食谱
+    rule_type: meal_day
+    title: 周日食谱
+    content: {total_kcal: 1380, breakfast: [紫薯100克+蒸蛋羹1碗, 脱脂牛奶200毫升], lunch: [藜麦饭80克, 香煎龙利鱼150克, 蒜蓉西兰花200克, 萝卜丝蛋汤1碗], dinner: [蒸山药150克, 凉拌鸡丝100克, 清炒菠菜200克], snack_optional: [无糖酸奶100克]}
+  - id: food_substitutions
+    source: B
+    pages: [5]
+    section: 2.4 食材替换指南
+    rule_type: substitution
+    title: 食材等量替换
+    content:
+      protein_100_120g: [[鸡胸肉, 火鸡胸肉, 去皮鸡腿肉], [鳕鱼或鲈鱼, 龙利鱼, 比目鱼], [虾仁, 蛤蜊肉, 鱿鱼], [北豆腐, 南豆腐1.5倍量], [鸡蛋, 蛋清2个]]
+      carbohydrate_about_80g_raw: [[糙米, 燕麦米, 黑米], [红薯, 紫薯, 山药], [藜麦, 糙米], [全麦面包2片, 全麦馒头1个]]
+      vegetables_about_200g: [[西兰花, 花菜, 芦笋], [菠菜, 油麦菜, 生菜], [番茄, 黄瓜, 西葫芦], [冬瓜, 丝瓜, 白萝卜]]
+  - id: muscle_eligibility
+    source: B
+    pages: [5]
+    section: 3.1 方案定位与目标人群
+    rule_type: eligibility
+    title: 力量增肌目标人群
+    content: {strength_sessions_value: 3, sessions_comparator: unknown_missing_glyph, bmi: 正常或偏瘦, no_diet_contraindication_disease: true}
+    unknown_glyph: true
+  - id: muscle_targets
+    source: B
+    pages: [6]
+    section: 3.1 方案定位与目标人群
+    rule_type: nutrient_target
+    title: 力量增肌核心目标
+    content: {energy_delta_kcal: [300, 500], protein_g_per_kg: [1.8, 2.2], carbohydrate_g_per_kg: [4, 6], lean_mass_gain_kg_per_month: [0.5, 1]}
+  - id: muscle_training_rest_targets
+    source: B
+    pages: [6]
+    section: 3.2 训练日vs休息日营养素差异
+    rule_type: nutrient_target
+    title: 训练日与休息日目标
+    content: {training_day: {energy_kcal: [2500, 3000], protein_g: [130, 160], carbohydrate_g: [300, 400], fat_g: [70, 90]}, rest_day: {energy_kcal: [2200, 2600], protein_g: [130, 160], carbohydrate_g: [200, 250], fat_g: [70, 90]}}
+  - id: muscle_timing
+    source: B
+    pages: [6]
+    section: 3.3 关键补充时机
+    rule_type: timing
+    title: 增肌关键补充时机
+    content: {pre_training: {hours_before: [1, 2], examples: [燕麦+香蕉+鸡蛋, 全麦面包+花生酱]}, post_training: {minutes_after: [30, 60], examples: [乳清蛋白粉1勺+香蕉1根, 鸡胸肉+白米饭]}, before_sleep: {hours_before: 1, examples: [酪蛋白粉, 希腊酸奶+坚果]}}
+  - id: glucose_plan_eligibility
+    source: B
+    pages: [6]
+    section: 4.1 方案定位与目标人群
+    rule_type: eligibility
+    title: 稳糖调理目标人群
+    content: {fasting_glucose_mmol_l: [6.1, 7.0], other: [糖尿病家族史, 餐后血糖波动大], excludes: [确诊糖尿病并发症]}
+  - id: gi_categories
+    source: B
+    pages: [7]
+    section: 4.2 低GI饮食核心原则
+    rule_type: classification
+    title: GI 食物分类
+    content: {low: {operator: "<", value: 55, examples: [糙米, 燕麦, 藜麦, 荞麦, 全麦面包, 红薯]}, medium: {range: [55, 70], examples: [白米饭, 南瓜, 玉米, 香蕉]}, high: {operator: ">", value: 70, examples: [白面包, 白馒头, 糯米, 西瓜, 荔枝, 龙眼, 果汁, 含糖饮料, 糖果, 蛋糕]}}
+  - id: plate_321
+    source: B
+    pages: [7]
+    section: 4.3 控糖餐盘法则
+    rule_type: plate_method
+    title: 控糖321餐盘
+    content: {vegetables: {parts: 3, plate_fraction: 0.5}, protein: {parts: 2, plate_fraction: 0.25}, low_gi_carbohydrate: {parts: 1, plate_fraction: 0.25, amount: 约拳头大小}, eating_order: [蔬菜, 蛋白质, 碳水]}
+  - id: plan_selection
+    source: B
+    pages: [7]
+    section: 5.1 如何选择适合自己的方案
+    rule_type: recommendation_mapping
+    title: 方案选择映射
+    content: {mappings: [{condition: "BMI数值24且想减重（比较符号缺失）", plan: 轻盈减脂, cycle: 8-12周}, {condition: 规律健身想增肌, plan: 力量增肌, cycle: 持续使用阶段性调整}, {condition: 血糖偏高或糖尿病前期, plan: 稳糖调理, cycle: 长期持续}, {condition: BMI正常想保持健康, plan: 三套方案轮换, cycle: 长期持续}]}
+    unknown_glyph: true
+  - id: plan_switching
+    source: B
+    pages: [7]
+    section: 5.2 方案切换与过渡
+    rule_type: transition
+    title: 方案切换规则
+    content: {avoid_switching_within_weeks: 2, finish_current_weeks: 4, transition_days: [3, 5], transition_energy: 两套方案中间值}
+  - id: plan_faq
+    source: B
+    pages: [8]
+    section: 5.3 常见疑问解答
+    rule_type: usage_guidance
+    title: 方案使用常见问题
+    content: {cycle_weeks_before_replacement: 4, replacement_percent: 20, exercise_minutes_for_glucose_plan: 30, meal_replacement_times_per_week_value: 2, meal_replacement_comparator: unknown_missing_glyph}
+    unknown_glyph: true
+

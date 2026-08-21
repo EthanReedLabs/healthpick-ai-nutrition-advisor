@@ -1,0 +1,37 @@
+schema_version: 1
+review_status: review_required
+first_pass_reviewer: Codex
+first_pass_date: "2026-08-21"
+items:
+  - {id: chicken_breast, name: 鸡胸肉（去皮）, category: meat_seafood, page: 2, section: 3.1 肉类与海鲜, basis: {amount: 100, unit: g, qualifier: 可食部}, nutrients: {energy_kcal: 165, protein_g: 31.0, fat_g: 3.6, cholesterol_mg: 85}, recommended_for: [减脂, 增肌]}
+  - {id: beef_tenderloin, name: 牛里脊, category: meat_seafood, page: 2, section: 3.1 肉类与海鲜, basis: {amount: 100, unit: g, qualifier: 可食部}, nutrients: {energy_kcal: 125, protein_g: 22.0, fat_g: 4.0, cholesterol_mg: 65}, recommended_for: [增肌, 补铁]}
+  - {id: lean_pork, name: 猪瘦肉, category: meat_seafood, page: 2, section: 3.1 肉类与海鲜, basis: {amount: 100, unit: g, qualifier: 可食部}, nutrients: {energy_kcal: 143, protein_g: 20.3, fat_g: 6.2, cholesterol_mg: 60}, recommended_for: [一般人群]}
+  - {id: salmon, name: 三文鱼, category: meat_seafood, page: 2, section: 3.1 肉类与海鲜, basis: {amount: 100, unit: g, qualifier: 可食部}, nutrients: {energy_kcal: 208, protein_g: 20.4, fat_g: 13.4, cholesterol_mg: 55}, recommended_for: [增肌, 健脑]}
+  - {id: cod, name: 鳕鱼, category: meat_seafood, page: 2, section: 3.1 肉类与海鲜, basis: {amount: 100, unit: g, qualifier: 可食部}, nutrients: {energy_kcal: 82, protein_g: 17.8, fat_g: 0.7, cholesterol_mg: 43}, recommended_for: [减脂, 儿童]}
+  - {id: shrimp, name: 虾仁, category: meat_seafood, page: 2, section: 3.1 肉类与海鲜, basis: {amount: 100, unit: g, qualifier: 可食部}, nutrients: {energy_kcal: 93, protein_g: 18.6, fat_g: 1.0, cholesterol_mg: 193}, recommended_for: [减脂, 增肌]}
+  - {id: chicken_egg, name: 鸡蛋（全蛋）, category: meat_seafood, page: 3, section: 3.1 肉类与海鲜, basis: {amount: 100, unit: g, qualifier: 可食部}, nutrients: {energy_kcal: 155, protein_g: 12.6, fat_g: 11.1, cholesterol_mg: 372}, recommended_for: [一般人群]}
+  - {id: duck_egg, name: 鸭蛋, category: meat_seafood, page: 3, section: 3.1 肉类与海鲜, basis: {amount: 100, unit: g, qualifier: 可食部}, nutrients: {energy_kcal: 180, protein_g: 12.8, fat_g: 13.0, cholesterol_mg: 565}, recommended_for: [一般人群]}
+  - {id: firm_tofu, name: 北豆腐, category: soy_dairy, page: 3, section: 3.2 豆制品与乳制品, basis: {amount: 100, unit: g}, nutrients: {energy_kcal: 98, protein_g: 12.2, fat_g: 4.8, calcium_mg: 138}, recommended_for: [减脂, 素食]}
+  - {id: soft_tofu, name: 南豆腐, category: soy_dairy, page: 3, section: 3.2 豆制品与乳制品, basis: {amount: 100, unit: g}, nutrients: {energy_kcal: 57, protein_g: 6.2, fat_g: 2.5, calcium_mg: 116}, recommended_for: [一般人群]}
+  - {id: tofu_skin, name: 千张（豆腐皮）, category: soy_dairy, page: 3, section: 3.2 豆制品与乳制品, basis: {amount: 100, unit: g}, nutrients: {energy_kcal: 260, protein_g: 24.5, fat_g: 16.0, calcium_mg: 313}, recommended_for: [增肌, 素食]}
+  - {id: unsweetened_soy_milk, name: 豆浆（无糖）, category: soy_dairy, page: 3, section: 3.2 豆制品与乳制品, basis: {amount: 100, unit: g}, nutrients: {energy_kcal: 31, protein_g: 3.0, fat_g: 1.6, calcium_mg: 10}, recommended_for: [一般人群]}
+  - {id: whole_milk, name: 牛奶（全脂）, category: soy_dairy, page: 3, section: 3.2 豆制品与乳制品, basis: {amount: 100, unit: g}, nutrients: {energy_kcal: 65, protein_g: 3.2, fat_g: 3.6, calcium_mg: 104}, recommended_for: [一般人群]}
+  - {id: greek_yogurt, name: 希腊酸奶（无糖）, category: soy_dairy, page: 3, section: 3.2 豆制品与乳制品, basis: {amount: 100, unit: g}, nutrients: {energy_kcal: 97, protein_g: 10.0, fat_g: 5.0, calcium_mg: 110}, recommended_for: [减脂, 增肌]}
+  - {id: cheddar_cheese, name: 奶酪（切达）, category: soy_dairy, page: 3, section: 3.2 豆制品与乳制品, basis: {amount: 100, unit: g}, nutrients: {energy_kcal: 403, protein_g: 25.0, fat_g: 33.0, calcium_mg: 721}, recommended_for: [增肌, 儿童]}
+  - {id: brown_rice, name: 糙米, category: grain_tuber, page: 3, section: 3.3 谷物与薯类, basis: {amount: 100, unit: g, qualifier: 可食部}, nutrients: {energy_kcal: 348, carbohydrate_g: 76.0, fiber_g: 3.4, gi: 50}, recommended_for: [减脂, 控糖]}
+  - {id: oats, name: 燕麦, category: grain_tuber, page: 3, section: 3.3 谷物与薯类, basis: {amount: 100, unit: g, qualifier: 可食部}, nutrients: {energy_kcal: 338, carbohydrate_g: 61.0, fiber_g: 10.0, gi: 55}, recommended_for: [减脂, 控糖]}
+  - {id: cooked_white_rice, name: 白米饭, category: grain_tuber, page: 3, section: 3.3 谷物与薯类, basis: {amount: 100, unit: g, qualifier: 可食部}, nutrients: {energy_kcal: 130, carbohydrate_g: 28.0, fiber_g: 0.4, gi: 73}, recommended_for: [增肌]}
+  - {id: sweet_potato, name: 红薯, category: grain_tuber, page: 3, section: 3.3 谷物与薯类, basis: {amount: 100, unit: g, qualifier: 可食部}, nutrients: {energy_kcal: 86, carbohydrate_g: 20.0, fiber_g: 3.0, gi: 54}, recommended_for: [减脂, 一般人群]}
+  - {id: purple_sweet_potato, name: 紫薯, category: grain_tuber, page: 3, section: 3.3 谷物与薯类, basis: {amount: 100, unit: g, qualifier: 可食部}, nutrients: {energy_kcal: 82, carbohydrate_g: 18.0, fiber_g: 2.5, gi: 54}, recommended_for: [减脂, 一般人群]}
+  - {id: whole_wheat_bread, name: 全麦面包, category: grain_tuber, page: 3, section: 3.3 谷物与薯类, basis: {amount: 100, unit: g, qualifier: 可食部}, nutrients: {energy_kcal: 247, carbohydrate_g: 41.0, fiber_g: 7.0, gi: 50}, recommended_for: [减脂, 控糖]}
+  - {id: quinoa, name: 藜麦, category: grain_tuber, page: 3, section: 3.3 谷物与薯类, basis: {amount: 100, unit: g, qualifier: 可食部}, nutrients: {energy_kcal: 368, carbohydrate_g: 64.0, fiber_g: 7.0, gi: 53}, recommended_for: [减脂, 素食]}
+  - {id: corn, name: 玉米, category: grain_tuber, page: 3, section: 3.3 谷物与薯类, basis: {amount: 100, unit: g, qualifier: 可食部}, nutrients: {energy_kcal: 112, carbohydrate_g: 22.8, fiber_g: 2.7, gi: 55}, recommended_for: [一般人群]}
+  - {id: broccoli, name: 西兰花, category: vegetable_fungus, page: 3, section: 3.4 蔬菜与菌菇, basis: {amount: 100, unit: g, qualifier: 可食部}, nutrients: {energy_kcal: 34, carbohydrate_g: 4.3, fiber_g: 2.6, vitamin_c_mg: 89}, preparation: [白灼, 蒜蓉炒]}
+  - {id: spinach, name: 菠菜, category: vegetable_fungus, page: 3, section: 3.4 蔬菜与菌菇, basis: {amount: 100, unit: g, qualifier: 可食部}, nutrients: {energy_kcal: 23, carbohydrate_g: 3.6, fiber_g: 2.2, vitamin_c_mg: 32}, preparation: [蒜蓉炒, 做汤]}
+  - {id: tomato, name: 番茄, category: vegetable_fungus, page: 3, section: 3.4 蔬菜与菌菇, basis: {amount: 100, unit: g, qualifier: 可食部}, nutrients: {energy_kcal: 18, carbohydrate_g: 3.9, fiber_g: 1.2, vitamin_c_mg: 14}, preparation: [生食, 炒蛋]}
+  - {id: cucumber, name: 黄瓜, category: vegetable_fungus, page: 3, section: 3.4 蔬菜与菌菇, basis: {amount: 100, unit: g, qualifier: 可食部}, nutrients: {energy_kcal: 16, carbohydrate_g: 2.9, fiber_g: 0.5, vitamin_c_mg: 9}, preparation: [生食, 凉拌]}
+  - {id: dried_wood_ear, name: 木耳（干）, category: vegetable_fungus, page: 3, section: 3.4 蔬菜与菌菇, basis: {amount: 100, unit: g, qualifier: 可食部}, nutrients: {energy_kcal: 265, carbohydrate_g: 65.0, fiber_g: 29.9, vitamin_c_mg: 0}, preparation: [泡发后凉拌, 炒]}
+  - {id: fresh_shiitake, name: 香菇（鲜）, category: vegetable_fungus, page: 3, section: 3.4 蔬菜与菌菇, basis: {amount: 100, unit: g, qualifier: 可食部}, nutrients: {energy_kcal: 26, carbohydrate_g: 3.3, fiber_g: 2.0, vitamin_c_mg: 1}, preparation: [炒, 炖, 做汤]}
+  - {id: enoki, name: 金针菇, category: vegetable_fungus, page: 3, section: 3.4 蔬菜与菌菇, basis: {amount: 100, unit: g, qualifier: 可食部}, nutrients: {energy_kcal: 32, carbohydrate_g: 6.0, fiber_g: 2.7, vitamin_c_mg: 0}, preparation: [凉拌, 火锅, 炒]}
+  - {id: fresh_kelp, name: 海带（鲜）, category: vegetable_fungus, page: 3, section: 3.4 蔬菜与菌菇, basis: {amount: 100, unit: g, qualifier: 可食部}, nutrients: {energy_kcal: 13, carbohydrate_g: 2.1, fiber_g: 0.5, vitamin_c_mg: 0}, preparation: [做汤, 凉拌]}
+

@@ -1,0 +1,30 @@
+schema_version: 1
+task_id: P03-07
+phase_id: PHASE-03
+outcome: pass_with_action
+started_at: "2026-08-21T19:32:14+08:00"
+completed_at: "2026-08-21T19:39:30+08:00"
+recorded_at: "2026-08-21"
+backfilled: false
+owner: WEB/API/QA_DOCS
+summary: 浏览器已完成营养 A/B 与平台 C-only 两条动态 SSE 闭环，显式 Mock、风险级别、内联 Chunk-ID、页码/章节/摘录均可见，控制台无异常；Real、vector 和原文复核仍待外部行动。
+deliverables:
+  - output/playwright/phase-03-dynamic-mock-closed-loop.png
+  - output/playwright/phase-03-dynamic-platform-c-only.png
+  - docs/evidence/phase-03-browser-closed-loop.json
+acceptance_checks:
+  - name: 营养问题从 Web 到 API/SSE 再到 A/B 引用卡片
+    result: pass
+    evidence: [docs/evidence/phase-03-browser-closed-loop.json, output/playwright/phase-03-dynamic-mock-closed-loop.png]
+  - name: 平台问题浏览器闭环只返回 C
+    result: pass
+    evidence: [docs/evidence/phase-03-browser-closed-loop.json, output/playwright/phase-03-dynamic-platform-c-only.png]
+  - name: Mock/Real、keyword/vector 和 session 模式透明
+    result: pass
+    evidence: [docs/evidence/phase-03-browser-closed-loop.json, docs/evidence/phase-03-api-runtime.json]
+  - name: 浏览器控制台与 Chat 网络请求
+    result: pass
+    evidence: [docs/evidence/phase-03-browser-closed-loop.json]
+issues: [ISSUE-002, ISSUE-003, ISSUE-006, ISSUE-017, ISSUE-020, ISSUE-021]
+residual_actions: [ACTION-02, ACTION-03, ACTION-06]
+review: {status: pending_final_review, reviewer: Project Lead, reviewed_at: null, notes: Mock 闭环通过；真实 LLM、向量与原文复核证据待补}

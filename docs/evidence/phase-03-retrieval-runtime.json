@@ -1,0 +1,428 @@
+{
+  "schema_version": 1,
+  "task_id": "P03-03",
+  "checked_at": "2026-08-21T19:19:33.626820+08:00",
+  "retrieval_mode": "keyword",
+  "embedding_claimed": false,
+  "chunk_counts": {
+    "A": 21,
+    "B": 26,
+    "C": 20
+  },
+  "probes": [
+    {
+      "name": "nutrition",
+      "query": "膳食纤维有什么营养作用？",
+      "route": "nutrition",
+      "components": [
+        "nutrition"
+      ],
+      "allowed_sources": [
+        "A",
+        "B"
+      ],
+      "reason_codes": [
+        "core:nutrition:营养,膳食,纤维"
+      ],
+      "trace": {
+        "mode": "keyword",
+        "examined_chunks": 67,
+        "eligible_chunks": 47,
+        "rejected_by_source_boundary": 20,
+        "returned_chunks": 6
+      },
+      "hits": [
+        {
+          "chunk_id": "A-p01-c04",
+          "source": "A",
+          "page": 1,
+          "section": "1.2 微量营养素与膳食纤维",
+          "score": 21.511307,
+          "matched_terms": [
+            "膳食",
+            "食纤",
+            "纤维",
+            "营养",
+            "膳食纤",
+            "食纤维"
+          ]
+        },
+        {
+          "chunk_id": "A-p02-c02",
+          "source": "A",
+          "page": 2,
+          "section": "2.2 秋季时令食材推荐",
+          "score": 17.436217,
+          "matched_terms": [
+            "膳食",
+            "食纤",
+            "纤维",
+            "营养",
+            "膳食纤",
+            "食纤维"
+          ]
+        },
+        {
+          "chunk_id": "A-p01-c02",
+          "source": "A",
+          "page": 1,
+          "section": "1.1 三大宏量营养素",
+          "score": 15.561232,
+          "matched_terms": [
+            "膳食",
+            "食纤",
+            "纤维",
+            "营养",
+            "膳食纤",
+            "食纤维"
+          ]
+        },
+        {
+          "chunk_id": "B-p01-c04",
+          "source": "B",
+          "page": 1,
+          "section": "2.2 每日营养素目标",
+          "score": 12.479436,
+          "matched_terms": [
+            "膳食",
+            "食纤",
+            "纤维",
+            "营养",
+            "膳食纤",
+            "食纤维"
+          ]
+        },
+        {
+          "chunk_id": "A-p03-c03",
+          "source": "A",
+          "page": 3,
+          "section": "3.3 谷物与薯类（每100 克可食部）",
+          "score": 11.758059,
+          "matched_terms": [
+            "膳食",
+            "食纤",
+            "纤维",
+            "膳食纤",
+            "食纤维"
+          ]
+        },
+        {
+          "chunk_id": "A-p03-c04",
+          "source": "A",
+          "page": 3,
+          "section": "3.4 蔬菜与菌菇（每100 克可食部）",
+          "score": 11.389733,
+          "matched_terms": [
+            "膳食",
+            "食纤",
+            "纤维",
+            "膳食纤",
+            "食纤维"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "recommendation",
+      "query": "帮我搭配一份增肌早餐食谱",
+      "route": "recommendation",
+      "components": [
+        "recommendation"
+      ],
+      "allowed_sources": [
+        "A",
+        "B"
+      ],
+      "reason_codes": [
+        "core:recommendation:食谱,搭配,早餐,增肌"
+      ],
+      "trace": {
+        "mode": "keyword",
+        "examined_chunks": 67,
+        "eligible_chunks": 47,
+        "rejected_by_source_boundary": 20,
+        "returned_chunks": 6
+      },
+      "hits": [
+        {
+          "chunk_id": "B-p02-c03",
+          "source": "B",
+          "page": 2,
+          "section": "周三食谱（1320 千卡示例）",
+          "score": 6.359589,
+          "matched_terms": [
+            "早餐",
+            "食谱"
+          ]
+        },
+        {
+          "chunk_id": "B-p03-c03",
+          "source": "B",
+          "page": 3,
+          "section": "周五食谱（1360 千卡示例）",
+          "score": 5.965682,
+          "matched_terms": [
+            "早餐",
+            "食谱"
+          ]
+        },
+        {
+          "chunk_id": "B-p04-c03",
+          "source": "B",
+          "page": 4,
+          "section": "周日食谱（1380 千卡示例）",
+          "score": 5.637201,
+          "matched_terms": [
+            "早餐",
+            "食谱"
+          ]
+        },
+        {
+          "chunk_id": "B-p04-c02",
+          "source": "B",
+          "page": 4,
+          "section": "周六食谱（1420 千卡示例）",
+          "score": 5.102334,
+          "matched_terms": [
+            "早餐",
+            "食谱"
+          ]
+        },
+        {
+          "chunk_id": "B-p02-c02",
+          "source": "B",
+          "page": 2,
+          "section": "周二食谱（1380 千卡示例）",
+          "score": 4.952541,
+          "matched_terms": [
+            "早餐",
+            "食谱"
+          ]
+        },
+        {
+          "chunk_id": "B-p03-c02",
+          "source": "B",
+          "page": 3,
+          "section": "周四食谱（1400 千卡示例）",
+          "score": 4.934547,
+          "matched_terms": [
+            "早餐",
+            "食谱"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "platform",
+      "query": "平台会员和企业服务有哪些？",
+      "route": "platform",
+      "components": [
+        "platform"
+      ],
+      "allowed_sources": [
+        "C"
+      ],
+      "reason_codes": [
+        "platform:平台,会员,企业服务"
+      ],
+      "trace": {
+        "mode": "keyword",
+        "examined_chunks": 67,
+        "eligible_chunks": 20,
+        "rejected_by_source_boundary": 47,
+        "returned_chunks": 6
+      },
+      "hits": [
+        {
+          "chunk_id": "C-p05-c01",
+          "source": "C",
+          "page": 5,
+          "section": "5.2 渠道合作",
+          "score": 8.549111,
+          "matched_terms": [
+            "平台",
+            "会员",
+            "服务"
+          ]
+        },
+        {
+          "chunk_id": "C-p02-c03",
+          "source": "C",
+          "page": 2,
+          "section": "【企业健康管家】员工健康管理SaaS",
+          "score": 7.881025,
+          "matched_terms": [
+            "平台",
+            "企业",
+            "服务"
+          ]
+        },
+        {
+          "chunk_id": "C-p04-c02",
+          "source": "C",
+          "page": 4,
+          "section": "4.2 企业客户案例",
+          "score": 7.455769,
+          "matched_terms": [
+            "平台",
+            "企业",
+            "服务"
+          ]
+        },
+        {
+          "chunk_id": "C-p01-c03",
+          "source": "C",
+          "page": 1,
+          "section": "1.2 平台定位",
+          "score": 6.83718,
+          "matched_terms": [
+            "平台",
+            "企业",
+            "服务"
+          ]
+        },
+        {
+          "chunk_id": "C-p04-c03",
+          "source": "C",
+          "page": 4,
+          "section": "5.1 API 开放平台",
+          "score": 6.608842,
+          "matched_terms": [
+            "平台",
+            "企业",
+            "服务"
+          ]
+        },
+        {
+          "chunk_id": "C-p03-c01",
+          "source": "C",
+          "page": 3,
+          "section": "2.3 增值服务",
+          "score": 5.807641,
+          "matched_terms": [
+            "平台",
+            "企业",
+            "服务"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "mixed",
+      "query": "平台会员能否获得低钠饮食建议？",
+      "route": "mixed",
+      "components": [
+        "nutrition",
+        "platform"
+      ],
+      "allowed_sources": [
+        "A",
+        "B",
+        "C"
+      ],
+      "reason_codes": [
+        "core:nutrition:饮食,低钠",
+        "platform:平台,会员"
+      ],
+      "trace": {
+        "mode": "keyword",
+        "examined_chunks": 67,
+        "eligible_chunks": 67,
+        "rejected_by_source_boundary": 0,
+        "returned_chunks": 6
+      },
+      "hits": [
+        {
+          "chunk_id": "B-p05-c02",
+          "source": "B",
+          "page": 5,
+          "section": "2.4 食材替换指南",
+          "score": 4.141802,
+          "matched_terms": [
+            "获得",
+            "饮食"
+          ]
+        },
+        {
+          "chunk_id": "C-p02-c02",
+          "source": "C",
+          "page": 2,
+          "section": "【专业版】深度健康管理",
+          "score": 15.164762,
+          "matched_terms": [
+            "平台",
+            "饮食",
+            "食建",
+            "建议",
+            "饮食建",
+            "食建议"
+          ]
+        },
+        {
+          "chunk_id": "C-p05-c01",
+          "source": "C",
+          "page": 5,
+          "section": "5.2 渠道合作",
+          "score": 6.039961,
+          "matched_terms": [
+            "平台",
+            "会员"
+          ]
+        },
+        {
+          "chunk_id": "C-p03-c01",
+          "source": "C",
+          "page": 3,
+          "section": "2.3 增值服务",
+          "score": 3.934873,
+          "matched_terms": [
+            "平台",
+            "饮食",
+            "建议"
+          ]
+        },
+        {
+          "chunk_id": "A-p02-c03",
+          "source": "A",
+          "page": 2,
+          "section": "2.3 三餐热量分配建议",
+          "score": 3.885087,
+          "matched_terms": [
+            "平台",
+            "建议"
+          ]
+        },
+        {
+          "chunk_id": "B-p07-c05",
+          "source": "B",
+          "page": 7,
+          "section": "5.2 方案切换与过渡",
+          "score": 3.718353,
+          "matched_terms": [
+            "饮食",
+            "建议"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "out_of_scope",
+      "query": "如何修复汽车发动机？",
+      "route": "out_of_scope",
+      "components": [],
+      "allowed_sources": [],
+      "reason_codes": [
+        "no_supported_intent"
+      ],
+      "trace": {
+        "mode": "keyword",
+        "examined_chunks": 67,
+        "eligible_chunks": 0,
+        "rejected_by_source_boundary": 67,
+        "returned_chunks": 0
+      },
+      "hits": []
+    }
+  ],
+  "result": "pass"
+}

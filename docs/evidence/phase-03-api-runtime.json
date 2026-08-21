@@ -1,0 +1,72 @@
+{
+  "schema_version": 1,
+  "captured_at": "2026-08-21T19:32:37.1726141+08:00",
+  "scope": "phase-03-p03-01-and-p03-05-local-uvicorn",
+  "environment": "test",
+  "api_origin": "http://127.0.0.1:8010",
+  "health": {
+    "status_code": 200,
+    "status": "ok",
+    "service": "healthpick-api",
+    "version": "0.1.0",
+    "request_id": "cdcf98ad-1e68-4452-aaa5-1f3c32dca133",
+    "modes": {
+      "llm": "mock",
+      "embedding": "disabled",
+      "retrieval": "keyword"
+    },
+    "dependencies": {
+      "database": {
+        "status": "not_checked",
+        "detail": null
+      },
+      "llm": {
+        "status": "mock",
+        "detail": "development/test only"
+      },
+      "embedding": {
+        "status": "disabled",
+        "detail": null
+      }
+    }
+  },
+  "openapi": {
+    "status_code": 200,
+    "version": "0.1.0",
+    "path_count": 2,
+    "has_health": true,
+    "has_chat": true
+  },
+  "chat_sse": {
+    "status_code": 200,
+    "content_type": [
+      "text/event-stream; charset=utf-8"
+    ],
+    "event_names": [
+      "meta",
+      "citation",
+      "citation",
+      "citation",
+      "citation",
+      "citation",
+      "citation",
+      "token",
+      "token",
+      "final"
+    ],
+    "request_id": "add3a0b9-4224-4392-9054-9fa86b8f338b",
+    "route": "nutrition",
+    "model": {
+      "provider": "healthpick_mock",
+      "name": "mock-healthpick-v1",
+      "mode": "mock"
+    },
+    "citation_count": 6,
+    "sources": [
+      "A",
+      "B"
+    ],
+    "explicit_mock_disclosure": true
+  },
+  "result": "PASS"
+}

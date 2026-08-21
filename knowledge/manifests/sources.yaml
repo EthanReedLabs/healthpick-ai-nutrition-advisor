@@ -1,0 +1,106 @@
+schema_version: 1
+generated_at: "2026-08-21T00:00:00+08:00"
+sources:
+  - code: A
+    file: knowledge/raw/A-2026-fall-healthy-diet-guide.pdf
+    title: 2026秋季健康膳食指南
+    version: V2.1
+    release_date: 2026-08-15
+    pages: 5
+    source_role: core_nutrition
+    allowed_uses:
+      - nutrition_qa
+      - food_fact_lookup
+      - contraindication_check
+      - recommendation_support
+    forbidden_uses: []
+    sha256: 44B9A8B1FFDDF08A6F6397563393CF1D786AB210036493DFD0F1DA5788BF4E18
+    extraction_status: file_validation_passed
+    extraction:
+      parser: PyMuPDF 1.28.2 native_text
+      pages_file: knowledge/normalized/pages/A.pages.jsonl
+      pages_sha256: 4D46435EE01032B7F1346AF26776B3B6DE001E11A9113951D4213DBC4E357F77
+      chunks_file: knowledge/normalized/chunks/A.chunks.jsonl
+      chunks_sha256: 11F88F08D43E617E0B2EA8B7FDD67177373362011A5C529B700CF0C77BDB0C3D
+      chunk_count: 21
+      unknown_glyph_pages: [2, 4]
+    facts:
+      food_file: knowledge/normalized/facts/food_facts.jsonl
+      food_sha256: 9ACC97D26AC0AF46F50BD9C4974283360D894026ABBBA4BD9AB2DBF87DF1292C
+      plan_file: knowledge/normalized/facts/plan_rules.jsonl
+      plan_sha256: F43F52BC9FBA3EABDBC3C7B8B0EE3135444055B4A38C435EFA64EE56FAF38ADC
+    structured_fact_review: second_person_required
+
+  - code: B
+    file: knowledge/raw/B-personalized-diet-plan.pdf
+    title: 个性化饮食计划方案
+    version: V1.8
+    release_date: 2026-08-10
+    pages: 8
+    source_role: core_nutrition
+    allowed_uses:
+      - plan_recommendation
+      - meal_plan_lookup
+      - food_substitution
+      - recommendation_support
+    forbidden_uses: []
+    sha256: 65C5FF9E426CB49F92899106FE4E02FEA64C91F49880F51F8B517547C4A21BB3
+    extraction_status: file_validation_passed
+    extraction:
+      parser: PyMuPDF 1.28.2 native_text
+      pages_file: knowledge/normalized/pages/B.pages.jsonl
+      pages_sha256: D345C00159C736EC3DF74D6269879E5D526393FAAD421C70C7CE9CE3311CF7B5
+      chunks_file: knowledge/normalized/chunks/B.chunks.jsonl
+      chunks_sha256: 22D04ED08DACDF7912151DDA9C557054677D7783E16498943FE9A7B325297E7A
+      chunk_count: 26
+      unknown_glyph_pages: [1, 5, 7, 8]
+    facts:
+      plan_file: knowledge/normalized/facts/plan_rules.jsonl
+      plan_sha256: F43F52BC9FBA3EABDBC3C7B8B0EE3135444055B4A38C435EFA64EE56FAF38ADC
+    structured_fact_review: second_person_required
+
+  - code: C
+    file: knowledge/raw/C-healthpick-service-whitepaper.pdf
+    title: 健康优选平台服务白皮书
+    version: V3.0
+    release_date: 2026-08-01
+    pages: 5
+    source_role: auxiliary_platform
+    allowed_uses:
+      - platform_qa
+      - membership_qa
+      - enterprise_qa
+      - api_product_qa
+    forbidden_uses:
+      - nutrition_qa
+      - plan_recommendation
+      - food_fact_lookup
+      - contraindication_check
+    sha256: 015713384E28C91C4FA217FAA1F9B125DAFF166DFEDEA6BD67815258B2921DBC
+    extraction_status: file_validation_passed
+    extraction:
+      parser: PyMuPDF 1.28.2 native_text
+      pages_file: knowledge/normalized/pages/C.pages.jsonl
+      pages_sha256: 7CF1F08DF530EA07CFB5A474F76EFF78005047A7F256064DD21D400A704A552C
+      chunks_file: knowledge/normalized/chunks/C.chunks.jsonl
+      chunks_sha256: C6E4FABFD336A59F31C87CC7E0745B3E76099FC8E4E535132EA992681A9FD2BE
+      chunk_count: 20
+      unknown_glyph_pages: []
+    facts:
+      platform_file: knowledge/normalized/facts/platform_facts.jsonl
+      platform_sha256: 6BC43EF84DA82FD3F6D63AAA814E19C41C4562ACD06A97ED242BBA7B99F25C48
+    structured_fact_review: second_person_required
+
+competition_brief:
+  file: docs/source/competition-brief.docx
+  sha256: 7F8C6A81F5FB14ABD4AC20B6A9102C9F3CE8E5D250B907187FC82B80C2684499
+
+phase_02_validation:
+  status: file_validation_passed
+  report: docs/evidence/phase-02-knowledge-validation.md
+  pytest_report: docs/evidence/phase-02-pytest.xml
+  phase_record: docs/evidence/phase-02-baseline-record.md
+  second_person_review_checklist: docs/evidence/phase-02-second-person-review-checklist.md
+  database_migration: not_run_action_01
+  embedding_index: not_run_action_03
+  second_person_review: required_action_06

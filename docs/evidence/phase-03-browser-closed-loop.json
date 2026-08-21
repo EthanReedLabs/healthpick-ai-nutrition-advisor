@@ -1,0 +1,72 @@
+{
+  "schema_version": 1,
+  "task_id": "P03-07",
+  "checked_at": "2026-08-21T19:39:30+08:00",
+  "web_target": "http://127.0.0.1:3000",
+  "api_target": "http://127.0.0.1:8010",
+  "runtime_modes": {
+    "llm": "mock",
+    "model": "mock-healthpick-v1",
+    "embedding": "disabled",
+    "retrieval": "keyword",
+    "session": "ephemeral"
+  },
+  "browser": {
+    "engine": "playwright-cli",
+    "viewport": [1440, 1000],
+    "in_app_browser_fallback_issue": "ISSUE-017"
+  },
+  "checks": [
+    {
+      "name": "nutrition_dynamic_answer",
+      "query": "膳食纤维有什么营养作用？",
+      "http_status": 200,
+      "ui_route": "nutrition",
+      "ui_model_mode": "mock",
+      "ui_safety": "S0",
+      "inline_reference": "A-p01-c04",
+      "citation_sources": ["A", "B"],
+      "citation_metadata_visible": ["title", "page", "section", "excerpt"],
+      "source_boundary_result": "pass",
+      "screenshot": "output/playwright/phase-03-dynamic-mock-closed-loop.png"
+    },
+    {
+      "name": "platform_c_only_dynamic_answer",
+      "query": "平台会员和企业服务有哪些？",
+      "http_status": 200,
+      "ui_route": "platform",
+      "ui_model_mode": "mock",
+      "inline_reference": "C-p05-c01",
+      "citation_sources": ["C"],
+      "source_boundary_result": "pass",
+      "screenshot": "output/playwright/phase-03-dynamic-platform-c-only.png"
+    },
+    {
+      "name": "source_boundary_copy",
+      "result": "pass",
+      "labels": {
+        "A": "健康膳食指南",
+        "B": "个性化饮食方案",
+        "C": "平台服务白皮书（仅平台功能与规则）"
+      },
+      "resolved_issues": ["ISSUE-020", "ISSUE-021"]
+    }
+  ],
+  "network": {
+    "successful_chat_posts": 3,
+    "chat_statuses": [200, 200, 200]
+  },
+  "console": {
+    "errors": 0,
+    "warnings": 0
+  },
+  "real_external_model": {
+    "executed": false,
+    "required_action": "ACTION-02"
+  },
+  "vector_retrieval": {
+    "executed": false,
+    "required_action": "ACTION-03"
+  },
+  "result": "pass_with_action"
+}

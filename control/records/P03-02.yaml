@@ -1,0 +1,33 @@
+schema_version: 1
+task_id: P03-02
+phase_id: PHASE-03
+outcome: passed
+started_at: "2026-08-21T19:07:12+08:00"
+completed_at: "2026-08-21T19:13:24.290239+08:00"
+recorded_at: "2026-08-21"
+backfilled: false
+owner: API
+summary: Provider-neutral LLM 契约、显式 Mock、OpenAI-compatible Real 适配、配置工厂及错误归一化已实现；Mock 真实运行与 Real 传输协议测试通过。
+deliverables:
+  - apps/api/healthpick_api/providers/base.py
+  - apps/api/healthpick_api/providers/mock.py
+  - apps/api/healthpick_api/providers/openai_compatible.py
+  - apps/api/healthpick_api/providers/factory.py
+  - tests/api/test_providers.py
+  - scripts/smoke_provider.py
+acceptance_checks:
+  - name: Provider 成功、限流、客户端错误、超时和非法响应 8 项专项测试
+    result: pass
+    evidence: [docs/evidence/phase-03-api-pytest.xml, docs/evidence/phase-03-provider-quality.md]
+  - name: Mock 模式在运行结果中不可误认为 Real
+    result: pass
+    evidence: [docs/evidence/phase-03-provider-runtime.json]
+  - name: Real 模式缺配置快速失败且错误不泄露 provider 正文
+    result: pass
+    evidence: [tests/api/test_providers.py, docs/evidence/phase-03-provider-quality.md]
+  - name: Python lint、format 与全量 API 回归
+    result: pass
+    evidence: [pyproject.toml, uv.lock, docs/evidence/phase-03-api-pytest.xml]
+issues: [ISSUE-007, ISSUE-012, ISSUE-018, ISSUE-019]
+residual_actions: []
+review: {status: pending_final_review, reviewer: Project Lead, reviewed_at: null, notes: Real 外部调用由 ACTION-02/P03-07 留证；待最终总纲验收复核}

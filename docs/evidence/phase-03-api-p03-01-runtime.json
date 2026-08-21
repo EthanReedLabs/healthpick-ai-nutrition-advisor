@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "task_id": "P03-01",
+  "captured_at": "2026-08-21T18:37:06.3118596+08:00",
+  "scope": "p03-01-contract-placeholder-before-p03-05",
+  "health": {
+    "status_code": 200,
+    "modes": {
+      "llm": "mock",
+      "embedding": "disabled",
+      "retrieval": "keyword"
+    }
+  },
+  "openapi": {
+    "status_code": 200,
+    "path_count": 2,
+    "has_health": true,
+    "has_chat": true
+  },
+  "chat_placeholder": {
+    "status_code": 503,
+    "code": "chat_not_ready",
+    "fake_answer_returned": false
+  },
+  "superseded_by": "P03-05 SSE implementation",
+  "result": "pass"
+}

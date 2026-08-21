@@ -1,0 +1,17 @@
+schema_version: 1
+task_id: P01-05
+phase_id: PHASE-01
+outcome: passed
+started_at: "2026-08-21T16:47:07+08:00"
+completed_at: "2026-08-21T16:50:46+08:00"
+recorded_at: "2026-08-21 (backfilled after Phase 02)"
+backfilled: true
+owner: DEVOPS
+summary: Git 边界、忽略规则、源码行尾与二进制文件规则已确定。
+deliverables: [.gitignore, .gitattributes, docs/evidence/phase-01-baseline-record.md]
+acceptance_checks:
+  - {name: .env 被忽略且行尾策略明确, result: pass, evidence: [.gitignore, .gitattributes, docs/evidence/phase-01-baseline-record.md]}
+issues: []
+residual_actions: []
+review: {status: pending_final_review, reviewer: Project Lead, reviewed_at: null, notes: 待最终总纲验收复核}
+

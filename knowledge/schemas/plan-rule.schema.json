@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://healthpick.local/schemas/plan-rule.schema.json",
+  "title": "PlanRule",
+  "type": "object",
+  "required": ["schema_version", "rule_id", "rule_type", "title", "content", "source_code", "source_role", "source_sha256", "pages", "section", "review_status", "first_pass_review"],
+  "properties": {
+    "schema_version": {"const": 1},
+    "rule_id": {"type": "string", "pattern": "^rule-[AB]-[a-z0-9_]+$"},
+    "rule_type": {"type": "string", "minLength": 1},
+    "title": {"type": "string", "minLength": 1},
+    "content": {"type": "object", "minProperties": 1},
+    "source_code": {"enum": ["A", "B"]},
+    "source_role": {"const": "core_nutrition"},
+    "source_sha256": {"type": "string", "pattern": "^[A-F0-9]{64}$"},
+    "pages": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "integer", "minimum": 1}},
+    "section": {"type": "string", "minLength": 1},
+    "unknown_glyph": {"type": "boolean"},
+    "review_status": {"enum": ["verified", "review_required", "rejected"]},
+    "first_pass_review": {"type": "object"},
+    "second_person_review": {
+      "type": "object",
+      "required": ["reviewer", "date", "notes"],
+      "properties": {
+        "reviewer": {"type": "string", "minLength": 1},
+        "date": {"type": "string", "format": "date"},
+        "notes": {"type": "string", "minLength": 1}
+      }
+    }
+  },
+  "additionalProperties": true
+}
