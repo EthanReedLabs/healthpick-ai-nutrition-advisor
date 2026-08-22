@@ -2,7 +2,7 @@
 
 ## 结论
 
-P08-04 以 `PASS WITH ACTION` 完成。六分钟脚本、运行手册、评委问答和资产索引齐全；同一隔离 Compose 候选在不改配置的情况下连续完成 rehearsal-01/02。两次均通过营养/平台/混合来源边界、S3 安全会话、三轮历史、72/80 评测摘要和 ACTION-06 推荐复核门，并清理临时会话。
+P08-04 以 `PASS` 完成。六分钟脚本、运行手册、评委问答和资产索引齐全；原有同一隔离 Compose 候选连续完成 rehearsal-01/02，最终 RC8 又在公网完成真实千问、推荐、引用、恢复与 S3 演示。ACTION-05/06 均已关闭，最终录像和截图已经生成并固定哈希。
 
 ## 双次结果
 
@@ -19,6 +19,8 @@ P08-04 以 `PASS WITH ACTION` 完成。六分钟脚本、运行手册、评委�
 | 推荐第二人复核门 | ACTION-06 正确阻断 | ACTION-06 正确阻断 |
 | 临时会话清理 | PASS | PASS |
 
+最终 RC8 公网演练另见 `docs/evidence/phase-08-rc8-final-rehearsal.json`，其公开评测为 9/9 frozen gates `PASS`，事实处置为 74 verified / 6 rejected / 0 pending。
+
 ## 演示资产
 
 - `docs/demo/DEMO_SCRIPT_6MIN.md`
@@ -27,16 +29,20 @@ P08-04 以 `PASS WITH ACTION` 完成。六分钟脚本、运行手册、评委�
 - `docs/demo/ASSET_INDEX.md`
 - P06/P07 真实桌面、移动、评测、停止生成和数据删除截图
 - `scripts/run_demo_rehearsal.py`
+- `output/playwright/final-rc8/healthpick-rc8-final-demo-6min.mp4`
+- `output/playwright/final-rc8/healthpick-rc8-final-demo.webm`
+- `docs/demo/assets/healthpick-rc8-final-s3.png`
+- `docs/evidence/phase-08-rc8-final-demo.json`
 
 ## 问题与解决
 
 - ISSUE-070：首轮演练误把 S3 设计理解为“完全不持久化”，并与正常三轮共用会话。实际产品会清空该会话生成上下文、保留一条 `context_eligible=false` 安全记录。演练改为独立安全会话并校验主会话三轮保持与安全轮不可进入生成上下文，连续两次通过。
 
-## 保留行动
+## 最终资产说明
 
-- ACTION-05：公网 URL 镜头、HTTPS 和提交时段可用性尚未演练。
-- ACTION-06：推荐规则第二人复核未完成，演示只能展示诚实 review gate，不能展示伪造个性化方案。
-- 最终视频文件和提交回执属于人工最终提交资产，当前索引明确标为尚未生成。
+- 完整录像 8分17.84秒，保留全部实际等待与恢复过程。
+- 六分钟提交版 5分55.64秒，仅做统一 1.4× 时间压缩，没有剪接、替换或 Mock。
+- 比赛平台回执必须在实际外部提交后取得，当前不伪造。
 
 ## 沉淀候选
 

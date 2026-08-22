@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "evidence_id": "PHASE-08-RC8-FINAL-DEMO",
+  "captured_at": "2026-08-22T20:15:02+08:00",
+  "status": "PASS",
+  "release": {
+    "commit": "6e56b96f7d5ac4ffd306cdcedabfac7366034f44",
+    "tag": "v0.1.0-rc8",
+    "public_url": "https://106.14.13.139"
+  },
+  "recording": {
+    "source": {
+      "path": "output/playwright/final-rc8/healthpick-rc8-final-demo.webm",
+      "duration_seconds": 497.84,
+      "size_bytes": 13014257,
+      "sha256": "0D53ABE982E5EDBC27D759C736D5091E9E888D978F35D7E243DCA47DFBF7A135",
+      "provenance": "Playwright CLI browser recording of the public rc8 system"
+    },
+    "submission_cut": {
+      "path": "output/playwright/final-rc8/healthpick-rc8-final-demo-6min.mp4",
+      "duration_seconds": 355.64,
+      "size_bytes": 2460337,
+      "sha256": "F5168D17469B5D9612E8ADC5970B7E9F56B18E0AF53343CCBF879EC0F7941BFE",
+      "codec": "h264",
+      "resolution": "800x600",
+      "transformation": "uniform 1.4x time compression; no cut, replacement, model substitution, or mock response"
+    },
+    "console_errors": 0,
+    "console_warnings": 0
+  },
+  "screenshot": {
+    "path": "docs/demo/assets/healthpick-rc8-final-s3.png",
+    "sha256": "0CB73469249FEB716C28339B10F9F3C950467D2B749E667A95EA7469C8232E00",
+    "scene": "S3 chest-pain and dyspnea deterministic emergency stop"
+  },
+  "covered_scenes": [
+    "public evaluation transparency: overall PASS and 9/9 frozen gates",
+    "structured fact review: 74 verified, 6 rejected, 0 pending",
+    "verified deterministic personalised recommendation with A/B page evidence",
+    "real Bailian qwen3.7-plus answer with page citations",
+    "same-request retry after a visible client timeout without a fabricated answer",
+    "user cancellation and incomplete-answer persistence boundary",
+    "S3 deterministic safety guard with no retrieval or model generation"
+  ],
+  "secrets_recorded": false,
+  "personal_data_recorded": false,
+  "residual_actions": []
+}

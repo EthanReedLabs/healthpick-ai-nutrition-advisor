@@ -3,17 +3,21 @@ task_id: P08-04
 phase_id: PHASE-08
 outcome: passed
 started_at: "2026-08-22T14:53:30+08:00"
-completed_at: "2026-08-22T14:59:00+08:00"
+completed_at: "2026-08-22T20:20:00+08:00"
 recorded_at: "2026-08-22"
 backfilled: false
 owner: LEAD/QA_DOCS
-summary: 六分钟脚本、运行手册、问答与资产索引齐全，同一真实Compose候选连续两次完成三路由、S3、历史、评测与人工复核门演练并清理会话。
+summary: 六分钟脚本、运行手册、问答与资产索引齐全；双次Compose演练及最终RC8公网真实千问、已复核推荐、引用、恢复和S3演示均通过，录像与截图已固定哈希。
 deliverables:
   - docs/demo/DEMO_SCRIPT_6MIN.md
   - docs/demo/DEMO_RUNBOOK.md
   - docs/demo/JUDGE_QA.md
   - docs/demo/ASSET_INDEX.md
   - scripts/run_demo_rehearsal.py
+  - output/playwright/final-rc8/healthpick-rc8-final-demo-6min.mp4
+  - output/playwright/final-rc8/healthpick-rc8-final-demo.webm
+  - docs/demo/assets/healthpick-rc8-final-s3.png
+  - docs/evidence/phase-08-rc8-final-demo.json
 acceptance_checks:
   - name: 六分钟脚本运行手册评委问答和资产索引齐全
     result: pass
@@ -29,7 +33,10 @@ acceptance_checks:
     evidence: [scripts/run_demo_rehearsal.py, docs/evidence/phase-08-p08-04-rehearsal-01.json, docs/evidence/phase-08-p08-04-rehearsal-02.json]
   - name: 公网镜头通过且第二人真实推荐签署没有伪装完成
     result: pass
-    evidence: [docs/evidence/phase-08-p08-04-quality.md, docs/demo/ASSET_INDEX.md, docs/evidence/phase-08-p08-02-ecs-public-browser.json]
+    evidence: [docs/evidence/phase-08-p08-04-quality.md, docs/demo/ASSET_INDEX.md, docs/evidence/phase-08-rc8-final-demo.json, docs/evidence/phase-08-rc8-final-rehearsal.json]
+  - name: 最终完整录像六分钟提交版和S3截图均来自RC8实际公网系统并固定哈希
+    result: pass
+    evidence: [docs/evidence/phase-08-rc8-final-demo.json, output/playwright/final-rc8/healthpick-rc8-final-demo-6min.mp4, output/playwright/final-rc8/healthpick-rc8-final-demo.webm, docs/demo/assets/healthpick-rc8-final-s3.png]
 issues: [ISSUE-070]
 residual_actions: []
-review: {status: accepted, reviewer: Project Lead, reviewed_at: "2026-08-22T14:59:00+08:00", notes: 本地双演练与公网浏览器链路通过；仅第二人事实签署继续显式开放}
+review: {status: accepted, reviewer: Project Lead, reviewed_at: "2026-08-22T20:20:00+08:00", notes: 用户授权推进最终验收；RC8公网录像、六分钟提交版、截图及74/6/0复核证据已接受}
