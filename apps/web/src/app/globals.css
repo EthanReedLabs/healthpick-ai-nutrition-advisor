@@ -490,6 +490,38 @@ textarea:focus-visible {
   flex: 1;
 }
 
+.welcome-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 9px 12px;
+  margin-top: 15px;
+}
+
+.welcome-actions button {
+  min-height: 38px;
+  padding: 8px 13px;
+  border: 1px solid #a8c8b9;
+  border-radius: 999px;
+  color: var(--green-dark);
+  background: var(--green-soft);
+  cursor: pointer;
+  font-size: 11px;
+  font-weight: 800;
+  transition: border-color 160ms ease, background 160ms ease, transform 160ms ease;
+}
+
+.welcome-actions button:hover {
+  border-color: var(--green);
+  background: #d7ebdf;
+  transform: translateY(-1px);
+}
+
+.welcome-actions span {
+  color: var(--muted);
+  font-size: 11px;
+}
+
 .conversation-turn + .conversation-turn {
   margin-top: 28px;
   padding-top: 28px;
@@ -1162,9 +1194,26 @@ textarea:focus-visible {
 }
 
 .context-rail {
-  min-height: 100vh;
+  height: 100vh;
+  height: 100dvh;
+  position: sticky;
+  top: 0;
+  align-self: start;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-color: #b8cec3 transparent;
   padding: 38px 22px;
   background: rgba(244, 248, 245, 0.76);
+}
+
+.context-rail::-webkit-scrollbar {
+  width: 7px;
+}
+
+.context-rail::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+  background: #b8cec3;
 }
 
 .context-card {
@@ -1835,14 +1884,26 @@ textarea:focus-visible {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 42px;
+    gap: 12px;
+    margin-bottom: 32px;
   }
 
   .mobile-actions {
+    flex: 0 0 auto;
     gap: 5px;
   }
 
+  .mobile-actions .profile-shortcut {
+    min-width: 40px;
+    min-height: 40px;
+    padding: 7px 8px;
+    white-space: nowrap;
+  }
+
   .mobile-header .connection-badge {
+    min-width: 34px;
+    min-height: 40px;
+    justify-content: center;
     padding-inline: 7px;
     font-size: 0;
   }
@@ -1858,6 +1919,10 @@ textarea:focus-visible {
   .assistant-message {
     margin-top: 30px;
     padding: 18px;
+  }
+
+  .welcome-actions button {
+    min-height: 42px;
   }
 
   .user-message {
@@ -1930,6 +1995,12 @@ textarea:focus-visible {
 
   .profile-grid {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 420px) {
+  .mobile-header .brand-lockup.compact > strong {
+    display: none;
   }
 }
 

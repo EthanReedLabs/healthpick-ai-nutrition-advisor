@@ -1,0 +1,91 @@
+{
+  "acceptance_criteria": [
+    "https://106.14.13.139 返回 HTTP 200，健康检查显示真实百炼千问模型与检索能力正常",
+    "公网桌面端和 375px 移动端均呈现 RC9 首屏、上下文栏、快捷问题和移动端操作优化",
+    "画像填写、推荐生成、AI 问答、引用查看、安全提示与历史记录核心流程可完成",
+    "浏览器验收无控制台错误，部署记录包含镜像标识、健康结果和 RC8 回滚方式"
+  ],
+  "approved_event_fingerprints": [],
+  "confirmation": {
+    "reason": "",
+    "required": false
+  },
+  "confirmed_by": "unconfirmed-proposal",
+  "constraints": {
+    "allowed_paths": [
+      "apps/web",
+      "control/records",
+      "output/deployment"
+    ],
+    "frozen_paths": [],
+    "preserve": [
+      "RC8 Git 标签、提交、镜像/容器回滚点和既有验收证据",
+      "后端 API、RAG 来源隔离、医学安全边界、知识库、数据、百炼千问配置与 HTTPS 公网地址"
+    ],
+    "reject": [
+      "上传项目源码、暴露或改写密钥、修改全局环境或扩展服务器长期配置",
+      "Git 提交、正式打标签或推送，以及未经健康检查的流量切换",
+      "不可逆覆盖 RC8 回滚点，或改动产品功能、后端逻辑、知识库事实与医学规则"
+    ]
+  },
+  "correction_limit": 2,
+  "created_at": "2026-08-22T13:39:08.019496+00:00",
+  "critic": {
+    "cadence_writes": 1,
+    "enabled": true,
+    "min_confidence": 0.9,
+    "timeout_seconds": 120.0
+  },
+  "intent_id": "l3:rc9-existing-feature-polish",
+  "mcp": {
+    "allow_servers": [],
+    "allow_tools": [],
+    "local_servers": [
+      "sulde-kb"
+    ],
+    "unknown_effect": "confirm"
+  },
+  "mode": "enforce",
+  "objective": "将当前本地已验收的 RC9 前端候选以镜像归档方式部署到现有 106.14.13.139 公网预览，供用户查看实际效果",
+  "permissions": {
+    "destructive": "deny",
+    "external_write": "confirm",
+    "local_write": true
+  },
+  "proposal_digest": "9d00384dd48ec36081ad96a90d91a47d25f50ceeddab7efa32ae3ebe339f4181",
+  "proposal_for": {
+    "base_policy_digest": "be99506d5b31985c69cca3ee02626e29de57cab38c9570db2dd67ab4eba60014",
+    "base_revision": 2,
+    "contract_path": "D:\\OPC_competition\\healthpick-ai-nutrition-advisor\\control\\records\\RC9-POLISH.intent.json"
+  },
+  "rationale": "在保留 RC8 可回滚基线和既有后端能力的前提下，验证 RC9 打磨在真实公网环境中的效果",
+  "revision": 3,
+  "runtime": {
+    "active_skill_frames": [],
+    "active_skills": [],
+    "approved_proposal_digests": [],
+    "authorized_events": [],
+    "corrections": [],
+    "inconclusive_outcomes": [],
+    "integrity_breaches": [],
+    "local_write_completions": 0,
+    "open_events": [],
+    "pause_event_fingerprint": "",
+    "pause_reason": "",
+    "pause_requires_revision": false,
+    "pause_revision": 0,
+    "pending_verifications": [],
+    "sequence": 0,
+    "verified_effects": []
+  },
+  "schema": "sulde-intent-contract-v1",
+  "skills": {
+    "allow": [
+      "*"
+    ],
+    "deny": []
+  },
+  "status": "active",
+  "updated_at": "2026-08-22T14:31:15.835345+00:00",
+  "workspace_root": "D:\\OPC_competition\\healthpick-ai-nutrition-advisor"
+}

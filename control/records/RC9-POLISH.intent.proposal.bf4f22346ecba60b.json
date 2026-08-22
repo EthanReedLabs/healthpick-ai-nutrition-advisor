@@ -1,0 +1,91 @@
+{
+  "acceptance_criteria": [
+    "暂存区只包含明确列出的 Web 源码/测试、RC9 控制记录和必要的本地/公网截图，不包含 output/deployment、密钥、环境文件或 SSH 主机密钥",
+    "Web 测试、Lint、类型检查和生产构建通过，暂存差异检查与敏感信息扫描无阻断项",
+    "生成一个新的非 amend 本地 commit，提交后 HEAD 内容与暂存清单一致，工作区仅保留明确排除的本地部署产物",
+    "不创建或移动正式标签，不推送远端，不影响 https://106.14.13.139 当前 RC9 预览和 RC8 回滚点"
+  ],
+  "approved_event_fingerprints": [],
+  "confirmation": {
+    "reason": "",
+    "required": false
+  },
+  "confirmed_by": "unconfirmed-proposal",
+  "constraints": {
+    "allowed_paths": [
+      "apps/web",
+      "control/records",
+      ".git"
+    ],
+    "frozen_paths": [],
+    "preserve": [
+      "线上 RC9 Web 预览、RC8 API/数据库/Caddy 运行状态、RC8 标签/提交/镜像与回滚能力",
+      "既有冻结验收证据和项目历史，不修改、重写或删除已有提交与标签"
+    ],
+    "reject": [
+      "提交 output/deployment 下的镜像 tar、known_hosts.rc9、任何密钥/环境文件、依赖目录或临时锁文件",
+      "git push、正式打标签、amend、rebase、reset、force 操作或历史重写",
+      "新增产品功能、修改后端/知识库/医学规则或改变当前公网运行配置"
+    ]
+  },
+  "correction_limit": 2,
+  "created_at": "2026-08-22T13:39:08.019496+00:00",
+  "critic": {
+    "cadence_writes": 1,
+    "enabled": true,
+    "min_confidence": 0.9,
+    "timeout_seconds": 120.0
+  },
+  "intent_id": "l3:rc9-existing-feature-polish",
+  "mcp": {
+    "allow_servers": [],
+    "allow_tools": [],
+    "local_servers": [
+      "sulde-kb"
+    ],
+    "unknown_effect": "confirm"
+  },
+  "mode": "enforce",
+  "objective": "将当前已验收并已部署的 RC9 Web 打磨源码、测试、执行记录、部署记录和必要截图证据提交为一个可复核的本地 Git commit",
+  "permissions": {
+    "destructive": "deny",
+    "external_write": "confirm",
+    "local_write": true
+  },
+  "proposal_digest": "bf4f22346ecba60bef99118f44c92c32b1a76004393f983792689f4543f6820f",
+  "proposal_for": {
+    "base_policy_digest": "59b5963ddfd4c37b37ae6cf8d27ca4f9c986a3f194a44e7abbe7e1ce8cd79733",
+    "base_revision": 3,
+    "contract_path": "D:\\OPC_competition\\healthpick-ai-nutrition-advisor\\control\\records\\RC9-POLISH.intent.json"
+  },
+  "rationale": "固化 RC9 候选的代码与验收链路，便于后续复核和选择性推送，同时不把临时部署包或 SSH 数据带入仓库",
+  "revision": 4,
+  "runtime": {
+    "active_skill_frames": [],
+    "active_skills": [],
+    "approved_proposal_digests": [],
+    "authorized_events": [],
+    "corrections": [],
+    "inconclusive_outcomes": [],
+    "integrity_breaches": [],
+    "local_write_completions": 0,
+    "open_events": [],
+    "pause_event_fingerprint": "",
+    "pause_reason": "",
+    "pause_requires_revision": false,
+    "pause_revision": 0,
+    "pending_verifications": [],
+    "sequence": 0,
+    "verified_effects": []
+  },
+  "schema": "sulde-intent-contract-v1",
+  "skills": {
+    "allow": [
+      "*"
+    ],
+    "deny": []
+  },
+  "status": "active",
+  "updated_at": "2026-08-22T15:17:45.813108+00:00",
+  "workspace_root": "D:\\OPC_competition\\healthpick-ai-nutrition-advisor"
+}

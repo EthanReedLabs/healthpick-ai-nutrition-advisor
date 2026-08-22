@@ -232,7 +232,7 @@ describe("ChatWorkspace", () => {
 
   it("registers the current anonymous session and adopts the server canonical session", async () => {
     render(<ChatWorkspace />);
-    await screen.findByText(/你可以询问日常营养搭配/);
+    await screen.findByText(/完善健康档案后可生成规则匹配方案/);
 
     fireEvent.click(screen.getByRole("button", { name: "登录或注册" }));
     fireEvent.change(screen.getByLabelText("邮箱"), {
@@ -263,7 +263,7 @@ describe("ChatWorkspace", () => {
 
   it("exports personal data and permanently deletes the account after password re-entry", async () => {
     render(<ChatWorkspace />);
-    await screen.findByText(/你可以询问日常营养搭配/);
+    await screen.findByText(/完善健康档案后可生成规则匹配方案/);
 
     fireEvent.click(screen.getByRole("button", { name: "登录或注册" }));
     fireEvent.change(screen.getByLabelText("邮箱"), {
@@ -368,8 +368,12 @@ describe("ChatWorkspace", () => {
 
   it("keeps a health-profile editor entry in the mobile header", async () => {
     render(<ChatWorkspace />);
+    expect(await screen.findByRole("button", { name: "完善档案，生成规则方案" })).toBeInTheDocument();
     expect(screen.getByLabelText("开始新对话（移动端）")).toBeInTheDocument();
     fireEvent.click(screen.getByLabelText("打开健康档案编辑器（移动端）"));
+    expect(screen.getByRole("dialog", { name: "编辑健康档案" })).toBeInTheDocument();
+    fireEvent.click(screen.getByLabelText("关闭健康档案编辑器"));
+    fireEvent.click(screen.getByRole("button", { name: "完善档案，生成规则方案" }));
     expect(screen.getByRole("dialog", { name: "编辑健康档案" })).toBeInTheDocument();
   });
 
@@ -890,8 +894,8 @@ describe("ChatWorkspace", () => {
     render(<ChatWorkspace />);
 
     expect(screen.getByRole("status", { name: /正在恢复你的对话/ })).toBeInTheDocument();
-    expect(screen.queryByText(/你可以询问日常营养搭配/)).not.toBeInTheDocument();
-    expect(await screen.findByText(/你可以询问日常营养搭配/)).toBeInTheDocument();
+    expect(screen.queryByText(/完善健康档案后可生成规则匹配方案/)).not.toBeInTheDocument();
+    expect(await screen.findByText(/完善健康档案后可生成规则匹配方案/)).toBeInTheDocument();
   });
 
   it("recovers a failed session initialization in place", async () => {
@@ -919,7 +923,7 @@ describe("ChatWorkspace", () => {
     expect(alert).toHaveTextContent("对话暂时未就绪");
     expect(alert).toHaveTextContent("不需要前往其他面板");
     fireEvent.click(within(alert).getByRole("button", { name: "重新恢复对话" }));
-    expect(await screen.findByText(/你可以询问日常营养搭配/)).toBeInTheDocument();
+    expect(await screen.findByText(/完善健康档案后可生成规则匹配方案/)).toBeInTheDocument();
   });
 
   it("opens mobile history and closes it with Escape", async () => {

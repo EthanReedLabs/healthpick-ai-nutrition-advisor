@@ -1,0 +1,90 @@
+{
+  "acceptance_criteria": [
+    "桌面端与移动端首屏层级清晰，核心演示入口无需解释即可识别",
+    "画像填写、推荐生成、AI 问答、引用查看、安全提示和历史记录流程均可正常完成",
+    "加载、空、错误和禁用状态反馈一致且可理解",
+    "apps/web 测试、Lint、类型检查与生产构建全部通过",
+    "浏览器验收无控制台错误并留存桌面端与移动端截图证据"
+  ],
+  "approved_event_fingerprints": [],
+  "confirmation": {
+    "reason": "",
+    "required": false
+  },
+  "confirmed_by": "unconfirmed-proposal",
+  "constraints": {
+    "allowed_paths": [
+      "apps/web",
+      "control/records"
+    ],
+    "frozen_paths": [],
+    "preserve": [
+      "推荐结果语义、RAG 来源隔离、医学安全边界、API 与数据结构",
+      "线上 RC8 标签、提交和既有验收证据"
+    ],
+    "reject": [
+      "新增产品能力、架构重构、更换模型、修改知识库事实或医学逻辑",
+      "未获单独批准的部署、打标签或推送"
+    ]
+  },
+  "correction_limit": 2,
+  "created_at": "2026-08-22T13:39:08.019496+00:00",
+  "critic": {
+    "cadence_writes": 1,
+    "enabled": true,
+    "min_confidence": 0.9,
+    "timeout_seconds": 120.0
+  },
+  "intent_id": "l3:rc9-existing-feature-polish",
+  "mcp": {
+    "allow_servers": [],
+    "allow_tools": [],
+    "local_servers": [
+      "sulde-kb"
+    ],
+    "unknown_effect": "confirm"
+  },
+  "mode": "enforce",
+  "objective": "在不扩展产品功能和不改动线上 RC8 的前提下，打磨现有 Web 端首屏、问答、推荐、引用、安全提示与移动端体验，形成可独立验收的本地 RC9 候选",
+  "permissions": {
+    "destructive": "deny",
+    "external_write": "confirm",
+    "local_write": true
+  },
+  "proposal_digest": "13e852c53e168f8fb7c4bf9e58f2c17274d2f006aa4ff2ee74a29e4cc603cba3",
+  "proposal_for": {
+    "base_policy_digest": "69c51124fbab49d6c553fde4b1a2472d1e402f4772bebccc192605689e314d2c",
+    "base_revision": 1,
+    "contract_path": "D:\\OPC_competition\\healthpick-ai-nutrition-advisor\\control\\records\\RC9-POLISH.intent.json"
+  },
+  "rationale": "提升比赛演示第一印象、操作效率和信息可信度，同时保持已验收能力稳定",
+  "revision": 2,
+  "runtime": {
+    "active_skill_frames": [],
+    "active_skills": [],
+    "approved_proposal_digests": [],
+    "authorized_events": [],
+    "corrections": [],
+    "inconclusive_outcomes": [],
+    "integrity_breaches": [],
+    "local_write_completions": 0,
+    "open_events": [],
+    "pause_event_fingerprint": "",
+    "pause_reason": "",
+    "pause_requires_revision": false,
+    "pause_revision": 0,
+    "pending_verifications": [],
+    "sequence": 0,
+    "verified_effects": []
+  },
+  "schema": "sulde-intent-contract-v1",
+  "skills": {
+    "allow": [
+      "*"
+    ],
+    "deny": []
+  },
+  "status": "active",
+  "updated_at": "2026-08-22T13:39:45.095385+00:00",
+  "workspace_root": "D:\\OPC_competition\\healthpick-ai-nutrition-advisor"
+}

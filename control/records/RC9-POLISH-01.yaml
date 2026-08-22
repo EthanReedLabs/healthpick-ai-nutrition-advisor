@@ -1,0 +1,44 @@
+schema_version: 1
+task_id: RC9-POLISH-01
+phase_id: PHASE-08
+outcome: passed
+started_at: "2026-08-22T21:39:00+08:00"
+completed_at: "2026-08-22T22:04:00+08:00"
+recorded_at: "2026-08-22T22:04:00+08:00"
+backfilled: false
+owner: LEAD
+summary: 在不改动线上RC8、后端、知识库和业务语义的前提下，完成现有Web端首屏路径、桌面三栏布局、移动端顶部操作和触控体验打磨，并通过本地真实API与全部Web质量门。
+deliverables:
+  - apps/web/src/app/globals.css
+  - apps/web/src/components/chat-workspace.tsx
+  - apps/web/src/components/chat-workspace.test.tsx
+  - apps/web/output/playwright/rc9-local/rc9-desktop-initial-1440x1000.png
+  - apps/web/output/playwright/rc9-local/rc9-mobile-initial-375x812.png
+  - apps/web/output/playwright/rc9-local/rc9-desktop-recommendation-1440x1000.png
+  - control/records/RC9-POLISH-01.md
+acceptance_checks:
+  - name: 桌面端和移动端首屏均能直接识别并操作核心入口
+    result: pass
+    evidence:
+      - apps/web/output/playwright/rc9-local/rc9-desktop-initial-1440x1000.png
+      - apps/web/output/playwright/rc9-local/rc9-mobile-initial-375x812.png
+  - name: 既有档案入口生成规则方案且未修改推荐语义
+    result: pass
+    evidence:
+      - apps/web/output/playwright/rc9-local/rc9-desktop-recommendation-1440x1000.png
+      - control/records/RC9-POLISH-01.md
+  - name: 问答安全分级引用和真实API流程通过且浏览器无控制台错误
+    result: pass
+    evidence:
+      - control/records/RC9-POLISH-01.md
+  - name: Web测试Lint类型检查和生产构建全部通过
+    result: pass
+    evidence:
+      - control/records/RC9-POLISH-01.md
+issues: []
+residual_actions: []
+review:
+  status: pending_final_review
+  reviewer: Project Lead
+  reviewed_at: null
+  notes: 本地RC9候选已通过执行核验；未部署未打标签未推送，部署前需纳入统一总纲验收。

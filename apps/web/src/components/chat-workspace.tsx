@@ -1541,8 +1541,14 @@ export default function ChatWorkspace() {
               <div>
                 <strong>HealthPick 助手</strong>
                 <p>
-                  你可以询问日常营养搭配、健康饮食原则，或平台规则。回答会区分资料 A、B、C；没有证据时会明确说明。
+                  完善健康档案后可生成规则匹配方案；也可以直接询问日常营养搭配、健康饮食原则或平台规则。回答会区分资料 A、B、C，没有证据时会明确说明。
                 </p>
+                <div className="welcome-actions">
+                  <button type="button" onClick={openProfileEditor}>
+                    完善档案，生成规则方案
+                  </button>
+                  <span>或直接选择下方问题开始</span>
+                </div>
               </div>
             </div>
           )}

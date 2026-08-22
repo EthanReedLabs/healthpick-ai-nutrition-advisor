@@ -1,0 +1,77 @@
+schema_version: 1
+record_id: RC9-PREVIEW-DEPLOY-01
+captured_at: "2026-08-22T23:01:18+08:00"
+status: PASS
+runtime_status: RUNNING
+public_url: "https://106.14.13.139"
+release:
+  type: temporary_preview
+  image_tag: rc9-preview-20260822
+  git_commit_created: false
+  formal_tag_created: false
+  pushed: false
+  source_uploaded: false
+images:
+  web:
+    active: healthpick-web:rc9-preview-20260822
+    server_id: sha256:92fc1d1ec3bcaf3aa0b4d37eb29f8de8271f186bd3f8116749c4c1d6fc539298
+    status: healthy
+  api:
+    active: healthpick-api:v0.1.0-rc8
+    server_id: sha256:87fd5fbc1cd239a545f761f117181353c0a23b7c7786803457ad068ac5de5714
+    unchanged: true
+    status: healthy
+  rc8_web_rollback:
+    image: healthpick-web:v0.1.0-rc8
+    server_id: sha256:43676fbbf99510ff747d10521b30e7a98c076c2e82dbdf543663ab3456cf0b0d
+transfer:
+  archive: output/deployment/healthpick-rc9-preview-20260822.tar
+  bytes: 188997120
+  sha256: 2B9729EDBCC7DEFB9F0F48CF75DF129B0500605410E0FB6E853378BFA5E46A26
+  server_hash_match: true
+  server_archive_removed: true
+checks:
+  https_home: 200
+  health_status: ok
+  llm_mode: real
+  retrieval_mode: keyword
+  desktop_1440x1000: PASS
+  mobile_375x812: PASS
+  real_qwen_answer: PASS
+  same_request_timeout_recovery: PASS
+  s1_safety_and_citations: PASS
+  recommendation_missing_field_guard: PASS
+  recommendation_fat_loss_rule_score_80: PASS
+  browser_console_errors: 0
+  browser_console_warnings: 0
+  test_conversation_deleted: true
+  api_restarted: false
+  database_restarted: false
+  caddy_restarted: false
+rollback:
+  image_tag: v0.1.0-rc8
+  scope: web_only
+  command: >-
+    IMAGE_TAG=v0.1.0-rc8 docker compose -p healthpick-prod
+    --env-file /opt/healthpick/shared/production.env
+    --env-file /opt/healthpick/shared/bailian.env
+    -f /opt/healthpick/current/compose.yaml
+    -f /opt/healthpick/current/compose.production.yaml
+    up -d --wait --no-build --no-deps web
+artifacts:
+  - path: apps/web/output/playwright/rc9-public/rc9-public-desktop-1440x1000.png
+    sha256: 037EB02C49DBE93481F08D9167A4DAF33C713D6DA97A7DF1B9D8B5F46596B8AD
+  - path: apps/web/output/playwright/rc9-public/rc9-public-mobile-375x812.png
+    sha256: 3B3956E4257894AA7564F9E90CE80968413C80137FCFD4D1D8E2DCD654F3B2E6
+  - path: apps/web/output/playwright/rc9-public/rc9-public-mobile-answer-375x812.png
+    sha256: 172D4632BEC237CCDF91AD2647AFDAC75F82F8309839A2951D2AF5B79B7B9147
+  - path: apps/web/output/playwright/rc9-public/rc9-public-mobile-recommendation-card.png
+    sha256: 9824F9A02CF581AB1315855FE535B06AEB910B746751CEAAFFBA93B387700E29
+issues_resolved:
+  - project_scoped_host_key_pin
+  - explicit_server_identity_selection
+  - controlled_docker_sandbox_elevation
+  - screenshot_directory_creation
+  - playwright_function_wrapper_correction
+  - same_request_client_timeout_recovery
+  - minimum_profile_field_guard_verified
