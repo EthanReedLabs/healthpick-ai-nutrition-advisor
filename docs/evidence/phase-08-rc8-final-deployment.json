@@ -1,0 +1,64 @@
+{
+  "schema_version": 1,
+  "evidence_id": "PHASE-08-RC8-FINAL-DEPLOYMENT",
+  "captured_at": "2026-08-22T19:55:50+08:00",
+  "release": {
+    "tag": "v0.1.0-rc8",
+    "commit": "6e56b96f7d5ac4ffd306cdcedabfac7366034f44",
+    "public_origin": "https://106.14.13.139",
+    "server_release_path": "/opt/healthpick/releases/6e56b96f7d5ac4ffd306cdcedabfac7366034f44"
+  },
+  "transfer": {
+    "mode": "docker_images_only",
+    "archive_bytes": 188996608,
+    "archive_sha256": "5FBBF5BC1F89F1F0785C3D21C59ABA21D951F2D5D81351D4385A8498F59B3D51",
+    "server_sha256_match": true,
+    "server_release_descriptor_file_count": 3,
+    "application_source_uploaded": false,
+    "server_application_source_file_count": 0,
+    "temporary_archive_removed_after_load": true
+  },
+  "images": {
+    "api": {
+      "name": "healthpick-api:v0.1.0-rc8",
+      "local_manifest_id": "sha256:79eb5896e2171464ce4cdef7ee54d343aff74a06a1b97476670d63fc35e4b436",
+      "server_image_id": "sha256:87fd5fbc1cd239a545f761f117181353c0a23b7c7786803457ad068ac5de5714",
+      "container_status": "healthy"
+    },
+    "web": {
+      "name": "healthpick-web:v0.1.0-rc8",
+      "local_manifest_id": "sha256:7c43d96e155face41d983d671d4c9bbc2ce45a5e90f925432451115158cb48e1",
+      "server_image_id": "sha256:43676fbbf99510ff747d10521b30e7a98c076c2e82dbdf543663ab3456cf0b0d",
+      "container_status": "healthy"
+    }
+  },
+  "database_counts": {
+    "food_facts": 31,
+    "plan_rules": 37,
+    "platform_facts": 12
+  },
+  "checks": {
+    "https_health": "PASS",
+    "production_bailian_qwen_mode": "PASS",
+    "public_evaluation_automatic_gates": "9/9 PASS",
+    "public_evaluation_overall_status": "PASS",
+    "manual_review_status": "PASS",
+    "fat_loss_recommendation": "PASS",
+    "three_route_real_model_rehearsal": "PASS",
+    "s3_emergency_stop": "PASS",
+    "postgres_history": "PASS",
+    "temporary_session_cleanup": "PASS"
+  },
+  "structured_review": {
+    "verified": 74,
+    "rejected": 6,
+    "review_required": 0,
+    "released_core_rule_count": 7
+  },
+  "evidence": [
+    "docs/evidence/action-06-full-structured-fact-review.json",
+    "docs/evidence/phase-08-rc8-final-rehearsal.json",
+    "apps/api/healthpick_api/evaluation/release-summary-v1.1.json"
+  ],
+  "status": "PASS"
+}

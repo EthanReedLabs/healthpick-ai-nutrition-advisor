@@ -1,0 +1,93 @@
+{
+  "schema_version": 1,
+  "run_id": "rc8-final-01",
+  "captured_at": "2026-08-22T19:55:50.593409+08:00",
+  "origins": {
+    "api": "https://106.14.13.139",
+    "web": "https://106.14.13.139"
+  },
+  "runtime": {
+    "llm": "real",
+    "retrieval": "keyword",
+    "store": "postgres"
+  },
+  "cases": [
+    {
+      "name": "nutrition",
+      "route": "nutrition",
+      "sources": [
+        "A"
+      ],
+      "citation_count": 6,
+      "model": {
+        "provider": "openai_compatible",
+        "name": "qwen3.7-plus",
+        "mode": "real"
+      },
+      "latency_ms": 10082,
+      "answer_sha256": "970f486a3dc18dd0ca68031db58216a73ffb0b83b5182bffdbaff24aa48e7d04",
+      "status": "PASS"
+    },
+    {
+      "name": "platform",
+      "route": "platform",
+      "sources": [
+        "C"
+      ],
+      "citation_count": 6,
+      "model": {
+        "provider": "openai_compatible",
+        "name": "qwen3.7-plus",
+        "mode": "real"
+      },
+      "latency_ms": 16481,
+      "answer_sha256": "8e2d53b551ac35f8454df2465538d50003c700f489bd181ab1a8a4dd96cfe4b9",
+      "status": "PASS"
+    },
+    {
+      "name": "mixed",
+      "route": "mixed",
+      "sources": [
+        "B",
+        "C"
+      ],
+      "citation_count": 6,
+      "model": {
+        "provider": "openai_compatible",
+        "name": "qwen3.7-plus",
+        "mode": "real"
+      },
+      "latency_ms": 15516,
+      "answer_sha256": "f3f16a7ce12557a4946b75154e096300b12aafaf1dffccc3a350240393215e2c",
+      "status": "PASS"
+    }
+  ],
+  "emergency": {
+    "risk_level": "S3",
+    "response_mode": "emergency_stop",
+    "visible_record_persisted": true,
+    "generation_context_eligible": false,
+    "status": "PASS"
+  },
+  "history": {
+    "persisted_turns": 3,
+    "status": "PASS"
+  },
+  "evaluation": {
+    "cases": 72,
+    "turns": 80,
+    "gates": "9/9",
+    "status": "PASS"
+  },
+  "recommendation_core_release": {
+    "status": "ready",
+    "requires_second_person_review": false,
+    "released_core_rule_count": 7,
+    "verified_structured_record_count": 74,
+    "rejected_unknown_glyph_rule_count": 6,
+    "review_required_record_count": 0
+  },
+  "cleanup": "PASS",
+  "residual_actions": [],
+  "status": "PASS"
+}

@@ -1023,6 +1023,30 @@ issues:
     resolution: 放行门改为校验规则级unknown_glyph、完整授权复核记录和精确7条白名单；含未知符号的具体规则继续隔离。
     evidence: [scripts/validate_knowledge.py, docs/evidence/action-06-core-rule-review.json, docs/evidence/phase-02-knowledge-validation.json]
     action_ids: [ACTION-06, ACTION-07]
+  - id: ISSUE-079
+    discovered_at: "2026-08-22T19:35:54+08:00"
+    phase: PHASE-08
+    task_ids: [DATA-06, P08-07]
+    severity: low
+    status: resolved
+    blocks_final: false
+    symptom: ACTION-06 关闭后缺字隔离审计仍只接受旧状态 review_required，导致实际隔离正确但报告为 FAIL。
+    cause: 审计状态断言没有随最终处置模型从待复核更新为驳回。
+    resolution: 门禁改为精确校验 6 条模糊规则全部为 rejected；8 个 Chunk 未加载、6 条规则驳回和专项回归全部 PASS。
+    evidence: [scripts/audit_unknown_glyph_exclusion.py, docs/evidence/action-07-unknown-glyph-exclusion.json, tests/test_knowledge_artifacts.py]
+    action_ids: []
+  - id: ISSUE-080
+    discovered_at: "2026-08-22T19:44:40+08:00"
+    phase: PHASE-08
+    task_ids: [P08-02, P08-07]
+    severity: low
+    status: resolved
+    blocks_final: false
+    symptom: rc7 首次切换前复制运行描述文件时按发布根目录寻找 Caddyfile，文件不存在而安全停止。
+    cause: Caddyfile 实际位于 infra/caddy/Caddyfile，部署命令使用了错误相对路径。
+    resolution: 切换前只读确认目录结构，按真实嵌套路径复制并校验恰好 3 个描述文件、源码文件为 0；rc7 和最终 rc8 均无构建健康切换。
+    evidence: [docs/deployment/ecs-production.md, docs/evidence/phase-08-rc8-final-deployment.json]
+    action_ids: []
 final_gates:
   - {id: FINAL-01, title: 注册范围内全部任务关闭且无 PASS WITH ACTION, status: not_started, required_task_ids: [P08-07], evidence: []}
   - {id: FINAL-02, title: 全部任务完成记录已复核接受, status: not_started, required_task_ids: [P08-07], evidence: []}
@@ -1036,8 +1060,8 @@ final_gates:
   - {id: FINAL-10, title: Project Lead 最终签署且不存在开放阻断, status: not_started, required_task_ids: [P08-07], evidence: []}
 
 release:
-  commit: b8cd3f1ee243cbf5a83ba8019b44cb40f4152184
-  tag: v0.1.0-rc5
+  commit: 6e56b96f7d5ac4ffd306cdcedabfac7366034f44
+  tag: v0.1.0-rc8
   public_url: https://106.14.13.139
-  compose_probe: docs/evidence/phase-08-p08-05-release-candidate.json
+  compose_probe: docs/evidence/phase-08-rc8-final-deployment.json
   final_signoff: null
