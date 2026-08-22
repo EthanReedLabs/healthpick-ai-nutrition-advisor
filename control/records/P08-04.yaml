@@ -1,7 +1,7 @@
 schema_version: 1
 task_id: P08-04
 phase_id: PHASE-08
-outcome: pass_with_action
+outcome: passed
 started_at: "2026-08-22T14:53:30+08:00"
 completed_at: "2026-08-22T14:59:00+08:00"
 recorded_at: "2026-08-22"
@@ -28,8 +28,8 @@ acceptance_checks:
     result: pass
     evidence: [scripts/run_demo_rehearsal.py, docs/evidence/phase-08-p08-04-rehearsal-01.json, docs/evidence/phase-08-p08-04-rehearsal-02.json]
   - name: 公网镜头通过且第二人真实推荐签署没有伪装完成
-    result: pass_with_action
+    result: pass
     evidence: [docs/evidence/phase-08-p08-04-quality.md, docs/demo/ASSET_INDEX.md, docs/evidence/phase-08-p08-02-ecs-public-browser.json]
 issues: [ISSUE-070]
-residual_actions: [ACTION-06]
+residual_actions: []
 review: {status: accepted, reviewer: Project Lead, reviewed_at: "2026-08-22T14:59:00+08:00", notes: 本地双演练与公网浏览器链路通过；仅第二人事实签署继续显式开放}

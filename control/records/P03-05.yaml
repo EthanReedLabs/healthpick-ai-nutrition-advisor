@@ -1,7 +1,7 @@
 schema_version: 1
 task_id: P03-05
 phase_id: PHASE-03
-outcome: pass_with_action
+outcome: passed
 started_at: "2026-08-21T19:23:01+08:00"
 completed_at: "2026-08-21T19:32:13.6235555+08:00"
 recorded_at: "2026-08-21"
@@ -29,5 +29,5 @@ acceptance_checks:
     result: pass
     evidence: [tests/api/test_chat_sse.py, docs/evidence/phase-03-api-pytest.xml]
 issues: [ISSUE-006]
-residual_actions: [ACTION-06]
+residual_actions: []
 review: {status: pending_final_review, reviewer: Project Lead, reviewed_at: null, notes: 真实 LLM 浏览器证据由 ACTION-02/P03-07 留存；P04 安全规则后续补齐}

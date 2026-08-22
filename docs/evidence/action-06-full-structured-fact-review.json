@@ -1,0 +1,75 @@
+{
+  "schema_version": 1,
+  "evidence_id": "ACTION-06-FULL-STRUCTURED-FACT-REVIEW",
+  "action_id": "ACTION-06",
+  "captured_at": "2026-08-22T19:30:33+08:00",
+  "review_method": "Project Lead-authorized review / Codex-assisted",
+  "scope": {
+    "total_records": 80,
+    "food_facts": 31,
+    "plan_rules": 37,
+    "platform_facts": 12,
+    "source_pages": 18
+  },
+  "disposition": {
+    "verified": 74,
+    "rejected": 6,
+    "review_required": 0
+  },
+  "rejected_rule_ids": [
+    "rule-A-glucose_control_guidance",
+    "rule-B-fat_loss_eligibility",
+    "rule-B-fat_loss_targets",
+    "rule-B-muscle_eligibility",
+    "rule-B-plan_selection",
+    "rule-B-plan_faq"
+  ],
+  "rejection_policy": "Unrecoverable source glyphs remain unknown; rejected rules are not eligible for runtime recommendation.",
+  "runtime_release": {
+    "deterministic_core_rule_count": 7,
+    "core_rule_set_unchanged": true,
+    "all_core_rules_verified": true,
+    "rejected_rules_runtime_isolated": true
+  },
+  "page_review_evidence": [
+    "docs/evidence/phase-02-page-review/A-p01.png",
+    "docs/evidence/phase-02-page-review/A-p02.png",
+    "docs/evidence/phase-02-page-review/A-p03.png",
+    "docs/evidence/phase-02-page-review/A-p04.png",
+    "docs/evidence/phase-02-page-review/A-p05.png",
+    "docs/evidence/phase-02-page-review/B-p01.png",
+    "docs/evidence/phase-02-page-review/B-p02.png",
+    "docs/evidence/phase-02-page-review/B-p03.png",
+    "docs/evidence/phase-02-page-review/B-p04.png",
+    "docs/evidence/phase-02-page-review/B-p05.png",
+    "docs/evidence/phase-02-page-review/B-p06.png",
+    "docs/evidence/phase-02-page-review/B-p07.png",
+    "docs/evidence/phase-02-page-review/B-p08.png",
+    "docs/evidence/phase-02-page-review/C-p01.png",
+    "docs/evidence/phase-02-page-review/C-p02.png",
+    "docs/evidence/phase-02-page-review/C-p03.png",
+    "docs/evidence/phase-02-page-review/C-p04.png",
+    "docs/evidence/phase-02-page-review/C-p05.png"
+  ],
+  "generated_artifacts": [
+    "knowledge/normalized/facts/food_facts.jsonl",
+    "knowledge/normalized/facts/plan_rules.jsonl",
+    "knowledge/normalized/facts/platform_facts.jsonl"
+  ],
+  "checks": {
+    "every_record_has_completed_disposition": true,
+    "every_completed_disposition_has_review_metadata": true,
+    "every_record_links_existing_page_evidence": true,
+    "verified_records_have_no_unresolved_glyph": true,
+    "rejected_set_matches_all_unresolved_glyph_rules": true,
+    "remaining_review_required_is_zero": true,
+    "knowledge_validation_status": "PASS"
+  },
+  "evidence": [
+    "docs/evidence/phase-02-knowledge-validation.json",
+    "docs/evidence/action-07-unknown-glyph-exclusion.json",
+    "tests/test_knowledge_artifacts.py"
+  ],
+  "action_status": "CLOSED",
+  "status": "PASS"
+}

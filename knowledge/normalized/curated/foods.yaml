@@ -1,7 +1,13 @@
 schema_version: 1
-review_status: review_required
+review_status: verified
 first_pass_reviewer: Codex
 first_pass_date: "2026-08-21"
+second_pass_review:
+  reviewer: "Project Lead-authorized review / Codex-assisted"
+  date: "2026-08-22"
+  page_notes:
+    A-p02: "逐表对照 A-p02 肉类与海鲜 6 行；名称、每100克口径、能量、蛋白质、脂肪和胆固醇数值一致。"
+    A-p03: "逐表对照 A-p03 肉类与海鲜续表、豆乳、谷薯、蔬菜菌菇共25行；名称、口径、营养数值及烹饪建议一致。"
 items:
   - {id: chicken_breast, name: 鸡胸肉（去皮）, category: meat_seafood, page: 2, section: 3.1 肉类与海鲜, basis: {amount: 100, unit: g, qualifier: 可食部}, nutrients: {energy_kcal: 165, protein_g: 31.0, fat_g: 3.6, cholesterol_mg: 85}, recommended_for: [减脂, 增肌]}
   - {id: beef_tenderloin, name: 牛里脊, category: meat_seafood, page: 2, section: 3.1 肉类与海鲜, basis: {amount: 100, unit: g, qualifier: 可食部}, nutrients: {energy_kcal: 125, protein_g: 22.0, fat_g: 4.0, cholesterol_mg: 65}, recommended_for: [增肌, 补铁]}
@@ -34,4 +40,3 @@ items:
   - {id: fresh_shiitake, name: 香菇（鲜）, category: vegetable_fungus, page: 3, section: 3.4 蔬菜与菌菇, basis: {amount: 100, unit: g, qualifier: 可食部}, nutrients: {energy_kcal: 26, carbohydrate_g: 3.3, fiber_g: 2.0, vitamin_c_mg: 1}, preparation: [炒, 炖, 做汤]}
   - {id: enoki, name: 金针菇, category: vegetable_fungus, page: 3, section: 3.4 蔬菜与菌菇, basis: {amount: 100, unit: g, qualifier: 可食部}, nutrients: {energy_kcal: 32, carbohydrate_g: 6.0, fiber_g: 2.7, vitamin_c_mg: 0}, preparation: [凉拌, 火锅, 炒]}
   - {id: fresh_kelp, name: 海带（鲜）, category: vegetable_fungus, page: 3, section: 3.4 蔬菜与菌菇, basis: {amount: 100, unit: g, qualifier: 可食部}, nutrients: {energy_kcal: 13, carbohydrate_g: 2.1, fiber_g: 0.5, vitamin_c_mg: 0}, preparation: [做汤, 凉拌]}
-

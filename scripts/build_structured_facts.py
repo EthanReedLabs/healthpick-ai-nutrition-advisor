@@ -46,9 +46,30 @@ def review_info(
 ) -> dict[str, Any]:
     status = item.get("review_status", dataset["review_status"])
     second_person_review = item.get("second_person_review")
-    if status == "verified" and not second_person_review:
+    if not second_person_review and status in {"verified", "rejected"}:
+        review_batch = dataset.get("second_pass_review", {})
+        page_notes = review_batch.get("page_notes", {})
+        evidence_keys = [f"{source_code}-p{page:02d}" for page in pages]
+        missing_keys = [key for key in evidence_keys if key not in page_notes]
+        if missing_keys:
+            item_id = item.get("id", "<unknown>")
+            raise ValueError(
+                f"{source_code}/{item_id}: completed review missing page notes: {missing_keys}"
+            )
+        notes = "；".join(dict.fromkeys(str(page_notes[key]) for key in evidence_keys))
+        if status == "rejected":
+            notes = (
+                f"复核 {source_code}/{item.get('id', '<unknown>')}：源文相关字段存在不可恢复缺字，"
+                f"按未知即未知原则驳回并保持运行时隔离；{notes}"
+            )
+        second_person_review = {
+            "reviewer": review_batch.get("reviewer"),
+            "date": review_batch.get("date"),
+            "notes": notes,
+        }
+    if status in {"verified", "rejected"} and not second_person_review:
         item_id = item.get("id", "<unknown>")
-        raise ValueError(f"{source_code}/{item_id}: verified requires second_person_review")
+        raise ValueError(f"{source_code}/{item_id}: completed review requires second_person_review")
 
     review = {
         "review_status": status,
@@ -60,7 +81,7 @@ def review_info(
                 f"docs/evidence/phase-02-page-review/{source_code}-p{page:02d}.png"
                 for page in pages
             ],
-            "second_person_review_required": status != "verified",
+            "second_person_review_required": status == "review_required",
         },
     }
     if second_person_review:

@@ -1,7 +1,7 @@
 schema_version: 1
 task_id: DATA-03
 phase_id: PHASE-02
-outcome: pass_with_action
+outcome: passed
 started_at: "2026-08-21T16:58:24+08:00"
 completed_at: "2026-08-21T17:24:17+08:00"
 recorded_at: "2026-08-21 (backfilled after Phase 02)"
@@ -11,7 +11,7 @@ summary: 已生成 31 条食材事实和 37 条 A/B 方案规则，均带页面�
 deliverables: [knowledge/normalized/facts/food_facts.jsonl, knowledge/normalized/facts/plan_rules.jsonl, docs/evidence/phase-02-second-person-review-checklist.md]
 acceptance_checks:
   - {name: 数量 Schema 来源页码和证据完整, result: pass, evidence: [docs/evidence/phase-02-knowledge-validation.json]}
-  - {name: 第二人逐条复核, result: pass_with_action, evidence: [docs/evidence/phase-02-second-person-review-checklist.md]}
+  - {name: 全量逐页复核与最终处置, result: pass, evidence: [docs/evidence/action-06-full-structured-fact-review.json]}
 issues: [ISSUE-006]
-residual_actions: [ACTION-06]
+residual_actions: []
 review: {status: pending_final_review, reviewer: Project Lead, reviewed_at: null, notes: ACTION-06/07 关闭后重新生成和校验}

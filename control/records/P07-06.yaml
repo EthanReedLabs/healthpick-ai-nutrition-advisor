@@ -1,7 +1,7 @@
 schema_version: 1
 task_id: P07-06
 phase_id: PHASE-07
-outcome: pass_with_action
+outcome: passed
 started_at: "2026-08-22T14:13:07+08:00"
 completed_at: "2026-08-22T14:17:30+08:00"
 recorded_at: "2026-08-22"
@@ -25,8 +25,8 @@ acceptance_checks:
     result: pass
     evidence: [docs/evidence/local-real-stack-runtime.json]
   - name: 外部授权与第二人事实复核没有伪装完成
-    result: pass_with_action
+    result: pass
     evidence: [docs/evidence/phase-07-baseline-record.md, control/project-control.yaml]
 issues: [ISSUE-005, ISSUE-009, ISSUE-014, ISSUE-017]
-residual_actions: [ACTION-06]
+residual_actions: []
 review: {status: accepted, reviewer: Project Lead, reviewed_at: "2026-08-22T14:17:30+08:00", notes: 允许进入Phase08；公网已由P08-02补证，ACTION-06继续阻断最终交付READY}

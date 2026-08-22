@@ -26,6 +26,15 @@ CORE_RECOMMENDATION_RULE_IDS = {
     "rule-B-muscle_timing",
     "rule-B-plate_321",
 }
+REJECTED_UNKNOWN_GLYPH_RULE_IDS = {
+    "rule-A-glucose_control_guidance",
+    "rule-B-fat_loss_eligibility",
+    "rule-B-fat_loss_targets",
+    "rule-B-muscle_eligibility",
+    "rule-B-plan_selection",
+    "rule-B-plan_faq",
+}
+EXPECTED_VERIFIED_RECORDS = 74
 
 
 def load_jsonl(path: Path) -> list[dict[str, Any]]:
@@ -213,11 +222,11 @@ def main() -> int:
 
     for record in food_facts + plan_rules + platform_facts:
         record_id = record.get("fact_id", record.get("rule_id"))
-        if record["review_status"] == "verified":
+        if record["review_status"] in {"verified", "rejected"}:
             second_review = record.get("second_person_review")
             require(
                 isinstance(second_review, dict),
-                f"{record_id}: verified without second-person review",
+                f"{record_id}: completed disposition without second-person review",
                 errors,
             )
             if isinstance(second_review, dict):
@@ -228,7 +237,7 @@ def main() -> int:
                 )
             require(
                 record["first_pass_review"].get("second_person_review_required") is False,
-                f"{record_id}: verified but review flag remains open",
+                f"{record_id}: completed disposition but review flag remains open",
                 errors,
             )
         else:
@@ -252,10 +261,28 @@ def main() -> int:
     verified_ids = {
         record.get("fact_id", record.get("rule_id")) for record in verified_records
     }
+    rejected_records = [
+        record
+        for record in food_facts + plan_rules + platform_facts
+        if record["review_status"] == "rejected"
+    ]
+    rejected_ids = {
+        record.get("fact_id", record.get("rule_id")) for record in rejected_records
+    }
     require(
-        verified_ids == CORE_RECOMMENDATION_RULE_IDS,
-        "verified record set must exactly match the seven released core recommendation rules; "
-        f"found {sorted(verified_ids)}",
+        len(verified_records) == EXPECTED_VERIFIED_RECORDS,
+        f"expected {EXPECTED_VERIFIED_RECORDS} verified records, found {len(verified_records)}",
+        errors,
+    )
+    require(
+        CORE_RECOMMENDATION_RULE_IDS.issubset(verified_ids),
+        "the seven runtime core recommendation rules must all remain verified",
+        errors,
+    )
+    require(
+        rejected_ids == REJECTED_UNKNOWN_GLYPH_RULE_IDS,
+        "rejected set must exactly match the six unresolved-glyph rules; "
+        f"found {sorted(rejected_ids)}",
         errors,
     )
     for record in verified_records:
@@ -266,13 +293,21 @@ def main() -> int:
             errors,
         )
     core_release_gate = (
-        verified_ids == CORE_RECOMMENDATION_RULE_IDS
-        and len(verified_records) == len(CORE_RECOMMENDATION_RULE_IDS)
+        CORE_RECOMMENDATION_RULE_IDS.issubset(verified_ids)
         and all(
             not record.get("unknown_glyph", False)
             and isinstance(record.get("second_person_review"), dict)
             and record["first_pass_review"].get("second_person_review_required") is False
             for record in verified_records
+            if record.get("fact_id", record.get("rule_id")) in CORE_RECOMMENDATION_RULE_IDS
+        )
+    )
+    full_review_gate = (
+        len(verified_records) == EXPECTED_VERIFIED_RECORDS
+        and rejected_ids == REJECTED_UNKNOWN_GLYPH_RULE_IDS
+        and not any(
+            record["review_status"] == "review_required"
+            for record in food_facts + plan_rules + platform_facts
         )
     )
 
@@ -297,6 +332,7 @@ def main() -> int:
         for record in food_facts + plan_rules + platform_facts
     )
     verified_count = len(verified_records)
+    rejected_count = len(rejected_records)
     database_evidence = load_json_if_present(EVIDENCE / "action-01-database-runtime.json")
     model_evidence = load_json_if_present(EVIDENCE / "action-02-03-real-model-runtime.json")
     glyph_evidence = load_json_if_present(EVIDENCE / "action-07-unknown-glyph-exclusion.json")
@@ -321,10 +357,10 @@ def main() -> int:
         [
             (
                 f"{unknown_pages} pages / {unknown_chunks} chunks contain source-level "
-                "unknown glyphs; affected rules remain review_required."
+                "unknown glyphs; affected rules are rejected and remain runtime-isolated."
             ),
             (
-                f"{verified_count} core recommendation rules "
+                f"{len(CORE_RECOMMENDATION_RULE_IDS)} core recommendation rules "
                 + (
                     "completed the authorized assisted review and are released to the "
                     "deterministic engine."
@@ -332,10 +368,9 @@ def main() -> int:
                     else "did not satisfy the release gate."
                 )
             ),
-            (
-                f"{review_required} remaining structured records still require participant "
-                "second-person review and remain quarantined from deterministic recommendations."
-            ),
+            f"Structured review dispositions: {verified_count} verified, "
+            f"{rejected_count} rejected, {review_required} review_required; "
+            + ("ACTION-06 is closed." if full_review_gate else "ACTION-06 remains open."),
             "Unknown-glyph runtime exclusion: "
             + ("PASS." if unknown_glyph_gate else "NOT_RUN (ACTION-07)."),
             "Database migration execution: "
@@ -353,6 +388,7 @@ def main() -> int:
         "unknown_glyph_pages": unknown_pages,
         "unknown_glyph_chunks": unknown_chunks,
         "verified_records": verified_count,
+        "rejected_records": rejected_count,
         "review_required_records": review_required,
     }
     report = {
@@ -368,8 +404,8 @@ def main() -> int:
             "embedding_index": "PASS" if embedding_gate else "NOT_RUN",
             "unknown_glyph_exclusion": "PASS" if unknown_glyph_gate else "NOT_RUN",
             "core_recommendation_review": "PASS" if core_release_gate else "FAIL",
-            "remaining_structured_records": "QUARANTINED_REVIEW_REQUIRED",
-            "second_person_review": "PARTIAL_CORE_RELEASED",
+            "remaining_structured_records": "CLOSED" if full_review_gate else "OPEN",
+            "second_person_review": "PASS" if full_review_gate else "INCOMPLETE",
         },
     }
     EVIDENCE.mkdir(parents=True, exist_ok=True)

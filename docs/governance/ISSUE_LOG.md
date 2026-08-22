@@ -64,7 +64,7 @@
 - 严重度：high；阻断最终验收：True
 - 现象：A-p02、A-p04、B-p01、B-p05、B-p07、B-p08 的原始 PDF 存在缺字符号，影响 8 个 Chunk。
 - 原因：源文件渲染和文本层均缺字，不是解析器丢字。
-- 解决/缓解：未猜测符号；8 个受影响 Chunk 已从运行索引 fail-closed 排除，6 条规则保持 review_required，修正版来源到达前持续排除。
+- 解决/缓解：未猜测符号；8 个受影响 Chunk 已从运行索引 fail-closed 排除，6 条规则完成复核后标记 rejected，修正版来源到达前持续排除。
 - 行动：ACTION-07
 - 证据：docs/evidence/phase-02-knowledge-validation.json, docs/evidence/phase-02-second-person-review-checklist.md, docs/evidence/action-07-unknown-glyph-exclusion.json
 

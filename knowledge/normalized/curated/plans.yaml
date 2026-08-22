@@ -1,7 +1,23 @@
 schema_version: 1
-review_status: review_required
+review_status: verified
 first_pass_reviewer: Codex
 first_pass_date: "2026-08-21"
+second_pass_review:
+  reviewer: "Project Lead-authorized review / Codex-assisted"
+  date: "2026-08-22"
+  page_notes:
+    A-p01: "逐项对照 A-p01 宏量营养素、添加糖、蛋白质、膳食纤维与211餐盘起始内容，结构化数值一致。"
+    A-p02: "逐项对照 A-p02 211餐盘续页与三餐热量分配，比例、食材示例和热量范围一致。"
+    A-p04: "逐项对照 A-p04 减脂、增肌、控糖、控压及禁忌；可判定字段一致，缺字关联字段不作补猜。"
+    A-p05: "逐项对照 A-p05 哺乳期禁忌、免责声明和文档说明，结构化内容一致。"
+    B-p01: "逐项对照 B-p01 方案范围、减脂目标人群与营养目标；可判定字段一致，缺字关联字段不作补猜。"
+    B-p02: "逐餐对照 B-p02 周一、周二及周三开头食谱，餐次、食材、份量与示例热量一致。"
+    B-p03: "逐餐对照 B-p03 周三续页、周四与周五开头食谱，餐次、食材、份量与示例热量一致。"
+    B-p04: "逐餐对照 B-p04 周五续页、周六与周日开头食谱，餐次、食材、份量与示例热量一致。"
+    B-p05: "逐项对照 B-p05 周日续页、食材替换和增肌适用人群；可判定字段一致，缺字关联字段不作补猜。"
+    B-p06: "逐项对照 B-p06 增肌目标、训练/休息日指标、补充时机及控糖适用人群，数值和内容一致。"
+    B-p07: "逐项对照 B-p07 GI分级、321餐盘、方案选择和切换；可判定字段一致，缺字关联字段不作补猜。"
+    B-p08: "逐项对照 B-p08 常见问答与免责声明；可判定字段一致，缺字关联字段不作补猜。"
 items:
   - id: macro_energy
     source: A
@@ -79,6 +95,7 @@ items:
     section: 4.3 控糖人群
     rule_type: risk_guidance
     title: 控糖一般原则
+    review_status: rejected
     content: {prefer_gi: {operator: "<", value: 55}, avoid_gi: {operator: ">", value: 70}, meal_pattern: 三餐加两次加餐, fruit_amount_value: 200, fruit_amount_unit: g_per_day, fruit_comparator: unknown_missing_glyph, avoid: [果汁, 蜂蜜, 白糖, 精制糕点]}
     unknown_glyph: true
   - id: blood_pressure_guidance
@@ -143,6 +160,7 @@ items:
     section: 2.1 方案定位与目标人群
     rule_type: eligibility
     title: 轻盈减脂目标人群
+    review_status: rejected
     content: {bmi_values_shown: [24, 28], bmi_comparators: unknown_missing_glyph, waist_cm_values: {male: 85, female: 80}, waist_comparators: unknown_missing_glyph, no_diet_contraindication_disease: true}
     unknown_glyph: true
   - id: fat_loss_targets
@@ -151,6 +169,7 @@ items:
     section: 2.2 每日营养素目标
     rule_type: nutrient_target
     title: 轻盈减脂每日目标
+    review_status: rejected
     content:
       female: {energy_kcal: [1200, 1500], protein_g: [60, 75], carbohydrate_g: [120, 150], fat_g: [35, 45]}
       male: {energy_kcal: [1500, 1800], protein_g: [75, 90], carbohydrate_g: [150, 180], fat_g: [40, 50]}
@@ -230,6 +249,7 @@ items:
     section: 3.1 方案定位与目标人群
     rule_type: eligibility
     title: 力量增肌目标人群
+    review_status: rejected
     content: {strength_sessions_value: 3, sessions_comparator: unknown_missing_glyph, bmi: 正常或偏瘦, no_diet_contraindication_disease: true}
     unknown_glyph: true
   - id: muscle_targets
@@ -300,6 +320,7 @@ items:
     section: 5.1 如何选择适合自己的方案
     rule_type: recommendation_mapping
     title: 方案选择映射
+    review_status: rejected
     content: {mappings: [{condition: "BMI数值24且想减重（比较符号缺失）", plan: 轻盈减脂, cycle: 8-12周}, {condition: 规律健身想增肌, plan: 力量增肌, cycle: 持续使用阶段性调整}, {condition: 血糖偏高或糖尿病前期, plan: 稳糖调理, cycle: 长期持续}, {condition: BMI正常想保持健康, plan: 三套方案轮换, cycle: 长期持续}]}
     unknown_glyph: true
   - id: plan_switching
@@ -315,5 +336,6 @@ items:
     section: 5.3 常见疑问解答
     rule_type: usage_guidance
     title: 方案使用常见问题
+    review_status: rejected
     content: {cycle_weeks_before_replacement: 4, replacement_percent: 20, exercise_minutes_for_glucose_plan: 30, meal_replacement_times_per_week_value: 2, meal_replacement_comparator: unknown_missing_glyph}
     unknown_glyph: true

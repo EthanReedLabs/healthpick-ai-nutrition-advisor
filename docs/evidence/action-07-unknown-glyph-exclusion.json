@@ -3,7 +3,7 @@
   "evidence_id": "ACTION-07-UNKNOWN-GLYPH-EXCLUSION",
   "action_id": "ACTION-07",
   "scope": "knowledge/runtime-retrieval/structured-rules",
-  "captured_at": "2026-08-21T20:33:26.771253+08:00",
+  "captured_at": "2026-08-22T19:41:22.128947+08:00",
   "resolution": "maintain_exclusion_until_corrected_source_is_available",
   "source_chunk_count": 67,
   "runtime_loaded_chunk_count": 59,
@@ -31,7 +31,7 @@
     "no_ambiguous_chunk_is_loaded": true,
     "curated_ambiguous_rules_are_exactly_6": true,
     "generated_ambiguous_rules_are_exactly_6": true,
-    "all_ambiguous_rules_remain_review_required": true
+    "all_ambiguous_rules_are_rejected": true
   },
   "status": "PASS"
 }

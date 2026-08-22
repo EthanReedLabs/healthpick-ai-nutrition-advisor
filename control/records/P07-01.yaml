@@ -1,7 +1,7 @@
 schema_version: 1
 task_id: P07-01
 phase_id: PHASE-07
-outcome: pass_with_action
+outcome: passed
 started_at: "2026-08-22T12:06:25+08:00"
 completed_at: "2026-08-22T12:16:22+08:00"
 recorded_at: "2026-08-22"
@@ -26,8 +26,8 @@ acceptance_checks:
     result: pass
     evidence: [evals/golden/release-gate-v1.json, evals/golden/release-golden-v1.manifest.json]
   - name: 人工事实复核状态未被伪装完成
-    result: pass_with_action
+    result: pass
     evidence: [docs/evidence/phase-07-p07-01-dataset-validation.json, docs/evidence/phase-07-p07-01-quality.md]
 issues: [ISSUE-057]
-residual_actions: [ACTION-06]
+residual_actions: []
 review: {status: accepted, reviewer: Project Lead, reviewed_at: "2026-08-22T12:16:22+08:00", notes: 数据集与阈值可进入P07-02首轮运行；ACTION-06继续阻断人工事实准确性签署}

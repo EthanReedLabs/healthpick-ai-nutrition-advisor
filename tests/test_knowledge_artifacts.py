@@ -104,7 +104,7 @@ def test_review_evidence_images_exist() -> None:
     )
     for record in records:
         review_required = record["first_pass_review"]["second_person_review_required"]
-        if record["review_status"] == "verified":
+        if record["review_status"] in {"verified", "rejected"}:
             assert review_required is False
             assert record["second_person_review"]["reviewer"]
             assert record["second_person_review"]["notes"]
@@ -114,12 +114,25 @@ def test_review_evidence_images_exist() -> None:
             assert (ROOT / path).is_file()
 
 
-def test_only_the_seven_reviewed_recommendation_rules_are_released() -> None:
-    rules = read_jsonl(KNOWLEDGE / "normalized" / "facts" / "plan_rules.jsonl")
+def test_full_review_disposition_and_core_runtime_release() -> None:
+    facts_dir = KNOWLEDGE / "normalized" / "facts"
+    records = (
+        read_jsonl(facts_dir / "food_facts.jsonl")
+        + read_jsonl(facts_dir / "plan_rules.jsonl")
+        + read_jsonl(facts_dir / "platform_facts.jsonl")
+    )
+    rules = read_jsonl(facts_dir / "plan_rules.jsonl")
     verified_ids = {
-        rule["rule_id"] for rule in rules if rule["review_status"] == "verified"
+        record.get("fact_id", record.get("rule_id"))
+        for record in records
+        if record["review_status"] == "verified"
     }
-    assert verified_ids == {
+    rejected_ids = {
+        record.get("fact_id", record.get("rule_id"))
+        for record in records
+        if record["review_status"] == "rejected"
+    }
+    core_ids = {
         "rule-A-plate_211",
         "rule-A-fat_loss_guidance",
         "rule-B-food_substitutions",
@@ -128,10 +141,21 @@ def test_only_the_seven_reviewed_recommendation_rules_are_released() -> None:
         "rule-B-gi_categories",
         "rule-B-plate_321",
     }
+    assert len(verified_ids) == 74
+    assert core_ids.issubset(verified_ids)
+    assert rejected_ids == {
+        "rule-A-glucose_control_guidance",
+        "rule-B-fat_loss_eligibility",
+        "rule-B-fat_loss_targets",
+        "rule-B-muscle_eligibility",
+        "rule-B-plan_selection",
+        "rule-B-plan_faq",
+    }
+    assert all(record["review_status"] != "review_required" for record in records)
     assert all(
         not rule.get("unknown_glyph", False)
         for rule in rules
-        if rule["rule_id"] in verified_ids
+        if rule["rule_id"] in core_ids
     )
 
 
@@ -141,7 +165,7 @@ def test_verified_record_requires_second_person_review() -> None:
         "first_pass_reviewer": "Codex",
         "first_pass_date": "2026-08-21",
     }
-    with pytest.raises(ValueError, match="verified requires second_person_review"):
+    with pytest.raises(ValueError, match="completed review"):
         review_info(dataset, "A", [3], {"id": "sample", "review_status": "verified"})
 
 

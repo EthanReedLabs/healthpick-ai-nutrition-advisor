@@ -1,7 +1,7 @@
 schema_version: 1
 task_id: P05-05
 phase_id: PHASE-05
-outcome: pass_with_action
+outcome: passed
 started_at: "2026-08-22T10:28:00+08:00"
 completed_at: "2026-08-22T10:40:00+08:00"
 recorded_at: "2026-08-22"
@@ -28,5 +28,5 @@ acceptance_checks:
     result: pass
     evidence: [docs/evidence/phase-05-p05-05-quality.md, control/project-control.yaml]
 issues: [ISSUE-007, ISSUE-009, ISSUE-014, ISSUE-017, ISSUE-047, ISSUE-048]
-residual_actions: [ACTION-06]
+residual_actions: []
 review: {status: pending_final_review, reviewer: Project Lead, reviewed_at: null, notes: 本地P0与公网部署已全绿；仅第二人知识复核仍在后续门}

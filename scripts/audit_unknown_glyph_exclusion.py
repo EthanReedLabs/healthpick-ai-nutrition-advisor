@@ -49,8 +49,8 @@ def main() -> None:
         "no_ambiguous_chunk_is_loaded": not (loaded_ids & set(ambiguous_chunk_ids)),
         "curated_ambiguous_rules_are_exactly_6": len(ambiguous_rules) == 6,
         "generated_ambiguous_rules_are_exactly_6": len(generated_ambiguous) == 6,
-        "all_ambiguous_rules_remain_review_required": all(
-            item["review_status"] == "review_required" for item in generated_ambiguous
+        "all_ambiguous_rules_are_rejected": all(
+            item["review_status"] == "rejected" for item in generated_ambiguous
         ),
     }
     status = "PASS" if all(checks.values()) else "FAIL"

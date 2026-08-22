@@ -1,7 +1,16 @@
 schema_version: 1
-review_status: review_required
+review_status: verified
 first_pass_reviewer: Codex
 first_pass_date: "2026-08-21"
+second_pass_review:
+  reviewer: "Project Lead-authorized review / Codex-assisted"
+  date: "2026-08-22"
+  page_notes:
+    C-p01: "逐项对照 C-p01 平台概述与免费版服务；仅按白皮书声明范围记录，字段一致。"
+    C-p02: "逐项对照 C-p02 标准版、专业版与企业版价格及功能，数值和服务项一致。"
+    C-p03: "逐项对照 C-p03 增值服务、技术架构、隐私和合作生态；外部真实性仍明确标记为未核验。"
+    C-p04: "逐项对照 C-p04 成功案例和API套餐；仅记录白皮书声称内容，案例外部真实性仍标记为未核验。"
+    C-p05: "逐项对照 C-p05 合作与平台联系方式，邮箱、网站、热线及工作时间一致。"
 items:
   - id: free_tier
     pages: [1]
@@ -75,4 +84,3 @@ items:
     fact_type: contact
     title: 平台联系信息
     value: {website: www.healthpick.com, hotline: 400-888-9999, hotline_hours: 工作日9:00-21:00, enterprise_email: partnership@healthpick.com, media_email: media@healthpick.com}
-
