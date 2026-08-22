@@ -5,7 +5,7 @@
 - 结构校验：`PASS`
 - 最终验收就绪度：`NOT_READY`
 - 当前阶段：`PHASE-08`
-- 最近审计：`2026-08-22T16:51:28.479483+08:00`
+- 最近审计：`2026-08-22T17:06:54.925675+08:00`
 
 ## 阶段
 
@@ -80,8 +80,8 @@
 | PHASE-08 | P08-02 | 公网部署与 Compose 干净环境复现 | DEVOPS | `passed` | control/records/P08-02.yaml |
 | PHASE-08 | P08-03 | 文档 AI 披露许可证与隐私冻结 | QA_DOCS/LEAD | `passed` | control/records/P08-03.yaml |
 | PHASE-08 | P08-04 | 演示资产与双次连续演练 | LEAD/QA_DOCS | `pass_with_action` | control/records/P08-04.yaml |
-| PHASE-08 | P08-05 | Release tag 匿名克隆与提交候选冻结 | DEVOPS/LEAD | `in_progress` | — |
-| PHASE-08 | P08-06 | 公网七天可用性责任与监测 | DEVOPS/LEAD | `not_started` | — |
+| PHASE-08 | P08-05 | Release tag 匿名克隆与提交候选冻结 | DEVOPS/LEAD | `passed` | control/records/P08-05.yaml |
+| PHASE-08 | P08-06 | 公网七天可用性责任与监测 | DEVOPS/LEAD | `in_progress` | — |
 | PHASE-08 | P08-07 | 执行最终总纲验收并签署 | LEAD | `not_started` | — |
 
 ## 开放行动
@@ -102,13 +102,13 @@
 ## 任务状态计数
 
 - in_progress: 1
-- not_started: 2
+- not_started: 1
 - pass_with_action: 18
-- passed: 34
+- passed: 35
 
 ## 最终验收
 
-当前共有 `72` 个机器判定阻断项。完整清单见 `docs/evidence/control-plane-validation.md`。
+当前共有 `68` 个机器判定阻断项。完整清单见 `docs/evidence/control-plane-validation.md`。
 
 | Gate | 验收项 | 状态 |
 |---|---|---|

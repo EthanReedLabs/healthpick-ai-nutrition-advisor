@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-22T16:51:28.479483+08:00",
+  "generated_at": "2026-08-22T17:06:54.925675+08:00",
   "structural_status": "PASS",
   "final_readiness": "NOT_READY",
   "current_phase": "PHASE-08",
@@ -11,10 +11,10 @@
       "in_progress": 1
     },
     "tasks": {
-      "passed": 34,
+      "passed": 35,
       "pass_with_action": 18,
       "in_progress": 1,
-      "not_started": 2
+      "not_started": 1
     },
     "actions": {
       "closed": 6,
@@ -84,8 +84,7 @@
     "task:P07-02=pass_with_action",
     "task:P07-06=pass_with_action",
     "task:P08-04=pass_with_action",
-    "task:P08-05=in_progress",
-    "task:P08-06=not_started",
+    "task:P08-06=in_progress",
     "task:P08-07=not_started",
     "action:ACTION-05=open",
     "action:ACTION-06=open",
@@ -99,9 +98,6 @@
     "gate:FINAL-08=not_started",
     "gate:FINAL-09=not_started",
     "gate:FINAL-10=not_started",
-    "release:commit=missing",
-    "release:tag=missing",
-    "release:compose_probe=missing",
     "release:final_signoff=missing"
   ]
 }

@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "evidence_id": "PHASE-08-P08-05-RELEASE-CANDIDATE",
+  "captured_at": "2026-08-22T17:02:00+08:00",
+  "status": "PASS",
+  "release": {
+    "commit": "b8cd3f1ee243cbf5a83ba8019b44cb40f4152184",
+    "tag": "v0.1.0-rc5",
+    "annotated_tag_object": "f00b7fa72305320aa9101677ea0eb11cb0766be1",
+    "tree": "d4633fabcff5bd42037a45fee0aeb0d056e3c9df",
+    "application_image_tag": "v0.1.0-rc5"
+  },
+  "anonymous_clone": {
+    "location": "../healthpick-rc5-anonymous",
+    "head": "b8cd3f1ee243cbf5a83ba8019b44cb40f4152184",
+    "tag_commit": "b8cd3f1ee243cbf5a83ba8019b44cb40f4152184",
+    "tree": "d4633fabcff5bd42037a45fee0aeb0d056e3c9df",
+    "tracked_worktree_clean": true,
+    "dependency_install": "npm ci: PASS, 0 vulnerabilities"
+  },
+  "verification": {
+    "python_tests": {"passed": 260, "status": "PASS"},
+    "web_tests": {"passed": 30, "status": "PASS"},
+    "ruff": "PASS",
+    "eslint": "PASS",
+    "typescript": "PASS",
+    "production_build": "PASS",
+    "release_document_checks": {"passed": 7, "errors": 0, "status": "PASS"},
+    "repository_secret_scan": {"scanned_files": 504, "findings": 0, "status": "PASS"},
+    "control_plane": {"structural_status": "PASS", "errors": 0}
+  },
+  "ecs_release_descriptor": {
+    "current_target": "/opt/healthpick/releases/b8cd3f1ee243cbf5a83ba8019b44cb40f4152184",
+    "files": ["compose.yaml", "compose.production.yaml", "infra/caddy/Caddyfile"],
+    "application_source_files": 0,
+    "compose_config": "PASS",
+    "start_flag": "--no-build",
+    "containers_healthy": true,
+    "public_root_status": 200,
+    "public_health_status": 200,
+    "llm_mode": "real"
+  },
+  "secrets_recorded": false,
+  "residual_actions": []
+}
