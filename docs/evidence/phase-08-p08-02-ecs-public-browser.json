@@ -1,0 +1,69 @@
+{
+  "schema_version": 1,
+  "evidence_id": "PHASE-08-P08-02-ECS-PUBLIC-BROWSER",
+  "captured_at": "2026-08-22T16:41:03+08:00",
+  "status": "PASS",
+  "endpoint": "https://106.14.13.139",
+  "tls": {
+    "issuer": "Let's Encrypt YE2",
+    "subject_alternative_name": "IP Address:106.14.13.139",
+    "not_before": "2026-08-22T07:27:27Z",
+    "not_after": "2026-08-28T23:27:26Z",
+    "profile": "shortlived",
+    "no_sni_client_support": "PASS via Caddy default_sni"
+  },
+  "http": {
+    "root_status": 200,
+    "health_status": 200,
+    "health_body_status": "ok",
+    "llm_mode": "real"
+  },
+  "browser": {
+    "engine": "Chromium via Playwright CLI",
+    "page_title": "HealthPick · 营养知识助手",
+    "connection_badge": "API 在线 · Real",
+    "network_origin": "https://106.14.13.139",
+    "old_sslip_origin_requests": 0
+  },
+  "flows": [
+    {
+      "name": "nutrition",
+      "question": "膳食纤维有什么营养作用？",
+      "http_status": 200,
+      "risk_level": "S0",
+      "model": "qwen3.7-plus",
+      "mode": "real",
+      "citation_sources": ["A"],
+      "citations_have_pages": true,
+      "status": "PASS"
+    },
+    {
+      "name": "platform",
+      "question": "平台会员和企业服务有哪些？",
+      "http_status": 200,
+      "risk_level": "S0",
+      "model": "qwen3.7-plus",
+      "mode": "real",
+      "citation_sources": ["C"],
+      "citations_have_pages": true,
+      "status": "PASS"
+    },
+    {
+      "name": "emergency",
+      "question": "我现在胸痛而且呼吸困难。",
+      "http_status": 200,
+      "risk_level": "S3",
+      "response_mode": "emergency_stop",
+      "model_called": false,
+      "retrieval_called": false,
+      "citations": [],
+      "status": "PASS"
+    }
+  ],
+  "cleanup": {
+    "temporary_conversations": 2,
+    "delete_statuses": [204, 204],
+    "status": "PASS"
+  },
+  "secrets_recorded": false
+}

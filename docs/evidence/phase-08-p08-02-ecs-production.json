@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "evidence_id": "PHASE-08-P08-02-ECS-PRODUCTION",
+  "captured_at": "2026-08-22T16:41:03+08:00",
+  "status": "PASS",
+  "target": {
+    "provider": "Alibaba Cloud ECS",
+    "host": "106.14.13.139",
+    "public_endpoint": "https://106.14.13.139",
+    "public_ip": "106.14.13.139",
+    "os": "Alibaba Cloud Linux 3",
+    "release_commit": "72d4490e41a828ca2060dd9cc5e5447e4ca2f9f1",
+    "application_image_tag": "v0.1.0-rc5"
+  },
+  "delivery": {
+    "mode": "image_only",
+    "server_build_disabled": true,
+    "start_flag": "--no-build",
+    "application_source_files_on_server": 0,
+    "application_archive_sha256": "b0b2fca19270b25ad36e5f58f6daaf84e6b494b8bb916f4256006ae3b576b2f6",
+    "infrastructure_archive_sha256": "36094e1ab3827050bd76a72c98aa7c23c59270f87141069c8c74e3943dfba9d9",
+    "server_transfer_archives_removed_after_load": true,
+    "rc5_web_archive_size": 81711104,
+    "rc5_web_archive_sha256": "d79997c2c1852a8a6508c3e7233c745c37da64fc85e39c8dc9b894249445f13e"
+  },
+  "images": [
+    {"name": "healthpick-api:v0.1.0-rc5", "config_digest": "741bb757b8639208f7ddfbadbcda46c38fce8ddb7de6a9f9e70d64094a2c67b3"},
+    {"name": "healthpick-web:v0.1.0-rc5", "config_digest": "0ea4144b7e236d256e35a0ccd9093624062e1454e68678e8529e13be62e714c8"},
+    {"name": "pgvector/pgvector:0.8.6-pg17-bookworm", "config_digest": "17a06c0a60bf"},
+    {"name": "caddy:2.11.4-alpine", "config_digest": "af555904a096"}
+  ],
+  "runtime": {
+    "compose_config": "PASS",
+    "postgres": "healthy",
+    "migration": "completed_successfully",
+    "seed": "completed_successfully",
+    "api": "healthy",
+    "web": "healthy",
+    "caddy": "running",
+    "api_read_only_rootfs": true,
+    "web_read_only_rootfs": true,
+    "postgres_host_bind": "127.0.0.1:54329",
+    "api_host_bind": "127.0.0.1:8010",
+    "web_host_bind": "127.0.0.1:3000",
+    "public_listeners": ["80/tcp", "443/tcp", "443/udp"]
+  },
+  "model": {
+    "provider": "Alibaba Cloud Model Studio",
+    "plan": "Token Plan",
+    "key_type": "sk-sp (value not recorded)",
+    "endpoint_class": "token-plan-cn-beijing-openai-compatible",
+    "model": "qwen3.7-plus",
+    "direct_probe_http_status": 200,
+    "runtime_mode": "real"
+  },
+  "rehearsal": {
+    "run_id": "ecs-qwen-real-02",
+    "status": "PASS_WITH_ACTION",
+    "nutrition": {"route": "nutrition", "sources": ["A"], "status": "PASS"},
+    "platform": {"route": "platform", "sources": ["C"], "status": "PASS"},
+    "mixed": {"route": "mixed", "sources": ["B", "C"], "status": "PASS"},
+    "emergency": {"risk_level": "S3", "generation_context_eligible": false, "status": "PASS"},
+    "postgres_history_turns": 3,
+    "cleanup": "PASS"
+  },
+  "https": {
+    "status": "PASS",
+    "endpoint": "https://106.14.13.139",
+    "caddy_listening": true,
+    "host_firewalld": "inactive",
+    "host_iptables_input_policy": "ACCEPT",
+    "certificate_issuer": "Let's Encrypt YE2",
+    "certificate_san": "IP Address:106.14.13.139",
+    "certificate_profile": "shortlived",
+    "certificate_not_after": "2026-08-28T23:27:26Z",
+    "no_sni_handshake": "PASS via default_sni",
+    "public_root_status": 200,
+    "public_health_status": 200,
+    "browser_evidence": "docs/evidence/phase-08-p08-02-ecs-public-browser.json"
+  },
+  "issues": ["ISSUE-073", "ISSUE-074", "ISSUE-075", "ISSUE-076", "ISSUE-077"],
+  "residual_actions": []
+}

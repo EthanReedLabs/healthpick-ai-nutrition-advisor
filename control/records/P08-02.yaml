@@ -1,18 +1,20 @@
 schema_version: 1
 task_id: P08-02
 phase_id: PHASE-08
-outcome: pass_with_action
+outcome: passed
 started_at: "2026-08-22T14:32:00+08:00"
-completed_at: "2026-08-22T14:43:30+08:00"
+completed_at: "2026-08-22T16:13:19+08:00"
 recorded_at: "2026-08-22"
 backfilled: false
 owner: DEVOPS
-summary: 当前冻结代码在独立Compose项目和新卷完成构建、迁移、seed、真实问答、三服务重启和会话持久化；公网Render等待区域预算与七天责任授权。
+summary: 独立Compose新卷复现通过；ECS以纯镜像和--no-build启动，真实百炼Token Plan qwen3.7-plus三路由及S3演练通过；公网IP短期受信证书、HTTPS和浏览器全链路通过。
 deliverables:
   - compose.yaml
   - scripts/smoke_compose_lifecycle.py
   - docs/evidence/phase-08-p08-02-compose.json
   - docs/evidence/phase-08-p08-02-quality.md
+  - docs/evidence/phase-08-p08-02-ecs-production.json
+  - docs/evidence/phase-08-p08-02-ecs-public-browser.json
 acceptance_checks:
   - name: 新空卷迁移seed和生产镜像构建通过
     result: pass
@@ -26,9 +28,15 @@ acceptance_checks:
   - name: API与Web非root只读且三服务健康
     result: pass
     evidence: [docs/evidence/phase-08-p08-02-container-security.json]
-  - name: 公网HTTPS和七天可用性
-    result: pass_with_action
-    evidence: [docs/evidence/phase-08-p08-02-quality.md, control/project-control.yaml]
-issues: [ISSUE-005, ISSUE-009, ISSUE-067, ISSUE-068]
-residual_actions: [ACTION-05]
-review: {status: accepted, reviewer: Project Lead, reviewed_at: "2026-08-22T14:43:30+08:00", notes: 本地干净Compose通过；公网部署必须等待ACTION-05授权，不得把本记录解释为公网READY}
+  - name: 公网HTTPS与浏览器真实链路
+    result: pass
+    evidence: [docs/evidence/phase-08-p08-02-quality.md, docs/evidence/phase-08-p08-02-ecs-production.json, docs/evidence/phase-08-p08-02-ecs-public-browser.json]
+  - name: ECS只接收镜像且服务器禁止构建
+    result: pass
+    evidence: [docs/evidence/phase-08-p08-02-ecs-production.json, docs/deployment/ecs-production.md]
+  - name: 百炼TokenPlan千问真实三路由与S3演练
+    result: pass
+    evidence: [docs/evidence/phase-08-p08-02-ecs-production.json]
+issues: [ISSUE-005, ISSUE-009, ISSUE-067, ISSUE-068, ISSUE-073, ISSUE-074, ISSUE-075, ISSUE-076, ISSUE-077]
+residual_actions: []
+review: {status: accepted, reviewer: Project Lead, reviewed_at: "2026-08-22T16:45:10+08:00", notes: ECS纯镜像栈、真实千问、公网HTTPS、浏览器来源隔离与S3急症停止均通过；七天续期监测由P08-06独立管理}

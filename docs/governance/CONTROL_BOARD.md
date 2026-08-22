@@ -5,13 +5,13 @@
 - 结构校验：`PASS`
 - 最终验收就绪度：`NOT_READY`
 - 当前阶段：`PHASE-08`
-- 最近审计：`2026-08-22T15:02:21.214606+08:00`
+- 最近审计：`2026-08-22T16:51:28.479483+08:00`
 
 ## 阶段
 
 | Phase | 名称 | 状态 | 退出记录 |
 |---|---|---|---|
-| PHASE-01 | 基线与范围冻结 | `pass_with_action` | docs/evidence/phase-01-baseline-record.md |
+| PHASE-01 | 基线与范围冻结 | `passed` | docs/evidence/phase-01-baseline-record.md |
 | PHASE-02 | 知识数据生产化 | `pass_with_action` | docs/evidence/phase-02-baseline-record.md |
 | PHASE-03 | 最薄动态问答闭环 | `pass_with_action` | docs/evidence/phase-03-baseline-record.md |
 | PHASE-04 | 推荐与医疗安全 | `pass_with_action` | docs/evidence/phase-04-baseline-record.md |
@@ -35,7 +35,7 @@
 | PHASE-01 | P01-05 | 建立仓库与行尾策略 | DEVOPS | `passed` | control/records/P01-05.yaml |
 | PHASE-01 | P01-06 | 冻结最小 API 契约 | WEB/API | `passed` | control/records/P01-06.yaml |
 | PHASE-01 | P01-07 | 冻结风险触发器与降级路径 | LEAD | `passed` | control/records/P01-07.yaml |
-| PHASE-01 | P01-08 | 执行 Phase 01 退出验收 | LEAD | `pass_with_action` | control/records/P01-08.yaml |
+| PHASE-01 | P01-08 | 执行 Phase 01 退出验收 | LEAD | `passed` | control/records/P01-08.yaml |
 | PHASE-01 | P01-09 | 建立 Phase 02 READY 任务板 | LEAD | `passed` | control/records/P01-09.yaml |
 | PHASE-02 | DATA-01 | 页级解析与视觉核对 | KNOWLEDGE | `passed` | control/records/DATA-01.yaml |
 | PHASE-02 | DATA-02 | 生成稳定页内 Chunk | KNOWLEDGE/API | `passed` | control/records/DATA-02.yaml |
@@ -77,7 +77,7 @@
 | PHASE-07 | P07-05 | 关键体验与可访问性打磨 | WEB/QA_DOCS | `passed` | control/records/P07-05.yaml |
 | PHASE-07 | P07-06 | 功能冻结与 Phase 07 验收 | LEAD | `pass_with_action` | control/records/P07-06.yaml |
 | PHASE-08 | P08-01 | 全回归性能安全与密钥扫描 | QA_DOCS/DEVOPS | `passed` | control/records/P08-01.yaml |
-| PHASE-08 | P08-02 | 公网部署与 Compose 干净环境复现 | DEVOPS | `pass_with_action` | control/records/P08-02.yaml |
+| PHASE-08 | P08-02 | 公网部署与 Compose 干净环境复现 | DEVOPS | `passed` | control/records/P08-02.yaml |
 | PHASE-08 | P08-03 | 文档 AI 披露许可证与隐私冻结 | QA_DOCS/LEAD | `passed` | control/records/P08-03.yaml |
 | PHASE-08 | P08-04 | 演示资产与双次连续演练 | LEAD/QA_DOCS | `pass_with_action` | control/records/P08-04.yaml |
 | PHASE-08 | P08-05 | Release tag 匿名克隆与提交候选冻结 | DEVOPS/LEAD | `in_progress` | — |
@@ -88,14 +88,13 @@
 
 | ID | 行动 | Owner | 截止 | 阻断 |
 |---|---|---|---|---|
-| ACTION-05 | Render 区域预算与七天可用性确认 | DEVOPS/LEAD | Phase-08 部署前 | P08-02, P08-06 |
+| ACTION-05 | ECS 七天可用性与短期 IP 证书续期监测 | DEVOPS/LEAD | Phase-08 最终验收前 | P08-06 |
 | ACTION-06 | 80 条结构化事实第二人逐条复核 | KNOWLEDGE/LEAD | T+12 | DATA-03, DATA-04, DATA-06, P04-02, P04-05, P04-07 |
 
 ## 未关闭问题
 
 | ID | 状态 | 严重度 | 现象 | 后续行动 |
 |---|---|---|---|---|
-| ISSUE-005 | `open` | high | Render 账号、区域、预算和七天可用性尚未确认。 | ACTION-05 |
 | ISSUE-009 | `open` | low | Windows 沙箱偶发在创建 PowerShell 子进程前返回 CreateProcessAsUserW 拒绝访问，并行和后续串行调用均曾出现。 | — |
 | ISSUE-014 | `open` | low | create-next-app 安装的 ESLint 9.39.5 输出版本已弃用提示。 | — |
 | ISSUE-017 | `open` | low | 内置浏览器连接在页面操作前因宿主请求缺失 sandboxPolicy 元数据失败。 | — |
@@ -104,12 +103,12 @@
 
 - in_progress: 1
 - not_started: 2
-- pass_with_action: 20
-- passed: 32
+- pass_with_action: 18
+- passed: 34
 
 ## 最终验收
 
-当前共有 `77` 个机器判定阻断项。完整清单见 `docs/evidence/control-plane-validation.md`。
+当前共有 `72` 个机器判定阻断项。完整清单见 `docs/evidence/control-plane-validation.md`。
 
 | Gate | 验收项 | 状态 |
 |---|---|---|

@@ -41,13 +41,33 @@ def test_production_overlay_exposes_only_caddy_publicly() -> None:
     assert "WEB_BIND_ADDRESS=127.0.0.1" in env_text
     assert "COMPOSE_LLM_MODE=real" in env_text
     assert "COMPOSE_LLM_MODEL=qwen3.7-plus" in env_text
-    assert "replace-with-beijing-bailian-secret" in env_text
+    assert "PUBLIC_HOST=106.14.13.139" in env_text
+    assert "COMPOSE_PUBLIC_API_ORIGIN=https://106.14.13.139" in env_text
+    assert (
+        "COMPOSE_LLM_BASE_URL=https://token-plan.cn-beijing.maas.aliyuncs.com/compatible-mode/v1"
+        in env_text
+    )
+    assert "replace-with-token-plan-bailian-secret" in env_text
+
+
+def test_ecs_runbook_requires_image_only_no_build_deployment() -> None:
+    runbook = (ROOT / "docs" / "deployment" / "ecs-production.md").read_text(
+        encoding="utf-8"
+    )
+
+    assert "不接收应用源码" in runbook
+    assert "docker load" in runbook
+    assert "--no-build" in runbook
+    assert "compose.production.yaml build" not in runbook
 
 
 def test_caddy_routes_api_and_web_through_one_https_origin() -> None:
     caddyfile = (ROOT / "infra" / "caddy" / "Caddyfile").read_text(encoding="utf-8")
 
     assert "{$PUBLIC_HOST}" in caddyfile
+    assert "default_sni {$PUBLIC_HOST}" in caddyfile
+    assert "issuer acme https://acme-v02.api.letsencrypt.org/directory" in caddyfile
+    assert "profile shortlived" in caddyfile
     assert "@api path /v1/* /healthz /openapi.json /docs* /redoc*" in caddyfile
     assert "reverse_proxy api:8010" in caddyfile
     assert "reverse_proxy web:3000" in caddyfile

@@ -1,17 +1,17 @@
 schema_version: 1
 task_id: P01-08
 phase_id: PHASE-01
-outcome: pass_with_action
+outcome: passed
 started_at: "2026-08-21T16:47:07+08:00"
 completed_at: "2026-08-21T16:50:46+08:00"
 recorded_at: "2026-08-21 (backfilled after Phase 02)"
 backfilled: true
 owner: LEAD
-summary: Phase 01 核心门禁通过；数据库、真实模型、Embedding 和远端 Git 已补证，仅 Render 发布条件仍保留。
-deliverables: [docs/evidence/phase-01-baseline-record.md, docs/evidence/action-01-database-runtime.json, docs/evidence/action-02-03-real-model-runtime.json, docs/evidence/action-04-git-remote-runtime.json]
+summary: Phase 01 核心门禁通过；数据库、真实模型、Embedding、远端 Git 与 Alibaba Cloud ECS 公网运行条件均已补证。
+deliverables: [docs/evidence/phase-01-baseline-record.md, docs/evidence/action-01-database-runtime.json, docs/evidence/action-02-03-real-model-runtime.json, docs/evidence/action-04-git-remote-runtime.json, docs/evidence/phase-08-p08-02-ecs-production.json]
 acceptance_checks:
   - {name: G1-G7/G9 核心门禁, result: pass, evidence: [docs/evidence/phase-01-baseline-record.md]}
-  - {name: 外部运行资源, result: pass_with_action, evidence: [docs/evidence/action-01-database-runtime.json, docs/evidence/action-02-03-real-model-runtime.json, docs/evidence/action-04-git-remote-runtime.json]}
+  - {name: 外部运行资源, result: pass, evidence: [docs/evidence/action-01-database-runtime.json, docs/evidence/action-02-03-real-model-runtime.json, docs/evidence/action-04-git-remote-runtime.json, docs/evidence/phase-08-p08-02-ecs-production.json]}
 issues: [ISSUE-001, ISSUE-002, ISSUE-003, ISSUE-004, ISSUE-005]
-residual_actions: [ACTION-05]
-review: {status: pending_final_review, reviewer: Project Lead, reviewed_at: null, notes: ACTION-05 关闭后才能升级 passed}
+residual_actions: []
+review: {status: accepted, reviewer: Project Lead, reviewed_at: "2026-08-22T16:45:10+08:00", notes: ECS公网HTTPS和真实模型链路已补证，Phase 01历史外部运行条件关闭}

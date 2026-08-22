@@ -28,5 +28,5 @@ acceptance_checks:
     result: pass
     evidence: [docs/evidence/phase-05-p05-05-quality.md, control/project-control.yaml]
 issues: [ISSUE-007, ISSUE-009, ISSUE-014, ISSUE-017, ISSUE-047, ISSUE-048]
-residual_actions: [ACTION-05, ACTION-06]
-review: {status: pending_final_review, reviewer: Project Lead, reviewed_at: null, notes: 本地P0全绿；用户主动停止已由P07-05关闭，公网授权和第二人知识复核仍在后续门}
+residual_actions: [ACTION-06]
+review: {status: pending_final_review, reviewer: Project Lead, reviewed_at: null, notes: 本地P0与公网部署已全绿；仅第二人知识复核仍在后续门}

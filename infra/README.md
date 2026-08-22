@@ -31,6 +31,6 @@ Compose 的应用覆盖变量统一使用 `COMPOSE_*` 前缀（例如 `COMPOSE_L
 
 ## ECS 生产部署
 
-生产环境叠加 `compose.production.yaml`，Caddy 只公开 `80/443`，PostgreSQL、API、Web 均通过 `*_BIND_ADDRESS=127.0.0.1` 绑定宿主回环地址。百炼千问通过现有 OpenAI-compatible Provider 接入，真实 API Key 只能保存在服务器权限 `0600` 的环境文件中。
+生产环境叠加 `compose.production.yaml`，Caddy 只公开 `80/443`，PostgreSQL、API、Web 均通过 `*_BIND_ADDRESS=127.0.0.1` 绑定宿主回环地址。服务器只加载预构建镜像，启动必须带 `--no-build`，不得接收应用源码。百炼千问通过现有 OpenAI-compatible Provider 接入；本部署使用 `sk-sp-` Token Plan Key 和其北京专属端点，真实 API Key 只能保存在服务器权限 `0600` 的独立环境文件中。
 
 完整步骤、回滚和验收命令见 `docs/deployment/ecs-production.md`。

@@ -1,25 +1,39 @@
+{
+	# TLS clients do not normally send SNI for an IP literal. Select the
+	# managed public IP certificate when the ClientHello has no server name.
+	default_sni {$PUBLIC_HOST}
+}
+
 {$PUBLIC_HOST} {
-    encode zstd gzip
+	# Public IP certificates are short-lived and require the Let's Encrypt
+	# shortlived ACME profile. Caddy renews them from the persistent data volume.
+	tls {
+		issuer acme https://acme-v02.api.letsencrypt.org/directory {
+			profile shortlived
+		}
+	}
 
-    @api path /v1/* /healthz /openapi.json /docs* /redoc*
-    handle @api {
-        reverse_proxy api:8010
-    }
+	encode zstd gzip
 
-    handle {
-        reverse_proxy web:3000
-    }
+	@api path /v1/* /healthz /openapi.json /docs* /redoc*
+	handle @api {
+		reverse_proxy api:8010
+	}
 
-    header {
-        -Server
-        X-Content-Type-Options "nosniff"
-        X-Frame-Options "DENY"
-        Referrer-Policy "strict-origin-when-cross-origin"
-        Permissions-Policy "camera=(), microphone=(), geolocation=()"
-    }
+	handle {
+		reverse_proxy web:3000
+	}
 
-    log {
-        output stdout
-        format console
-    }
+	header {
+		-Server
+		X-Content-Type-Options "nosniff"
+		X-Frame-Options "DENY"
+		Referrer-Policy "strict-origin-when-cross-origin"
+		Permissions-Policy "camera=(), microphone=(), geolocation=()"
+	}
+
+	log {
+		output stdout
+		format console
+	}
 }

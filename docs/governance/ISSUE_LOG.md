@@ -46,16 +46,16 @@
 - 行动：ACTION-04
 - 证据：docs/evidence/phase-01-baseline-record.md, docs/evidence/action-04-git-remote-runtime.json
 
-## ISSUE-005 · OPEN
+## ISSUE-005 · RESOLVED
 
 - 发现时间：2026-08-21T16:47:07+08:00
 - 阶段/任务：PHASE-01 / P01-08, P08-02, P08-06
-- 严重度：high；阻断最终验收：True
-- 现象：Render 账号、区域、预算和七天可用性尚未确认。
-- 原因：尚未确认
-- 解决/缓解：等待参赛者授权账号与可能产生费用的操作。
-- 行动：ACTION-05
-- 证据：docs/evidence/phase-01-baseline-record.md
+- 严重度：high；阻断最终验收：False
+- 现象：Phase 01 时公网承载平台、区域、预算和七天可用性尚未确认。
+- 原因：当时缺少已授权的公网运行环境。
+- 解决/缓解：用户提供 Alibaba Cloud ECS 并批准纯镜像部署；公网 IP HTTPS 与真实千问链路已经通过，七天观测单独由 P08-06 管理。
+- 行动：无
+- 证据：docs/evidence/phase-01-baseline-record.md, docs/evidence/phase-08-p08-02-ecs-production.json
 
 ## ISSUE-006 · RESOLVED
 
@@ -771,3 +771,80 @@
 - 解决/缓解：使用独立安全会话，分别断言主演示三轮保持、安全会话一条可见记录且不可进入生成上下文；连续两次演练通过。
 - 行动：无
 - 证据：scripts/run_demo_rehearsal.py, docs/demo/DEMO_SCRIPT_6MIN.md, docs/evidence/phase-08-p08-04-rehearsal-01.json, docs/evidence/phase-08-p08-04-rehearsal-02.json
+
+## ISSUE-071 · RESOLVED
+
+- 发现时间：2026-08-22T15:08:00+08:00
+- 阶段/任务：PHASE-08 / P08-05
+- 严重度：high；阻断最终验收：False
+- 现象：RC1匿名克隆后黄金数据集哈希与manifest不一致，但源工作区校验通过。
+- 原因：生成器按Windows默认写入CRLF，Git检出策略将跟踪文件规范化为LF，manifest记录了提交前工作树字节而非提交后字节。
+- 解决/缓解：生成器固定newline为LF，回归断言禁止CRLF，重生v1和v1.1 manifest；历史评测报告保留原哈希以维持审计真实性。
+- 行动：无
+- 证据：scripts/build_release_golden.py, tests/test_release_golden_dataset.py, evals/golden/release-golden-v1.manifest.json, evals/golden/release-golden-v1.1.manifest.json
+
+## ISSUE-072 · RESOLVED
+
+- 发现时间：2026-08-22T15:20:00+08:00
+- 阶段/任务：PHASE-08 / P08-05
+- 严重度：high；阻断最终验收：False
+- 现象：RC2匿名冷克隆执行npm run typecheck时缺少Next生成的LayoutProps，源工作区因已有.next缓存而误通过。
+- 原因：typecheck脚本直接运行tsc，隐式依赖next dev或build预先生成路由类型。
+- 解决/缓解：typecheck先执行next typegen再运行tsc；RC3与RC4匿名冷克隆在无.next缓存条件下通过类型检查和生产构建。
+- 行动：无
+- 证据：apps/web/package.json, control/project-control.yaml
+
+## ISSUE-073 · RESOLVED
+
+- 发现时间：2026-08-22T15:42:00+08:00
+- 阶段/任务：PHASE-08 / P08-02, P08-05
+- 严重度：medium；阻断最终验收：False
+- 现象：ECS首次部署时Docker Hub拉取Caddy超时，且用户要求服务器只接受镜像、不得接收源码或构建上下文。
+- 原因：服务器外网镜像仓库链路不稳定，源码构建也不符合已确认的交付边界。
+- 解决/缓解：可信本机构建或拉取四镜像，按应用与基础设施分卷docker save，双端SHA-256一致后docker load；加载完成删除服务器归档并确认源码文件计数为0，启动强制--no-build。
+- 行动：无
+- 证据：docs/deployment/ecs-production.md, docs/evidence/phase-08-p08-02-ecs-production.json
+
+## ISSUE-074 · RESOLVED
+
+- 发现时间：2026-08-22T16:03:00+08:00
+- 阶段/任务：PHASE-08 / P08-02, P08-06
+- 严重度：high；阻断最终验收：False
+- 现象：Caddy已监听公网80/443，但Let’s Encrypt HTTP-01和TLS-ALPN-01均从公网连接超时，HTTPS证书未签发。
+- 原因：ECS系统firewalld未运行且iptables INPUT为ACCEPT，阻断点定位为阿里云安全组尚未放行TCP 80/443。
+- 解决/缓解：用户在ECS安全组放行TCP 80和443后，Let’s Encrypt短期IP证书签发成功；公网首页、健康检查和Chromium真实链路全部通过。UDP 443仅用于HTTP/3。
+- 行动：无
+- 证据：docs/evidence/phase-08-p08-02-ecs-production.json, docs/evidence/phase-08-p08-02-ecs-public-browser.json
+
+## ISSUE-075 · RESOLVED
+
+- 发现时间：2026-08-22T16:06:00+08:00
+- 阶段/任务：PHASE-08 / P08-02
+- 严重度：high；阻断最终验收：False
+- 现象：生产API首个真实问答返回provider_rejected_request，绕过应用直连通用DashScope端点得到401 invalid_api_key。
+- 原因：用户密钥为sk-sp开头的Token Plan专属Key，却配置了按量付费通用DashScope Base URL；两类密钥和端点不可混用。
+- 解决/缓解：不回显密钥地分别探测Token Plan与Coding Plan端点；前者以qwen3.7-plus返回200、后者401。生产改用北京Token Plan专属OpenAI兼容端点并仅重建API，三路由、S3、历史与清理演练全部通过。
+- 行动：无
+- 证据：infra/ecs.env.example, docs/deployment/ecs-production.md, docs/evidence/phase-08-p08-02-ecs-production.json
+
+## ISSUE-076 · RESOLVED
+
+- 发现时间：2026-08-22T16:24:00+08:00
+- 阶段/任务：PHASE-08 / P08-02
+- 严重度：high；阻断最终验收：False
+- 现象：临时sslip.io域名在Alibaba Cloud中国大陆节点返回未备案拦截页，应用容器本身正常。
+- 原因：中国大陆公网域名接入触发ICP备案校验，临时域名没有对应备案。
+- 解决/缓解：改为Let’s Encrypt支持的公网IP短期证书，以https://106.14.13.139直接提供服务，不再依赖未备案域名。
+- 行动：无
+- 证据：infra/ecs.env.example, infra/caddy/Caddyfile, docs/evidence/phase-08-p08-02-ecs-production.json
+
+## ISSUE-077 · RESOLVED
+
+- 发现时间：2026-08-22T16:36:00+08:00
+- 阶段/任务：PHASE-08 / P08-02
+- 严重度：medium；阻断最终验收：False
+- 现象：公网IP证书已签发，但不发送SNI的IP客户端握手时Caddy无法选择证书。
+- 原因：IP字面量客户端不保证在ClientHello中发送SNI，Caddy缺少无SNI时的默认证书选择。
+- 解决/缓解：在Caddy全局配置中设置default_sni为PUBLIC_HOST；Windows curl、Python和Chromium均通过受信HTTPS。
+- 行动：无
+- 证据：infra/caddy/Caddyfile, tests/test_production_deployment.py, docs/evidence/phase-08-p08-02-ecs-public-browser.json

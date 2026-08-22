@@ -24,5 +24,5 @@ acceptance_checks:
     result: pass
     evidence: [docs/evidence/phase-06-baseline-record.md, docs/evidence/control-plane-validation.json]
 issues: [ISSUE-005, ISSUE-009, ISSUE-014, ISSUE-017, ISSUE-048]
-residual_actions: [ACTION-05, ACTION-06]
-review: {status: accepted, reviewer: Project Lead, reviewed_at: "2026-08-22T12:06:25+08:00", notes: 允许进入Phase07；既有残余行动继续开放，不得将阶段签署解释为最终交付READY}
+residual_actions: [ACTION-06]
+review: {status: accepted, reviewer: Project Lead, reviewed_at: "2026-08-22T12:06:25+08:00", notes: 允许进入Phase07；公网已由P08-02补证，仅第二人知识复核继续开放}
