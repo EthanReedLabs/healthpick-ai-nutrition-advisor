@@ -20,6 +20,10 @@ def digest(path: Path) -> str:
 def test_errata_preserves_v1_and_thresholds_and_validates() -> None:
     base_manifest = json.loads(BASE_MANIFEST.read_text(encoding="utf-8"))
     errata_manifest = json.loads(ERRATA_MANIFEST.read_text(encoding="utf-8"))
+    assert b"\r\n" not in BASE.read_bytes()
+    assert b"\r\n" not in ERRATA.read_bytes()
+    assert BASE.read_bytes().endswith(b"\n")
+    assert ERRATA.read_bytes().endswith(b"\n")
     assert digest(BASE) == base_manifest["dataset_sha256"]
     assert errata_manifest["base_dataset_sha256"] == base_manifest["dataset_sha256"]
     assert errata_manifest["thresholds_sha256"] == base_manifest["thresholds_sha256"]

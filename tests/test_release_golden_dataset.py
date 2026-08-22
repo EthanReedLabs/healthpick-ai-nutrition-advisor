@@ -34,9 +34,12 @@ def test_release_golden_set_has_exact_frozen_coverage_and_valid_evidence() -> No
 def test_release_dataset_manifest_hashes_and_thresholds_are_frozen() -> None:
     manifest = json.loads(MANIFEST.read_text(encoding="utf-8"))
     thresholds = json.loads(THRESHOLDS.read_text(encoding="utf-8"))
+    dataset_bytes = DATASET.read_bytes()
 
     assert manifest["status"] == "PASS"
-    assert manifest["dataset_sha256"] == hashlib.sha256(DATASET.read_bytes()).hexdigest()
+    assert b"\r\n" not in dataset_bytes
+    assert dataset_bytes.endswith(b"\n")
+    assert manifest["dataset_sha256"] == hashlib.sha256(dataset_bytes).hexdigest()
     assert manifest["thresholds_sha256"] == hashlib.sha256(THRESHOLDS.read_bytes()).hexdigest()
     assert thresholds["frozen_before_first_run"] is True
     assert thresholds["minimums"]["numeric_fact_accuracy"] == 1.0

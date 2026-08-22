@@ -454,6 +454,7 @@ def main() -> int:
         )
         + "\n",
         encoding="utf-8",
+        newline="\n",
     )
     validation = validate_release_cases(tuple(cases), chunks)
     generated_at = datetime.now().astimezone().isoformat()
@@ -469,10 +470,16 @@ def main() -> int:
         **validation,
     }
     MANIFEST.parent.mkdir(parents=True, exist_ok=True)
-    MANIFEST.write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    MANIFEST.write_text(
+        json.dumps(manifest, ensure_ascii=False, indent=2) + "\n",
+        encoding="utf-8",
+        newline="\n",
+    )
     VALIDATION.parent.mkdir(parents=True, exist_ok=True)
     VALIDATION.write_text(
-        json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
+        json.dumps(manifest, ensure_ascii=False, indent=2) + "\n",
+        encoding="utf-8",
+        newline="\n",
     )
     print(
         f"DATASET RESULT: {validation['status']} cases={validation['case_count']} "

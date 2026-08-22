@@ -142,6 +142,7 @@ def main() -> int:
         "\n".join(json.dumps(row, ensure_ascii=False, separators=(",", ":")) for row in rows)
         + "\n",
         encoding="utf-8",
+        newline="\n",
     )
     cases = load_release_cases(OUTPUT_DATASET)
     chunks = load_chunk_index(
@@ -172,9 +173,15 @@ def main() -> int:
         **validation,
     }
     OUTPUT_MANIFEST.write_text(
-        json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
+        json.dumps(manifest, ensure_ascii=False, indent=2) + "\n",
+        encoding="utf-8",
+        newline="\n",
     )
-    EVIDENCE.write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    EVIDENCE.write_text(
+        json.dumps(manifest, ensure_ascii=False, indent=2) + "\n",
+        encoding="utf-8",
+        newline="\n",
+    )
     print(
         f"ERRATA RESULT: PASS cases={validation['case_count']} turns={validation['turn_count']} "
         f"changes={len(changes)} details={EVIDENCE.relative_to(ROOT)}"
