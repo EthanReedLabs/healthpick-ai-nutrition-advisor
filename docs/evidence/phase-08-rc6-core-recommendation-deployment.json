@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "evidence_id": "PHASE-08-RC6-CORE-RECOMMENDATION-DEPLOYMENT",
+  "captured_at": "2026-08-22T18:05:01+08:00",
+  "release": {
+    "tag": "v0.1.0-rc6",
+    "commit": "62de15c7d7d553b96b4984f425d4f78dba1a50b4",
+    "public_origin": "https://106.14.13.139",
+    "server_release_path": "/opt/healthpick/releases/62de15c7d7d553b96b4984f425d4f78dba1a50b4"
+  },
+  "transfer": {
+    "mode": "docker_images_only_plus_deployment_descriptors",
+    "archive_bytes": 188994048,
+    "archive_sha256": "716538FAD400F97B4F34720F386EBBFF6B0D999805A0964C4EBF468B2FCE4C8B",
+    "server_sha256_match": true,
+    "server_release_descriptor_file_count": 3,
+    "application_source_uploaded": false,
+    "temporary_archive_removed_after_load": true
+  },
+  "images": {
+    "api": {
+      "name": "healthpick-api:v0.1.0-rc6",
+      "server_image_id": "sha256:a395855ababb0166ed892c0a243d0e4dbaffd7f5eccb34ac17bfa397a483cda0",
+      "container_status": "healthy"
+    },
+    "web": {
+      "name": "healthpick-web:v0.1.0-rc6",
+      "server_image_id": "sha256:c5149aca23fa6ddc38ea8c0cdc15839203c0a0b414c9ddb9f8495669686affda",
+      "container_status": "healthy"
+    }
+  },
+  "checks": {
+    "https_health": "PASS",
+    "production_bailian_qwen_mode": "PASS",
+    "fat_loss_ready": "PASS",
+    "muscle_gain_ready": "PASS",
+    "stable_glucose_ready": "PASS",
+    "allergy_constraint_fail_closed": "PASS",
+    "missing_goal_fail_closed": "PASS",
+    "public_reviewed_plan_card": "PASS",
+    "browser_console_errors": 0
+  },
+  "released_rule_count": 7,
+  "remaining_quarantined_record_count": 73,
+  "browser_evidence": "output/playwright/phase-08-rc6-public-reviewed-plan-1440x1000.png",
+  "status": "PASS"
+}

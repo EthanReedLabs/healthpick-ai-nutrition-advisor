@@ -7,7 +7,7 @@ completed_at: "2026-08-22T16:13:19+08:00"
 recorded_at: "2026-08-22"
 backfilled: false
 owner: DEVOPS
-summary: 独立Compose新卷复现通过；ECS以纯镜像和--no-build启动，真实百炼Token Plan qwen3.7-plus三路由及S3演练通过；公网IP短期受信证书、HTTPS和浏览器全链路通过。
+summary: 独立Compose新卷复现通过；ECS以纯镜像和--no-build启动，真实百炼Token Plan qwen3.7-plus三路由及S3演练通过；rc6核心推荐规则已完成纯镜像升级和公网浏览器验收。
 deliverables:
   - compose.yaml
   - scripts/smoke_compose_lifecycle.py
@@ -15,6 +15,7 @@ deliverables:
   - docs/evidence/phase-08-p08-02-quality.md
   - docs/evidence/phase-08-p08-02-ecs-production.json
   - docs/evidence/phase-08-p08-02-ecs-public-browser.json
+  - docs/evidence/phase-08-rc6-core-recommendation-deployment.json
 acceptance_checks:
   - name: 新空卷迁移seed和生产镜像构建通过
     result: pass
@@ -37,6 +38,9 @@ acceptance_checks:
   - name: 百炼TokenPlan千问真实三路由与S3演练
     result: pass
     evidence: [docs/evidence/phase-08-p08-02-ecs-production.json]
+  - name: rc6核心推荐规则纯镜像升级与公网方案卡
+    result: pass
+    evidence: [docs/evidence/phase-08-rc6-core-recommendation-deployment.json, output/playwright/phase-08-rc6-public-reviewed-plan-1440x1000.png]
 issues: [ISSUE-005, ISSUE-009, ISSUE-067, ISSUE-068, ISSUE-073, ISSUE-074, ISSUE-075, ISSUE-076, ISSUE-077]
 residual_actions: []
-review: {status: accepted, reviewer: Project Lead, reviewed_at: "2026-08-22T16:45:10+08:00", notes: ECS纯镜像栈、真实千问、公网HTTPS、浏览器来源隔离与S3急症停止均通过；七天续期监测由P08-06独立管理}
+review: {status: accepted, reviewer: Project Lead, reviewed_at: "2026-08-22T18:05:01+08:00", notes: ECS纯镜像栈、真实千问、公网HTTPS、浏览器来源隔离、S3急症停止及rc6已复核推荐方案均通过}
