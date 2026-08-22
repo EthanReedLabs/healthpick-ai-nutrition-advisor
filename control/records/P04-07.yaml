@@ -35,4 +35,4 @@ acceptance_checks:
     evidence: [docs/evidence/control-plane-validation.json]
 issues: [ISSUE-028, ISSUE-029, ISSUE-030, ISSUE-031, ISSUE-032]
 residual_actions: []
-review: {status: pending_final_review, reviewer: Project Lead, reviewed_at: null, notes: 本地阶段准入通过；ACTION-06 关闭前保持真实推荐 fail-closed}
+review: {status: accepted, reviewer: Project Lead, reviewed_at: "2026-08-22T20:36:00+08:00", notes: 用户授权由Codex辅助执行最终证据审计；Phase04退出门及真实推荐最终放行证据已接受}

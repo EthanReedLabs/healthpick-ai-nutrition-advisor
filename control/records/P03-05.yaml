@@ -30,4 +30,4 @@ acceptance_checks:
     evidence: [tests/api/test_chat_sse.py, docs/evidence/phase-03-api-pytest.xml]
 issues: [ISSUE-006]
 residual_actions: []
-review: {status: pending_final_review, reviewer: Project Lead, reviewed_at: null, notes: 真实 LLM 浏览器证据由 ACTION-02/P03-07 留存；P04 安全规则后续补齐}
+review: {status: accepted, reviewer: Project Lead, reviewed_at: "2026-08-22T20:36:00+08:00", notes: 用户授权由Codex辅助执行最终证据审计；真实LLM、SSE、会话和安全后续证据已接受}

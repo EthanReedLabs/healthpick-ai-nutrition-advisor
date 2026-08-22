@@ -40,4 +40,4 @@ acceptance_checks:
     evidence: [docs/evidence/current-pytest.xml, docs/evidence/phase-04-p04-01-web-vitest.xml]
 issues: [ISSUE-027, ISSUE-028]
 residual_actions: []
-review: {status: pending_final_review, reviewer: Project Lead, reviewed_at: null, notes: 待最终总纲验收复核；P04-03 风险分级不属于本任务}
+review: {status: accepted, reviewer: Project Lead, reviewed_at: "2026-08-22T20:36:00+08:00", notes: 用户授权由Codex辅助执行最终证据审计；健康档案和约束模型证据已接受}

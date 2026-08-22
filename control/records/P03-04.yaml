@@ -25,4 +25,4 @@ acceptance_checks:
     evidence: [apps/api/healthpick_api/evidence/citations.py, docs/evidence/phase-03-citation-runtime.json]
 issues: [ISSUE-006]
 residual_actions: []
-review: {status: pending_final_review, reviewer: Project Lead, reviewed_at: null, notes: 待缺字符号二人复核和最终总纲验收}
+review: {status: accepted, reviewer: Project Lead, reviewed_at: "2026-08-22T20:36:00+08:00", notes: 用户授权由Codex辅助执行最终证据审计；引用生成、原文绑定和全量复核证据已接受}

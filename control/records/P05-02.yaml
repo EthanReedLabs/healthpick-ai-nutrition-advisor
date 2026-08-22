@@ -42,4 +42,4 @@ acceptance_checks:
     evidence: [docs/evidence/phase-05-p05-02-quality.md, docs/evidence/phase-05-p05-02-api-pytest.xml, docs/evidence/phase-05-p05-02-web-vitest.xml]
 issues: [ISSUE-017, ISSUE-035, ISSUE-036, ISSUE-037]
 residual_actions: []
-review: {status: pending_final_review, reviewer: Project Lead, reviewed_at: null, notes: P05-02 无残余行动；P05-03 继续完成三档错误和加载状态体验}
+review: {status: accepted, reviewer: Project Lead, reviewed_at: "2026-08-22T20:36:00+08:00", notes: 用户授权由Codex辅助执行最终证据审计；输入边界、错误、超时和同请求恢复证据已接受}

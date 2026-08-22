@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "evidence_id": "FINAL-PUBLIC-PROBE-RC8",
+  "captured_at": "2026-08-22T20:40:00+08:00",
+  "status": "PASS",
+  "release": {
+    "commit": "6e56b96f7d5ac4ffd306cdcedabfac7366034f44",
+    "tag": "v0.1.0-rc8",
+    "origin": "https://106.14.13.139"
+  },
+  "https": {
+    "certificate_verification_skipped": false,
+    "root_status": 200,
+    "server": "Caddy",
+    "security_headers": [
+      "X-Content-Type-Options: nosniff",
+      "X-Frame-Options: DENY",
+      "Referrer-Policy: strict-origin-when-cross-origin",
+      "Permissions-Policy: camera=(), microphone=(), geolocation=()"
+    ]
+  },
+  "healthz": {
+    "status": "ok",
+    "service": "healthpick-api",
+    "environment": "production",
+    "llm_mode": "real",
+    "retrieval_mode": "keyword",
+    "database": "conversation schema ready"
+  },
+  "evaluation": {
+    "endpoint": "/v1/evaluation/summary",
+    "automatic_status": "PASS",
+    "overall_status": "PASS",
+    "gates_passed": 9,
+    "gates_total": 9,
+    "manual_review": "PASS",
+    "structured_review": "74 verified / 6 rejected / 0 pending"
+  },
+  "diagnostic_note": "The first probe used non-contract path /health and correctly received 404; Caddy and OpenAPI define /healthz, which returned status ok.",
+  "secrets_recorded": false
+}

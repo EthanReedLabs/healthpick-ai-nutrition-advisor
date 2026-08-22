@@ -15,4 +15,4 @@ acceptance_checks:
   - {name: 数据库向量与全量事实处置放行, result: pass, evidence: [docs/evidence/phase-02-knowledge-validation.json, docs/evidence/action-06-full-structured-fact-review.json]}
 issues: [ISSUE-001, ISSUE-003, ISSUE-007, ISSUE-008, ISSUE-009, ISSUE-010, ISSUE-011]
 residual_actions: []
-review: {status: pending_final_review, reviewer: Project Lead, reviewed_at: null, notes: 三项运行/人工门禁关闭后升级 passed}
+review: {status: accepted, reviewer: Project Lead, reviewed_at: "2026-08-22T20:36:00+08:00", notes: 用户授权由Codex辅助执行最终证据审计；导入、隔离、向量和全量人工处置门均已接受}

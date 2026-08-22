@@ -3,9 +3,9 @@
 > 本文件由 `scripts/control_plane.py` 从 `control/project-control.yaml` 生成；请勿手工修改状态。
 
 - 结构校验：`PASS`
-- 最终验收就绪度：`NOT_READY`
+- 最终验收就绪度：`READY`
 - 当前阶段：`PHASE-08`
-- 最近审计：`2026-08-22T20:35:13.820931+08:00`
+- 最近审计：`2026-08-22T20:46:45.153917+08:00`
 
 ## 阶段
 
@@ -18,7 +18,7 @@
 | PHASE-05 | P0 完整与本地部署 | `passed` | docs/evidence/phase-05-baseline-record.md |
 | PHASE-06 | P1 产品化能力 | `passed` | docs/evidence/phase-06-baseline-record.md |
 | PHASE-07 | 评测冲分与功能冻结 | `passed` | docs/evidence/phase-07-baseline-record.md |
-| PHASE-08 | 发布演示与最终验收 | `in_progress` | — |
+| PHASE-08 | 发布演示与最终验收 | `passed` | docs/evidence/phase-08-baseline-record.md |
 
 ## 当前可开始任务
 
@@ -82,7 +82,7 @@
 | PHASE-08 | P08-04 | 演示资产与双次连续演练 | LEAD/QA_DOCS | `passed` | control/records/P08-04.yaml |
 | PHASE-08 | P08-05 | Release tag 远端干净克隆与提交候选冻结 | DEVOPS/LEAD | `passed` | control/records/P08-05.yaml |
 | PHASE-08 | P08-06 | 短期公网可用性与停机责任确认 | DEVOPS/LEAD | `passed` | control/records/P08-06.yaml |
-| PHASE-08 | P08-07 | 执行最终总纲验收并签署 | LEAD | `in_progress` | — |
+| PHASE-08 | P08-07 | 执行最终总纲验收并签署 | LEAD | `passed` | control/records/P08-07.yaml |
 
 ## 开放行动
 
@@ -100,22 +100,21 @@
 
 ## 任务状态计数
 
-- in_progress: 1
-- passed: 54
+- passed: 55
 
 ## 最终验收
 
-当前共有 `45` 个机器判定阻断项。完整清单见 `docs/evidence/control-plane-validation.md`。
+当前共有 `0` 个机器判定阻断项。完整清单见 `docs/evidence/control-plane-validation.md`。
 
 | Gate | 验收项 | 状态 |
 |---|---|---|
-| FINAL-01 | 注册范围内全部任务关闭且无 PASS WITH ACTION | `not_started` |
-| FINAL-02 | 全部任务完成记录已复核接受 | `not_started` |
-| FINAL-03 | P0/P1 需求追踪与客观证据完整 | `not_started` |
-| FINAL-04 | 知识准确引用隔离与医疗安全全绿 | `not_started` |
-| FINAL-05 | 自动测试回归性能安全和隐私全绿 | `not_started` |
-| FINAL-06 | 公网 HTTPS 与 Compose 干净环境复现通过 | `not_started` |
-| FINAL-07 | 文档 AI 披露演示和提交资产齐全 | `not_started` |
-| FINAL-08 | Release commit/tag/hash/远端干净克隆一致 | `not_started` |
-| FINAL-09 | 短期公网可用性与赛后停机责任已确认 | `not_started` |
-| FINAL-10 | Project Lead 最终签署且不存在开放阻断 | `not_started` |
+| FINAL-01 | 注册范围内全部任务关闭且无 PASS WITH ACTION | `passed` |
+| FINAL-02 | 全部任务完成记录已复核接受 | `passed` |
+| FINAL-03 | P0/P1 需求追踪与客观证据完整 | `passed` |
+| FINAL-04 | 知识准确引用隔离与医疗安全全绿 | `passed` |
+| FINAL-05 | 自动测试回归性能安全和隐私全绿 | `passed` |
+| FINAL-06 | 公网 HTTPS 与 Compose 干净环境复现通过 | `passed` |
+| FINAL-07 | 文档 AI 披露演示和提交资产齐全 | `passed` |
+| FINAL-08 | Release commit/tag/hash/远端干净克隆一致 | `passed` |
+| FINAL-09 | 短期公网可用性与赛后停机责任已确认 | `passed` |
+| FINAL-10 | Project Lead 最终签署且不存在开放阻断 | `passed` |

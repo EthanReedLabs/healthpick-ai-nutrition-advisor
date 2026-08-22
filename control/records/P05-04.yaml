@@ -37,4 +37,4 @@ acceptance_checks:
     evidence: [infra/docker/api.Dockerfile, infra/docker/web.Dockerfile, docs/evidence/phase-05-p05-04-quality.md, docs/evidence/phase-05-p05-04-pytest.xml, docs/evidence/phase-05-p05-04-web-vitest.xml]
 issues: [ISSUE-038, ISSUE-039, ISSUE-040, ISSUE-041]
 residual_actions: []
-review: {status: pending_final_review, reviewer: Project Lead, reviewed_at: null, notes: P05-04 无残余行动；下一优先任务为 P05-03 三档响应式与交互状态}
+review: {status: accepted, reviewer: Project Lead, reviewed_at: "2026-08-22T20:36:00+08:00", notes: 用户授权由Codex辅助执行最终证据审计；Compose、数据库和RC8纯镜像部署证据已接受}

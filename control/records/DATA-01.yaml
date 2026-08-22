@@ -14,5 +14,4 @@ acceptance_checks:
   - {name: 18 张页面视觉证据存在, result: pass, evidence: [docs/evidence/phase-02-baseline-record.md]}
 issues: [ISSUE-006]
 residual_actions: []
-review: {status: pending_final_review, reviewer: Project Lead, reviewed_at: null, notes: 缺字符号问题由 ACTION-07 独立承接}
-
+review: {status: accepted, reviewer: Project Lead, reviewed_at: "2026-08-22T20:36:00+08:00", notes: 用户授权由Codex辅助执行最终证据审计；交付物、验收检查及ACTION-07后续成功证据已复核接受}

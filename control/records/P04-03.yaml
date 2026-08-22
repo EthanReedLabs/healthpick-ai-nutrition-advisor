@@ -40,4 +40,4 @@ acceptance_checks:
     evidence: [docs/evidence/current-pytest.xml, docs/evidence/control-plane-validation.json]
 issues: [ISSUE-029]
 residual_actions: []
-review: {status: pending_final_review, reviewer: Project Lead, reviewed_at: null, notes: ISSUE-029 属于 P04-04 输出校验范围，不回退 P04-03 的模型前确定性安全门验收}
+review: {status: accepted, reviewer: Project Lead, reviewed_at: "2026-08-22T20:36:00+08:00", notes: 用户授权由Codex辅助执行最终证据审计；模型前禁忌硬过滤与风险分级证据已接受}

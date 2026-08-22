@@ -39,4 +39,4 @@ acceptance_checks:
     evidence: [docs/evidence/current-pytest.xml]
 issues: [ISSUE-032]
 residual_actions: []
-review: {status: pending_final_review, reviewer: Project Lead, reviewed_at: null, notes: ACTION-06 仅约束真实推荐事实放行，不影响本安全黄金集的规则与隔离验收}
+review: {status: accepted, reviewer: Project Lead, reviewed_at: "2026-08-22T20:36:00+08:00", notes: 用户授权由Codex辅助执行最终证据审计；推荐安全黄金集、API回归和ACTION-06关闭证据已接受}

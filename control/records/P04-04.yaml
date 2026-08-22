@@ -37,4 +37,4 @@ acceptance_checks:
     evidence: [docs/evidence/current-pytest.xml, docs/evidence/phase-04-p04-04-design.md]
 issues: [ISSUE-029, ISSUE-032]
 residual_actions: []
-review: {status: pending_final_review, reviewer: Project Lead, reviewed_at: null, notes: P04-06 已验证安全类别覆盖率、零容忍阈值和真实并发回退}
+review: {status: accepted, reviewer: Project Lead, reviewed_at: "2026-08-22T20:36:00+08:00", notes: 用户授权由Codex辅助执行最终证据审计；输出校验、拒答、免责声明及黄金集后续证据已接受}

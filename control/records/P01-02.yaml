@@ -14,5 +14,4 @@ acceptance_checks:
   - {name: 开发部署主备路径明确, result: pass, evidence: [docs/decisions/ADR-002-development-and-deployment-baseline.md]}
 issues: []
 residual_actions: []
-review: {status: pending_final_review, reviewer: Project Lead, reviewed_at: null, notes: 待最终总纲验收复核}
-
+review: {status: accepted, reviewer: Project Lead, reviewed_at: "2026-08-22T20:36:00+08:00", notes: 用户授权由Codex辅助执行最终证据审计；技术与部署决策及RC8成功证据已接受}

@@ -10,7 +10,7 @@ phases:
   - {id: PHASE-05, title: P0 完整与本地部署, status: passed, required: true, exit_record: docs/evidence/phase-05-baseline-record.md}
   - {id: PHASE-06, title: P1 产品化能力, status: passed, required: true, exit_record: docs/evidence/phase-06-baseline-record.md}
   - {id: PHASE-07, title: 评测冲分与功能冻结, status: passed, required: true, exit_record: docs/evidence/phase-07-baseline-record.md}
-  - {id: PHASE-08, title: 发布演示与最终验收, status: in_progress, required: true, exit_record: null}
+  - {id: PHASE-08, title: 发布演示与最终验收, status: passed, required: true, exit_record: docs/evidence/phase-08-baseline-record.md}
 
 tasks:
   - {id: P01-01, phase: PHASE-01, title: 冻结需求范围与追踪矩阵, priority: P0, required: true, owner: LEAD, status: passed, dependencies: [], record: control/records/P01-01.yaml, evidence: [docs/01-requirements-traceability.md, docs/evidence/phase-01-ownership-baseline.md], residual_actions: []}
@@ -74,7 +74,7 @@ tasks:
   - {id: P08-04, phase: PHASE-08, title: 演示资产与双次连续演练, priority: GATE, required: true, owner: LEAD/QA_DOCS, status: passed, dependencies: [P08-02, P08-03], record: control/records/P08-04.yaml, evidence: [docs/evidence/phase-08-p08-04-quality.md, docs/evidence/phase-08-p08-04-rehearsal-01.json, docs/evidence/phase-08-p08-04-rehearsal-02.json, docs/evidence/phase-08-rc8-final-rehearsal.json, docs/evidence/phase-08-rc8-final-demo.json, docs/demo/DEMO_SCRIPT_6MIN.md, docs/demo/DEMO_RUNBOOK.md, docs/demo/JUDGE_QA.md, docs/demo/ASSET_INDEX.md, docs/demo/assets/healthpick-rc8-final-s3.png, output/playwright/final-rc8/healthpick-rc8-final-demo-6min.mp4, output/playwright/final-rc8/healthpick-rc8-final-demo.webm, docs/evidence/action-06-full-structured-fact-review.json], residual_actions: []}
   - {id: P08-05, phase: PHASE-08, title: Release tag 远端干净克隆与提交候选冻结, priority: GATE, required: true, owner: DEVOPS/LEAD, status: passed, dependencies: [P08-02, P08-03, P08-04], record: control/records/P08-05.yaml, evidence: [docs/evidence/phase-08-p08-05-quality.md, docs/evidence/phase-08-p08-05-release-candidate.json, docs/evidence/phase-08-rc8-final-deployment.json], residual_actions: []}
   - {id: P08-06, phase: PHASE-08, title: 短期公网可用性与停机责任确认, priority: P0, required: true, owner: DEVOPS/LEAD, status: passed, dependencies: [P08-05], record: control/records/P08-06.yaml, evidence: [docs/evidence/phase-08-p08-06-quality.md, docs/evidence/phase-08-p08-06-availability.json], residual_actions: []}
-  - {id: P08-07, phase: PHASE-08, title: 执行最终总纲验收并签署, priority: GATE, required: true, owner: LEAD, status: in_progress, dependencies: [P08-05, P08-06], record: null, evidence: [], residual_actions: []}
+  - {id: P08-07, phase: PHASE-08, title: 执行最终总纲验收并签署, priority: GATE, required: true, owner: LEAD, status: passed, dependencies: [P08-05, P08-06], record: control/records/P08-07.yaml, evidence: [docs/evidence/final-acceptance-signoff.json, docs/evidence/final-acceptance-signoff.md, docs/evidence/final-task-record-review.json, docs/evidence/final-public-probe.json, docs/evidence/phase-08-baseline-record.md, docs/evidence/control-plane-validation.json], residual_actions: []}
 
 actions:
   - {id: ACTION-01, title: Docker/PostgreSQL/pgvector 运行态恢复, owner: DEVOPS/LEAD, deadline: T+12, status: closed, blocks: [DATA-05, DATA-06, P05-04, P08-02], evidence: [docs/evidence/action-01-database-runtime.json]}
@@ -1059,21 +1059,33 @@ issues:
     resolution: 不擅自公开源码；改用现有授权凭据从远端RC8标签创建全新浅克隆，提交、tag、tree、锁定安装和全部质量门一致通过；提交时如需评委读源码须授予访问权或上传归档。
     evidence: [docs/evidence/phase-08-p08-05-release-candidate.json, docs/evidence/phase-08-p08-05-quality.md]
     action_ids: []
+  - id: ISSUE-082
+    discovered_at: "2026-08-22T20:39:00+08:00"
+    phase: PHASE-08
+    task_ids: [P08-07]
+    severity: low
+    status: resolved
+    blocks_final: false
+    symptom: 最终公网健康探针首次请求非契约路径/health并返回404。
+    cause: 健康路径记忆错误；Caddy与OpenAPI实际公开/healthz。
+    resolution: 只读核对Caddyfile和OpenAPI后改探/healthz，返回production、llm real和database schema ready；HTTPS根页及评测摘要同时通过。
+    evidence: [infra/caddy/Caddyfile, packages/shared/openapi/healthpick.openapi.json, docs/evidence/final-public-probe.json]
+    action_ids: []
 final_gates:
-  - {id: FINAL-01, title: 注册范围内全部任务关闭且无 PASS WITH ACTION, status: not_started, required_task_ids: [P08-07], evidence: []}
-  - {id: FINAL-02, title: 全部任务完成记录已复核接受, status: not_started, required_task_ids: [P08-07], evidence: []}
-  - {id: FINAL-03, title: P0/P1 需求追踪与客观证据完整, status: not_started, required_task_ids: [P05-05, P06-05, P08-03], evidence: []}
-  - {id: FINAL-04, title: 知识准确引用隔离与医疗安全全绿, status: not_started, required_task_ids: [DATA-06, P04-06, P07-02], evidence: []}
-  - {id: FINAL-05, title: 自动测试回归性能安全和隐私全绿, status: not_started, required_task_ids: [P07-02, P08-01], evidence: []}
-  - {id: FINAL-06, title: 公网 HTTPS 与 Compose 干净环境复现通过, status: not_started, required_task_ids: [P08-02], evidence: []}
-  - {id: FINAL-07, title: 文档 AI 披露演示和提交资产齐全, status: not_started, required_task_ids: [P08-03, P08-04], evidence: []}
-  - {id: FINAL-08, title: Release commit/tag/hash/远端干净克隆一致, status: not_started, required_task_ids: [P08-05], evidence: []}
-  - {id: FINAL-09, title: 短期公网可用性与赛后停机责任已确认, status: not_started, required_task_ids: [P08-06], evidence: []}
-  - {id: FINAL-10, title: Project Lead 最终签署且不存在开放阻断, status: not_started, required_task_ids: [P08-07], evidence: []}
+  - {id: FINAL-01, title: 注册范围内全部任务关闭且无 PASS WITH ACTION, status: passed, required_task_ids: [P08-07], evidence: [docs/evidence/control-plane-validation.json, docs/evidence/final-acceptance-signoff.json]}
+  - {id: FINAL-02, title: 全部任务完成记录已复核接受, status: passed, required_task_ids: [P08-07], evidence: [docs/evidence/final-task-record-review.json, control/records/P08-07.yaml]}
+  - {id: FINAL-03, title: P0/P1 需求追踪与客观证据完整, status: passed, required_task_ids: [P05-05, P06-05, P08-03], evidence: [docs/01-requirements-traceability.md, docs/evidence/phase-05-p05-05-p0-traceability.md, docs/evidence/final-release-doc-validation.json]}
+  - {id: FINAL-04, title: 知识准确引用隔离与医疗安全全绿, status: passed, required_task_ids: [DATA-06, P04-06, P07-02], evidence: [docs/evidence/action-06-full-structured-fact-review.json, docs/evidence/action-07-unknown-glyph-exclusion.json, docs/evidence/phase-04-p04-06-golden.json, evals/reports/release-v1-20260822T200205387257+0800/summary.json]}
+  - {id: FINAL-05, title: 自动测试回归性能安全和隐私全绿, status: passed, required_task_ids: [P07-02, P08-01], evidence: [docs/evidence/current-pytest.xml, docs/evidence/current-web-vitest.xml, evals/reports/release-v1-20260822T200205387257+0800/summary.json, docs/evidence/phase-08-p08-01-secret-scan.json, docs/evidence/final-security-audit.json, docs/evidence/final-release-doc-validation.json]}
+  - {id: FINAL-06, title: 公网 HTTPS 与 Compose 干净环境复现通过, status: passed, required_task_ids: [P08-02], evidence: [docs/evidence/final-public-probe.json, docs/evidence/phase-08-rc8-final-deployment.json, docs/evidence/phase-08-p08-02-compose.json, docs/evidence/phase-08-p08-05-release-candidate.json]}
+  - {id: FINAL-07, title: 文档 AI 披露演示和提交资产齐全, status: passed, required_task_ids: [P08-03, P08-04], evidence: [README.md, docs/AI_USAGE.md, docs/demo/ASSET_INDEX.md, docs/evidence/phase-08-rc8-final-demo.json, docs/evidence/final-release-doc-validation.json]}
+  - {id: FINAL-08, title: Release commit/tag/hash/远端干净克隆一致, status: passed, required_task_ids: [P08-05], evidence: [docs/evidence/phase-08-p08-05-release-candidate.json, docs/evidence/phase-08-rc8-final-deployment.json, docs/evidence/final-acceptance-signoff.json]}
+  - {id: FINAL-09, title: 短期公网可用性与赛后停机责任已确认, status: passed, required_task_ids: [P08-06], evidence: [docs/evidence/phase-08-p08-06-availability.json, docs/evidence/phase-08-p08-06-quality.md, docs/evidence/final-public-probe.json]}
+  - {id: FINAL-10, title: Project Lead 最终签署且不存在开放阻断, status: passed, required_task_ids: [P08-07], evidence: [docs/evidence/final-acceptance-signoff.json, docs/evidence/final-acceptance-signoff.md, docs/evidence/control-plane-validation.json]}
 
 release:
   commit: 6e56b96f7d5ac4ffd306cdcedabfac7366034f44
   tag: v0.1.0-rc8
   public_url: https://106.14.13.139
   compose_probe: docs/evidence/phase-08-rc8-final-deployment.json
-  final_signoff: null
+  final_signoff: docs/evidence/final-acceptance-signoff.md

@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "evidence_id": "FINAL-ACCEPTANCE-RC8",
+  "signed_at": "2026-08-22T20:43:00+08:00",
+  "decision": "ACCEPTED",
+  "release_scope": {
+    "application_commit": "6e56b96f7d5ac4ffd306cdcedabfac7366034f44",
+    "tag": "v0.1.0-rc8",
+    "tag_object": "ee2c6c5fee5e4ed4ad78af4977e04295ed4e4ffa",
+    "tree": "cc45e0163bdb489cec1476efe084fc805d8cf9ae",
+    "evidence_base_commit": "c624b4996b757d0a6e917991d2304350060d226a",
+    "public_url": "https://106.14.13.139",
+    "image_archive_sha256": "5FBBF5BC1F89F1F0785C3D21C59ABA21D951F2D5D81351D4385A8498F59B3D51",
+    "api_image_manifest": "sha256:79eb5896e2171464ce4cdef7ee54d343aff74a06a1b97476670d63fc35e4b436",
+    "web_image_manifest": "sha256:7c43d96e155face41d983d671d4c9bbc2ce45a5e90f925432451115158cb48e1",
+    "knowledge_manifest_sha256": "718385EFE40C60D276C9AA5F7F683EE8A3DB175E20A93DF9431FEAD0182EDC27",
+    "provider": "Bailian OpenAI-compatible",
+    "llm_model": "qwen3.7-plus",
+    "public_retrieval_mode": "keyword",
+    "database_migrations": [
+      "001_knowledge_base.sql",
+      "002_enable_vector.sql",
+      "003_chunk_embedding_qwen3_1024.sql"
+    ]
+  },
+  "quality": {
+    "application_release_python_tests": "261/261 PASS in the clean v0.1.0-rc8 tag clone",
+    "final_governance_python_tests": "262/262 PASS including final readiness invariants",
+    "web_tests": "30/30 PASS",
+    "ruff": "PASS",
+    "eslint": "PASS",
+    "typescript": "PASS",
+    "production_build": "PASS",
+    "release_evaluation": "9/9 frozen gates PASS",
+    "repository_secret_scan": "540 candidates / 0 findings PASS",
+    "release_document_checks": "7/7 PASS",
+    "structured_fact_disposition": "74 verified / 6 rejected / 0 pending",
+    "released_core_rules": 7
+  },
+  "governance": {
+    "required_tasks_open": 0,
+    "actions_open": 0,
+    "final_blocking_issues_open": 0,
+    "task_record_reviews_pending": 0,
+    "final_gates_passed": "10/10",
+    "non_blocking_open_issues": ["ISSUE-009", "ISSUE-014", "ISSUE-017"]
+  },
+  "signoff": {
+    "role": "Project Lead",
+    "authorization": "User instructed Codex to complete all remaining tasks and perform unified final acceptance",
+    "executed_by": "Codex-assisted evidence audit",
+    "signature_type": "repository project record; not a cryptographic signature or competition-platform receipt"
+  },
+  "external_operator_notes": [
+    "The competition-platform upload and receipt remain external actions and are not fabricated in the repository.",
+    "The GitHub repository is private; grant judge access or upload a source archive if the submission channel requires source review.",
+    "Rotate the Bailian API key after delivery because it appeared once in private tool output; repository, image, report, and video scans contain no key finding."
+  ]
+}

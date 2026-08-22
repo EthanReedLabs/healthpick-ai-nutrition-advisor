@@ -14,4 +14,4 @@ acceptance_checks:
   - {name: 全量逐页复核与最终处置, result: pass, evidence: [docs/evidence/action-06-full-structured-fact-review.json]}
 issues: [ISSUE-006]
 residual_actions: []
-review: {status: pending_final_review, reviewer: Project Lead, reviewed_at: null, notes: ACTION-06/07 关闭后重新生成和校验}
+review: {status: accepted, reviewer: Project Lead, reviewed_at: "2026-08-22T20:36:00+08:00", notes: 用户授权由Codex辅助执行最终证据审计；ACTION-06/07关闭及74/6/0全量复核证据已接受}

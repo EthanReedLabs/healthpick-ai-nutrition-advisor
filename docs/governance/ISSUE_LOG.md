@@ -892,3 +892,14 @@
 - 解决/缓解：不擅自公开源码；改用现有授权凭据从远端RC8标签创建全新浅克隆，提交、tag、tree、锁定安装和全部质量门一致通过；提交时如需评委读源码须授予访问权或上传归档。
 - 行动：无
 - 证据：docs/evidence/phase-08-p08-05-release-candidate.json, docs/evidence/phase-08-p08-05-quality.md
+
+## ISSUE-082 · RESOLVED
+
+- 发现时间：2026-08-22T20:39:00+08:00
+- 阶段/任务：PHASE-08 / P08-07
+- 严重度：low；阻断最终验收：False
+- 现象：最终公网健康探针首次请求非契约路径/health并返回404。
+- 原因：健康路径记忆错误；Caddy与OpenAPI实际公开/healthz。
+- 解决/缓解：只读核对Caddyfile和OpenAPI后改探/healthz，返回production、llm real和database schema ready；HTTPS根页及评测摘要同时通过。
+- 行动：无
+- 证据：infra/caddy/Caddyfile, packages/shared/openapi/healthpick.openapi.json, docs/evidence/final-public-probe.json

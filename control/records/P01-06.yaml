@@ -13,5 +13,4 @@ acceptance_checks:
   - {name: 请求响应引用安全和错误字段明确, result: pass, evidence: [docs/phases/phase-01-baseline-freeze.md]}
 issues: []
 residual_actions: []
-review: {status: pending_final_review, reviewer: Project Lead, reviewed_at: null, notes: Phase 03 需固化为 OpenAPI 后再次验证}
-
+review: {status: accepted, reviewer: Project Lead, reviewed_at: "2026-08-22T20:36:00+08:00", notes: 用户授权由Codex辅助执行最终证据审计；最小API契约已由OpenAPI和261项回归复核接受}

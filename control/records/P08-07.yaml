@@ -1,0 +1,36 @@
+schema_version: 1
+task_id: P08-07
+phase_id: PHASE-08
+outcome: passed
+started_at: "2026-08-22T19:30:00+08:00"
+completed_at: "2026-08-22T20:43:00+08:00"
+recorded_at: "2026-08-22"
+backfilled: false
+owner: LEAD
+summary: 统一反向审计全部55项任务记录、8项行动、最终阻断问题、RC8发布范围、测试、公网、知识、文档、演示和远端克隆后，FINAL-01至10全部通过并以用户授权的Codex辅助证据审计签署ACCEPTED。
+deliverables:
+  - docs/evidence/final-acceptance-signoff.json
+  - docs/evidence/final-acceptance-signoff.md
+  - docs/evidence/final-task-record-review.json
+  - docs/evidence/final-public-probe.json
+  - docs/evidence/phase-08-baseline-record.md
+  - docs/evidence/control-plane-validation.json
+acceptance_checks:
+  - name: 注册范围任务行动和最终阻断全部关闭
+    result: pass
+    evidence: [docs/evidence/control-plane-validation.json, docs/evidence/final-acceptance-signoff.json]
+  - name: 全部55项任务记录已接受且不存在pending复核
+    result: pass
+    evidence: [docs/evidence/final-task-record-review.json, docs/evidence/control-plane-validation.json]
+  - name: P0P1知识安全工程质量和隐私证据全绿
+    result: pass
+    evidence: [docs/01-requirements-traceability.md, docs/evidence/action-06-full-structured-fact-review.json, docs/evidence/current-pytest.xml, docs/evidence/current-web-vitest.xml, docs/evidence/phase-08-p08-01-secret-scan.json, docs/evidence/final-security-audit.json]
+  - name: 公网HTTPS部署演示远端克隆和短期运行责任完整
+    result: pass
+    evidence: [docs/evidence/final-public-probe.json, docs/evidence/phase-08-rc8-final-deployment.json, docs/evidence/phase-08-rc8-final-demo.json, docs/evidence/phase-08-p08-05-release-candidate.json, docs/evidence/phase-08-p08-06-availability.json]
+  - name: FINAL01至10均有同一RC8范围客观证据并签署ACCEPTED
+    result: pass
+    evidence: [docs/evidence/final-acceptance-signoff.json, docs/evidence/final-acceptance-signoff.md, docs/evidence/control-plane-validation.json]
+issues: [ISSUE-079, ISSUE-080, ISSUE-081, ISSUE-082]
+residual_actions: []
+review: {status: accepted, reviewer: Project Lead, reviewed_at: "2026-08-22T20:43:00+08:00", notes: 用户明确要求统一控制面和最终总纲验收；由Codex辅助完成证据反向审计，不声称额外独立人工或平台回执}

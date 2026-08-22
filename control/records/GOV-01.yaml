@@ -32,4 +32,4 @@ acceptance_checks:
     evidence: [docs/evidence/current-pytest.xml]
 issues: [ISSUE-009]
 residual_actions: []
-review: {status: pending_final_review, reviewer: Project Lead, reviewed_at: null, notes: 待最终总纲验收复核}
+review: {status: accepted, reviewer: Project Lead, reviewed_at: "2026-08-22T20:36:00+08:00", notes: 用户授权由Codex辅助执行最终证据审计；统一控制面、记录、问题日志和机器门禁已接受}

@@ -32,4 +32,4 @@ acceptance_checks:
     evidence: [docs/evidence/phase-05-p05-03-quality.md, docs/evidence/phase-05-p05-03-web-vitest.xml]
 issues: [ISSUE-042, ISSUE-043, ISSUE-044, ISSUE-045, ISSUE-046]
 residual_actions: []
-review: {status: pending_final_review, reviewer: Project Lead, reviewed_at: null, notes: P05-03 无残余行动；下一任务为 P05-05 P0追踪矩阵与全回归}
+review: {status: accepted, reviewer: Project Lead, reviewed_at: "2026-08-22T20:36:00+08:00", notes: 用户授权由Codex辅助执行最终证据审计；三档响应式、交互状态和全回归证据已接受}
