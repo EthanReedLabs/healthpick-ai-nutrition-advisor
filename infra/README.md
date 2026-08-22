@@ -1,6 +1,7 @@
 # Infrastructure
 
 - `docker/`：镜像和 Compose 相关配置；
+- `caddy/`：生产 HTTPS 反向代理配置；
 - `migrations/`：数据库结构与版本迁移。
 
 目标交付形态是公网 HTTPS 演示环境与 Docker Compose 本地复现并存。任何部署配置不得包含真实 Secret；生产迁移必须先在空库和已有数据副本上验证。
@@ -27,3 +28,9 @@ Compose 的应用覆盖变量统一使用 `COMPOSE_*` 前缀（例如 `COMPOSE_L
 迁移器每次启动都会按文件名顺序核对 canonical SHA-256：空库执行迁移，结构完整的历史库只登记安全基线，部分结构会拒绝启动。已经进入发布基线的迁移只允许新增，不允许修改；文本迁移由 `.gitattributes` 固定为 LF，校验和同时兼容 CRLF/LF 工作区。
 
 种子器在单事务内验证 A/B/C 清单与源文件哈希，执行 upsert 和陈旧数据清理，并强制校验精确行数及资料 C 路由隔离。迁移或种子失败时 API 不会启动。
+
+## ECS 生产部署
+
+生产环境叠加 `compose.production.yaml`，Caddy 只公开 `80/443`，PostgreSQL、API、Web 均通过 `*_BIND_ADDRESS=127.0.0.1` 绑定宿主回环地址。百炼千问通过现有 OpenAI-compatible Provider 接入，真实 API Key 只能保存在服务器权限 `0600` 的环境文件中。
+
+完整步骤、回滚和验收命令见 `docs/deployment/ecs-production.md`。

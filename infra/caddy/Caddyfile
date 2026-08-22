@@ -1,0 +1,25 @@
+{$PUBLIC_HOST} {
+    encode zstd gzip
+
+    @api path /v1/* /healthz /openapi.json /docs* /redoc*
+    handle @api {
+        reverse_proxy api:8010
+    }
+
+    handle {
+        reverse_proxy web:3000
+    }
+
+    header {
+        -Server
+        X-Content-Type-Options "nosniff"
+        X-Frame-Options "DENY"
+        Referrer-Policy "strict-origin-when-cross-origin"
+        Permissions-Policy "camera=(), microphone=(), geolocation=()"
+    }
+
+    log {
+        output stdout
+        format console
+    }
+}
