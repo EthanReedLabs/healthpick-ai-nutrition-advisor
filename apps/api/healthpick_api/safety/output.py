@@ -83,10 +83,7 @@ def ensure_required_notice(answer: str, safety: SafetyResult) -> str:
         if any(term in normalized for term in EMERGENCY_NOTICE_TERMS):
             return normalized
     elif safety.required_notice == "professional":
-        notice = (
-            "安全提示：以上仅为一般营养信息，不构成医疗诊断或治疗建议；"
-            "请咨询医生或注册营养师后再做个体化调整。"
-        )
+        notice = "健康免责声明：本建议仅供参考，不构成医疗建议，请咨询专业医师或注册营养师。"
         if any(term in normalized for term in PROFESSIONAL_NOTICE_TERMS) and any(
             term in normalized for term in GENERAL_NOTICE_TERMS
         ):

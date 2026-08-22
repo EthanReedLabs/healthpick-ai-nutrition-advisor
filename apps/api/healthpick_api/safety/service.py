@@ -29,6 +29,7 @@ MESSAGE_S1_RULES: tuple[tuple[str, tuple[str, ...]], ...] = (
     ("message_allergy_or_intolerance", ("过敏", "不耐受")),
     ("message_gout", ("痛风", "高尿酸")),
     ("message_hypertension", ("高血压",)),
+    ("message_blood_glucose_concern", ("血糖偏高", "血糖有点高", "血糖高")),
     ("message_gluten_restriction", ("乳糜泻", "麸质")),
 )
 

@@ -94,6 +94,15 @@ def test_message_only_allergy_creates_a_hard_filter_tag() -> None:
     assert "shellfish" in result.blocked_food_tags
 
 
+@pytest.mark.parametrize("message", ["我血糖偏高", "我血糖有点高", "我血糖高"])
+def test_blood_glucose_concern_requires_professional_notice(message: str) -> None:
+    result = SafetyService().assess(message)
+    assert result.risk_level == "S1"
+    assert result.response_mode == "general_only"
+    assert result.required_notice == "professional"
+    assert "message_blood_glucose_concern" in result.matched_rules
+
+
 def test_candidate_filter_rejects_before_any_model_prompt() -> None:
     service = SafetyService()
     safety = service.assess(
@@ -129,7 +138,7 @@ def test_required_notice_is_appended_deterministically() -> None:
     general_answer = ensure_required_notice("一般回答【A-p01-c04】", general)
     professional_answer = ensure_required_notice("一般回答【A-p01-c04】", professional)
     assert "仅供参考" in general_answer
-    assert "咨询医生或注册营养师" in professional_answer
+    assert "本建议仅供参考，不构成医疗建议，请咨询专业医师或注册营养师" in professional_answer
     assert (
         OutputSafetyValidator()
         .validate(
@@ -273,7 +282,7 @@ def test_api_marks_profile_constrained_general_answer_as_s2() -> None:
     assert final["safety"]["response_mode"] == "general_only"
     assert final["safety"]["allow_personalized_targets"] is False
     assert final["citations"]
-    assert "咨询医生或注册营养师" in final["answer"]
+    assert "本建议仅供参考，不构成医疗建议，请咨询专业医师或注册营养师" in final["answer"]
 
 
 def test_pipeline_repairs_a_precise_s2_target_once_and_adds_notice() -> None:
@@ -296,7 +305,7 @@ def test_pipeline_repairs_a_precise_s2_target_once_and_adds_notice() -> None:
     final = parse_final(response.text)
     assert len(provider.requests) == 2
     assert "999克" not in final["answer"]
-    assert "咨询医生或注册营养师" in final["answer"]
+    assert "本建议仅供参考，不构成医疗建议，请咨询专业医师或注册营养师" in final["answer"]
 
 
 @pytest.mark.anyio

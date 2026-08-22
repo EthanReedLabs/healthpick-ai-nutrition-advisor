@@ -468,7 +468,7 @@ def test_s2_evidence_fallback_keeps_professional_boundary() -> None:
     final = ChatFinalEvent.model_validate(parse_sse(response.text)[-1][1])
     assert final.safety.risk_level == "S2"
     assert final.model.name == "deterministic_evidence_fallback"
-    assert "咨询医生或注册营养师" in final.answer
+    assert "本建议仅供参考，不构成医疗建议，请咨询专业医师或注册营养师" in final.answer
     assert OutputSafetyValidator().validate(answer=final.answer, safety=final.safety).valid
 
 
