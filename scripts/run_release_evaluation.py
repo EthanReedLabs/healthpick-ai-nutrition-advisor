@@ -36,6 +36,7 @@ DEFAULT_DATASET = ROOT / "evals" / "datasets" / "release-golden-v1.jsonl"
 DEFAULT_THRESHOLDS = ROOT / "evals" / "golden" / "release-gate-v1.json"
 DEFAULT_MANIFEST = ROOT / "evals" / "golden" / "release-golden-v1.manifest.json"
 DEFAULT_REPORT_ROOT = ROOT / "evals" / "reports"
+ACTION_06_REVIEW = ROOT / "docs" / "evidence" / "action-06-full-structured-fact-review.json"
 
 
 def sha256(path: Path) -> str:
@@ -425,9 +426,16 @@ async def run(args: argparse.Namespace) -> int:
     automatic_status = (
         "PASS" if all(gate["status"] == "PASS" for gate in gates.values()) else "FAIL"
     )
+    review_evidence = json.loads(ACTION_06_REVIEW.read_text(encoding="utf-8"))
+    disposition = review_evidence.get("disposition", {})
+    review_passed = (
+        review_evidence.get("status") == "PASS"
+        and review_evidence.get("action_status") == "CLOSED"
+        and disposition == {"verified": 74, "rejected": 6, "review_required": 0}
+    )
     manual_review = {
-        "status": "PENDING",
-        "action": "ACTION-06",
+        "status": "PASS" if review_passed else "FAIL",
+        "action": "ACTION-06 CLOSED" if review_passed else "ACTION-06",
         "case_count": sum(case.assertion_review == "second_person_required" for case in cases),
     }
     summary = {
@@ -468,7 +476,7 @@ async def run(args: argparse.Namespace) -> int:
         "gates": gates,
         "automatic_status": automatic_status,
         "manual_review": manual_review,
-        "overall_status": "PASS_WITH_ACTION" if automatic_status == "PASS" else "FAIL",
+        "overall_status": "PASS" if automatic_status == "PASS" and review_passed else "FAIL",
         "cleanup_status": cleanup_status,
         "first_attempt_preserved": True,
     }
@@ -485,7 +493,7 @@ async def run(args: argparse.Namespace) -> int:
                 f"ERROR gate={name} actual={gate['actual']} "
                 f"required={gate['operator']}{gate['threshold']}"
             )
-    return 0 if automatic_status == "PASS" else 1
+    return 0 if automatic_status == "PASS" and review_passed else 1
 
 
 def main() -> int:

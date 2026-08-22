@@ -76,13 +76,13 @@ def test_evaluation_summary_is_frozen_and_secret_free(client: TestClient) -> Non
     assert response.status_code == 200
     body = response.json()
     assert body["automatic_status"] == "PASS"
-    assert body["overall_status"] == "PASS_WITH_ACTION"
+    assert body["overall_status"] == "PASS"
     assert body["gates_passed"] == body["gates_total"] == 9
     assert body["case_count"] == 72
     assert body["turn_count"] == 80
     assert body["manual_review"] == {
-        "status": "PENDING",
-        "action": "ACTION-06",
+        "status": "PASS",
+        "action": "ACTION-06 CLOSED",
         "case_count": 53,
     }
     assert body["first_attempt_preserved"] is True

@@ -88,7 +88,9 @@ def main() -> int:
             for name, value in cases.items()
         },
         "released_core_rule_count": 7,
-        "remaining_quarantined_record_count": 73,
+        "verified_structured_record_count": 74,
+        "rejected_unknown_glyph_rule_count": 6,
+        "review_required_record_count": 0,
         "residual_action": None,
     }
     OUTPUT.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")

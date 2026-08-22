@@ -1765,9 +1765,12 @@ export default function ChatWorkspace() {
                 </div>
               </dl>
               <div className="evaluation-review" role="status">
-                <strong>整体状态：待人工复核</strong>
+                <strong>
+                  整体状态：{evaluation.manual_review.status === "PASS" ? "已通过" : "待人工复核"}
+                </strong>
                 <span>
                   {evaluation.manual_review.action} · {evaluation.manual_review.case_count} 个事实用例
+                  {evaluation.manual_review.status === "PASS" ? "完成复核" : ""}
                 </span>
               </div>
               <p>{evaluation.public_note}</p>

@@ -115,7 +115,7 @@ describe("ChatWorkspace", () => {
           turn_count: 80,
           completed_at: "2026-08-22T13:21:40+08:00",
           automatic_status: "PASS",
-          overall_status: "PASS_WITH_ACTION",
+          overall_status: "PASS",
           cleanup_status: "PASS",
           gates_passed: 9,
           gates_total: 9,
@@ -131,7 +131,7 @@ describe("ChatWorkspace", () => {
             first_response_p95_ms: 2814,
           },
           gates: {},
-          manual_review: { status: "PENDING", action: "ACTION-06", case_count: 53 },
+          manual_review: { status: "PASS", action: "ACTION-06 CLOSED", case_count: 53 },
           first_attempt_preserved: true,
           public_note: "自动发布门已通过；人工复核仍独立跟踪。",
         });
@@ -226,8 +226,8 @@ describe("ChatWorkspace", () => {
     const evaluationCard = evaluationHeading.closest(".evaluation-card") as HTMLElement;
     expect(evaluationCard).toHaveTextContent("9/9 自动门通过");
     expect(evaluationCard).toHaveTextContent("95.6%");
-    expect(evaluationCard).toHaveTextContent("整体状态：待人工复核");
-    expect(evaluationCard).toHaveTextContent("ACTION-06 · 53 个事实用例");
+    expect(evaluationCard).toHaveTextContent("整体状态：已通过");
+    expect(evaluationCard).toHaveTextContent("ACTION-06 CLOSED · 53 个事实用例完成复核");
   });
 
   it("registers the current anonymous session and adopts the server canonical session", async () => {

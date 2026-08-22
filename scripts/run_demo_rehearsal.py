@@ -177,11 +177,13 @@ async def run(api_origin: str, web_origin: str, run_id: str) -> dict[str, Any]:
                     "status": recommendation["status"],
                     "requires_second_person_review": False,
                     "released_core_rule_count": 7,
-                    "remaining_quarantined_record_count": 73,
+                    "verified_structured_record_count": 74,
+                    "rejected_unknown_glyph_rule_count": 6,
+                    "review_required_record_count": 0,
                 },
                 "cleanup": "PASS",
-                "residual_actions": ["ACTION-06"],
-                "status": "PASS_WITH_ACTION",
+                "residual_actions": [],
+                "status": "PASS",
             }
         finally:
             await scope.cleanup()

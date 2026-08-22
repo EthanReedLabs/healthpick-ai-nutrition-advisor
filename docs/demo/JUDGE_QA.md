@@ -8,4 +8,4 @@
 - 用户数据保存在哪里？对话在 PostgreSQL，健康档案单独不落库；远程 Provider 会接收生成所需内容，隐私说明已披露。
 - 如何删除？会话级删除、账号 JSON 导出、密码确认永久删除，且删除覆盖与导出同一数据面。
 - 如何复现？`docker compose up -d --build`，新卷按迁移→seed→API→Web 硬依赖启动。
-- 当前还缺什么？Render 授权/七天责任 ACTION-05、事实第二人复核 ACTION-06，以及最终 tag/匿名克隆/提交回执。
+- 当前还缺什么？ACTION-05 与 ACTION-06 均已关闭；当前只剩最终 Release、演示录屏、匿名克隆复验和总纲签署。

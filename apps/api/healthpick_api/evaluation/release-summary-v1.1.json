@@ -8,7 +8,7 @@
   "turn_count": 80,
   "completed_at": "2026-08-22T13:21:40.950215+08:00",
   "automatic_status": "PASS",
-  "overall_status": "PASS_WITH_ACTION",
+  "overall_status": "PASS",
   "cleanup_status": "PASS",
   "gates_passed": 9,
   "gates_total": 9,
@@ -80,10 +80,10 @@
     }
   },
   "manual_review": {
-    "status": "PENDING",
-    "action": "ACTION-06",
+    "status": "PASS",
+    "action": "ACTION-06 CLOSED",
     "case_count": 53
   },
   "first_attempt_preserved": true,
-  "public_note": "自动发布门已通过；知识事实的第二人复核仍按 ACTION-06 独立跟踪，完成前整体状态保持 PASS_WITH_ACTION。"
+  "public_note": "自动发布门 9/9 已通过；80 条结构化事实完成最终处置：74 条通过、6 条因源文缺字驳回并保持隔离、0 条待复核。"
 }
