@@ -130,6 +130,67 @@ def test_validator_requires_inline_reference_for_supported_answer(index: Knowled
     assert "missing_inline_reference" in validation.error_codes
 
 
+def test_validator_rejects_an_uncited_factual_clause(index: KnowledgeIndex) -> None:
+    decision, bundle = bundle_for("膳食纤维营养", index)
+    citation = bundle.citations[0]
+    validation = EvidenceValidator(index).validate(
+        answer=(f"膳食纤维有助于促进肠道蠕动【{citation.chunk_id}】。每天推荐摄入100克。"),
+        citations=(citation,),
+        decision=decision,
+    )
+    assert "uncited_factual_claim" in validation.error_codes
+
+
+def test_validator_rejects_grouped_reference_syntax(index: KnowledgeIndex) -> None:
+    decision, bundle = bundle_for("膳食纤维营养", index)
+    first, second = bundle.citations[:2]
+    validation = EvidenceValidator(index).validate(
+        answer=f"膳食纤维说明见原文【{first.chunk_id}; {second.chunk_id}】。",
+        citations=(first, second),
+        decision=decision,
+    )
+    assert "invalid_inline_reference_format" in validation.error_codes
+
+
+def test_reference_after_period_does_not_cover_the_next_claim(
+    index: KnowledgeIndex,
+) -> None:
+    decision, bundle = bundle_for("膳食纤维营养", index)
+    citation = bundle.citations[0]
+    validation = EvidenceValidator(index).validate(
+        answer=(f"膳食纤维的说明见原文证据。【{citation.chunk_id}】 膳食纤维每天推荐摄入999克。"),
+        citations=(citation,),
+        decision=decision,
+    )
+    assert "uncited_factual_claim" in validation.error_codes
+
+
+def test_validator_rejects_numeric_claim_missing_from_bound_evidence(
+    index: KnowledgeIndex,
+) -> None:
+    decision, bundle = bundle_for("膳食纤维营养", index)
+    citation = bundle.citations[0]
+    validation = EvidenceValidator(index).validate(
+        answer=f"膳食纤维每天推荐摄入999克【{citation.chunk_id}】。",
+        citations=(citation,),
+        decision=decision,
+    )
+    assert "numeric_claim_not_in_evidence" in validation.error_codes
+
+
+def test_validator_rejects_claim_without_a_text_anchor_in_bound_evidence(
+    index: KnowledgeIndex,
+) -> None:
+    decision, bundle = bundle_for("膳食纤维营养", index)
+    citation = bundle.citations[0]
+    validation = EvidenceValidator(index).validate(
+        answer=f"咖啡因推荐摄入规则见此处【{citation.chunk_id}】。",
+        citations=(citation,),
+        decision=decision,
+    )
+    assert "claim_evidence_anchor_mismatch" in validation.error_codes
+
+
 def test_out_of_scope_refusal_is_valid_without_evidence(index: KnowledgeIndex) -> None:
     decision = QueryRouter().route("如何修复汽车发动机？")
     validation = EvidenceValidator(index).validate(

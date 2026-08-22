@@ -26,5 +26,5 @@ acceptance_checks:
     result: pass
     evidence: [docs/evidence/phase-03-browser-closed-loop.json]
 issues: [ISSUE-002, ISSUE-003, ISSUE-006, ISSUE-017, ISSUE-020, ISSUE-021]
-residual_actions: [ACTION-02, ACTION-03, ACTION-06]
+residual_actions: [ACTION-06]
 review: {status: pending_final_review, reviewer: Project Lead, reviewed_at: null, notes: Mock 闭环通过；真实 LLM、向量与原文复核证据待补}

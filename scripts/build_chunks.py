@@ -7,7 +7,6 @@ import re
 from pathlib import Path
 from typing import Any
 
-
 ROOT = Path(__file__).resolve().parents[1]
 PAGE_DIR = ROOT / "knowledge" / "normalized" / "pages"
 OUTPUT_DIR = ROOT / "knowledge" / "normalized" / "chunks"
@@ -27,9 +26,7 @@ def read_jsonl(path: Path) -> list[dict[str, Any]]:
 
 def is_heading(text: str) -> bool:
     first_line = text.splitlines()[0].strip()
-    return len(first_line) <= 60 and any(
-        pattern.match(first_line) for pattern in HEADING_PATTERNS
-    )
+    return len(first_line) <= 60 and any(pattern.match(first_line) for pattern in HEADING_PATTERNS)
 
 
 def route_policy(source_role: str) -> tuple[list[str], list[str]]:
@@ -53,9 +50,7 @@ def flush_chunk(
     chunks.append(
         {
             "schema_version": 1,
-            "chunk_id": (
-                f"{page['source_code']}-p{page['page']:02d}-c{chunk_number:02d}"
-            ),
+            "chunk_id": (f"{page['source_code']}-p{page['page']:02d}-c{chunk_number:02d}"),
             "page_id": page["page_id"],
             "source_code": page["source_code"],
             "source_title": page["source_title"],
@@ -74,8 +69,7 @@ def flush_chunk(
                     content,
                 )
             ),
-            "unknown_glyph_count": content.count("\uffff")
-            + content.count("\ufffd"),
+            "unknown_glyph_count": content.count("\uffff") + content.count("\ufffd"),
             "review_status": "review_required",
         }
     )
@@ -97,9 +91,7 @@ def build_source(page_path: Path) -> tuple[Path, int]:
         for block in page["blocks"]:
             text = block["text"].strip()
             if is_heading(text):
-                flush_chunk(
-                    page_chunks, page, current_section, texts, block_numbers
-                )
+                flush_chunk(page_chunks, page, current_section, texts, block_numbers)
                 texts = []
                 block_numbers = []
                 current_length = 0
@@ -107,9 +99,7 @@ def build_source(page_path: Path) -> tuple[Path, int]:
                 inherited_section = current_section
 
             if texts and current_length + len(text) + 1 > TARGET_CHARS:
-                flush_chunk(
-                    page_chunks, page, current_section, texts, block_numbers
-                )
+                flush_chunk(page_chunks, page, current_section, texts, block_numbers)
                 texts = []
                 block_numbers = []
                 current_length = 0

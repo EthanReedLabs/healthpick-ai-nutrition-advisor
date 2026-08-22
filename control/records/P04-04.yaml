@@ -1,0 +1,40 @@
+schema_version: 1
+task_id: P04-04
+phase_id: PHASE-04
+outcome: passed
+started_at: "2026-08-21T22:15:00+08:00"
+completed_at: "2026-08-21T22:29:50+08:00"
+recorded_at: "2026-08-21"
+backfilled: false
+owner: API
+summary: 模型输出后的免责声明、禁用结论、逐分句证据绑定、单次修复和经复验的确定性证据回退均已实现，并通过真实本地模型与隐私日志测试。
+deliverables:
+  - apps/api/healthpick_api/safety/output.py
+  - apps/api/healthpick_api/evidence/validator.py
+  - apps/api/healthpick_api/chat/pipeline.py
+  - scripts/smoke_output_safety.py
+  - tests/api/test_evidence.py
+  - tests/api/test_chat_sse.py
+  - tests/api/test_safety.py
+acceptance_checks:
+  - name: S0 至 S3 所需声明由服务端确定性附加
+    result: pass
+    evidence: [docs/evidence/phase-04-p04-04-runtime.json, docs/evidence/phase-04-p04-04-api-pytest.xml]
+  - name: 药物指令、诊断、绝对疗效及 S2 精确数值在输出后被拦截
+    result: pass
+    evidence: [docs/evidence/phase-04-p04-04-api-pytest.xml]
+  - name: 事实性分句、文字锚点和精确数值逐项绑定证据
+    result: pass
+    evidence: [docs/evidence/phase-04-p04-04-api-pytest.xml]
+  - name: 仅允许一次受限修复且模型再次失败时切换经复验的确定性证据回退
+    result: pass
+    evidence: [docs/evidence/phase-04-p04-04-api-pytest.xml]
+  - name: 安全日志和校验日志不存健康原文或回答正文
+    result: pass
+    evidence: [docs/evidence/phase-04-p04-04-api-pytest.xml]
+  - name: Python 全量回归和静态检查
+    result: pass
+    evidence: [docs/evidence/current-pytest.xml, docs/evidence/phase-04-p04-04-design.md]
+issues: [ISSUE-029, ISSUE-032]
+residual_actions: []
+review: {status: pending_final_review, reviewer: Project Lead, reviewed_at: null, notes: P04-06 已验证安全类别覆盖率、零容忍阈值和真实并发回退}

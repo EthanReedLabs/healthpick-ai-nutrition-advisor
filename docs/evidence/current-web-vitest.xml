@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuites name="vitest tests" tests="11" failures="0" errors="0" time="0.6306244">
+    <testsuite name="src/components/chat-workspace.test.tsx" timestamp="2026-08-21T14:56:20.027Z" hostname="Eric" tests="11" failures="0" errors="0" skipped="0" time="0.6306244">
+        <testcase classname="src/components/chat-workspace.test.tsx" name="ChatWorkspace &gt; shows the explicit API and model mode" time="0.0529868">
+        </testcase>
+        <testcase classname="src/components/chat-workspace.test.tsx" name="ChatWorkspace &gt; fills the composer from a quick question without fabricating an answer" time="0.0897984">
+        </testcase>
+        <testcase classname="src/components/chat-workspace.test.tsx" name="ChatWorkspace &gt; keeps a health-profile editor entry in the mobile header" time="0.0261507">
+        </testcase>
+        <testcase classname="src/components/chat-workspace.test.tsx" name="ChatWorkspace &gt; surfaces the API error and states that no preset answer is used" time="0.035184">
+        </testcase>
+        <testcase classname="src/components/chat-workspace.test.tsx" name="ChatWorkspace &gt; renders the validated final event from an SSE response" time="0.0298682">
+        </testcase>
+        <testcase classname="src/components/chat-workspace.test.tsx" name="ChatWorkspace &gt; validates an ephemeral profile and sends it with the next chat request" time="0.1665239">
+        </testcase>
+        <testcase classname="src/components/chat-workspace.test.tsx" name="ChatWorkspace &gt; renders a deterministic primary recommendation card from a ready contract" time="0.0915672">
+        </testcase>
+        <testcase classname="src/components/chat-workspace.test.tsx" name="ChatWorkspace &gt; shows readable S1 restrictions and every blocked food tag" time="0.0299377">
+        </testcase>
+        <testcase classname="src/components/chat-workspace.test.tsx" name="ChatWorkspace &gt; renders S3 as an explicit emergency stop without citations" time="0.0267541">
+        </testcase>
+        <testcase classname="src/components/chat-workspace.test.tsx" name="ChatWorkspace &gt; distinguishes evidence-gate failure from a connection error" time="0.0225354">
+        </testcase>
+        <testcase classname="src/components/chat-workspace.test.tsx" name="ChatWorkspace &gt; creates a fresh conversation id when the user starts a new chat" time="0.0581024">
+        </testcase>
+    </testsuite>
+</testsuites>

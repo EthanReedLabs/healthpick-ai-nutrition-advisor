@@ -1,18 +1,17 @@
 schema_version: 1
 task_id: DATA-05
 phase_id: PHASE-02
-outcome: pass_with_action
+outcome: passed
 started_at: "2026-08-21T16:58:24+08:00"
 completed_at: "2026-08-21T17:24:17+08:00"
 recorded_at: "2026-08-21 (backfilled after Phase 02)"
 backfilled: true
 owner: API
-summary: 五个 JSON Schema 和七表 migration 已生成并静态校验，未猜测向量维度。
-deliverables: [knowledge/schemas/page.schema.json, knowledge/schemas/chunk.schema.json, knowledge/schemas/food-fact.schema.json, knowledge/schemas/plan-rule.schema.json, knowledge/schemas/platform-fact.schema.json, infra/migrations/001_knowledge_base.sql]
+summary: 五个 JSON Schema、七表 migration、pgvector 扩展和 1024 维向量 migration 已生成并通过真实数据库探针。
+deliverables: [knowledge/schemas/page.schema.json, knowledge/schemas/chunk.schema.json, knowledge/schemas/food-fact.schema.json, knowledge/schemas/plan-rule.schema.json, knowledge/schemas/platform-fact.schema.json, infra/migrations/001_knowledge_base.sql, infra/migrations/002_enable_vector.sql, infra/migrations/003_chunk_embedding_qwen3_1024.sql]
 acceptance_checks:
   - {name: Schema 和 migration 静态校验, result: pass, evidence: [docs/evidence/phase-02-knowledge-validation.json]}
-  - {name: 数据库和向量运行态, result: pass_with_action, evidence: [docs/evidence/phase-02-baseline-record.md]}
+  - {name: 数据库和向量运行态, result: pass, evidence: [docs/evidence/action-01-database-runtime.json, docs/evidence/action-02-03-real-model-runtime.json]}
 issues: [ISSUE-001, ISSUE-003]
-residual_actions: [ACTION-01, ACTION-03]
-review: {status: pending_final_review, reviewer: Project Lead, reviewed_at: null, notes: 运行态证据产生后才能升级 passed}
-
+residual_actions: []
+review: {status: pending_final_review, reviewer: Project Lead, reviewed_at: null, notes: 运行态证据已补齐，等待最终总纲统一复核}

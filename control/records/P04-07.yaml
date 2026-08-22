@@ -1,0 +1,38 @@
+schema_version: 1
+task_id: P04-07
+phase_id: PHASE-04
+outcome: pass_with_action
+started_at: "2026-08-21T22:55:00+08:00"
+completed_at: "2026-08-21T22:56:33+08:00"
+recorded_at: "2026-08-21"
+backfilled: false
+owner: LEAD
+summary: Phase 04 本地推荐、安全、真实模型、浏览器、黄金集和控制面全部通过；仅保留真实结构化事实第二人复核 ACTION-06，未复核目录继续 fail-closed。
+deliverables:
+  - docs/evidence/phase-04-baseline-record.md
+  - docs/evidence/phase-04-p04-06-golden.json
+  - docs/evidence/phase-04-p04-06-api-pytest.xml
+  - docs/evidence/phase-04-p04-04-runtime.json
+  - docs/evidence/local-real-stack-runtime.json
+acceptance_checks:
+  - name: P04-01 至 P04-06 均有独立完成记录
+    result: pass
+    evidence: [control/records/P04-01.yaml, control/records/P04-02.yaml, control/records/P04-03.yaml, control/records/P04-04.yaml, control/records/P04-05.yaml, control/records/P04-06.yaml]
+  - name: Python 177 项和 Web 11 项全量回归
+    result: pass
+    evidence: [docs/evidence/current-pytest.xml, docs/evidence/current-web-vitest.xml]
+  - name: 真实 LLM/Embedding 与浏览器本地闭环
+    result: pass
+    evidence: [docs/evidence/local-real-stack-runtime.json, docs/evidence/phase-04-p04-05-browser.md]
+  - name: 安全黄金集硬门槛全绿
+    result: pass
+    evidence: [docs/evidence/phase-04-p04-06-golden.json, docs/evidence/phase-04-p04-06-api-pytest.xml]
+  - name: Phase 04 问题全部解决或绑定明确行动
+    result: pass_with_action
+    evidence: [docs/evidence/phase-04-baseline-record.md, control/project-control.yaml]
+  - name: 统一控制面结构审计
+    result: pass
+    evidence: [docs/evidence/control-plane-validation.json]
+issues: [ISSUE-028, ISSUE-029, ISSUE-030, ISSUE-031, ISSUE-032]
+residual_actions: [ACTION-06]
+review: {status: pending_final_review, reviewer: Project Lead, reviewed_at: null, notes: 本地阶段准入通过；ACTION-06 关闭前保持真实推荐 fail-closed}

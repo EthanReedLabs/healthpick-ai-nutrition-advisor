@@ -1,0 +1,28 @@
+schema_version: 1
+task_id: P06-05
+phase_id: PHASE-06
+outcome: pass_with_action
+started_at: "2026-08-22T12:03:59+08:00"
+completed_at: "2026-08-22T12:06:25+08:00"
+recorded_at: "2026-08-22"
+backfilled: false
+owner: LEAD
+summary: Phase06四项P1能力、全仓回归、真实RAG、PostgreSQL隐私和浏览器门全部通过，三项既有后续行动继续显式开放。
+deliverables:
+  - docs/evidence/phase-06-baseline-record.md
+acceptance_checks:
+  - name: P06_01至P06_04独立记录和验收齐全
+    result: pass
+    evidence: [control/records/P06-01.yaml, control/records/P06-02.yaml, control/records/P06-03.yaml, control/records/P06-04.yaml]
+  - name: 全仓自动质量门全部通过
+    result: pass
+    evidence: [docs/evidence/phase-06-p06-05-pytest.xml, docs/evidence/phase-06-p06-05-web-vitest.xml]
+  - name: 真实本地模型检索透明与隐私数据面复验通过
+    result: pass
+    evidence: [docs/evidence/local-real-stack-runtime.json, docs/evidence/phase-06-p06-04-postgres.json, docs/evidence/phase-06-p06-04-browser.md]
+  - name: 控制面结构审计通过且最终门保持关闭
+    result: pass
+    evidence: [docs/evidence/phase-06-baseline-record.md, docs/evidence/control-plane-validation.json]
+issues: [ISSUE-005, ISSUE-009, ISSUE-014, ISSUE-017, ISSUE-048]
+residual_actions: [ACTION-05, ACTION-06]
+review: {status: accepted, reviewer: Project Lead, reviewed_at: "2026-08-22T12:06:25+08:00", notes: 允许进入Phase07；既有残余行动继续开放，不得将阶段签署解释为最终交付READY}

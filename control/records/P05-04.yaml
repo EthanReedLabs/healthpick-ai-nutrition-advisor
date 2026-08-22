@@ -1,0 +1,40 @@
+schema_version: 1
+task_id: P05-04
+phase_id: PHASE-05
+outcome: passed
+started_at: "2026-08-22T00:22:00+08:00"
+completed_at: "2026-08-22T09:53:00+08:00"
+recorded_at: "2026-08-22"
+backfilled: false
+owner: DEVOPS/API
+summary: Compose 五服务依赖链、可审计迁移、事务幂等 seed、非 root 生产镜像和空库重启验收全部完成。
+deliverables:
+  - compose.yaml
+  - .dockerignore
+  - infra/docker/api.Dockerfile
+  - infra/docker/web.Dockerfile
+  - scripts/migrate_database.py
+  - scripts/seed_database.py
+  - scripts/smoke_compose_lifecycle.py
+  - tests/test_database_lifecycle.py
+  - apps/web/next.config.ts
+  - infra/README.md
+acceptance_checks:
+  - name: PostgreSQL健康迁移seed API健康Web启动的依赖顺序
+    result: pass
+    evidence: [compose.yaml, docs/evidence/phase-05-p05-04-compose.json]
+  - name: 空库迁移已有库安全基线与校验和防漂移
+    result: pass
+    evidence: [scripts/migrate_database.py, tests/test_database_lifecycle.py, docs/evidence/phase-05-p05-04-compose.json]
+  - name: A/B/C事务seed幂等精确计数和资料C隔离
+    result: pass
+    evidence: [scripts/seed_database.py, tests/test_database_lifecycle.py, docs/evidence/phase-05-p05-04-compose.json]
+  - name: 空环境启动真实问答重启再smoke且数据保留
+    result: pass
+    evidence: [scripts/smoke_compose_lifecycle.py, docs/evidence/phase-05-p05-04-compose.json]
+  - name: 非root只读生产镜像和完整自动回归
+    result: pass
+    evidence: [infra/docker/api.Dockerfile, infra/docker/web.Dockerfile, docs/evidence/phase-05-p05-04-quality.md, docs/evidence/phase-05-p05-04-pytest.xml, docs/evidence/phase-05-p05-04-web-vitest.xml]
+issues: [ISSUE-038, ISSUE-039, ISSUE-040, ISSUE-041]
+residual_actions: []
+review: {status: pending_final_review, reviewer: Project Lead, reviewed_at: null, notes: P05-04 无残余行动；下一优先任务为 P05-03 三档响应式与交互状态}

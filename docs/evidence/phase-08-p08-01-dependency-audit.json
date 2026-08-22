@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "captured_at": "2026-08-22T14:32:00+08:00",
+  "javascript": {
+    "command": "npm audit --audit-level=high",
+    "scope": "package-lock production and development dependency graph",
+    "lock_sha256": "C62AB92FD4103F03BBD39A6D9F04F9E96683BC58E849CA8778E640DE1F7489BB",
+    "vulnerabilities": 0,
+    "status": "PASS"
+  },
+  "python": {
+    "method": "uv export --frozen --no-dev followed by pip-audit --disable-pip --no-deps",
+    "lock_sha256": "32FF070C22F2BECB13D7D560435F9ED4DDA3AF5FB862F96F37F9B4C8C819A483",
+    "export_sha256": "FA89F535A2EEE008F732178BF1BE52E248BED394B0795FE33481D83ADBEDDCC6",
+    "dependencies": 32,
+    "vulnerabilities": 0,
+    "report": "docs/evidence/phase-08-p08-01-python-audit.json",
+    "status": "PASS"
+  },
+  "status": "PASS"
+}

@@ -3,13 +3,16 @@
 from __future__ import annotations
 
 import json
+import sys
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
-from healthpick_api.retrieval import KeywordRetriever, KnowledgeIndex
-from healthpick_api.routing import QueryRouter
-
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "apps" / "api"))
+
+from healthpick_api.retrieval import KeywordRetriever, KnowledgeIndex  # noqa: E402
+from healthpick_api.routing import QueryRouter  # noqa: E402
+
 OUTPUT = ROOT / "docs" / "evidence" / "phase-03-retrieval-runtime.json"
 
 QUERIES = {

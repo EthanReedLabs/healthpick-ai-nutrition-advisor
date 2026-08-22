@@ -5,11 +5,10 @@ import json
 from collections import Counter
 from pathlib import Path
 
-import yaml
 import pytest
+import yaml
 
 from scripts.build_structured_facts import review_info
-
 
 ROOT = Path(__file__).resolve().parents[1]
 KNOWLEDGE = ROOT / "knowledge"
@@ -83,9 +82,7 @@ def test_nutrition_facts_never_use_source_c() -> None:
 
 
 def test_platform_facts_are_platform_only() -> None:
-    facts = read_jsonl(
-        KNOWLEDGE / "normalized" / "facts" / "platform_facts.jsonl"
-    )
+    facts = read_jsonl(KNOWLEDGE / "normalized" / "facts" / "platform_facts.jsonl")
     assert len(facts) == 12
     assert all(fact["source_code"] == "C" for fact in facts)
     assert all(fact["allowed_routes"] == ["platform"] for fact in facts)

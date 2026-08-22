@@ -8,7 +8,7 @@ Copy-Item .env.example .env.local
 npm run dev -- --hostname 127.0.0.1 --port 3000
 ```
 
-打开 `http://127.0.0.1:3000`。页面从 `/healthz` 读取当前 Real/Mock 模式，问答请求默认发送到 API；后端未就绪时显示稳定错误，不使用预置回复冒充模型结果。
+打开 `http://127.0.0.1:3000`。页面从 `/healthz` 读取当前 Real/Mock 模式，问答请求默认发送到 API；后端未就绪时显示稳定错误，不使用预置回复冒充模型结果。Chat 客户端等待 45 秒后主动超时，只接受 `text/event-stream` 和有效 `final` 事件；可重试错误会保留原始客户端 `X-Request-ID`，避免超时后重复落库。
 
 质量门禁：
 

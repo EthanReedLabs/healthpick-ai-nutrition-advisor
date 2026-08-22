@@ -1,0 +1,32 @@
+schema_version: 1
+task_id: P07-04
+phase_id: PHASE-07
+outcome: passed
+started_at: "2026-08-22T13:40:00+08:00"
+completed_at: "2026-08-22T13:52:29+08:00"
+recorded_at: "2026-08-22"
+backfilled: false
+owner: WEB
+summary: 冻结评测报告已形成脱敏API与Web概览，自动9/9通过和ACTION-06人工待复核并列展示；API29项、Web27项及真实浏览器验收通过。
+deliverables:
+  - scripts/export_public_evaluation.py
+  - apps/api/healthpick_api/evaluation/release-summary-v1.1.json
+  - apps/api/healthpick_api/evaluation/public_summary.py
+  - apps/web/src/components/chat-workspace.tsx
+  - docs/evidence/phase-07-p07-04-quality.md
+acceptance_checks:
+  - name: 冻结报告生成脱敏公开摘要且不暴露内部配置
+    result: pass
+    evidence: [scripts/export_public_evaluation.py, apps/api/healthpick_api/evaluation/release-summary-v1.1.json, docs/evidence/phase-07-p07-04-api-pytest.xml]
+  - name: Web展示核心指标及数据集规模
+    result: pass
+    evidence: [docs/evidence/phase-07-p07-04-web-vitest.xml, output/playwright/phase-07-p07-04-evaluation-card.png]
+  - name: 自动通过与人工待复核状态明确区分
+    result: pass
+    evidence: [docs/evidence/phase-07-p07-04-browser.md, output/playwright/phase-07-p07-04-evaluation-card.png]
+  - name: 模型检索存储主备策略透明且不泄密
+    result: pass
+    evidence: [apps/api/healthpick_api/main.py, apps/web/src/components/chat-workspace.tsx, docs/evidence/phase-07-p07-04-browser.md]
+issues: [ISSUE-063]
+residual_actions: []
+review: {status: accepted, reviewer: Project Lead, reviewed_at: "2026-08-22T13:52:29+08:00", notes: 脱敏、指标真实性和浏览器可视证据齐全，允许进入P07-05}

@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "task_id": "P07-03",
+  "captured_at": "2026-08-22T13:37:40.299919+08:00",
+  "primary_failure": "injected_connection_failure",
+  "backup": {
+    "provider": "ollama-local-backup",
+    "model": "qwen2.5:3b-instruct",
+    "mode": "real",
+    "failover": "used",
+    "primary_error_code": "provider_timeout",
+    "answer_chars": 6,
+    "answer_sha256": "f2ad1a417a4d12e8ce02380c22c1f9a799bf92ed39a00ab8dbb6474f9658fc70"
+  },
+  "dual_failure": {
+    "code": "provider_failover_exhausted",
+    "persisted": false
+  },
+  "secrets_recorded": false,
+  "status": "PASS"
+}

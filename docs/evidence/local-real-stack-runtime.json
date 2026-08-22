@@ -1,0 +1,411 @@
+{
+  "schema_version": 1,
+  "evidence_id": "LOCAL-REAL-STACK-RUNTIME",
+  "scope": "local/web/api/keyword-retrieval/ollama-real-model",
+  "captured_at": "2026-08-22T14:16:49.016643+08:00",
+  "origins": {
+    "web": "http://127.0.0.1:3100",
+    "api": "http://127.0.0.1:8010"
+  },
+  "health": {
+    "status_code": 200,
+    "status": "ok",
+    "environment": "development",
+    "modes": {
+      "llm": "real",
+      "embedding": "real",
+      "retrieval": "keyword"
+    }
+  },
+  "web": {
+    "status_code": 200,
+    "healthpick_marker": true
+  },
+  "transparency": {
+    "version": "0.1.0",
+    "model": {
+      "provider": "custom",
+      "name": "qwen2.5:3b-instruct",
+      "mode": "real"
+    },
+    "failover": {
+      "enabled": false,
+      "policy": "retryable_or_invalid_response",
+      "fallback": null
+    },
+    "embedding": {
+      "provider": "openai_compatible",
+      "name": "qwen3-embedding:0.6b",
+      "mode": "real",
+      "dimensions": 1024
+    },
+    "retrieval_mode": "keyword",
+    "conversation_store": "postgres",
+    "profile_persistence": "ephemeral",
+    "evidence_policy": "仅返回通过来源边界、逐条引用和输出安全校验的完整回答。",
+    "sources": [
+      {
+        "source": "A",
+        "title": "2026秋季健康膳食指南",
+        "allowed_use": "营养事实、风险与禁忌依据",
+        "forbidden_use": "不得用于解释平台会员、价格或服务承诺"
+      },
+      {
+        "source": "B",
+        "title": "2026秋季个性化饮食方案",
+        "allowed_use": "食谱、搭配、目标与同类替换依据",
+        "forbidden_use": "不得用于解释平台会员、价格或服务承诺"
+      },
+      {
+        "source": "C",
+        "title": "HealthPick平台服务白皮书",
+        "allowed_use": "平台功能、会员、合作与服务规则",
+        "forbidden_use": "不得作为营养事实或医疗安全依据"
+      }
+    ]
+  },
+  "cases": [
+    {
+      "name": "nutrition",
+      "status_code": 200,
+      "latency_ms": 2454,
+      "event_names": [
+        "meta",
+        "citation",
+        "citation",
+        "citation",
+        "citation",
+        "citation",
+        "citation",
+        "token",
+        "token",
+        "token",
+        "final"
+      ],
+      "route": "nutrition",
+      "model": {
+        "provider": "custom",
+        "name": "qwen2.5:3b-instruct",
+        "mode": "real"
+      },
+      "safety": {
+        "risk_level": "S0",
+        "matched_rules": [
+          "standard_nutrition_scope"
+        ],
+        "blocked_food_tags": [],
+        "allow_personalized_targets": true,
+        "required_notice": "general",
+        "response_mode": "normal"
+      },
+      "citation_count": 6,
+      "sources": [
+        "A"
+      ],
+      "referenced_chunk_ids": [
+        "A-p01-c02",
+        "A-p01-c04",
+        "A-p03-c03"
+      ],
+      "retrieval_trace": {
+        "mode": "keyword",
+        "route": "nutrition",
+        "route_components": [
+          "nutrition"
+        ],
+        "allowed_sources": [
+          "A",
+          "B"
+        ],
+        "query_terms": [
+          "膳食",
+          "食纤",
+          "纤维",
+          "维有",
+          "有什",
+          "么营",
+          "营养",
+          "养作",
+          "作用",
+          "膳食纤",
+          "食纤维",
+          "纤维有",
+          "维有什",
+          "有什么",
+          "什么营",
+          "么营养",
+          "营养作",
+          "养作用"
+        ],
+        "examined_chunks": 59,
+        "excluded_unknown_glyph_chunks": 8,
+        "eligible_chunks": 39,
+        "rejected_by_source_boundary": 20,
+        "returned_chunks": 6,
+        "selections": [
+          {
+            "chunk_id": "A-p01-c04",
+            "source": "A",
+            "score": 22.711848,
+            "matched_terms": [
+              "膳食",
+              "食纤",
+              "纤维",
+              "营养",
+              "膳食纤",
+              "食纤维"
+            ]
+          },
+          {
+            "chunk_id": "A-p01-c02",
+            "source": "A",
+            "score": 16.418618,
+            "matched_terms": [
+              "膳食",
+              "食纤",
+              "纤维",
+              "营养",
+              "膳食纤",
+              "食纤维"
+            ]
+          },
+          {
+            "chunk_id": "A-p03-c03",
+            "source": "A",
+            "score": 12.467381,
+            "matched_terms": [
+              "膳食",
+              "食纤",
+              "纤维",
+              "膳食纤",
+              "食纤维"
+            ]
+          },
+          {
+            "chunk_id": "A-p03-c04",
+            "source": "A",
+            "score": 12.0587,
+            "matched_terms": [
+              "膳食",
+              "食纤",
+              "纤维",
+              "膳食纤",
+              "食纤维"
+            ]
+          },
+          {
+            "chunk_id": "A-p05-c02",
+            "source": "A",
+            "score": 3.453907,
+            "matched_terms": [
+              "膳食",
+              "营养"
+            ]
+          },
+          {
+            "chunk_id": "A-p01-c01",
+            "source": "A",
+            "score": 3.251705,
+            "matched_terms": [
+              "膳食",
+              "营养"
+            ]
+          }
+        ],
+        "evidence_gate": "passed"
+      },
+      "answer_chars": 138,
+      "answer_sha256": "baea67dd15cff74e9d57bb700bd7195b6a4bc1f79af520cfdd1d88376ef27d38",
+      "status": "PASS"
+    },
+    {
+      "name": "platform",
+      "status_code": 200,
+      "latency_ms": 800,
+      "event_names": [
+        "meta",
+        "citation",
+        "citation",
+        "citation",
+        "citation",
+        "citation",
+        "citation",
+        "token",
+        "token",
+        "token",
+        "token",
+        "final"
+      ],
+      "route": "platform",
+      "model": {
+        "provider": "healthpick_guard",
+        "name": "deterministic_evidence_fallback",
+        "mode": "real"
+      },
+      "safety": {
+        "risk_level": "S0",
+        "matched_rules": [
+          "standard_nutrition_scope"
+        ],
+        "blocked_food_tags": [],
+        "allow_personalized_targets": true,
+        "required_notice": "general",
+        "response_mode": "normal"
+      },
+      "citation_count": 6,
+      "sources": [
+        "C"
+      ],
+      "referenced_chunk_ids": [
+        "C-p02-c01",
+        "C-p02-c03",
+        "C-p05-c01"
+      ],
+      "retrieval_trace": {
+        "mode": "keyword",
+        "route": "platform",
+        "route_components": [
+          "platform"
+        ],
+        "allowed_sources": [
+          "C"
+        ],
+        "query_terms": [
+          "平台",
+          "台会",
+          "会员",
+          "员和",
+          "和企",
+          "企业",
+          "业服",
+          "服务",
+          "务有",
+          "有哪",
+          "哪些",
+          "平台会",
+          "台会员",
+          "会员和",
+          "员和企",
+          "和企业",
+          "企业服",
+          "业服务",
+          "服务有",
+          "务有哪",
+          "有哪些"
+        ],
+        "examined_chunks": 59,
+        "excluded_unknown_glyph_chunks": 8,
+        "eligible_chunks": 20,
+        "rejected_by_source_boundary": 39,
+        "returned_chunks": 6,
+        "selections": [
+          {
+            "chunk_id": "C-p02-c01",
+            "source": "C",
+            "score": 28.205713,
+            "matched_terms": [
+              "平台",
+              "服务",
+              "hint:membership"
+            ]
+          },
+          {
+            "chunk_id": "C-p05-c01",
+            "source": "C",
+            "score": 8.04358,
+            "matched_terms": [
+              "平台",
+              "会员",
+              "服务"
+            ]
+          },
+          {
+            "chunk_id": "C-p02-c03",
+            "source": "C",
+            "score": 7.387098,
+            "matched_terms": [
+              "平台",
+              "企业",
+              "服务"
+            ]
+          },
+          {
+            "chunk_id": "C-p04-c02",
+            "source": "C",
+            "score": 6.979023,
+            "matched_terms": [
+              "平台",
+              "企业",
+              "服务"
+            ]
+          },
+          {
+            "chunk_id": "C-p01-c03",
+            "source": "C",
+            "score": 6.324651,
+            "matched_terms": [
+              "平台",
+              "企业",
+              "服务"
+            ]
+          },
+          {
+            "chunk_id": "C-p04-c03",
+            "source": "C",
+            "score": 6.12857,
+            "matched_terms": [
+              "平台",
+              "企业",
+              "服务"
+            ]
+          }
+        ],
+        "evidence_gate": "passed"
+      },
+      "answer_chars": 177,
+      "answer_sha256": "e39bca76927384d40cba523c0661911cac7048b2119e62dcd2fb7affd4034972",
+      "status": "PASS"
+    },
+    {
+      "name": "out_of_scope",
+      "status_code": 200,
+      "latency_ms": 19,
+      "event_names": [
+        "meta",
+        "token",
+        "final"
+      ],
+      "route": "out_of_scope",
+      "model": {
+        "provider": "healthpick_guard",
+        "name": "deterministic_scope_guard",
+        "mode": "real"
+      },
+      "safety": {
+        "risk_level": "S0",
+        "matched_rules": [
+          "scope_guard"
+        ],
+        "blocked_food_tags": [],
+        "allow_personalized_targets": true,
+        "required_notice": "general",
+        "response_mode": "normal"
+      },
+      "citation_count": 0,
+      "sources": [],
+      "referenced_chunk_ids": [],
+      "retrieval_trace": null,
+      "answer_chars": 40,
+      "answer_sha256": "a4d4718770d57fce581247ce21f8aac2bc82aed430a4d42bf2f242f6e620c67d",
+      "status": "PASS"
+    }
+  ],
+  "database_evidence": "docs/evidence/action-01-database-runtime.json",
+  "model_evidence": "docs/evidence/action-02-03-real-model-runtime.json",
+  "browser_evidence": "docs/evidence/local-real-stack-browser.md",
+  "phase_04_high_risk_gate": {
+    "status": "PASS",
+    "evidence": "docs/evidence/phase-04-p04-04-runtime.json"
+  },
+  "status": "PASS"
+}

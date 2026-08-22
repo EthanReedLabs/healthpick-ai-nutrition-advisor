@@ -8,7 +8,6 @@ from pathlib import Path
 import pymupdf
 import yaml
 
-
 ROOT = Path(__file__).resolve().parents[1]
 MANIFEST = ROOT / "knowledge" / "manifests" / "sources.yaml"
 OUTPUT_DIR = ROOT / "docs" / "evidence" / "phase-02-page-review"
@@ -45,4 +44,3 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
-

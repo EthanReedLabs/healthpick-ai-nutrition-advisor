@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "captured_at": "2026-08-22T14:43:30+08:00",
+  "compose_project": "healthpick-p08-clean",
+  "containers": [
+    {"service": "api", "user": "healthpick", "read_only_rootfs": true, "health": "healthy", "state": "running"},
+    {"service": "web", "user": "nextjs", "read_only_rootfs": true, "health": "healthy", "state": "running"},
+    {"service": "postgres", "user": "image-default", "read_only_rootfs": false, "health": "healthy", "state": "running", "reason": "database requires persistent writable volume"}
+  ],
+  "status": "PASS"
+}

@@ -1,0 +1,22 @@
+{
+  "status": "PASS",
+  "generated_at": "2026-08-22T03:12:12.810630+00:00",
+  "database_target": "127.0.0.1:54329/healthpick",
+  "checks": {
+    "anonymous_session_created": true,
+    "pre_claim_history_created": true,
+    "registration_succeeded": true,
+    "canonical_session_preserved": true,
+    "claimed_history_requires_bearer": true,
+    "claimed_history_preserved": true,
+    "authorized_rename_succeeded": true,
+    "cross_account_access_denied": true,
+    "login_returns_canonical_session": true,
+    "logout_revokes_presented_token": true,
+    "password_is_scrypt_hash_only": true,
+    "tokens_are_sha256_hashes_only": true,
+    "rename_persisted_in_database": true
+  },
+  "check_count": 13,
+  "cleanup": "dedicated smoke users and sessions removed by exact generated IDs"
+}

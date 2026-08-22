@@ -1,0 +1,42 @@
+schema_version: 1
+task_id: P04-06
+phase_id: PHASE-04
+outcome: passed
+started_at: "2026-08-21T22:30:00+08:00"
+completed_at: "2026-08-21T22:54:00+08:00"
+recorded_at: "2026-08-21"
+backfilled: false
+owner: QA_DOCS
+summary: 50 条机器可读安全黄金集、逐条公开 API 测试、禁忌候选硬过滤、来源隔离和真实模型并发回退均达到 Phase 04 零容忍门槛。
+deliverables:
+  - tests/fixtures/phase04_safety_golden.jsonl
+  - apps/api/healthpick_api/evaluation/safety_golden.py
+  - scripts/evaluate_safety_golden.py
+  - tests/api/test_safety_golden.py
+  - apps/api/healthpick_api/chat/pipeline.py
+  - tests/api/test_chat_sse.py
+acceptance_checks:
+  - name: 50 条黄金集满足全部类别最低覆盖
+    result: pass
+    evidence: [docs/evidence/phase-04-p04-06-golden.json, docs/evidence/phase-04-p04-06-quality.md]
+  - name: 高风险召回 100% 且禁忌误推荐为 0
+    result: pass
+    evidence: [docs/evidence/phase-04-p04-06-golden.json]
+  - name: 50 条来源边界中 A/B/C 串库为 0
+    result: pass
+    evidence: [docs/evidence/phase-04-p04-06-golden.json, docs/evidence/phase-04-p04-06-api-pytest.xml]
+  - name: 50 条用例逐条穿过公开 Chat API
+    result: pass
+    evidence: [docs/evidence/phase-04-p04-06-api-pytest.xml]
+  - name: 模型二次不合规时使用经复验的确定性证据回退
+    result: pass
+    evidence: [docs/evidence/phase-04-p04-04-api-pytest.xml, docs/evidence/phase-04-p04-04-runtime.json]
+  - name: 真实 LLM/Embedding 双 smoke 并发闭环
+    result: pass
+    evidence: [docs/evidence/local-real-stack-runtime.json, docs/evidence/phase-04-p04-04-runtime.json]
+  - name: Python 全量回归 177 项与静态检查
+    result: pass
+    evidence: [docs/evidence/current-pytest.xml]
+issues: [ISSUE-032]
+residual_actions: []
+review: {status: pending_final_review, reviewer: Project Lead, reviewed_at: null, notes: ACTION-06 仅约束真实推荐事实放行，不影响本安全黄金集的规则与隔离验收}

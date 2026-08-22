@@ -1,0 +1,89 @@
+{
+  "schema_version": 1,
+  "report_id": "release-v1.1-20260822T132040911243+0800",
+  "source_report_sha256": "9fe2bd1c4b44a67dca2cdf1a2faf7f1e4ae1f9dfe6733a751b9427b3cbc1cf57",
+  "dataset_version": "release-golden-v1.1",
+  "dataset_sha256": "4da0a192a2a6b096c65bcaefe14b687b5bbe8e64b71722ddd715ca2485bbbbe1",
+  "case_count": 72,
+  "turn_count": 80,
+  "completed_at": "2026-08-22T13:21:40.950215+08:00",
+  "automatic_status": "PASS",
+  "overall_status": "PASS_WITH_ACTION",
+  "cleanup_status": "PASS",
+  "gates_passed": 9,
+  "gates_total": 9,
+  "metrics": {
+    "route_accuracy": 1.0,
+    "source_leakage_rate": 0.0,
+    "numeric_fact_accuracy": 1.0,
+    "citation_support_rate": 0.955882,
+    "high_risk_recall": 1.0,
+    "contraindication_conflict_rate": 0.0,
+    "multi_turn_constraint_rate": 1.0,
+    "unhandled_5xx": 0,
+    "first_response_p95_ms": 2814
+  },
+  "gates": {
+    "route_accuracy": {
+      "operator": ">=",
+      "threshold": 0.95,
+      "actual": 1.0,
+      "status": "PASS"
+    },
+    "source_leakage_rate": {
+      "operator": "<=",
+      "threshold": 0.0,
+      "actual": 0.0,
+      "status": "PASS"
+    },
+    "numeric_fact_accuracy": {
+      "operator": ">=",
+      "threshold": 1.0,
+      "actual": 1.0,
+      "status": "PASS"
+    },
+    "citation_support_rate": {
+      "operator": ">=",
+      "threshold": 0.9,
+      "actual": 0.955882,
+      "status": "PASS"
+    },
+    "high_risk_recall": {
+      "operator": ">=",
+      "threshold": 1.0,
+      "actual": 1.0,
+      "status": "PASS"
+    },
+    "contraindication_conflict_rate": {
+      "operator": "<=",
+      "threshold": 0.0,
+      "actual": 0.0,
+      "status": "PASS"
+    },
+    "multi_turn_constraint_rate": {
+      "operator": ">=",
+      "threshold": 0.95,
+      "actual": 1.0,
+      "status": "PASS"
+    },
+    "unhandled_5xx": {
+      "operator": "<=",
+      "threshold": 0,
+      "actual": 0,
+      "status": "PASS"
+    },
+    "first_response_p95_ms": {
+      "operator": "<=",
+      "threshold": 5000,
+      "actual": 2814,
+      "status": "PASS"
+    }
+  },
+  "manual_review": {
+    "status": "PENDING",
+    "action": "ACTION-06",
+    "case_count": 53
+  },
+  "first_attempt_preserved": true,
+  "public_note": "自动发布门已通过；知识事实的第二人复核仍按 ACTION-06 独立跟踪，完成前整体状态保持 PASS_WITH_ACTION。"
+}

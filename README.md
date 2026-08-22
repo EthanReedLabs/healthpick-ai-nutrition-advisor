@@ -1,28 +1,101 @@
 # HealthPick AI Smart Nutrition Advisor
 
-第二届 OPC 软件与智能体开发赛道参赛项目的规划与实施仓库。
+第二届 OPC 软件与智能体开发赛道参赛项目。HealthPick 不是普通聊天壳，而是一套可审计的健康领域 RAG 产品：Next.js Web、FastAPI API、PostgreSQL、真实 LLM Provider、A/B/C 知识硬隔离、逐条引用、医疗安全门、多轮历史、账号数据权利、自动评测和 Docker Compose 复现均已落地。
 
-本项目采用代码优先路线：Next.js Web 前端、FastAPI 后端、PostgreSQL + pgvector 数据层，以及可替换的 LLM/Embedding Provider。目标不是只完成一个聊天演示，而是交付一个可部署、可追溯、可测试、具备安全边界和多轮记忆的 AI 智能膳食顾问。
+## 发布候选状态
 
-## 当前阶段
+截至 2026-08-22，Phase 01～07 已退出，Phase 08 正在执行。当前客观基线：
 
-当前仓库已完成：
+- Python 全仓 254 项、Web 30 项测试通过，Ruff、TypeScript、ESLint、Next.js production build 通过；
+- 真实 Ollama + PostgreSQL 执行 72 cases / 80 turns，路由 100%、来源泄漏 0、数字准确率 100%、引用支持率 95.5882%、高风险召回 100%、多轮保持 100%、未处理 5xx 为 0、首字 P95 2814ms；
+- 独立 Compose 新卷完成 001～005 migration、seed、真实问答、PostgreSQL/API/Web 重启和会话持久化；
+- 438 个已跟踪及未跟踪提交候选文件密钥扫描为 0；JavaScript 和 32 个 Python 生产依赖已知漏洞为 0；
+- 公网 Render 地址仍等待 `ACTION-05` 的区域、预算和七天在线责任授权；80 条结构化事实第二人复核 `ACTION-06` 仍开放。因此最终状态必须保持 `NOT_READY`，不能把本地通过写成最终提交完成。
 
-- 赛题与三份资料归档；
-- A/B 核心营养知识与 C 辅助平台资料的边界分析；
-- 高分功能范围、技术架构、RAG、安全、评测、部署与 48 小时执行计划；
-- 需求到功能、测试和提交证据的追踪设计；
-- FastAPI/OpenAPI、Provider、A/B/C 检索、引用校验、SSE Chat API 与 Next.js 工作台的开发态动态闭环。
+实时状态以 [统一控制板](docs/governance/CONTROL_BOARD.md) 和 `control/project-control.yaml` 为唯一真值。
 
-当前 Phase 04 已 READY，将继续实现健康档案、确定性推荐、禁忌硬过滤与医疗安全。后续仍以需求追踪矩阵和统一控制面为唯一范围/状态基线。
+## 核心能力
 
-Phase 01 已于 2026-08-21 完成，退出结论为 `PASS WITH ACTION`。资料、范围、Owner、技术与环境基线均已冻结；Docker、真实 LLM/Embedding 配置、远端仓库和 Render 账号仍有 T+6/T+12 限时行动，详见[阶段验收记录](docs/evidence/phase-01-baseline-record.md)。
+- 营养与方案问题只检索资料 A/B；会员、企业服务和 API 问题只检索资料 C；混合问题拆分后分别检索。
+- 回答展示文档、章节、页码、原文摘录和 Chunk ID；无证据时 fail closed。
+- S0～S3 确定性风险分级覆盖过敏、糖尿病、肾病、痛风、高血压、孕哺、药物调整、进食障碍和紧急症状。
+- PostgreSQL 保存匿名/账号会话和对话；支持搜索、改名、删除、账号导出和永久删除。
+- 用户可主动停止生成；客户端与服务端使用同一 request ID 取消，半成品不落库。
+- 公开透明页展示实际模型、Embedding、检索、存储、知识边界、故障切换策略及脱敏评测摘要。
 
-Phase 02 已完成文件级知识生产链路，退出结论为 `PASS WITH ACTION`：18 页、67 个 Chunk、80 条结构化事实、5 个 Schema、1 个 migration，文件与隔离校验通过，自动测试 11/11。80 条事实仍需参赛者第二人复核，6 个原始页面存在缺字符号；数据库与向量运行态尚未执行。详见[Phase 02 验收记录](docs/evidence/phase-02-baseline-record.md)与[第二人复核清单](docs/evidence/phase-02-second-person-review-checklist.md)。
+## 15 分钟本地运行
 
-Phase 03 已完成开发态最薄动态问答闭环，退出结论为 `PASS WITH ACTION`：API 50/50、Web 4/4，Ruff/ESLint/TypeScript/Next Build 均通过；浏览器实测营养问题只用 A/B、平台问题只用 C，引用可回查页码与章节。真实 LLM、向量模型和原文二人复核仍分别受 ACTION-02/03/06 阻断，详见[Phase 03 验收记录](docs/evidence/phase-03-baseline-record.md)。
+前置条件：Docker Desktop、Docker Compose，以及宿主机可访问的 OpenAI-compatible 模型服务。默认 Compose 指向宿主 Ollama：
 
-项目统一控制面已启用，覆盖 Phase 01～08 的 55 个任务、行动项、问题日志、逐任务完成记录和 10 个最终验收门。当前结构审计为 `PASS`，最终就绪度为 `NOT_READY`；控制面会把所有未完成任务显式列为阻断，直至最终总纲验收。入口见[统一控制板](docs/governance/CONTROL_BOARD.md)。
+```powershell
+ollama pull qwen2.5:3b-instruct
+Copy-Item .env.example .env
+docker compose up -d --build
+```
+
+macOS/Linux 将第二行改为 `cp .env.example .env`。默认入口：
+
+- Web：<http://127.0.0.1:3000>
+- API 健康：<http://127.0.0.1:8010/healthz>
+- OpenAPI：<http://127.0.0.1:8010/openapi.json>
+
+`.env.example` 只有占位值。使用远程 Provider 时，必须在本机 `.env` 或部署平台 Secret 中设置真实值；`.env` 已被 Git 忽略。生产环境禁止 `LLM_MODE=mock`，并强制 PostgreSQL 会话存储。
+
+停止服务：
+
+```powershell
+docker compose down
+```
+
+如需删除本地数据库卷，需由操作者明确执行 `docker compose down --volumes`；该动作会删除本地数据，不属于普通停止流程。
+
+## 开发与质量门
+
+Python：
+
+```powershell
+uv sync --frozen
+.\.venv\Scripts\pytest.exe
+.\.venv\Scripts\ruff.exe check .
+.\.venv\Scripts\python.exe -B scripts\control_plane.py
+```
+
+Web：
+
+```powershell
+cd apps\web
+npm ci
+npm test
+npm run typecheck
+npm run lint
+npm run build
+```
+
+提交候选密钥扫描：
+
+```powershell
+.\.venv\Scripts\python.exe -B scripts\audit_repository_security.py
+```
+
+最终发布使用 `scripts/control_plane.py --check-final`；任何必做任务、行动、阻断问题、未复核记录或 Release 字段缺失都会返回非零退出码。
+
+## 资料与许可证边界
+
+- A《2026秋季健康膳食指南》：营养事实、风险与禁忌依据。
+- B《2026秋季个性化饮食方案》：食谱、方案目标和同类替换依据。
+- C《HealthPick平台服务白皮书》：平台功能、会员、合作和服务规则，不得用于营养或医疗结论。
+
+本团队原创代码和原创文档按 [MIT License](LICENSE) 提供。赛题题面、资料 A/B/C、商标、截图中的第三方内容及依赖不因本许可证获得再许可，详见 [第三方与来源声明](THIRD_PARTY_NOTICES.md)。
+
+## 隐私、安全与 AI 披露
+
+- [面向用户的隐私说明](PRIVACY.md)
+- [安全边界与漏洞报告](SECURITY.md)
+- [医疗安全与隐私设计](docs/04-safety-privacy.md)
+- [AI 辅助开发使用披露](docs/AI_USAGE.md)
+- [机器可读数据路径](docs/release-data-map.json)
+
+健康档案当前为请求内临时数据，不写入 PostgreSQL；对话会持久化。注册账号只保存规范化邮箱、密码哈希和令牌哈希。Web 当前把 bearer token 存在浏览器 `localStorage`，其风险和删除路径已在隐私/安全文档中明确披露。
 
 ## 文档导航
 
@@ -34,52 +107,12 @@ Phase 03 已完成开发态最薄动态问答闭环，退出结论为 `PASS WITH
 6. [评测与冲分策略](docs/05-evaluation-and-winning.md)
 7. [48 小时排期](docs/06-48h-schedule.md)
 8. [演示与提交清单](docs/07-demo-and-submission.md)
-9. [AI 辅助使用披露](docs/AI_USAGE.md)
-10. [已确认项目意图](docs/INTENT.md)
-11. [技术选型决策](docs/decisions/ADR-001-technology-stack.md)
-12. [开发与部署基线](docs/decisions/ADR-002-development-and-deployment-baseline.md)
-13. [项目目录说明](PROJECT_STRUCTURE.md)
-14. [统一控制面规则](docs/governance/README.md)
-15. [实时统一控制板](docs/governance/CONTROL_BOARD.md)
-16. [最终总纲验收](docs/governance/FINAL_ACCEPTANCE_MASTER.md)
-17. [问题与解决日志](docs/governance/ISSUE_LOG.md)
+9. [AI 使用披露](docs/AI_USAGE.md)
+10. [系统架构决策](docs/decisions/ADR-001-technology-stack.md)
+11. [控制面规则](docs/governance/README.md)
+12. [问题与解决日志](docs/governance/ISSUE_LOG.md)
+13. [最终总纲验收](docs/governance/FINAL_ACCEPTANCE_MASTER.md)
 
-## 分阶段执行手册
+## 医疗边界
 
-- [Phase 01：基线与范围冻结（T+0～2h）](docs/phases/phase-01-baseline-freeze.md)
-- [Phase 02：知识数据生产化处理（T+2～6h）](docs/phases/phase-02-knowledge-ingestion.md)
-- [Phase 02 READY 任务板](docs/phases/phase-02-ready-task-board.md)
-- [Phase 02 验收记录](docs/evidence/phase-02-baseline-record.md)
-- [Phase 02 第二人复核清单](docs/evidence/phase-02-second-person-review-checklist.md)
-- [Phase 03：最薄动态问答闭环（T+6～12h）](docs/phases/phase-03-thin-slice.md)
-- [Phase 03 验收记录](docs/evidence/phase-03-baseline-record.md)
-- Phase 04～Phase 08 的详细手册按顺序编写，未完成前以 48 小时排期中的目标和退出条件为基线。
-
-所有任务状态以 `control/project-control.yaml` 为唯一真值。每个任务关闭后必须新增独立完成记录并通过 `scripts/control_plane.py` 审计；阶段文档和 README 不得单独宣称完成。
-
-## 资料边界
-
-- 素材 A：营养基础、食材数据、特殊人群和禁忌；仅属于核心营养知识库。
-- 素材 B：减脂、增肌、稳糖三套方案、食谱和替换规则；仅属于核心营养知识库。
-- 素材 C：平台产品、价格、企业合作、API 和品牌资料；只回答平台类问题，不得作为营养推荐依据。
-
-任何回答中的营养数字、方案结论、食材禁忌都必须来自 A/B 或确定性规则，且展示文档、章节和页码。C 中的会员价格、成功案例和平台能力不得进入膳食推荐上下文。
-
-## 推荐实施顺序
-
-1. 建立知识源清单、结构化事实表和隔离检索；
-2. 完成动态 LLM 问答、引用校验和安全门；
-3. 完成响应式聊天、健康档案与方案展示；
-4. 完成历史持久化、用户系统和部署；
-5. 使用黄金集、串库集、安全集和端到端测试生成提交证据；
-6. 冻结功能，完成文档、演示视频和提交演练。
-
-## 运行目标
-
-最终交付必须同时支持：
-
-- 公网 HTTPS 演示地址；
-- Docker Compose 本地一键运行；
-- `.env.example`，仓库中不包含真实密钥；
-- 可重复执行的单元、接口、RAG 评测和浏览器端到端测试；
-- 至少保留 7 天的演示可访问性。
+HealthPick 只提供资料范围内的一般膳食信息与计划辅助，不进行诊断，不替代医生或注册营养师，不建议停药、换药或调整治疗。胸痛、呼吸困难、严重过敏、意识丧失等紧急信号会中止普通生成并引导立即联系当地急救或线下医疗机构。

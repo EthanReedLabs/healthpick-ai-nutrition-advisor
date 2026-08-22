@@ -13,6 +13,5 @@ acceptance_checks:
   - {name: 数量 Schema 来源页码和证据完整, result: pass, evidence: [docs/evidence/phase-02-knowledge-validation.json]}
   - {name: 第二人逐条复核, result: pass_with_action, evidence: [docs/evidence/phase-02-second-person-review-checklist.md]}
 issues: [ISSUE-006]
-residual_actions: [ACTION-06, ACTION-07]
+residual_actions: [ACTION-06]
 review: {status: pending_final_review, reviewer: Project Lead, reviewed_at: null, notes: ACTION-06/07 关闭后重新生成和校验}
-

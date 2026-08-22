@@ -1,0 +1,34 @@
+schema_version: 1
+task_id: P07-02
+phase_id: PHASE-07
+outcome: pass_with_action
+started_at: "2026-08-22T12:16:22+08:00"
+completed_at: "2026-08-22T13:22:30+08:00"
+recorded_at: "2026-08-22"
+backfilled: false
+owner: QA_DOCS
+summary: 真实模型72用例80轮评测达到全部冻结发布阈值和路由引用多轮延迟冲分目标；首轮失败、勘误和每次重跑均独立保留，人工事实复核继续开放。
+deliverables:
+  - scripts/run_release_evaluation.py
+  - apps/api/healthpick_api/evaluation/release_runner.py
+  - evals/reports/release-v1.1-20260822T132040911243+0800/summary.json
+  - docs/evidence/phase-07-p07-02-quality.md
+acceptance_checks:
+  - name: 72用例80轮真实模型PostgreSQL评测完成
+    result: pass
+    evidence: [evals/reports/release-v1.1-20260822T132040911243+0800/summary.json, evals/reports/release-v1.1-20260822T132040911243+0800/golden-results.jsonl]
+  - name: 九项冻结发布门全部通过且无来源泄漏禁忌冲突和5xx
+    result: pass
+    evidence: [evals/reports/release-v1.1-20260822T132040911243+0800/summary.json, evals/reports/release-v1.1-20260822T132040911243+0800/safety-report.md, evals/reports/release-v1.1-20260822T132040911243+0800/source-isolation-report.md]
+  - name: 引用路由多轮和首字延迟冲分目标达到
+    result: pass
+    evidence: [docs/evidence/phase-07-p07-02-quality.md, evals/reports/release-v1.1-20260822T132040911243+0800/latency.csv]
+  - name: 首轮失败阈值勘误和重跑不可覆盖
+    result: pass
+    evidence: [evals/reports/release-v1-20260822T124320970139+0800/summary.json, evals/golden/release-golden-v1.1.manifest.json, docs/evidence/phase-07-p07-02-aborted-run.json]
+  - name: 第二人事实复核未伪装完成
+    result: pass_with_action
+    evidence: [evals/reports/release-v1.1-20260822T132040911243+0800/summary.json, docs/evidence/phase-07-p07-02-quality.md]
+issues: [ISSUE-058, ISSUE-059, ISSUE-060, ISSUE-061]
+residual_actions: [ACTION-06]
+review: {status: accepted, reviewer: Project Lead, reviewed_at: "2026-08-22T13:22:30+08:00", notes: 自动发布门与冲分目标通过，允许进入P07-03；ACTION-06继续阻断最终知识准确性签署}

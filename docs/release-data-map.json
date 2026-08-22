@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "captured_at": "2026-08-22T14:50:00+08:00",
+  "product": "HealthPick competition release candidate",
+  "paths": [
+    {
+      "id": "browser_identity",
+      "data": ["anonymous session id", "account email", "bearer token"],
+      "source": "API response",
+      "browser_storage": "localStorage",
+      "server_storage": "session id and token hash only; server does not store plaintext bearer token",
+      "off_device": true,
+      "recipients": ["HealthPick API"],
+      "deletion": "logout clears browser token and revokes current server token; clear site data removes local copy"
+    },
+    {
+      "id": "account",
+      "data": ["normalized email", "salted password hash", "authentication token hash", "timestamps"],
+      "source": "user registration/login",
+      "browser_storage": "email and bearer token; password is not persisted by the app",
+      "server_storage": "PostgreSQL users and auth_sessions",
+      "off_device": true,
+      "recipients": ["HealthPick API", "PostgreSQL"],
+      "retention": "account until permanent deletion; token validity 30 days",
+      "deletion": "password-confirmed permanent account deletion cascades across personal tables"
+    },
+    {
+      "id": "conversation",
+      "data": ["conversation title", "user message", "assistant answer", "citations", "route", "model", "request id", "timestamps"],
+      "source": "user and generated response",
+      "browser_storage": "rendered current state; session id identifies server history",
+      "server_storage": "PostgreSQL conversations and conversation_turns",
+      "off_device": true,
+      "recipients": ["HealthPick API", "PostgreSQL", "configured LLM Provider"],
+      "retention": "until conversation/account deletion or operator cleanup; no automatic retention worker",
+      "deletion": "delete one conversation or permanently delete account"
+    },
+    {
+      "id": "health_profile",
+      "data": ["goal", "age band", "height", "weight", "activity", "preferences", "allergies", "medical flags"],
+      "source": "user input",
+      "browser_storage": "React in-memory state for the active page",
+      "server_storage": "ephemeral request processing; not a standalone PostgreSQL profile",
+      "off_device": true,
+      "recipients": ["HealthPick API", "configured LLM Provider when generation is allowed"],
+      "retention": "request/page lifetime unless repeated in conversation text",
+      "deletion": "refresh clears standalone profile; delete conversation for profile facts typed into chat"
+    },
+    {
+      "id": "operational_logs",
+      "data": ["request id", "status", "route", "risk rule tags", "latency", "runtime mode"],
+      "source": "API operation",
+      "browser_storage": "none",
+      "server_storage": "runtime/platform logs",
+      "off_device": "depends on deployment logging provider",
+      "recipients": ["deployment operator and configured logging platform"],
+      "retention": "deployment-operator policy; not controlled by application database",
+      "deletion": "operator log lifecycle",
+      "excluded": ["raw health text", "password", "bearer token", "provider key", "internal prompt"]
+    },
+    {
+      "id": "knowledge_and_evaluation",
+      "data": ["competition documents A/B/C", "chunks", "structured facts", "de-identified evaluation cases and metrics"],
+      "source": "competition materials and synthetic test cases",
+      "browser_storage": "public evaluation summary only",
+      "server_storage": "repository and PostgreSQL knowledge tables",
+      "off_device": true,
+      "recipients": ["HealthPick API and project reviewers"],
+      "retention": "release lifecycle",
+      "deletion": "not part of personal-account deletion"
+    }
+  ],
+  "automatic_personal_data_retention_worker": false,
+  "advertising_sdk": false,
+  "analytics_sdk": false,
+  "public_deployment_status": "pending ACTION-05"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "evidence_id": "PHASE-05-P05-02-ERROR-CONTRACT",
+  "captured_at": "2026-08-22T00:18:58.660927+08:00",
+  "database_target": "127.0.0.1:54329/healthpick",
+  "api_origin": "http://127.0.0.1:8010",
+  "app_contract": {
+    "status": "PASS",
+    "checks": {
+      "whitespace_message_422": true,
+      "oversized_body_413": true,
+      "request_id_round_trip": true,
+      "blank_title_422": true,
+      "list_limit_422": true,
+      "method_405_stable": true,
+      "no_stack_or_secret_leak": true
+    }
+  },
+  "live_api": {
+    "status": "PASS",
+    "checks": {
+      "live_health_ok": true,
+      "live_database_ready": true,
+      "live_whitespace_422": true,
+      "live_oversized_413": true,
+      "live_request_id_round_trip": true
+    }
+  },
+  "provider_timeout": {
+    "status": "PASS",
+    "checks": {
+      "provider_timeout_504": true,
+      "distinct_timeout_code": true,
+      "timeout_retryable": true,
+      "timeout_not_persisted": true
+    }
+  },
+  "database_timeout": {
+    "status": "PASS",
+    "checks": {
+      "statement_timeout_enforced": true,
+      "database_timeout_distinct": true,
+      "database_timeout_retryable": true
+    }
+  },
+  "status": "PASS"
+}

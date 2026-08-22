@@ -1,0 +1,184 @@
+{
+  "schema_version": 1,
+  "evidence_id": "PHASE-08-P08-02-CLEAN-COMPOSE",
+  "captured_at": "2026-08-22T06:42:54.019140+00:00",
+  "origins": {
+    "api": "http://127.0.0.1:18120",
+    "web": "http://127.0.0.1:13120"
+  },
+  "before_restart": {
+    "api_health": {
+      "status": "ok",
+      "service": "healthpick-api",
+      "version": "0.1.0",
+      "environment": "development",
+      "request_id": "88829bd2-a686-47a8-82e0-516b34b2b6fc",
+      "modes": {
+        "llm": "real",
+        "embedding": "disabled",
+        "retrieval": "keyword"
+      },
+      "dependencies": {
+        "database": {
+          "status": "configured",
+          "detail": "conversation schema ready"
+        },
+        "llm": {
+          "status": "configured",
+          "detail": null
+        },
+        "embedding": {
+          "status": "disabled",
+          "detail": null
+        }
+      }
+    },
+    "web": {
+      "status_code": 200,
+      "healthpick_marker": true
+    },
+    "database": {
+      "counts": {
+        "knowledge_documents": 3,
+        "knowledge_pages": 18,
+        "knowledge_chunks": 67,
+        "food_facts": 31,
+        "plan_rules": 37,
+        "platform_facts": 12
+      },
+      "migrations": [
+        {
+          "version": "001",
+          "filename": "001_knowledge_base.sql",
+          "sha256": "81e18bffd3e4a834ce7dff0b4303254190661edc9b587d8d6a87f67291d74250",
+          "execution": "applied"
+        },
+        {
+          "version": "002",
+          "filename": "002_enable_vector.sql",
+          "sha256": "12aa6315cc0b3fb428a0e545c6aac290d1db533f7289be491ab0014c946dc6d4",
+          "execution": "applied"
+        },
+        {
+          "version": "003",
+          "filename": "003_chunk_embedding_qwen3_1024.sql",
+          "sha256": "a853add99e5de402aaa4e89498939ffad8b9253fbaff6e6f051898f62dc82cb3",
+          "execution": "applied"
+        },
+        {
+          "version": "004",
+          "filename": "004_conversation_persistence.sql",
+          "sha256": "be293b84f0e1915cd51ad06cc5e0ec1b762fb3f9e44de0cd56ea8ecedccd614d",
+          "execution": "applied"
+        },
+        {
+          "version": "005",
+          "filename": "005_account_identity.sql",
+          "sha256": "e0d884a12b7e65afd902d265ee2601f7cae7a6b97dd595a1e3374d951215dd44",
+          "execution": "applied"
+        }
+      ],
+      "successful_ingestion_runs": 1
+    }
+  },
+  "created_turn": {
+    "session_id": "46843232-bddb-4a1a-ba42-bd8cb0163439",
+    "conversation_id": "112d43ca-1691-4cdb-9bd8-516e01d6ef8c",
+    "turn_id": "8e45c97d-b5e0-46b3-832f-4b65af571ab4",
+    "request_id": "aa3494fb-c013-4381-8d98-d20f7f8239ff",
+    "route": "nutrition",
+    "citation_sources": [
+      "A"
+    ],
+    "answer_sha256": "d8b91a002eb2a69c5e43a55d941d3378daec3a1613edafce4f57a8c1c35eec70"
+  },
+  "status": "PASS",
+  "after_restart": {
+    "api_health": {
+      "status": "ok",
+      "service": "healthpick-api",
+      "version": "0.1.0",
+      "environment": "development",
+      "request_id": "e50e8777-5e21-4f4d-9b63-665efe75d4ee",
+      "modes": {
+        "llm": "real",
+        "embedding": "disabled",
+        "retrieval": "keyword"
+      },
+      "dependencies": {
+        "database": {
+          "status": "configured",
+          "detail": "conversation schema ready"
+        },
+        "llm": {
+          "status": "configured",
+          "detail": null
+        },
+        "embedding": {
+          "status": "disabled",
+          "detail": null
+        }
+      }
+    },
+    "web": {
+      "status_code": 200,
+      "healthpick_marker": true
+    },
+    "database": {
+      "counts": {
+        "knowledge_documents": 3,
+        "knowledge_pages": 18,
+        "knowledge_chunks": 67,
+        "food_facts": 31,
+        "plan_rules": 37,
+        "platform_facts": 12
+      },
+      "migrations": [
+        {
+          "version": "001",
+          "filename": "001_knowledge_base.sql",
+          "sha256": "81e18bffd3e4a834ce7dff0b4303254190661edc9b587d8d6a87f67291d74250",
+          "execution": "applied"
+        },
+        {
+          "version": "002",
+          "filename": "002_enable_vector.sql",
+          "sha256": "12aa6315cc0b3fb428a0e545c6aac290d1db533f7289be491ab0014c946dc6d4",
+          "execution": "applied"
+        },
+        {
+          "version": "003",
+          "filename": "003_chunk_embedding_qwen3_1024.sql",
+          "sha256": "a853add99e5de402aaa4e89498939ffad8b9253fbaff6e6f051898f62dc82cb3",
+          "execution": "applied"
+        },
+        {
+          "version": "004",
+          "filename": "004_conversation_persistence.sql",
+          "sha256": "be293b84f0e1915cd51ad06cc5e0ec1b762fb3f9e44de0cd56ea8ecedccd614d",
+          "execution": "applied"
+        },
+        {
+          "version": "005",
+          "filename": "005_account_identity.sql",
+          "sha256": "e0d884a12b7e65afd902d265ee2601f7cae7a6b97dd595a1e3374d951215dd44",
+          "execution": "applied"
+        }
+      ],
+      "successful_ingestion_runs": 2
+    }
+  },
+  "persistence": {
+    "conversation_id": "112d43ca-1691-4cdb-9bd8-516e01d6ef8c",
+    "turn_id": "8e45c97d-b5e0-46b3-832f-4b65af571ab4",
+    "request_id": "aa3494fb-c013-4381-8d98-d20f7f8239ff",
+    "turn_count": 1,
+    "identity_preserved": true,
+    "answer_preserved": true,
+    "model": {
+      "provider": "openai_compatible",
+      "name": "qwen2.5:3b-instruct",
+      "mode": "real"
+    }
+  }
+}

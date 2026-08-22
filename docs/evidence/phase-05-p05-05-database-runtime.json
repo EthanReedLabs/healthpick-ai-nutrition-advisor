@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "evidence_id": "ACTION-01-DB-RUNTIME",
+  "action_id": "ACTION-01",
+  "scope": "compose/postgresql/pgvector",
+  "captured_at": "2026-08-22T10:33:01.7219110+08:00",
+  "compose_project": "healthpick",
+  "container_id": "eeb3b2cd125e19b26ea84929fec98511ba3a56e425e2be00bd87cb53424603e6",
+  "health": "healthy",
+  "database": "healthpick",
+  "server_version": "17.11 (Debian 17.11-1.pgdg12+2)",
+  "pgcrypto_version": "1.3",
+  "vector_version": "0.8.6",
+  "knowledge_tables": 4,
+  "embedding_column_type": "vector(1024)",
+  "embedding_index_present": true,
+  "migration_001_sha256": "81e18bffd3e4a834ce7dff0b4303254190661edc9b587d8d6a87f67291d74250",
+  "status": "PASS"
+}

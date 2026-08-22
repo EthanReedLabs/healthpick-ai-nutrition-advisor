@@ -1,0 +1,32 @@
+schema_version: 1
+task_id: P06-01
+phase_id: PHASE-06
+outcome: passed
+started_at: "2026-08-22T10:44:00+08:00"
+completed_at: "2026-08-22T11:06:00+08:00"
+recorded_at: "2026-08-22"
+backfilled: false
+owner: API/WEB
+summary: 账号注册登录退出、匿名历史原子接管、服务端规范会话和会话级授权已在前端、API及真实PostgreSQL闭环。
+deliverables:
+  - infra/migrations/005_account_identity.sql
+  - apps/api/healthpick_api/auth.py
+  - apps/web/src/components/chat-workspace.tsx
+  - scripts/smoke_account_migration.py
+  - docs/evidence/phase-06-p06-01-quality.md
+acceptance_checks:
+  - name: 注册接管匿名历史且使用服务端规范会话
+    result: pass
+    evidence: [docs/evidence/phase-06-p06-01-postgres.json, docs/evidence/phase-06-p06-01-web-vitest.xml]
+  - name: 已接管会话未登录401且跨账号403
+    result: pass
+    evidence: [docs/evidence/phase-06-p06-01-pytest.xml, docs/evidence/phase-06-p06-01-postgres.json]
+  - name: 密码与令牌仅以安全哈希入库且退出令牌失效
+    result: pass
+    evidence: [docs/evidence/phase-06-p06-01-postgres.json]
+  - name: 前后端专项回归与生产构建通过
+    result: pass
+    evidence: [docs/evidence/phase-06-p06-01-pytest.xml, docs/evidence/phase-06-p06-01-web-vitest.xml, docs/evidence/phase-06-p06-01-quality.md]
+issues: [ISSUE-049, ISSUE-050, ISSUE-051]
+residual_actions: []
+review: {status: accepted, reviewer: Project Lead, reviewed_at: "2026-08-22T11:06:00+08:00", notes: P06-01验收通过，进入P06-02；导出删除边界继续由P06-04负责}

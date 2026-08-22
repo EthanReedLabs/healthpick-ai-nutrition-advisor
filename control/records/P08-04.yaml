@@ -1,0 +1,35 @@
+schema_version: 1
+task_id: P08-04
+phase_id: PHASE-08
+outcome: pass_with_action
+started_at: "2026-08-22T14:53:30+08:00"
+completed_at: "2026-08-22T14:59:00+08:00"
+recorded_at: "2026-08-22"
+backfilled: false
+owner: LEAD/QA_DOCS
+summary: 六分钟脚本、运行手册、问答与资产索引齐全，同一真实Compose候选连续两次完成三路由、S3、历史、评测与人工复核门演练并清理会话。
+deliverables:
+  - docs/demo/DEMO_SCRIPT_6MIN.md
+  - docs/demo/DEMO_RUNBOOK.md
+  - docs/demo/JUDGE_QA.md
+  - docs/demo/ASSET_INDEX.md
+  - scripts/run_demo_rehearsal.py
+acceptance_checks:
+  - name: 六分钟脚本运行手册评委问答和资产索引齐全
+    result: pass
+    evidence: [docs/demo/DEMO_SCRIPT_6MIN.md, docs/demo/DEMO_RUNBOOK.md, docs/demo/JUDGE_QA.md, docs/demo/ASSET_INDEX.md]
+  - name: 同一真实Compose候选第一次演练通过
+    result: pass
+    evidence: [docs/evidence/phase-08-p08-04-rehearsal-01.json]
+  - name: 不改配置第二次连续演练通过
+    result: pass
+    evidence: [docs/evidence/phase-08-p08-04-rehearsal-02.json]
+  - name: 临时演练会话清理且没有保存原始回答到报告
+    result: pass
+    evidence: [scripts/run_demo_rehearsal.py, docs/evidence/phase-08-p08-04-rehearsal-01.json, docs/evidence/phase-08-p08-04-rehearsal-02.json]
+  - name: 公网镜头与真实推荐签署没有伪装完成
+    result: pass_with_action
+    evidence: [docs/evidence/phase-08-p08-04-quality.md, docs/demo/ASSET_INDEX.md]
+issues: [ISSUE-070]
+residual_actions: [ACTION-05, ACTION-06]
+review: {status: accepted, reviewer: Project Lead, reviewed_at: "2026-08-22T14:59:00+08:00", notes: 本地双演练通过；公网镜头和第二人事实签署继续显式开放}

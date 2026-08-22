@@ -1,0 +1,51 @@
+{
+  "schema_version": 1,
+  "task_id": "P04-02",
+  "status": "PASS_WITH_ACTION",
+  "recorded_at": "2026-08-21T22:12:26.764113+08:00",
+  "api_origin": "http://127.0.0.1:8010",
+  "generated_by": "deterministic_rules",
+  "checks": {
+    "live_review_gate": {
+      "status": "blocked",
+      "blocked_reasons": [
+        "knowledge_second_person_review_required"
+      ],
+      "blocked_rule_count": 3,
+      "primary_present": false
+    },
+    "missing_goal": {
+      "status": "blocked",
+      "blocked_reasons": [
+        "missing_goal"
+      ],
+      "blocked_rule_count": 0,
+      "primary_present": false
+    },
+    "ambiguous_age": {
+      "status": "blocked",
+      "blocked_reasons": [
+        "age_outside_or_ambiguous_plan_scope"
+      ],
+      "blocked_rule_count": 0,
+      "primary_present": false
+    },
+    "allergy_general_only": {
+      "status": "blocked",
+      "blocked_reasons": [
+        "safety_s1_general_only"
+      ],
+      "blocked_rule_count": 0,
+      "primary_present": false
+    },
+    "kidney_general_only": {
+      "status": "blocked",
+      "blocked_reasons": [
+        "safety_s2_general_only"
+      ],
+      "blocked_rule_count": 0,
+      "primary_present": false
+    }
+  },
+  "residual_action": "ACTION-06"
+}

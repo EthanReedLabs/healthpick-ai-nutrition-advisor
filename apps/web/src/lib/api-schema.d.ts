@@ -21,6 +21,125 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/account": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /** Permanently delete the authenticated account and personal data */
+        delete: operations["delete_account_v1_account_delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/account/export": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Export the authenticated user's personal data */
+        get: operations["export_account_data_v1_account_export_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/auth/login": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Log in and return the canonical server session ID */
+        post: operations["login_account_v1_auth_login_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/auth/logout": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Logout Account */
+        post: operations["logout_account_v1_auth_logout_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/auth/me": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Current Account */
+        get: operations["current_account_v1_auth_me_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/auth/register": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Register and atomically claim one anonymous session */
+        post: operations["register_account_v1_auth_register_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/chat/cancel/{request_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Idempotently cancel one active generation request */
+        post: operations["cancel_chat_generation_v1_chat_cancel__request_id__post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/chat/stream": {
         parameters: {
             query?: never;
@@ -41,10 +160,396 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/conversations": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List conversations owned by an anonymous session */
+        get: operations["list_conversations_v1_conversations_get"];
+        put?: never;
+        /** Create a canonical conversation */
+        post: operations["create_conversation_v1_conversations_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/conversations/{conversation_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Read one conversation and its persisted turns */
+        get: operations["get_conversation_v1_conversations__conversation_id__get"];
+        put?: never;
+        post?: never;
+        /** Delete one owned conversation and all turns */
+        delete: operations["delete_conversation_v1_conversations__conversation_id__delete"];
+        options?: never;
+        head?: never;
+        /** Rename one owned conversation */
+        patch: operations["rename_conversation_v1_conversations__conversation_id__patch"];
+        trace?: never;
+    };
+    "/v1/evaluation/summary": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Return the packaged, sanitized release evaluation summary */
+        get: operations["evaluation_summary_v1_evaluation_summary_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/profile/assess": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Validate and preview an ephemeral health profile
+         * @description Normalizes a minimal structured profile and returns a BMI system estimate only when both height and weight are present. This endpoint does not persist data.
+         */
+        post: operations["profile_assessment_v1_profile_assess_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/recommendations/evaluate": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Evaluate a deterministic recommendation candidate
+         * @description Selects candidates from verified A/B plan rules only. Unreviewed or unknown-glyph facts return an explicit blocked result and never enter the candidate pool.
+         */
+        post: operations["recommendation_evaluation_v1_recommendations_evaluate_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/sessions/anonymous": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Create a server-owned anonymous session */
+        post: operations["create_anonymous_session_v1_sessions_anonymous_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/transparency": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Disclose non-secret model, retrieval, persistence and source boundaries */
+        get: operations["transparency_v1_transparency_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
+        /** AccountDataExport */
+        AccountDataExport: {
+            /** Auth Sessions */
+            auth_sessions: components["schemas"]["AccountExportAuthSession"][];
+            /** Conversations */
+            conversations: components["schemas"]["AccountExportConversation"][];
+            /** Excluded Static Data */
+            excluded_static_data: string[];
+            /**
+             * Export Version
+             * @default 1.0
+             * @constant
+             */
+            export_version: "1.0";
+            /**
+             * Exported At
+             * Format: date-time
+             */
+            exported_at: string;
+            inventory: components["schemas"]["AccountDataInventory"];
+            /** Sessions */
+            sessions: components["schemas"]["AccountExportSession"][];
+            user: components["schemas"]["AccountExportUser"];
+        };
+        /** AccountDataInventory */
+        AccountDataInventory: {
+            /** Anonymous Sessions */
+            anonymous_sessions: number;
+            /** Auth Sessions */
+            auth_sessions: number;
+            /** Conversation Turns */
+            conversation_turns: number;
+            /** Conversations */
+            conversations: number;
+            /** Total Records */
+            total_records: number;
+            /** Users */
+            users: number;
+        };
+        /** AccountDeleteRequest */
+        AccountDeleteRequest: {
+            /** Password */
+            password: string;
+        };
+        /** AccountExportAuthSession */
+        AccountExportAuthSession: {
+            /** Auth Session Id */
+            auth_session_id: string;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /**
+             * Expires At
+             * Format: date-time
+             */
+            expires_at: string;
+            /** Revoked At */
+            revoked_at?: string | null;
+        };
+        /** AccountExportConversation */
+        AccountExportConversation: {
+            /**
+             * Conversation Id
+             * Format: uuid
+             */
+            conversation_id: string;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /**
+             * Session Id
+             * Format: uuid
+             */
+            session_id: string;
+            /** Title */
+            title: string;
+            /** Turns */
+            turns: components["schemas"]["AccountExportTurn"][];
+            /**
+             * Updated At
+             * Format: date-time
+             */
+            updated_at: string;
+        };
+        /** AccountExportSession */
+        AccountExportSession: {
+            /** Claimed At */
+            claimed_at?: string | null;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /**
+             * Last Seen At
+             * Format: date-time
+             */
+            last_seen_at: string;
+            /**
+             * Session Id
+             * Format: uuid
+             */
+            session_id: string;
+            /**
+             * Updated At
+             * Format: date-time
+             */
+            updated_at: string;
+        };
+        /** AccountExportTurn */
+        AccountExportTurn: {
+            /** Assistant Message */
+            assistant_message: string;
+            /** Context Eligible */
+            context_eligible: boolean;
+            /** Created At */
+            created_at?: string | null;
+            /** Request Id */
+            request_id: string;
+            /** Response Payload */
+            response_payload: {
+                [key: string]: unknown;
+            };
+            /**
+             * Route
+             * @enum {string}
+             */
+            route: "nutrition" | "platform" | "mixed" | "out_of_scope";
+            /** Turn Id */
+            turn_id?: string | null;
+            /** User Message */
+            user_message: string;
+        };
+        /** AccountExportUser */
+        AccountExportUser: {
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /** Email */
+            email: string;
+            /**
+             * Updated At
+             * Format: date-time
+             */
+            updated_at: string;
+            /**
+             * User Id
+             * Format: uuid
+             */
+            user_id: string;
+        };
+        /** AnonymousSession */
+        AnonymousSession: {
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /**
+             * Session Id
+             * Format: uuid
+             */
+            session_id: string;
+        };
+        /** AuthLoginRequest */
+        AuthLoginRequest: {
+            /** Email */
+            email: string;
+            /** Password */
+            password: string;
+        };
+        /** AuthRegisterRequest */
+        AuthRegisterRequest: {
+            /**
+             * Anonymous Session Id
+             * Format: uuid
+             */
+            anonymous_session_id: string;
+            /** Email */
+            email: string;
+            /** Password */
+            password: string;
+        };
+        /** AuthResponse */
+        AuthResponse: {
+            /** Access Token */
+            access_token: string;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /** Email */
+            email: string;
+            /**
+             * Expires At
+             * Format: date-time
+             */
+            expires_at: string;
+            /**
+             * Session Id
+             * Format: uuid
+             */
+            session_id: string;
+            /**
+             * Token Type
+             * @default bearer
+             * @constant
+             */
+            token_type: "bearer";
+            /**
+             * User Id
+             * Format: uuid
+             */
+            user_id: string;
+        };
+        /** AuthUser */
+        AuthUser: {
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /** Email */
+            email: string;
+            /**
+             * User Id
+             * Format: uuid
+             */
+            user_id: string;
+        };
+        /** BmiEstimate */
+        BmiEstimate: {
+            /**
+             * Formula
+             * @default weight_kg / (height_m ** 2)
+             * @constant
+             */
+            formula: "weight_kg / (height_m ** 2)";
+            /** Height Cm */
+            height_cm: number;
+            /**
+             * Label
+             * @default 系统估算
+             * @constant
+             */
+            label: "系统估算";
+            /** Value */
+            value: number;
+            /** Weight Kg */
+            weight_kg: number;
+        };
         /** ChatFinalEvent */
         ChatFinalEvent: {
             /** Answer */
@@ -54,12 +559,15 @@ export interface components {
             model: components["schemas"]["ModelInfo"];
             /** Request Id */
             request_id: string;
+            retrieval_trace?: components["schemas"]["RetrievalTraceView"] | null;
             /**
              * Route
              * @enum {string}
              */
             route: "nutrition" | "platform" | "mixed" | "out_of_scope";
             safety: components["schemas"]["SafetyResult"];
+            /** Turn Id */
+            turn_id?: string | null;
         };
         /** ChatRequest */
         ChatRequest: {
@@ -68,6 +576,8 @@ export interface components {
             /** Message */
             message: string;
             profile_patch?: components["schemas"]["ProfilePatch"] | null;
+            /** Session Id */
+            session_id?: string | null;
         };
         /** Citation */
         Citation: {
@@ -97,6 +607,129 @@ export interface components {
              */
             status: "configured" | "mock" | "not_configured" | "not_checked" | "disabled";
         };
+        /** ConversationCreate */
+        ConversationCreate: {
+            /**
+             * Session Id
+             * Format: uuid
+             */
+            session_id: string;
+            /**
+             * Title
+             * @default 新对话
+             */
+            title: string;
+        };
+        /** ConversationDetail */
+        ConversationDetail: {
+            /**
+             * Conversation Id
+             * Format: uuid
+             */
+            conversation_id: string;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /**
+             * Session Id
+             * Format: uuid
+             */
+            session_id: string;
+            /** Title */
+            title: string;
+            /** Turn Count */
+            turn_count: number;
+            /** Turns */
+            turns: components["schemas"]["ConversationTurnView"][];
+            /**
+             * Updated At
+             * Format: date-time
+             */
+            updated_at: string;
+        };
+        /** ConversationList */
+        ConversationList: {
+            /** Items */
+            items: components["schemas"]["ConversationSummary"][];
+        };
+        /** ConversationRename */
+        ConversationRename: {
+            /**
+             * Session Id
+             * Format: uuid
+             */
+            session_id: string;
+            /** Title */
+            title: string;
+        };
+        /** ConversationSummary */
+        ConversationSummary: {
+            /**
+             * Conversation Id
+             * Format: uuid
+             */
+            conversation_id: string;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /**
+             * Session Id
+             * Format: uuid
+             */
+            session_id: string;
+            /** Title */
+            title: string;
+            /** Turn Count */
+            turn_count: number;
+            /**
+             * Updated At
+             * Format: date-time
+             */
+            updated_at: string;
+        };
+        /** ConversationTurnView */
+        ConversationTurnView: {
+            /** Assistant Message */
+            assistant_message: string;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /** Request Id */
+            request_id: string;
+            response?: components["schemas"]["ChatFinalEvent"] | null;
+            /**
+             * Route
+             * @enum {string}
+             */
+            route: "nutrition" | "platform" | "mixed" | "out_of_scope";
+            /**
+             * Turn Id
+             * Format: uuid
+             */
+            turn_id: string;
+            /** User Message */
+            user_message: string;
+        };
+        /** EmbeddingTransparency */
+        EmbeddingTransparency: {
+            /** Dimensions */
+            dimensions?: number | null;
+            /**
+             * Mode
+             * @enum {string}
+             */
+            mode: "real" | "disabled";
+            /** Name */
+            name: string;
+            /** Provider */
+            provider: string;
+        };
         /** ErrorResponse */
         ErrorResponse: {
             /** Code */
@@ -111,6 +744,93 @@ export interface components {
             request_id: string;
             /** Retryable */
             retryable: boolean;
+        };
+        /** EvaluationGate */
+        EvaluationGate: {
+            /** Actual */
+            actual: number;
+            /**
+             * Operator
+             * @enum {string}
+             */
+            operator: ">=" | "<=";
+            /**
+             * Status
+             * @enum {string}
+             */
+            status: "PASS" | "FAIL";
+            /** Threshold */
+            threshold: number;
+        };
+        /** EvaluationManualReview */
+        EvaluationManualReview: {
+            /** Action */
+            action: string;
+            /** Case Count */
+            case_count: number;
+            /**
+             * Status
+             * @enum {string}
+             */
+            status: "PENDING" | "PASS" | "FAIL";
+        };
+        /** EvaluationSummaryResponse */
+        EvaluationSummaryResponse: {
+            /**
+             * Automatic Status
+             * @enum {string}
+             */
+            automatic_status: "PASS" | "FAIL";
+            /** Case Count */
+            case_count: number;
+            /**
+             * Cleanup Status
+             * @enum {string}
+             */
+            cleanup_status: "PASS" | "FAIL";
+            /**
+             * Completed At
+             * Format: date-time
+             */
+            completed_at: string;
+            /** Dataset Sha256 */
+            dataset_sha256: string;
+            /** Dataset Version */
+            dataset_version: string;
+            /** First Attempt Preserved */
+            first_attempt_preserved: boolean;
+            /** Gates */
+            gates: {
+                [key: string]: components["schemas"]["EvaluationGate"];
+            };
+            /** Gates Passed */
+            gates_passed: number;
+            /** Gates Total */
+            gates_total: number;
+            manual_review: components["schemas"]["EvaluationManualReview"];
+            /** Metrics */
+            metrics: {
+                [key: string]: number;
+            };
+            /**
+             * Overall Status
+             * @enum {string}
+             */
+            overall_status: "PASS" | "PASS_WITH_ACTION" | "FAIL";
+            /** Public Note */
+            public_note: string;
+            /** Report Id */
+            report_id: string;
+            /**
+             * Schema Version
+             * @default 1
+             * @constant
+             */
+            schema_version: 1;
+            /** Source Report Sha256 */
+            source_report_sha256: string;
+            /** Turn Count */
+            turn_count: number;
         };
         /** HealthResponse */
         HealthResponse: {
@@ -144,6 +864,18 @@ export interface components {
             /** Version */
             version: string;
         };
+        /** ModelFailoverInfo */
+        ModelFailoverInfo: {
+            /** Enabled */
+            enabled: boolean;
+            fallback?: components["schemas"]["ModelInfo"] | null;
+            /**
+             * Policy
+             * @default retryable_or_invalid_response
+             * @constant
+             */
+            policy: "retryable_or_invalid_response";
+        };
         /** ModelInfo */
         ModelInfo: {
             /**
@@ -156,19 +888,167 @@ export interface components {
             /** Provider */
             provider: string;
         };
+        /** ProfileAssessment */
+        ProfileAssessment: {
+            bmi: components["schemas"]["BmiEstimate"] | null;
+            /** Collected Fields */
+            collected_fields: string[];
+            /**
+             * Persistence
+             * @default ephemeral
+             * @constant
+             */
+            persistence: "ephemeral";
+            profile: components["schemas"]["ProfilePatch"];
+        };
         /** ProfilePatch */
         ProfilePatch: {
+            /** Activity Level */
+            activity_level?: ("sedentary" | "light" | "moderate" | "high") | null;
+            /** Age Band */
+            age_band?: ("under_18" | "adult_18_44" | "adult_45_64" | "older_65_plus") | null;
             /** Allergies */
-            allergies?: string[];
+            allergies?: ("eggs" | "milk" | "peanuts" | "tree_nuts" | "wheat" | "soy" | "fish" | "shellfish" | "sesame")[];
             /** Conditions */
-            conditions?: string[];
+            conditions?: ("diabetes" | "kidney_disease" | "gout" | "hypertension" | "cardiovascular_disease" | "pregnancy" | "breastfeeding" | "celiac_disease" | "lactose_intolerance" | "eating_disorder_history")[];
+            /** Dietary Preferences */
+            dietary_preferences?: ("vegetarian" | "vegan" | "low_sodium" | "gluten_free" | "lactose_free")[];
             /** Disliked Foods */
             disliked_foods?: string[];
             /** Goal */
             goal?: ("fat_loss" | "muscle_gain" | "stable_glucose") | null;
+            /** Height Cm */
+            height_cm?: number | null;
+            /** Sex */
+            sex?: ("female" | "male" | "prefer_not_to_say") | null;
+            /** Weight Kg */
+            weight_kg?: number | null;
+        };
+        /** RecommendationEvaluation */
+        RecommendationEvaluation: {
+            alternate?: components["schemas"]["RecommendationOption"] | null;
+            /** Blocked Reasons */
+            blocked_reasons?: string[];
+            /** Blocked Rule Ids */
+            blocked_rule_ids?: string[];
+            /**
+             * Generated By
+             * @default deterministic_rules
+             * @constant
+             */
+            generated_by: "deterministic_rules";
+            primary?: components["schemas"]["RecommendationOption"] | null;
+            /**
+             * Requires Second Person Review
+             * @default false
+             */
+            requires_second_person_review: boolean;
+            /**
+             * Status
+             * @enum {string}
+             */
+            status: "ready" | "blocked";
+        };
+        /** RecommendationEvidence */
+        RecommendationEvidence: {
+            /** Pages */
+            pages: number[];
+            /**
+             * Review Status
+             * @default verified
+             * @constant
+             */
+            review_status: "verified";
+            /** Rule Id */
+            rule_id: string;
+            /** Section */
+            section: string;
+            /**
+             * Source
+             * @enum {string}
+             */
+            source: "A" | "B";
+            /** Title */
+            title: string;
+        };
+        /** RecommendationOption */
+        RecommendationOption: {
+            /** Actions */
+            actions: string[];
+            /** Blocked Food Tags */
+            blocked_food_tags?: string[];
+            /** Evidence */
+            evidence: components["schemas"]["RecommendationEvidence"][];
+            /** Key Targets */
+            key_targets: string[];
+            /** Match Reasons */
+            match_reasons: string[];
+            /** Plan Id */
+            plan_id: string;
+            /** Selection Score */
+            selection_score: number;
+            /** Substitutions */
+            substitutions?: string[];
+            /** Title */
+            title: string;
+        };
+        /** RetrievalSelection */
+        RetrievalSelection: {
+            /** Chunk Id */
+            chunk_id: string;
+            /** Matched Terms */
+            matched_terms?: string[];
+            /** Score */
+            score: number;
+            /**
+             * Source
+             * @enum {string}
+             */
+            source: "A" | "B" | "C";
+        };
+        /** RetrievalTraceView */
+        RetrievalTraceView: {
+            /** Allowed Sources */
+            allowed_sources: ("A" | "B" | "C")[];
+            /** Eligible Chunks */
+            eligible_chunks: number;
+            /**
+             * Evidence Gate
+             * @default passed
+             * @constant
+             */
+            evidence_gate: "passed";
+            /** Examined Chunks */
+            examined_chunks: number;
+            /** Excluded Unknown Glyph Chunks */
+            excluded_unknown_glyph_chunks: number;
+            /** Mode */
+            mode: string;
+            /** Query Terms */
+            query_terms: string[];
+            /** Rejected By Source Boundary */
+            rejected_by_source_boundary: number;
+            /** Returned Chunks */
+            returned_chunks: number;
+            /**
+             * Route
+             * @enum {string}
+             */
+            route: "nutrition" | "platform" | "mixed";
+            /** Route Components */
+            route_components: string[];
+            /** Selections */
+            selections: components["schemas"]["RetrievalSelection"][];
         };
         /** SafetyResult */
         SafetyResult: {
+            /**
+             * Allow Personalized Targets
+             * @default true
+             */
+            allow_personalized_targets: boolean;
+            /** Blocked Food Tags */
+            blocked_food_tags?: string[];
             /** Matched Rules */
             matched_rules?: string[];
             /**
@@ -177,10 +1057,58 @@ export interface components {
              */
             required_notice: "general" | "professional" | "emergency";
             /**
+             * Response Mode
+             * @default normal
+             * @enum {string}
+             */
+            response_mode: "normal" | "general_only" | "refuse" | "emergency_stop";
+            /**
              * Risk Level
              * @enum {string}
              */
             risk_level: "S0" | "S1" | "S2" | "S3";
+        };
+        /** SourceBoundaryInfo */
+        SourceBoundaryInfo: {
+            /** Allowed Use */
+            allowed_use: string;
+            /** Forbidden Use */
+            forbidden_use: string;
+            /**
+             * Source
+             * @enum {string}
+             */
+            source: "A" | "B" | "C";
+            /** Title */
+            title: string;
+        };
+        /** TransparencyResponse */
+        TransparencyResponse: {
+            /**
+             * Conversation Store
+             * @enum {string}
+             */
+            conversation_store: "ephemeral" | "postgres";
+            embedding: components["schemas"]["EmbeddingTransparency"];
+            /** Evidence Policy */
+            evidence_policy: string;
+            failover: components["schemas"]["ModelFailoverInfo"];
+            model: components["schemas"]["ModelInfo"];
+            /**
+             * Profile Persistence
+             * @default ephemeral
+             * @constant
+             */
+            profile_persistence: "ephemeral";
+            /**
+             * Retrieval Mode
+             * @enum {string}
+             */
+            retrieval_mode: "keyword" | "vector" | "hybrid";
+            /** Sources */
+            sources: components["schemas"]["SourceBoundaryInfo"][];
+            /** Version */
+            version: string;
         };
     };
     responses: never;
@@ -208,6 +1136,280 @@ export interface operations {
                 content: {
                     "application/json": components["schemas"]["HealthResponse"];
                 };
+            };
+            /** @description Request validation failed */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Unexpected server error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    delete_account_v1_account_delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AccountDeleteRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Request validation failed */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Unexpected server error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    export_account_data_v1_account_export_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AccountDataExport"];
+                };
+            };
+            /** @description Request validation failed */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Unexpected server error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    login_account_v1_auth_login_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AuthLoginRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AuthResponse"];
+                };
+            };
+            /** @description Request validation failed */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Unexpected server error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    logout_account_v1_auth_logout_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Request validation failed */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Unexpected server error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    current_account_v1_auth_me_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AuthUser"];
+                };
+            };
+            /** @description Request validation failed */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Unexpected server error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    register_account_v1_auth_register_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AuthRegisterRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AuthResponse"];
+                };
+            };
+            /** @description Request validation failed */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Unexpected server error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    cancel_chat_generation_v1_chat_cancel__request_id__post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                request_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
             };
             /** @description Request validation failed */
             422: {
@@ -280,6 +1482,422 @@ export interface operations {
             };
             /** @description Provider not configured or unavailable */
             503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Provider request timed out */
+            504: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    list_conversations_v1_conversations_get: {
+        parameters: {
+            query: {
+                session_id: string;
+                limit?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ConversationList"];
+                };
+            };
+            /** @description Request validation failed */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Unexpected server error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    create_conversation_v1_conversations_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ConversationCreate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ConversationSummary"];
+                };
+            };
+            /** @description Request validation failed */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Unexpected server error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    get_conversation_v1_conversations__conversation_id__get: {
+        parameters: {
+            query: {
+                session_id: string;
+            };
+            header?: never;
+            path: {
+                conversation_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ConversationDetail"];
+                };
+            };
+            /** @description Request validation failed */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Unexpected server error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    delete_conversation_v1_conversations__conversation_id__delete: {
+        parameters: {
+            query: {
+                session_id: string;
+            };
+            header?: never;
+            path: {
+                conversation_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Request validation failed */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Unexpected server error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    rename_conversation_v1_conversations__conversation_id__patch: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                conversation_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ConversationRename"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ConversationSummary"];
+                };
+            };
+            /** @description Request validation failed */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Unexpected server error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    evaluation_summary_v1_evaluation_summary_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EvaluationSummaryResponse"];
+                };
+            };
+            /** @description Request validation failed */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Unexpected server error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    profile_assessment_v1_profile_assess_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ProfilePatch"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProfileAssessment"];
+                };
+            };
+            /** @description Request validation failed */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Unexpected server error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    recommendation_evaluation_v1_recommendations_evaluate_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ProfilePatch"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RecommendationEvaluation"];
+                };
+            };
+            /** @description Request validation failed */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Unexpected server error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    create_anonymous_session_v1_sessions_anonymous_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AnonymousSession"];
+                };
+            };
+            /** @description Request validation failed */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Unexpected server error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    transparency_v1_transparency_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TransparencyResponse"];
+                };
+            };
+            /** @description Request validation failed */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Unexpected server error */
+            500: {
                 headers: {
                     [name: string]: unknown;
                 };

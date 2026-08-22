@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "task_id": "P04-05",
+  "status": "PASS_WITH_ACTION",
+  "recorded_at": "2026-08-21T21:56:30+08:00",
+  "runtime": {
+    "web_origin": "http://127.0.0.1:3100",
+    "api_origin": "http://127.0.0.1:8010",
+    "llm_mode": "real",
+    "embedding_mode": "real",
+    "retrieval_mode": "keyword"
+  },
+  "checks": {
+    "s0_normal": "PASS",
+    "s1_constraints": "PASS",
+    "s2_refusal_unit": "PASS",
+    "s3_emergency": "PASS",
+    "evidence_failure_state": "PASS",
+    "s3_history_reset": "PASS",
+    "new_conversation_id": "PASS",
+    "mobile_profile_entry": "PASS",
+    "responsive_1440_768_375": "PASS",
+    "console_errors": 0,
+    "python_tests": 114,
+    "web_tests": 11,
+    "structured_ready_card_fixture": "PASS",
+    "live_review_gate_card": "PASS"
+  },
+  "remaining": ["ACTION-06 second-person review before live plan release"],
+  "issues_resolved": ["ISSUE-030", "ISSUE-031"]
+}

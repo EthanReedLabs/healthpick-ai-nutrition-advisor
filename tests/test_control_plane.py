@@ -11,9 +11,7 @@ def test_control_plane_is_structurally_valid() -> None:
 
 def test_completed_tasks_have_individual_records() -> None:
     report = audit()
-    completed = [
-        task for task in report["control"]["tasks"] if task["status"] in COMPLETED
-    ]
+    completed = [task for task in report["control"]["tasks"] if task["status"] in COMPLETED]
     assert completed
     for task in completed:
         assert task["record"]
@@ -23,15 +21,21 @@ def test_completed_tasks_have_individual_records() -> None:
 def test_final_gate_stays_closed_while_work_remains() -> None:
     report = audit()
     assert report["final_readiness"] == "NOT_READY"
-    assert "action:ACTION-01=open" in report["final_blockers"]
-    assert "task:P03-01=ready" in report["final_blockers"]
+    assert report["final_blockers"]
+    assert any(blocker.startswith("task:") for blocker in report["final_blockers"])
     assert "gate:FINAL-10=not_started" in report["final_blockers"]
 
 
 def test_non_release_environment_issue_does_not_fake_or_block_release() -> None:
     report = audit()
     assert "issue:ISSUE-009=open" not in report["final_blockers"]
-    assert "issue:ISSUE-006=mitigated" in report["final_blockers"]
+    blocking_issues = [
+        issue
+        for issue in report["control"]["issues"]
+        if issue["blocks_final"] and issue["status"] != "resolved"
+    ]
+    for issue in blocking_issues:
+        assert f"issue:{issue['id']}={issue['status']}" in report["final_blockers"]
 
 
 def test_generated_board_lists_every_task_and_final_gate() -> None:

@@ -8,6 +8,12 @@
 - 状态只镜像 `control/project-control.yaml` 的中心任务状态，不在本表独立维护第二套真值；
 - 每个 `PASS` 必须有自动测试或可复核证据，不能只凭开发者口头确认。
 
+## 当前实测快照
+
+截至 2026-08-22 10:34，Phase 05 已对全部 34 个 P0 做同 scope 证据审计：`PASS_CURRENT=27`、`PARTIAL_MAPPED=6`、`OPEN_MAPPED=1`、未解释空项为 0。逐项实现、测试、运行证据和后续门见 `docs/evidence/phase-05-p05-05-p0-traceability.md`。
+
+这里的 `PASS_CURRENT` 只表示当前本地构建通过；公网 HTTPS、第二人事实复核、用户主动停止生成、正式密钥扫描、release tag 和七天可用性仍由控制面后续任务/行动负责，最终状态继续是 `NOT_READY`。
+
 ## 基础需求
 
 | ID | 优先级 | 要求 | 实现 | 验收测试 | 提交证据 |

@@ -1,0 +1,45 @@
+schema_version: 1
+task_id: P05-02
+phase_id: PHASE-05
+outcome: passed
+started_at: "2026-08-21T23:54:00+08:00"
+completed_at: "2026-08-22T00:21:00+08:00"
+recorded_at: "2026-08-22"
+backfilled: false
+owner: API/WEB
+summary: 公共输入边界、分层错误码、模型与数据库超时、严格 SSE 客户端和同 request ID 安全重试全部完成，并通过真实 API、PostgreSQL、Ollama 和浏览器验收。
+deliverables:
+  - apps/api/healthpick_api/config.py
+  - apps/api/healthpick_api/models.py
+  - apps/api/healthpick_api/main.py
+  - apps/api/healthpick_api/providers/base.py
+  - apps/api/healthpick_api/providers/openai_compatible.py
+  - apps/api/healthpick_api/embeddings/openai_compatible.py
+  - apps/api/healthpick_api/chat/conversation.py
+  - apps/api/healthpick_api/chat/pipeline.py
+  - apps/web/src/lib/api.ts
+  - apps/web/src/components/chat-workspace.tsx
+  - scripts/smoke_phase05_error_contract.py
+  - scripts/runtime_conversation.py
+acceptance_checks:
+  - name: 请求体字段标题和分页边界稳定失败
+    result: pass
+    evidence: [docs/evidence/phase-05-p05-02-api-pytest.xml, docs/evidence/phase-05-p05-02-error-contract.json]
+  - name: 模型Embedding数据库和协议错误可判别且不泄露原始响应
+    result: pass
+    evidence: [docs/evidence/phase-05-p05-02-api-pytest.xml, docs/evidence/phase-05-p05-02-quality.md]
+  - name: 模型与数据库超时独立且未完成回答不持久化
+    result: pass
+    evidence: [docs/evidence/phase-05-p05-02-error-contract.json]
+  - name: Web 严格解析 SSE 并以原始 request ID 安全重试
+    result: pass
+    evidence: [docs/evidence/phase-05-p05-02-web-vitest.xml, docs/evidence/phase-05-p05-02-browser.md, output/playwright/phase-05-p05-02-timeout-retry-1440x1000.png]
+  - name: 既有本地真实模型和 Phase 04 runtime smoke 兼容规范会话契约
+    result: pass
+    evidence: [docs/evidence/local-real-stack-runtime.json, docs/evidence/phase-04-p04-01-runtime.json, docs/evidence/phase-04-p04-03-runtime.json, docs/evidence/phase-04-p04-04-runtime.json]
+  - name: 全量测试静态检查类型检查和生产构建
+    result: pass
+    evidence: [docs/evidence/phase-05-p05-02-quality.md, docs/evidence/phase-05-p05-02-api-pytest.xml, docs/evidence/phase-05-p05-02-web-vitest.xml]
+issues: [ISSUE-017, ISSUE-035, ISSUE-036, ISSUE-037]
+residual_actions: []
+review: {status: pending_final_review, reviewer: Project Lead, reviewed_at: null, notes: P05-02 无残余行动；P05-03 继续完成三档错误和加载状态体验}

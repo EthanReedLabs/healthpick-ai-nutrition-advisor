@@ -18,6 +18,7 @@ class ChunkRecord:
     allowed_routes: tuple[str, ...]
     forbidden_routes: tuple[str, ...]
     review_status: str
+    unknown_glyph_count: int = 0
 
 
 @dataclass(frozen=True, slots=True)
@@ -35,6 +36,7 @@ class RetrievalTrace:
     allowed_sources: tuple[str, ...]
     query_terms: tuple[str, ...]
     examined_chunks: int
+    excluded_unknown_glyph_chunks: int
     eligible_chunks: int
     rejected_by_source_boundary: int
     returned_chunks: int

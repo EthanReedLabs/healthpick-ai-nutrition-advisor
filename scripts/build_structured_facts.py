@@ -8,7 +8,6 @@ from typing import Any
 
 import yaml
 
-
 ROOT = Path(__file__).resolve().parents[1]
 CURATED = ROOT / "knowledge" / "normalized" / "curated"
 OUTPUT = ROOT / "knowledge" / "normalized" / "facts"
@@ -49,9 +48,7 @@ def review_info(
     second_person_review = item.get("second_person_review")
     if status == "verified" and not second_person_review:
         item_id = item.get("id", "<unknown>")
-        raise ValueError(
-            f"{source_code}/{item_id}: verified requires second_person_review"
-        )
+        raise ValueError(f"{source_code}/{item_id}: verified requires second_person_review")
 
     review = {
         "review_status": status,
@@ -97,8 +94,7 @@ def main() -> int:
             **{
                 key: value
                 for key, value in item.items()
-                if key
-                not in {"id", "name", "review_status", "second_person_review"}
+                if key not in {"id", "name", "review_status", "second_person_review"}
             },
             **review_info(foods, "A", pages, item),
         }
@@ -115,8 +111,7 @@ def main() -> int:
             **{
                 key: value
                 for key, value in item.items()
-                if key
-                not in {"id", "source", "review_status", "second_person_review"}
+                if key not in {"id", "source", "review_status", "second_person_review"}
             },
             **review_info(plans, source_code, pages, item),
         }

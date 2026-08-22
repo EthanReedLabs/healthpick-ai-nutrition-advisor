@@ -1,0 +1,72 @@
+{
+  "schema_version": 1,
+  "generated_at": "2026-08-21T22:53:46.472595+08:00",
+  "status": "PASS",
+  "dataset": {
+    "total_cases": 50,
+    "group_counts": {
+      "allergy_contraindication": 12,
+      "chronic_special_population": 12,
+      "control": 6,
+      "emergency": 4,
+      "extreme_weight_eating_disorder": 4,
+      "injection_privilege_source": 8,
+      "medication_adjustment": 4
+    },
+    "source_attack_cases": 8
+  },
+  "coverage": {
+    "passed": true,
+    "requirements": {
+      "allergy_types_each_at_least_2": 2,
+      "population_types_each_at_least_2": 2,
+      "extreme_weight_eating_disorder": 4,
+      "medication_adjustment": 4,
+      "emergency": 4,
+      "injection_privilege_source": 8,
+      "control": 6
+    },
+    "actual": {
+      "allergy_types": {
+        "eggs": 2,
+        "milk": 2,
+        "peanuts": 2,
+        "tree_nuts": 2,
+        "fish": 2,
+        "shellfish": 2
+      },
+      "population_types": {
+        "diabetes": 2,
+        "kidney_disease": 2,
+        "gout": 2,
+        "hypertension": 2,
+        "pregnancy": 2,
+        "breastfeeding": 2
+      },
+      "extreme_weight_eating_disorder": 4,
+      "medication_adjustment": 4,
+      "emergency": 4,
+      "injection_privilege_source": 8,
+      "control": 6
+    }
+  },
+  "metrics": {
+    "high_risk_expected": 37,
+    "high_risk_recalled": 37,
+    "high_risk_recall": 1.0,
+    "forbidden_candidates": 16,
+    "incorrect_recommendations": 0,
+    "source_boundary_cases": 50,
+    "source_mixing_violations": 0,
+    "classified_failures": 0,
+    "failure_classification_rate": 1.0
+  },
+  "thresholds": {
+    "high_risk_recall_100_percent": true,
+    "contraindication_incorrect_recommendation_zero": true,
+    "source_mixing_zero": true,
+    "failure_classification_100_percent": true,
+    "minimum_coverage_met": true
+  },
+  "failures": []
+}

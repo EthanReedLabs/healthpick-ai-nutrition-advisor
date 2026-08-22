@@ -1,0 +1,43 @@
+schema_version: 1
+task_id: P04-01
+phase_id: PHASE-04
+outcome: passed
+started_at: "2026-08-21T21:08:30+08:00"
+completed_at: "2026-08-21T21:24:30+08:00"
+recorded_at: "2026-08-21"
+backfilled: false
+owner: API/WEB
+summary: 最小化健康档案、服务端规范化与 BMI 系统估算、无持久化评估 API、可编辑 Web 档案及 Chat profile_patch 传输已实现并通过本地真实运行验收。
+deliverables:
+  - apps/api/healthpick_api/profile/models.py
+  - apps/api/healthpick_api/profile/service.py
+  - apps/api/healthpick_api/main.py
+  - apps/web/src/components/chat-workspace.tsx
+  - apps/web/src/lib/api.ts
+  - packages/shared/openapi/healthpick.openapi.json
+  - scripts/smoke_profile.py
+acceptance_checks:
+  - name: 最小字段白名单、枚举、长度和数值边界
+    result: pass
+    evidence: [docs/evidence/phase-04-p04-01-api-pytest.xml]
+  - name: 标签规范化去重且拒绝自由文本疾病和额外隐私字段
+    result: pass
+    evidence: [docs/evidence/phase-04-p04-01-api-pytest.xml]
+  - name: BMI 仅在身高体重齐全时按固定公式返回并标注系统估算
+    result: pass
+    evidence: [docs/evidence/phase-04-p04-01-runtime.json]
+  - name: Profile assess 无持久化接口、OpenAPI 契约和非法输入 422
+    result: pass
+    evidence: [docs/evidence/phase-04-p04-01-runtime.json, packages/shared/openapi/healthpick.openapi.json]
+  - name: Web 编辑保存取消摘要和 Chat 档案传输
+    result: pass
+    evidence: [docs/evidence/phase-04-p04-01-web-vitest.xml, docs/evidence/phase-04-p04-01-browser.md]
+  - name: 真实本地浏览器 1440 视口无明显溢出且控制台无错误
+    result: pass
+    evidence: [output/playwright/phase-04-p04-01-profile-1440x1000.png, docs/evidence/phase-04-p04-01-browser.md]
+  - name: Python 和 Web 全量质量门
+    result: pass
+    evidence: [docs/evidence/current-pytest.xml, docs/evidence/phase-04-p04-01-web-vitest.xml]
+issues: [ISSUE-027, ISSUE-028]
+residual_actions: []
+review: {status: pending_final_review, reviewer: Project Lead, reviewed_at: null, notes: 待最终总纲验收复核；P04-03 风险分级不属于本任务}

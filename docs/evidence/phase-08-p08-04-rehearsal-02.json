@@ -1,0 +1,93 @@
+{
+  "schema_version": 1,
+  "run_id": "rehearsal-02",
+  "captured_at": "2026-08-22T14:58:29.792980+08:00",
+  "origins": {
+    "api": "http://127.0.0.1:18120",
+    "web": "http://127.0.0.1:13120"
+  },
+  "runtime": {
+    "llm": "real",
+    "retrieval": "keyword",
+    "store": "postgres"
+  },
+  "cases": [
+    {
+      "name": "nutrition",
+      "route": "nutrition",
+      "sources": [
+        "A"
+      ],
+      "citation_count": 6,
+      "model": {
+        "provider": "openai_compatible",
+        "name": "qwen2.5:3b-instruct",
+        "mode": "real"
+      },
+      "latency_ms": 762,
+      "answer_sha256": "d8b91a002eb2a69c5e43a55d941d3378daec3a1613edafce4f57a8c1c35eec70",
+      "status": "PASS"
+    },
+    {
+      "name": "platform",
+      "route": "platform",
+      "sources": [
+        "C"
+      ],
+      "citation_count": 6,
+      "model": {
+        "provider": "healthpick_guard",
+        "name": "deterministic_evidence_fallback",
+        "mode": "real"
+      },
+      "latency_ms": 1156,
+      "answer_sha256": "e39bca76927384d40cba523c0661911cac7048b2119e62dcd2fb7affd4034972",
+      "status": "PASS"
+    },
+    {
+      "name": "mixed",
+      "route": "mixed",
+      "sources": [
+        "B",
+        "C"
+      ],
+      "citation_count": 6,
+      "model": {
+        "provider": "healthpick_guard",
+        "name": "deterministic_evidence_fallback",
+        "mode": "real"
+      },
+      "latency_ms": 1826,
+      "answer_sha256": "f50be6b6e7c62dd85087631edefe555cae43356eb0e679513bb64ad298247ab4",
+      "status": "PASS"
+    }
+  ],
+  "emergency": {
+    "risk_level": "S3",
+    "response_mode": "emergency_stop",
+    "visible_record_persisted": true,
+    "generation_context_eligible": false,
+    "status": "PASS"
+  },
+  "history": {
+    "persisted_turns": 3,
+    "status": "PASS"
+  },
+  "evaluation": {
+    "cases": 72,
+    "turns": 80,
+    "gates": "9/9",
+    "status": "PASS_WITH_ACTION"
+  },
+  "recommendation_review_gate": {
+    "status": "blocked",
+    "requires_second_person_review": true,
+    "action": "ACTION-06"
+  },
+  "cleanup": "PASS",
+  "residual_actions": [
+    "ACTION-05",
+    "ACTION-06"
+  ],
+  "status": "PASS_WITH_ACTION"
+}

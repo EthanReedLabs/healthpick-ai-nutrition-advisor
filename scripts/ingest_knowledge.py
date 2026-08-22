@@ -13,7 +13,6 @@ from typing import Any
 import pymupdf
 import yaml
 
-
 ROOT = Path(__file__).resolve().parents[1]
 MANIFEST_PATH = ROOT / "knowledge" / "manifests" / "sources.yaml"
 OUTPUT_DIR = ROOT / "knowledge" / "normalized" / "pages"
@@ -43,9 +42,7 @@ def normalize_text(text: str) -> tuple[str, int]:
 
 def text_blocks(page: pymupdf.Page) -> list[dict[str, Any]]:
     blocks: list[dict[str, Any]] = []
-    for x0, y0, x1, y1, text, block_no, block_type in page.get_text(
-        "blocks", sort=True
-    ):
+    for x0, y0, x1, y1, text, block_no, block_type in page.get_text("blocks", sort=True):
         if block_type != 0:
             continue
         normalized, removed = normalize_text(text)
@@ -72,15 +69,12 @@ def extract_source(source: dict[str, Any]) -> tuple[Path, int]:
     actual_hash = sha256(source_path)
     expected_hash = str(source["sha256"]).upper()
     if actual_hash != expected_hash:
-        raise ValueError(
-            f"{source['code']}: SHA-256 mismatch: {actual_hash} != {expected_hash}"
-        )
+        raise ValueError(f"{source['code']}: SHA-256 mismatch: {actual_hash} != {expected_hash}")
 
     document = pymupdf.open(source_path)
     if document.page_count != int(source["pages"]):
         raise ValueError(
-            f"{source['code']}: page count mismatch: "
-            f"{document.page_count} != {source['pages']}"
+            f"{source['code']}: page count mismatch: {document.page_count} != {source['pages']}"
         )
 
     records: list[dict[str, Any]] = []
@@ -90,9 +84,7 @@ def extract_source(source: dict[str, Any]) -> tuple[Path, int]:
             normalized, removed = normalize_text(raw_text)
             blocks = text_blocks(page)
             cjk_chars = len(re.findall(r"[\u3400-\u9fff]", normalized))
-            spaced_cjk = len(
-                re.findall(r"[\u3400-\u9fff]\s+[\u3400-\u9fff]", normalized)
-            )
+            spaced_cjk = len(re.findall(r"[\u3400-\u9fff]\s+[\u3400-\u9fff]", normalized))
             unknown_glyphs = normalized.count("\uffff") + normalized.count("\ufffd")
             records.append(
                 {
@@ -147,9 +139,7 @@ def main() -> int:
     args = parser.parse_args()
 
     selected = [
-        source
-        for source in load_sources()
-        if args.source == "all" or source["code"] == args.source
+        source for source in load_sources() if args.source == "all" or source["code"] == args.source
     ]
     try:
         for source in selected:

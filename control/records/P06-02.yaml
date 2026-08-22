@@ -1,0 +1,31 @@
+schema_version: 1
+task_id: P06-02
+phase_id: PHASE-06
+outcome: passed
+started_at: "2026-08-22T11:06:00+08:00"
+completed_at: "2026-08-22T11:20:00+08:00"
+recorded_at: "2026-08-22"
+backfilled: false
+owner: API/WEB
+summary: 标题搜索、结果计数和清除、行内重命名、二次确认删除已在桌面与移动端完成，并以真实浏览器刷新和PostgreSQL标题真值验收。
+deliverables:
+  - apps/web/src/components/chat-workspace.tsx
+  - apps/web/src/app/globals.css
+  - docs/evidence/phase-06-p06-02-quality.md
+  - docs/evidence/phase-06-p06-02-browser.md
+acceptance_checks:
+  - name: 搜索过滤结果计数清除和无结果状态可用
+    result: pass
+    evidence: [docs/evidence/phase-06-p06-02-web-vitest.xml, docs/evidence/phase-06-p06-02-browser.md]
+  - name: 重命名通过授权PATCH持久化且刷新可恢复
+    result: pass
+    evidence: [docs/evidence/phase-06-p06-02-api-pytest.xml, docs/evidence/phase-06-p06-01-postgres.json, docs/evidence/phase-06-p06-02-browser.md]
+  - name: 删除确认和删除后选择下一项无回归
+    result: pass
+    evidence: [docs/evidence/phase-06-p06-02-web-vitest.xml, docs/evidence/phase-06-p06-02-api-pytest.xml]
+  - name: 桌面移动可访问性溢出和控制台门禁通过
+    result: pass
+    evidence: [docs/evidence/phase-06-p06-02-browser.md, output/playwright/phase-06-p06-02-history-search-1440x1000.png, output/playwright/phase-06-p06-02-history-search-375x812.png]
+issues: [ISSUE-052]
+residual_actions: []
+review: {status: accepted, reviewer: Project Lead, reviewed_at: "2026-08-22T11:20:00+08:00", notes: UI与持久层证据配对，P06-02验收通过，进入P06-03}

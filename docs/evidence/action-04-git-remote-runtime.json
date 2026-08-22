@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "evidence_id": "ACTION-04-GIT-REMOTE",
+  "action_id": "ACTION-04",
+  "scope": "github/private/main",
+  "captured_at": "2026-08-21T20:44:00+08:00",
+  "repository": "EthanReedLabs/healthpick-ai-nutrition-advisor",
+  "url": "https://github.com/EthanReedLabs/healthpick-ai-nutrition-advisor",
+  "visibility": "PRIVATE",
+  "default_branch": "main",
+  "remote_commit": "2f339b1e6916b3dd6da3eddd6673d978d0f4421b",
+  "secret_pattern_hits_before_push": 0,
+  "status": "PASS"
+}

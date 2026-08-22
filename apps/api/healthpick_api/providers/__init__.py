@@ -11,6 +11,7 @@ from .base import (
     ProviderRequestError,
 )
 from .factory import build_llm_provider
+from .failover import FailoverLLMProvider
 from .mock import MockLLMProvider
 from .openai_compatible import OpenAICompatibleLLMProvider
 
@@ -19,6 +20,7 @@ __all__ = [
     "LLMProvider",
     "LLMRequest",
     "LLMResult",
+    "FailoverLLMProvider",
     "MockLLMProvider",
     "OpenAICompatibleLLMProvider",
     "ProviderConfigurationError",

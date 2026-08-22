@@ -18,6 +18,7 @@ class LLMRequest:
     temperature: float = 0.1
     max_tokens: int = 1200
     request_id: str | None = None
+    reasoning_effort: Literal["none", "low", "medium", "high", "max"] | None = None
 
 
 @dataclass(frozen=True, slots=True)
@@ -57,9 +58,12 @@ class ProviderRequestError(ProviderError):
         *,
         status_code: int | None = None,
         retryable: bool = True,
+        code: str | None = None,
     ) -> None:
         super().__init__(message, status_code=status_code)
         self.retryable = retryable
+        if code is not None:
+            self.code = code
 
 
 class ProviderProtocolError(ProviderError):

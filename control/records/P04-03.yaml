@@ -1,0 +1,43 @@
+schema_version: 1
+task_id: P04-03
+phase_id: PHASE-04
+outcome: passed
+started_at: "2026-08-21T21:25:00+08:00"
+completed_at: "2026-08-21T21:34:30+08:00"
+recorded_at: "2026-08-21"
+backfilled: false
+owner: API/KNOWLEDGE
+summary: 模型调用前的风险分级、确定性拒答/紧急中止、禁忌标签硬过滤及真实本地模型安全回归已实现；P04-04 的输出逐项校验作为独立后续门禁保留。
+deliverables:
+  - apps/api/healthpick_api/safety/service.py
+  - apps/api/healthpick_api/safety/__init__.py
+  - apps/api/healthpick_api/chat/pipeline.py
+  - apps/api/healthpick_api/models.py
+  - tests/api/test_safety.py
+  - scripts/smoke_safety.py
+  - packages/shared/openapi/healthpick.openapi.json
+acceptance_checks:
+  - name: S0-S3 风险矩阵与档案/消息组合判定
+    result: pass
+    evidence: [docs/evidence/phase-04-p04-03-api-pytest.xml]
+  - name: S2 精确处方和药物调整确定性拒答且不调用模型
+    result: pass
+    evidence: [docs/evidence/phase-04-p04-03-api-pytest.xml, docs/evidence/phase-04-p04-03-runtime.json]
+  - name: S3 紧急症状在检索和模型调用前确定性中止
+    result: pass
+    evidence: [docs/evidence/phase-04-p04-03-api-pytest.xml, docs/evidence/phase-04-p04-03-runtime.json]
+  - name: 过敏和疾病禁忌候选在模型调用前硬过滤
+    result: pass
+    evidence: [docs/evidence/phase-04-p04-03-api-pytest.xml, docs/evidence/phase-04-p04-03-runtime.json]
+  - name: 真实本地模型覆盖 S0、S1、S2 和 S3 六类路径
+    result: pass
+    evidence: [docs/evidence/phase-04-p04-03-runtime.json]
+  - name: 医疗安全触发口径有权威来源校准记录
+    result: pass
+    evidence: [docs/evidence/phase-04-safety-authorities.md]
+  - name: Python 全量回归和控制面结构审计
+    result: pass
+    evidence: [docs/evidence/current-pytest.xml, docs/evidence/control-plane-validation.json]
+issues: [ISSUE-029]
+residual_actions: []
+review: {status: pending_final_review, reviewer: Project Lead, reviewed_at: null, notes: ISSUE-029 属于 P04-04 输出校验范围，不回退 P04-03 的模型前确定性安全门验收}

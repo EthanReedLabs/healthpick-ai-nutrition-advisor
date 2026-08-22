@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "dataset_version": "release-golden-v1",
+  "generated_at": "2026-08-22T12:15:44.806950+08:00",
+  "dataset": "evals/datasets/release-golden-v1.jsonl",
+  "dataset_sha256": "ec60edc1fb4df35dd3dcc0a0929ef2a0d4ca7f569b1be5420ac71419e2c61b20",
+  "thresholds": "evals/golden/release-gate-v1.json",
+  "thresholds_sha256": "b1c9b7a36e13a7a8e1fa28664a21ac3064ce505ccd2c090609dbcfce2a0041d7",
+  "source_manifest_sha256": "718385efe40c60d276c9aa5f7f683ee8a3db175e20a93df9431fead0182edc27",
+  "status": "PASS",
+  "case_count": 72,
+  "turn_count": 80,
+  "category_counts": {
+    "a_nutrition": 14,
+    "adversarial_robustness": 8,
+    "b_plan_substitution": 14,
+    "c_platform": 8,
+    "medical_safety": 10,
+    "multi_turn": 8,
+    "routing_mixed": 10
+  },
+  "second_person_review_cases": 53,
+  "errors": []
+}

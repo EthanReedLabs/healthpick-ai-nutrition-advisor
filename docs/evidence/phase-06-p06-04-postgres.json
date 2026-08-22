@@ -1,0 +1,29 @@
+{
+  "status": "PASS",
+  "generated_at": "2026-08-22T03:54:08.340351+00:00",
+  "database_target": "127.0.0.1:54329/healthpick",
+  "checks": {
+    "anonymous_session_created": true,
+    "pre_claim_history_created": true,
+    "registration_succeeded": true,
+    "canonical_session_preserved": true,
+    "claimed_history_requires_bearer": true,
+    "claimed_history_preserved": true,
+    "authorized_rename_succeeded": true,
+    "cross_account_access_denied": true,
+    "login_returns_canonical_session": true,
+    "account_export_covers_personal_tables": true,
+    "account_export_excludes_secrets": true,
+    "account_export_excludes_static_knowledge": true,
+    "logout_revokes_presented_token": true,
+    "password_is_scrypt_hash_only": true,
+    "tokens_are_sha256_hashes_only": true,
+    "rename_persisted_in_database": true,
+    "account_delete_requires_password_reentry": true,
+    "account_delete_succeeded": true,
+    "deleted_account_cannot_login": true,
+    "account_delete_clears_same_personal_tables": true,
+    "account_delete_preserves_static_knowledge": true
+  },
+  "check_count": 21
+}

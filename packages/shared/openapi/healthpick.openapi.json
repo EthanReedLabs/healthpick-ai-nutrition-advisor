@@ -1,6 +1,544 @@
 {
   "components": {
     "schemas": {
+      "AccountDataExport": {
+        "additionalProperties": false,
+        "properties": {
+          "auth_sessions": {
+            "items": {
+              "$ref": "#/components/schemas/AccountExportAuthSession"
+            },
+            "title": "Auth Sessions",
+            "type": "array"
+          },
+          "conversations": {
+            "items": {
+              "$ref": "#/components/schemas/AccountExportConversation"
+            },
+            "title": "Conversations",
+            "type": "array"
+          },
+          "excluded_static_data": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Excluded Static Data",
+            "type": "array"
+          },
+          "export_version": {
+            "const": "1.0",
+            "default": "1.0",
+            "title": "Export Version",
+            "type": "string"
+          },
+          "exported_at": {
+            "format": "date-time",
+            "title": "Exported At",
+            "type": "string"
+          },
+          "inventory": {
+            "$ref": "#/components/schemas/AccountDataInventory"
+          },
+          "sessions": {
+            "items": {
+              "$ref": "#/components/schemas/AccountExportSession"
+            },
+            "title": "Sessions",
+            "type": "array"
+          },
+          "user": {
+            "$ref": "#/components/schemas/AccountExportUser"
+          }
+        },
+        "required": [
+          "exported_at",
+          "user",
+          "inventory",
+          "auth_sessions",
+          "sessions",
+          "conversations",
+          "excluded_static_data"
+        ],
+        "title": "AccountDataExport",
+        "type": "object"
+      },
+      "AccountDataInventory": {
+        "additionalProperties": false,
+        "properties": {
+          "anonymous_sessions": {
+            "minimum": 0.0,
+            "title": "Anonymous Sessions",
+            "type": "integer"
+          },
+          "auth_sessions": {
+            "minimum": 0.0,
+            "title": "Auth Sessions",
+            "type": "integer"
+          },
+          "conversation_turns": {
+            "minimum": 0.0,
+            "title": "Conversation Turns",
+            "type": "integer"
+          },
+          "conversations": {
+            "minimum": 0.0,
+            "title": "Conversations",
+            "type": "integer"
+          },
+          "total_records": {
+            "minimum": 0.0,
+            "title": "Total Records",
+            "type": "integer"
+          },
+          "users": {
+            "minimum": 0.0,
+            "title": "Users",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "users",
+          "auth_sessions",
+          "anonymous_sessions",
+          "conversations",
+          "conversation_turns",
+          "total_records"
+        ],
+        "title": "AccountDataInventory",
+        "type": "object"
+      },
+      "AccountDeleteRequest": {
+        "additionalProperties": false,
+        "properties": {
+          "password": {
+            "maxLength": 128,
+            "minLength": 10,
+            "title": "Password",
+            "type": "string"
+          }
+        },
+        "required": [
+          "password"
+        ],
+        "title": "AccountDeleteRequest",
+        "type": "object"
+      },
+      "AccountExportAuthSession": {
+        "additionalProperties": false,
+        "properties": {
+          "auth_session_id": {
+            "title": "Auth Session Id",
+            "type": "string"
+          },
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "expires_at": {
+            "format": "date-time",
+            "title": "Expires At",
+            "type": "string"
+          },
+          "revoked_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Revoked At"
+          }
+        },
+        "required": [
+          "auth_session_id",
+          "created_at",
+          "expires_at"
+        ],
+        "title": "AccountExportAuthSession",
+        "type": "object"
+      },
+      "AccountExportConversation": {
+        "additionalProperties": false,
+        "properties": {
+          "conversation_id": {
+            "format": "uuid",
+            "title": "Conversation Id",
+            "type": "string"
+          },
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "session_id": {
+            "format": "uuid",
+            "title": "Session Id",
+            "type": "string"
+          },
+          "title": {
+            "title": "Title",
+            "type": "string"
+          },
+          "turns": {
+            "items": {
+              "$ref": "#/components/schemas/AccountExportTurn"
+            },
+            "title": "Turns",
+            "type": "array"
+          },
+          "updated_at": {
+            "format": "date-time",
+            "title": "Updated At",
+            "type": "string"
+          }
+        },
+        "required": [
+          "conversation_id",
+          "session_id",
+          "title",
+          "created_at",
+          "updated_at",
+          "turns"
+        ],
+        "title": "AccountExportConversation",
+        "type": "object"
+      },
+      "AccountExportSession": {
+        "additionalProperties": false,
+        "properties": {
+          "claimed_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Claimed At"
+          },
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "last_seen_at": {
+            "format": "date-time",
+            "title": "Last Seen At",
+            "type": "string"
+          },
+          "session_id": {
+            "format": "uuid",
+            "title": "Session Id",
+            "type": "string"
+          },
+          "updated_at": {
+            "format": "date-time",
+            "title": "Updated At",
+            "type": "string"
+          }
+        },
+        "required": [
+          "session_id",
+          "created_at",
+          "updated_at",
+          "last_seen_at"
+        ],
+        "title": "AccountExportSession",
+        "type": "object"
+      },
+      "AccountExportTurn": {
+        "additionalProperties": false,
+        "properties": {
+          "assistant_message": {
+            "title": "Assistant Message",
+            "type": "string"
+          },
+          "context_eligible": {
+            "title": "Context Eligible",
+            "type": "boolean"
+          },
+          "created_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Created At"
+          },
+          "request_id": {
+            "title": "Request Id",
+            "type": "string"
+          },
+          "response_payload": {
+            "additionalProperties": true,
+            "title": "Response Payload",
+            "type": "object"
+          },
+          "route": {
+            "enum": [
+              "nutrition",
+              "platform",
+              "mixed",
+              "out_of_scope"
+            ],
+            "title": "Route",
+            "type": "string"
+          },
+          "turn_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Turn Id"
+          },
+          "user_message": {
+            "title": "User Message",
+            "type": "string"
+          }
+        },
+        "required": [
+          "request_id",
+          "user_message",
+          "assistant_message",
+          "route",
+          "context_eligible",
+          "response_payload"
+        ],
+        "title": "AccountExportTurn",
+        "type": "object"
+      },
+      "AccountExportUser": {
+        "additionalProperties": false,
+        "properties": {
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "email": {
+            "title": "Email",
+            "type": "string"
+          },
+          "updated_at": {
+            "format": "date-time",
+            "title": "Updated At",
+            "type": "string"
+          },
+          "user_id": {
+            "format": "uuid",
+            "title": "User Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "user_id",
+          "email",
+          "created_at",
+          "updated_at"
+        ],
+        "title": "AccountExportUser",
+        "type": "object"
+      },
+      "AnonymousSession": {
+        "additionalProperties": false,
+        "properties": {
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "session_id": {
+            "format": "uuid",
+            "title": "Session Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "session_id",
+          "created_at"
+        ],
+        "title": "AnonymousSession",
+        "type": "object"
+      },
+      "AuthLoginRequest": {
+        "additionalProperties": false,
+        "properties": {
+          "email": {
+            "maxLength": 254,
+            "minLength": 3,
+            "title": "Email",
+            "type": "string"
+          },
+          "password": {
+            "maxLength": 128,
+            "minLength": 10,
+            "title": "Password",
+            "type": "string"
+          }
+        },
+        "required": [
+          "email",
+          "password"
+        ],
+        "title": "AuthLoginRequest",
+        "type": "object"
+      },
+      "AuthRegisterRequest": {
+        "additionalProperties": false,
+        "properties": {
+          "anonymous_session_id": {
+            "format": "uuid",
+            "title": "Anonymous Session Id",
+            "type": "string"
+          },
+          "email": {
+            "maxLength": 254,
+            "minLength": 3,
+            "title": "Email",
+            "type": "string"
+          },
+          "password": {
+            "maxLength": 128,
+            "minLength": 10,
+            "title": "Password",
+            "type": "string"
+          }
+        },
+        "required": [
+          "email",
+          "password",
+          "anonymous_session_id"
+        ],
+        "title": "AuthRegisterRequest",
+        "type": "object"
+      },
+      "AuthResponse": {
+        "additionalProperties": false,
+        "properties": {
+          "access_token": {
+            "title": "Access Token",
+            "type": "string"
+          },
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "email": {
+            "title": "Email",
+            "type": "string"
+          },
+          "expires_at": {
+            "format": "date-time",
+            "title": "Expires At",
+            "type": "string"
+          },
+          "session_id": {
+            "format": "uuid",
+            "title": "Session Id",
+            "type": "string"
+          },
+          "token_type": {
+            "const": "bearer",
+            "default": "bearer",
+            "title": "Token Type",
+            "type": "string"
+          },
+          "user_id": {
+            "format": "uuid",
+            "title": "User Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "user_id",
+          "email",
+          "created_at",
+          "access_token",
+          "expires_at",
+          "session_id"
+        ],
+        "title": "AuthResponse",
+        "type": "object"
+      },
+      "AuthUser": {
+        "additionalProperties": false,
+        "properties": {
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "email": {
+            "title": "Email",
+            "type": "string"
+          },
+          "user_id": {
+            "format": "uuid",
+            "title": "User Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "user_id",
+          "email",
+          "created_at"
+        ],
+        "title": "AuthUser",
+        "type": "object"
+      },
+      "BmiEstimate": {
+        "additionalProperties": false,
+        "properties": {
+          "formula": {
+            "const": "weight_kg / (height_m ** 2)",
+            "default": "weight_kg / (height_m ** 2)",
+            "title": "Formula",
+            "type": "string"
+          },
+          "height_cm": {
+            "title": "Height Cm",
+            "type": "number"
+          },
+          "label": {
+            "const": "系统估算",
+            "default": "系统估算",
+            "title": "Label",
+            "type": "string"
+          },
+          "value": {
+            "exclusiveMinimum": 0.0,
+            "title": "Value",
+            "type": "number"
+          },
+          "weight_kg": {
+            "title": "Weight Kg",
+            "type": "number"
+          }
+        },
+        "required": [
+          "value",
+          "height_cm",
+          "weight_kg"
+        ],
+        "title": "BmiEstimate",
+        "type": "object"
+      },
       "ChatFinalEvent": {
         "additionalProperties": false,
         "properties": {
@@ -22,6 +560,16 @@
             "title": "Request Id",
             "type": "string"
           },
+          "retrieval_trace": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/RetrievalTraceView"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
           "route": {
             "enum": [
               "nutrition",
@@ -34,6 +582,18 @@
           },
           "safety": {
             "$ref": "#/components/schemas/SafetyResult"
+          },
+          "turn_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Turn Id"
           }
         },
         "required": [
@@ -57,7 +617,7 @@
             "type": "string"
           },
           "message": {
-            "maxLength": 4000,
+            "maxLength": 2000,
             "minLength": 1,
             "title": "Message",
             "type": "string"
@@ -71,6 +631,19 @@
                 "type": "null"
               }
             ]
+          },
+          "session_id": {
+            "anyOf": [
+              {
+                "maxLength": 128,
+                "minLength": 1,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Session Id"
           }
         },
         "required": [
@@ -157,6 +730,260 @@
         "title": "ComponentStatus",
         "type": "object"
       },
+      "ConversationCreate": {
+        "additionalProperties": false,
+        "properties": {
+          "session_id": {
+            "format": "uuid",
+            "title": "Session Id",
+            "type": "string"
+          },
+          "title": {
+            "default": "新对话",
+            "maxLength": 80,
+            "minLength": 1,
+            "title": "Title",
+            "type": "string"
+          }
+        },
+        "required": [
+          "session_id"
+        ],
+        "title": "ConversationCreate",
+        "type": "object"
+      },
+      "ConversationDetail": {
+        "additionalProperties": false,
+        "properties": {
+          "conversation_id": {
+            "format": "uuid",
+            "title": "Conversation Id",
+            "type": "string"
+          },
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "session_id": {
+            "format": "uuid",
+            "title": "Session Id",
+            "type": "string"
+          },
+          "title": {
+            "title": "Title",
+            "type": "string"
+          },
+          "turn_count": {
+            "minimum": 0.0,
+            "title": "Turn Count",
+            "type": "integer"
+          },
+          "turns": {
+            "items": {
+              "$ref": "#/components/schemas/ConversationTurnView"
+            },
+            "title": "Turns",
+            "type": "array"
+          },
+          "updated_at": {
+            "format": "date-time",
+            "title": "Updated At",
+            "type": "string"
+          }
+        },
+        "required": [
+          "conversation_id",
+          "session_id",
+          "title",
+          "created_at",
+          "updated_at",
+          "turn_count",
+          "turns"
+        ],
+        "title": "ConversationDetail",
+        "type": "object"
+      },
+      "ConversationList": {
+        "additionalProperties": false,
+        "properties": {
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/ConversationSummary"
+            },
+            "title": "Items",
+            "type": "array"
+          }
+        },
+        "required": [
+          "items"
+        ],
+        "title": "ConversationList",
+        "type": "object"
+      },
+      "ConversationRename": {
+        "additionalProperties": false,
+        "properties": {
+          "session_id": {
+            "format": "uuid",
+            "title": "Session Id",
+            "type": "string"
+          },
+          "title": {
+            "maxLength": 80,
+            "minLength": 1,
+            "title": "Title",
+            "type": "string"
+          }
+        },
+        "required": [
+          "session_id",
+          "title"
+        ],
+        "title": "ConversationRename",
+        "type": "object"
+      },
+      "ConversationSummary": {
+        "additionalProperties": false,
+        "properties": {
+          "conversation_id": {
+            "format": "uuid",
+            "title": "Conversation Id",
+            "type": "string"
+          },
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "session_id": {
+            "format": "uuid",
+            "title": "Session Id",
+            "type": "string"
+          },
+          "title": {
+            "title": "Title",
+            "type": "string"
+          },
+          "turn_count": {
+            "minimum": 0.0,
+            "title": "Turn Count",
+            "type": "integer"
+          },
+          "updated_at": {
+            "format": "date-time",
+            "title": "Updated At",
+            "type": "string"
+          }
+        },
+        "required": [
+          "conversation_id",
+          "session_id",
+          "title",
+          "created_at",
+          "updated_at",
+          "turn_count"
+        ],
+        "title": "ConversationSummary",
+        "type": "object"
+      },
+      "ConversationTurnView": {
+        "additionalProperties": false,
+        "properties": {
+          "assistant_message": {
+            "title": "Assistant Message",
+            "type": "string"
+          },
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "request_id": {
+            "title": "Request Id",
+            "type": "string"
+          },
+          "response": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ChatFinalEvent"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "route": {
+            "enum": [
+              "nutrition",
+              "platform",
+              "mixed",
+              "out_of_scope"
+            ],
+            "title": "Route",
+            "type": "string"
+          },
+          "turn_id": {
+            "format": "uuid",
+            "title": "Turn Id",
+            "type": "string"
+          },
+          "user_message": {
+            "title": "User Message",
+            "type": "string"
+          }
+        },
+        "required": [
+          "turn_id",
+          "request_id",
+          "user_message",
+          "assistant_message",
+          "route",
+          "created_at"
+        ],
+        "title": "ConversationTurnView",
+        "type": "object"
+      },
+      "EmbeddingTransparency": {
+        "additionalProperties": false,
+        "properties": {
+          "dimensions": {
+            "anyOf": [
+              {
+                "minimum": 1.0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Dimensions"
+          },
+          "mode": {
+            "enum": [
+              "real",
+              "disabled"
+            ],
+            "title": "Mode",
+            "type": "string"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "provider": {
+            "title": "Provider",
+            "type": "string"
+          }
+        },
+        "required": [
+          "provider",
+          "name",
+          "mode"
+        ],
+        "title": "EmbeddingTransparency",
+        "type": "object"
+      },
       "ErrorResponse": {
         "additionalProperties": false,
         "properties": {
@@ -199,6 +1026,207 @@
           "retryable"
         ],
         "title": "ErrorResponse",
+        "type": "object"
+      },
+      "EvaluationGate": {
+        "additionalProperties": false,
+        "properties": {
+          "actual": {
+            "title": "Actual",
+            "type": "number"
+          },
+          "operator": {
+            "enum": [
+              ">=",
+              "<="
+            ],
+            "title": "Operator",
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "PASS",
+              "FAIL"
+            ],
+            "title": "Status",
+            "type": "string"
+          },
+          "threshold": {
+            "title": "Threshold",
+            "type": "number"
+          }
+        },
+        "required": [
+          "operator",
+          "threshold",
+          "actual",
+          "status"
+        ],
+        "title": "EvaluationGate",
+        "type": "object"
+      },
+      "EvaluationManualReview": {
+        "additionalProperties": false,
+        "properties": {
+          "action": {
+            "title": "Action",
+            "type": "string"
+          },
+          "case_count": {
+            "minimum": 0.0,
+            "title": "Case Count",
+            "type": "integer"
+          },
+          "status": {
+            "enum": [
+              "PENDING",
+              "PASS",
+              "FAIL"
+            ],
+            "title": "Status",
+            "type": "string"
+          }
+        },
+        "required": [
+          "status",
+          "action",
+          "case_count"
+        ],
+        "title": "EvaluationManualReview",
+        "type": "object"
+      },
+      "EvaluationSummaryResponse": {
+        "additionalProperties": false,
+        "properties": {
+          "automatic_status": {
+            "enum": [
+              "PASS",
+              "FAIL"
+            ],
+            "title": "Automatic Status",
+            "type": "string"
+          },
+          "case_count": {
+            "minimum": 1.0,
+            "title": "Case Count",
+            "type": "integer"
+          },
+          "cleanup_status": {
+            "enum": [
+              "PASS",
+              "FAIL"
+            ],
+            "title": "Cleanup Status",
+            "type": "string"
+          },
+          "completed_at": {
+            "format": "date-time",
+            "title": "Completed At",
+            "type": "string"
+          },
+          "dataset_sha256": {
+            "maxLength": 64,
+            "minLength": 64,
+            "title": "Dataset Sha256",
+            "type": "string"
+          },
+          "dataset_version": {
+            "title": "Dataset Version",
+            "type": "string"
+          },
+          "first_attempt_preserved": {
+            "title": "First Attempt Preserved",
+            "type": "boolean"
+          },
+          "gates": {
+            "additionalProperties": {
+              "$ref": "#/components/schemas/EvaluationGate"
+            },
+            "title": "Gates",
+            "type": "object"
+          },
+          "gates_passed": {
+            "minimum": 0.0,
+            "title": "Gates Passed",
+            "type": "integer"
+          },
+          "gates_total": {
+            "minimum": 1.0,
+            "title": "Gates Total",
+            "type": "integer"
+          },
+          "manual_review": {
+            "$ref": "#/components/schemas/EvaluationManualReview"
+          },
+          "metrics": {
+            "additionalProperties": {
+              "anyOf": [
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "title": "Metrics",
+            "type": "object"
+          },
+          "overall_status": {
+            "enum": [
+              "PASS",
+              "PASS_WITH_ACTION",
+              "FAIL"
+            ],
+            "title": "Overall Status",
+            "type": "string"
+          },
+          "public_note": {
+            "title": "Public Note",
+            "type": "string"
+          },
+          "report_id": {
+            "title": "Report Id",
+            "type": "string"
+          },
+          "schema_version": {
+            "const": 1,
+            "default": 1,
+            "title": "Schema Version",
+            "type": "integer"
+          },
+          "source_report_sha256": {
+            "maxLength": 64,
+            "minLength": 64,
+            "title": "Source Report Sha256",
+            "type": "string"
+          },
+          "turn_count": {
+            "minimum": 1.0,
+            "title": "Turn Count",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "report_id",
+          "source_report_sha256",
+          "dataset_version",
+          "dataset_sha256",
+          "case_count",
+          "turn_count",
+          "completed_at",
+          "automatic_status",
+          "overall_status",
+          "cleanup_status",
+          "gates_passed",
+          "gates_total",
+          "metrics",
+          "gates",
+          "manual_review",
+          "first_attempt_preserved",
+          "public_note"
+        ],
+        "title": "EvaluationSummaryResponse",
         "type": "object"
       },
       "HealthResponse": {
@@ -258,6 +1286,36 @@
         "title": "HealthResponse",
         "type": "object"
       },
+      "ModelFailoverInfo": {
+        "additionalProperties": false,
+        "properties": {
+          "enabled": {
+            "title": "Enabled",
+            "type": "boolean"
+          },
+          "fallback": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ModelInfo"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "policy": {
+            "const": "retryable_or_invalid_response",
+            "default": "retryable_or_invalid_response",
+            "title": "Policy",
+            "type": "string"
+          }
+        },
+        "required": [
+          "enabled"
+        ],
+        "title": "ModelFailoverInfo",
+        "type": "object"
+      },
       "ModelInfo": {
         "additionalProperties": false,
         "properties": {
@@ -286,11 +1344,94 @@
         "title": "ModelInfo",
         "type": "object"
       },
+      "ProfileAssessment": {
+        "additionalProperties": false,
+        "properties": {
+          "bmi": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/BmiEstimate"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "collected_fields": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Collected Fields",
+            "type": "array"
+          },
+          "persistence": {
+            "const": "ephemeral",
+            "default": "ephemeral",
+            "title": "Persistence",
+            "type": "string"
+          },
+          "profile": {
+            "$ref": "#/components/schemas/ProfilePatch"
+          }
+        },
+        "required": [
+          "profile",
+          "bmi",
+          "collected_fields"
+        ],
+        "title": "ProfileAssessment",
+        "type": "object"
+      },
       "ProfilePatch": {
         "additionalProperties": false,
         "properties": {
+          "activity_level": {
+            "anyOf": [
+              {
+                "enum": [
+                  "sedentary",
+                  "light",
+                  "moderate",
+                  "high"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Activity Level"
+          },
+          "age_band": {
+            "anyOf": [
+              {
+                "enum": [
+                  "under_18",
+                  "adult_18_44",
+                  "adult_45_64",
+                  "older_65_plus"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Age Band"
+          },
           "allergies": {
             "items": {
+              "enum": [
+                "eggs",
+                "milk",
+                "peanuts",
+                "tree_nuts",
+                "wheat",
+                "soy",
+                "fish",
+                "shellfish",
+                "sesame"
+              ],
               "type": "string"
             },
             "maxItems": 20,
@@ -299,14 +1440,43 @@
           },
           "conditions": {
             "items": {
+              "enum": [
+                "diabetes",
+                "kidney_disease",
+                "gout",
+                "hypertension",
+                "cardiovascular_disease",
+                "pregnancy",
+                "breastfeeding",
+                "celiac_disease",
+                "lactose_intolerance",
+                "eating_disorder_history"
+              ],
               "type": "string"
             },
             "maxItems": 20,
             "title": "Conditions",
             "type": "array"
           },
+          "dietary_preferences": {
+            "items": {
+              "enum": [
+                "vegetarian",
+                "vegan",
+                "low_sodium",
+                "gluten_free",
+                "lactose_free"
+              ],
+              "type": "string"
+            },
+            "maxItems": 10,
+            "title": "Dietary Preferences",
+            "type": "array"
+          },
           "disliked_foods": {
             "items": {
+              "maxLength": 40,
+              "minLength": 1,
               "type": "string"
             },
             "maxItems": 20,
@@ -328,14 +1498,392 @@
               }
             ],
             "title": "Goal"
+          },
+          "height_cm": {
+            "anyOf": [
+              {
+                "maximum": 230.0,
+                "minimum": 100.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Height Cm"
+          },
+          "sex": {
+            "anyOf": [
+              {
+                "enum": [
+                  "female",
+                  "male",
+                  "prefer_not_to_say"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Sex"
+          },
+          "weight_kg": {
+            "anyOf": [
+              {
+                "maximum": 300.0,
+                "minimum": 25.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Weight Kg"
           }
         },
         "title": "ProfilePatch",
         "type": "object"
       },
+      "RecommendationEvaluation": {
+        "additionalProperties": false,
+        "properties": {
+          "alternate": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/RecommendationOption"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "blocked_reasons": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Blocked Reasons",
+            "type": "array"
+          },
+          "blocked_rule_ids": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Blocked Rule Ids",
+            "type": "array"
+          },
+          "generated_by": {
+            "const": "deterministic_rules",
+            "default": "deterministic_rules",
+            "title": "Generated By",
+            "type": "string"
+          },
+          "primary": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/RecommendationOption"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "requires_second_person_review": {
+            "default": false,
+            "title": "Requires Second Person Review",
+            "type": "boolean"
+          },
+          "status": {
+            "enum": [
+              "ready",
+              "blocked"
+            ],
+            "title": "Status",
+            "type": "string"
+          }
+        },
+        "required": [
+          "status"
+        ],
+        "title": "RecommendationEvaluation",
+        "type": "object"
+      },
+      "RecommendationEvidence": {
+        "additionalProperties": false,
+        "properties": {
+          "pages": {
+            "items": {
+              "type": "integer"
+            },
+            "title": "Pages",
+            "type": "array"
+          },
+          "review_status": {
+            "const": "verified",
+            "default": "verified",
+            "title": "Review Status",
+            "type": "string"
+          },
+          "rule_id": {
+            "title": "Rule Id",
+            "type": "string"
+          },
+          "section": {
+            "title": "Section",
+            "type": "string"
+          },
+          "source": {
+            "enum": [
+              "A",
+              "B"
+            ],
+            "title": "Source",
+            "type": "string"
+          },
+          "title": {
+            "title": "Title",
+            "type": "string"
+          }
+        },
+        "required": [
+          "rule_id",
+          "source",
+          "title",
+          "section",
+          "pages"
+        ],
+        "title": "RecommendationEvidence",
+        "type": "object"
+      },
+      "RecommendationOption": {
+        "additionalProperties": false,
+        "properties": {
+          "actions": {
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 3,
+            "minItems": 3,
+            "title": "Actions",
+            "type": "array"
+          },
+          "blocked_food_tags": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Blocked Food Tags",
+            "type": "array"
+          },
+          "evidence": {
+            "items": {
+              "$ref": "#/components/schemas/RecommendationEvidence"
+            },
+            "minItems": 1,
+            "title": "Evidence",
+            "type": "array"
+          },
+          "key_targets": {
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 5,
+            "minItems": 1,
+            "title": "Key Targets",
+            "type": "array"
+          },
+          "match_reasons": {
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 4,
+            "minItems": 1,
+            "title": "Match Reasons",
+            "type": "array"
+          },
+          "plan_id": {
+            "title": "Plan Id",
+            "type": "string"
+          },
+          "selection_score": {
+            "maximum": 100.0,
+            "minimum": 0.0,
+            "title": "Selection Score",
+            "type": "integer"
+          },
+          "substitutions": {
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 5,
+            "title": "Substitutions",
+            "type": "array"
+          },
+          "title": {
+            "title": "Title",
+            "type": "string"
+          }
+        },
+        "required": [
+          "plan_id",
+          "title",
+          "selection_score",
+          "match_reasons",
+          "key_targets",
+          "actions",
+          "evidence"
+        ],
+        "title": "RecommendationOption",
+        "type": "object"
+      },
+      "RetrievalSelection": {
+        "additionalProperties": false,
+        "properties": {
+          "chunk_id": {
+            "title": "Chunk Id",
+            "type": "string"
+          },
+          "matched_terms": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Matched Terms",
+            "type": "array"
+          },
+          "score": {
+            "minimum": 0.0,
+            "title": "Score",
+            "type": "number"
+          },
+          "source": {
+            "enum": [
+              "A",
+              "B",
+              "C"
+            ],
+            "title": "Source",
+            "type": "string"
+          }
+        },
+        "required": [
+          "chunk_id",
+          "source",
+          "score"
+        ],
+        "title": "RetrievalSelection",
+        "type": "object"
+      },
+      "RetrievalTraceView": {
+        "additionalProperties": false,
+        "properties": {
+          "allowed_sources": {
+            "items": {
+              "enum": [
+                "A",
+                "B",
+                "C"
+              ],
+              "type": "string"
+            },
+            "title": "Allowed Sources",
+            "type": "array"
+          },
+          "eligible_chunks": {
+            "minimum": 0.0,
+            "title": "Eligible Chunks",
+            "type": "integer"
+          },
+          "evidence_gate": {
+            "const": "passed",
+            "default": "passed",
+            "title": "Evidence Gate",
+            "type": "string"
+          },
+          "examined_chunks": {
+            "minimum": 0.0,
+            "title": "Examined Chunks",
+            "type": "integer"
+          },
+          "excluded_unknown_glyph_chunks": {
+            "minimum": 0.0,
+            "title": "Excluded Unknown Glyph Chunks",
+            "type": "integer"
+          },
+          "mode": {
+            "title": "Mode",
+            "type": "string"
+          },
+          "query_terms": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Query Terms",
+            "type": "array"
+          },
+          "rejected_by_source_boundary": {
+            "minimum": 0.0,
+            "title": "Rejected By Source Boundary",
+            "type": "integer"
+          },
+          "returned_chunks": {
+            "minimum": 0.0,
+            "title": "Returned Chunks",
+            "type": "integer"
+          },
+          "route": {
+            "enum": [
+              "nutrition",
+              "platform",
+              "mixed"
+            ],
+            "title": "Route",
+            "type": "string"
+          },
+          "route_components": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Route Components",
+            "type": "array"
+          },
+          "selections": {
+            "items": {
+              "$ref": "#/components/schemas/RetrievalSelection"
+            },
+            "title": "Selections",
+            "type": "array"
+          }
+        },
+        "required": [
+          "mode",
+          "route",
+          "route_components",
+          "allowed_sources",
+          "query_terms",
+          "examined_chunks",
+          "excluded_unknown_glyph_chunks",
+          "eligible_chunks",
+          "rejected_by_source_boundary",
+          "returned_chunks",
+          "selections"
+        ],
+        "title": "RetrievalTraceView",
+        "type": "object"
+      },
       "SafetyResult": {
         "additionalProperties": false,
         "properties": {
+          "allow_personalized_targets": {
+            "default": true,
+            "title": "Allow Personalized Targets",
+            "type": "boolean"
+          },
+          "blocked_food_tags": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Blocked Food Tags",
+            "type": "array"
+          },
           "matched_rules": {
             "items": {
               "type": "string"
@@ -350,6 +1898,17 @@
               "emergency"
             ],
             "title": "Required Notice",
+            "type": "string"
+          },
+          "response_mode": {
+            "default": "normal",
+            "enum": [
+              "normal",
+              "general_only",
+              "refuse",
+              "emergency_stop"
+            ],
+            "title": "Response Mode",
             "type": "string"
           },
           "risk_level": {
@@ -368,6 +1927,104 @@
           "required_notice"
         ],
         "title": "SafetyResult",
+        "type": "object"
+      },
+      "SourceBoundaryInfo": {
+        "additionalProperties": false,
+        "properties": {
+          "allowed_use": {
+            "title": "Allowed Use",
+            "type": "string"
+          },
+          "forbidden_use": {
+            "title": "Forbidden Use",
+            "type": "string"
+          },
+          "source": {
+            "enum": [
+              "A",
+              "B",
+              "C"
+            ],
+            "title": "Source",
+            "type": "string"
+          },
+          "title": {
+            "title": "Title",
+            "type": "string"
+          }
+        },
+        "required": [
+          "source",
+          "title",
+          "allowed_use",
+          "forbidden_use"
+        ],
+        "title": "SourceBoundaryInfo",
+        "type": "object"
+      },
+      "TransparencyResponse": {
+        "additionalProperties": false,
+        "properties": {
+          "conversation_store": {
+            "enum": [
+              "ephemeral",
+              "postgres"
+            ],
+            "title": "Conversation Store",
+            "type": "string"
+          },
+          "embedding": {
+            "$ref": "#/components/schemas/EmbeddingTransparency"
+          },
+          "evidence_policy": {
+            "title": "Evidence Policy",
+            "type": "string"
+          },
+          "failover": {
+            "$ref": "#/components/schemas/ModelFailoverInfo"
+          },
+          "model": {
+            "$ref": "#/components/schemas/ModelInfo"
+          },
+          "profile_persistence": {
+            "const": "ephemeral",
+            "default": "ephemeral",
+            "title": "Profile Persistence",
+            "type": "string"
+          },
+          "retrieval_mode": {
+            "enum": [
+              "keyword",
+              "vector",
+              "hybrid"
+            ],
+            "title": "Retrieval Mode",
+            "type": "string"
+          },
+          "sources": {
+            "items": {
+              "$ref": "#/components/schemas/SourceBoundaryInfo"
+            },
+            "title": "Sources",
+            "type": "array"
+          },
+          "version": {
+            "title": "Version",
+            "type": "string"
+          }
+        },
+        "required": [
+          "version",
+          "model",
+          "failover",
+          "embedding",
+          "retrieval_mode",
+          "conversation_store",
+          "evidence_policy",
+          "sources"
+        ],
+        "title": "TransparencyResponse",
         "type": "object"
       }
     }
@@ -417,6 +2074,314 @@
         "summary": "Healthz",
         "tags": [
           "system"
+        ]
+      }
+    },
+    "/v1/account": {
+      "delete": {
+        "operationId": "delete_account_v1_account_delete",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AccountDeleteRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Request validation failed"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Unexpected server error"
+          }
+        },
+        "summary": "Permanently delete the authenticated account and personal data",
+        "tags": [
+          "account"
+        ]
+      }
+    },
+    "/v1/account/export": {
+      "get": {
+        "operationId": "export_account_data_v1_account_export_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AccountDataExport"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Request validation failed"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Unexpected server error"
+          }
+        },
+        "summary": "Export the authenticated user's personal data",
+        "tags": [
+          "account"
+        ]
+      }
+    },
+    "/v1/auth/login": {
+      "post": {
+        "operationId": "login_account_v1_auth_login_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AuthLoginRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Request validation failed"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Unexpected server error"
+          }
+        },
+        "summary": "Log in and return the canonical server session ID",
+        "tags": [
+          "auth"
+        ]
+      }
+    },
+    "/v1/auth/logout": {
+      "post": {
+        "operationId": "logout_account_v1_auth_logout_post",
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Request validation failed"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Unexpected server error"
+          }
+        },
+        "summary": "Logout Account",
+        "tags": [
+          "auth"
+        ]
+      }
+    },
+    "/v1/auth/me": {
+      "get": {
+        "operationId": "current_account_v1_auth_me_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthUser"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Request validation failed"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Unexpected server error"
+          }
+        },
+        "summary": "Current Account",
+        "tags": [
+          "auth"
+        ]
+      }
+    },
+    "/v1/auth/register": {
+      "post": {
+        "operationId": "register_account_v1_auth_register_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AuthRegisterRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Request validation failed"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Unexpected server error"
+          }
+        },
+        "summary": "Register and atomically claim one anonymous session",
+        "tags": [
+          "auth"
+        ]
+      }
+    },
+    "/v1/chat/cancel/{request_id}": {
+      "post": {
+        "operationId": "cancel_chat_generation_v1_chat_cancel__request_id__post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "request_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Request Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Request validation failed"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Unexpected server error"
+          }
+        },
+        "summary": "Idempotently cancel one active generation request",
+        "tags": [
+          "chat"
         ]
       }
     },
@@ -485,11 +2450,540 @@
               }
             },
             "description": "Provider not configured or unavailable"
+          },
+          "504": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Provider request timed out"
           }
         },
         "summary": "Stream one evidence-grounded chat response",
         "tags": [
           "chat"
+        ]
+      }
+    },
+    "/v1/conversations": {
+      "get": {
+        "operationId": "list_conversations_v1_conversations_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "session_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Session Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 50,
+              "maximum": 100,
+              "minimum": 1,
+              "title": "Limit",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ConversationList"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Request validation failed"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Unexpected server error"
+          }
+        },
+        "summary": "List conversations owned by an anonymous session",
+        "tags": [
+          "conversations"
+        ]
+      },
+      "post": {
+        "operationId": "create_conversation_v1_conversations_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ConversationCreate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ConversationSummary"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Request validation failed"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Unexpected server error"
+          }
+        },
+        "summary": "Create a canonical conversation",
+        "tags": [
+          "conversations"
+        ]
+      }
+    },
+    "/v1/conversations/{conversation_id}": {
+      "delete": {
+        "operationId": "delete_conversation_v1_conversations__conversation_id__delete",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "conversation_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Conversation Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "session_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Session Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Request validation failed"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Unexpected server error"
+          }
+        },
+        "summary": "Delete one owned conversation and all turns",
+        "tags": [
+          "conversations"
+        ]
+      },
+      "get": {
+        "operationId": "get_conversation_v1_conversations__conversation_id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "conversation_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Conversation Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "session_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Session Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ConversationDetail"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Request validation failed"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Unexpected server error"
+          }
+        },
+        "summary": "Read one conversation and its persisted turns",
+        "tags": [
+          "conversations"
+        ]
+      },
+      "patch": {
+        "operationId": "rename_conversation_v1_conversations__conversation_id__patch",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "conversation_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Conversation Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ConversationRename"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ConversationSummary"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Request validation failed"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Unexpected server error"
+          }
+        },
+        "summary": "Rename one owned conversation",
+        "tags": [
+          "conversations"
+        ]
+      }
+    },
+    "/v1/evaluation/summary": {
+      "get": {
+        "operationId": "evaluation_summary_v1_evaluation_summary_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EvaluationSummaryResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Request validation failed"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Unexpected server error"
+          }
+        },
+        "summary": "Return the packaged, sanitized release evaluation summary",
+        "tags": [
+          "evaluation"
+        ]
+      }
+    },
+    "/v1/profile/assess": {
+      "post": {
+        "description": "Normalizes a minimal structured profile and returns a BMI system estimate only when both height and weight are present. This endpoint does not persist data.",
+        "operationId": "profile_assessment_v1_profile_assess_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProfilePatch"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProfileAssessment"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Request validation failed"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Unexpected server error"
+          }
+        },
+        "summary": "Validate and preview an ephemeral health profile",
+        "tags": [
+          "profile"
+        ]
+      }
+    },
+    "/v1/recommendations/evaluate": {
+      "post": {
+        "description": "Selects candidates from verified A/B plan rules only. Unreviewed or unknown-glyph facts return an explicit blocked result and never enter the candidate pool.",
+        "operationId": "recommendation_evaluation_v1_recommendations_evaluate_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProfilePatch"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RecommendationEvaluation"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Request validation failed"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Unexpected server error"
+          }
+        },
+        "summary": "Evaluate a deterministic recommendation candidate",
+        "tags": [
+          "recommendations"
+        ]
+      }
+    },
+    "/v1/sessions/anonymous": {
+      "post": {
+        "operationId": "create_anonymous_session_v1_sessions_anonymous_post",
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AnonymousSession"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Request validation failed"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Unexpected server error"
+          }
+        },
+        "summary": "Create a server-owned anonymous session",
+        "tags": [
+          "conversations"
+        ]
+      }
+    },
+    "/v1/transparency": {
+      "get": {
+        "operationId": "transparency_v1_transparency_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TransparencyResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Request validation failed"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Unexpected server error"
+          }
+        },
+        "summary": "Disclose non-secret model, retrieval, persistence and source boundaries",
+        "tags": [
+          "transparency"
         ]
       }
     }

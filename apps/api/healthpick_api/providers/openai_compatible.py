@@ -51,6 +51,8 @@ class OpenAICompatibleLLMProvider:
             "max_tokens": request.max_tokens,
             "stream": False,
         }
+        if request.reasoning_effort is not None:
+            payload["reasoning_effort"] = request.reasoning_effort
         headers = {"X-Request-ID": request.request_id} if request.request_id else None
 
         try:
@@ -61,16 +63,31 @@ class OpenAICompatibleLLMProvider:
             )
             response.raise_for_status()
         except httpx2.TimeoutException as exc:
-            raise ProviderRequestError("LLM provider timed out", retryable=True) from exc
+            raise ProviderRequestError(
+                "LLM provider timed out", retryable=True, code="provider_timeout"
+            ) from exc
         except httpx2.HTTPStatusError as exc:
             status_code = exc.response.status_code
             raise ProviderRequestError(
                 f"LLM provider returned HTTP {status_code}",
                 status_code=status_code,
                 retryable=status_code == 429 or status_code >= 500,
+                code=(
+                    "provider_rate_limited"
+                    if status_code == 429
+                    else (
+                        "provider_upstream_unavailable"
+                        if status_code >= 500
+                        else "provider_rejected_request"
+                    )
+                ),
             ) from exc
         except httpx2.RequestError as exc:
-            raise ProviderRequestError("LLM provider connection failed", retryable=True) from exc
+            raise ProviderRequestError(
+                "LLM provider connection failed",
+                retryable=True,
+                code="provider_connection_failed",
+            ) from exc
 
         try:
             body: dict[str, Any] = response.json()

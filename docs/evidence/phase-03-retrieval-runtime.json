@@ -1,12 +1,12 @@
 {
   "schema_version": 1,
   "task_id": "P03-03",
-  "checked_at": "2026-08-21T19:19:33.626820+08:00",
+  "checked_at": "2026-08-21T20:47:38.268161+08:00",
   "retrieval_mode": "keyword",
   "embedding_claimed": false,
   "chunk_counts": {
-    "A": 21,
-    "B": 26,
+    "A": 19,
+    "B": 20,
     "C": 20
   },
   "probes": [
@@ -26,8 +26,8 @@
       ],
       "trace": {
         "mode": "keyword",
-        "examined_chunks": 67,
-        "eligible_chunks": 47,
+        "examined_chunks": 59,
+        "eligible_chunks": 39,
         "rejected_by_source_boundary": 20,
         "returned_chunks": 6
       },
@@ -37,22 +37,7 @@
           "source": "A",
           "page": 1,
           "section": "1.2 微量营养素与膳食纤维",
-          "score": 21.511307,
-          "matched_terms": [
-            "膳食",
-            "食纤",
-            "纤维",
-            "营养",
-            "膳食纤",
-            "食纤维"
-          ]
-        },
-        {
-          "chunk_id": "A-p02-c02",
-          "source": "A",
-          "page": 2,
-          "section": "2.2 秋季时令食材推荐",
-          "score": 17.436217,
+          "score": 22.711848,
           "matched_terms": [
             "膳食",
             "食纤",
@@ -67,22 +52,7 @@
           "source": "A",
           "page": 1,
           "section": "1.1 三大宏量营养素",
-          "score": 15.561232,
-          "matched_terms": [
-            "膳食",
-            "食纤",
-            "纤维",
-            "营养",
-            "膳食纤",
-            "食纤维"
-          ]
-        },
-        {
-          "chunk_id": "B-p01-c04",
-          "source": "B",
-          "page": 1,
-          "section": "2.2 每日营养素目标",
-          "score": 12.479436,
+          "score": 16.418618,
           "matched_terms": [
             "膳食",
             "食纤",
@@ -97,7 +67,7 @@
           "source": "A",
           "page": 3,
           "section": "3.3 谷物与薯类（每100 克可食部）",
-          "score": 11.758059,
+          "score": 12.467381,
           "matched_terms": [
             "膳食",
             "食纤",
@@ -111,13 +81,35 @@
           "source": "A",
           "page": 3,
           "section": "3.4 蔬菜与菌菇（每100 克可食部）",
-          "score": 11.389733,
+          "score": 12.0587,
           "matched_terms": [
             "膳食",
             "食纤",
             "纤维",
             "膳食纤",
             "食纤维"
+          ]
+        },
+        {
+          "chunk_id": "A-p05-c02",
+          "source": "A",
+          "page": 5,
+          "section": "5.3 AI 膳食顾问免责声明",
+          "score": 3.453907,
+          "matched_terms": [
+            "膳食",
+            "营养"
+          ]
+        },
+        {
+          "chunk_id": "A-p01-c01",
+          "source": "A",
+          "page": 1,
+          "section": "文档首页",
+          "score": 3.251705,
+          "matched_terms": [
+            "膳食",
+            "营养"
           ]
         }
       ]
@@ -138,8 +130,8 @@
       ],
       "trace": {
         "mode": "keyword",
-        "examined_chunks": 67,
-        "eligible_chunks": 47,
+        "examined_chunks": 59,
+        "eligible_chunks": 39,
         "rejected_by_source_boundary": 20,
         "returned_chunks": 6
       },
@@ -149,7 +141,7 @@
           "source": "B",
           "page": 2,
           "section": "周三食谱（1320 千卡示例）",
-          "score": 6.359589,
+          "score": 6.175967,
           "matched_terms": [
             "早餐",
             "食谱"
@@ -160,7 +152,7 @@
           "source": "B",
           "page": 3,
           "section": "周五食谱（1360 千卡示例）",
-          "score": 5.965682,
+          "score": 5.777885,
           "matched_terms": [
             "早餐",
             "食谱"
@@ -171,7 +163,7 @@
           "source": "B",
           "page": 4,
           "section": "周日食谱（1380 千卡示例）",
-          "score": 5.637201,
+          "score": 5.448005,
           "matched_terms": [
             "早餐",
             "食谱"
@@ -182,7 +174,7 @@
           "source": "B",
           "page": 4,
           "section": "周六食谱（1420 千卡示例）",
-          "score": 5.102334,
+          "score": 4.914767,
           "matched_terms": [
             "早餐",
             "食谱"
@@ -193,7 +185,7 @@
           "source": "B",
           "page": 2,
           "section": "周二食谱（1380 千卡示例）",
-          "score": 4.952541,
+          "score": 4.766274,
           "matched_terms": [
             "早餐",
             "食谱"
@@ -204,7 +196,7 @@
           "source": "B",
           "page": 3,
           "section": "周四食谱（1400 千卡示例）",
-          "score": 4.934547,
+          "score": 4.748462,
           "matched_terms": [
             "早餐",
             "食谱"
@@ -227,9 +219,9 @@
       ],
       "trace": {
         "mode": "keyword",
-        "examined_chunks": 67,
+        "examined_chunks": 59,
         "eligible_chunks": 20,
-        "rejected_by_source_boundary": 47,
+        "rejected_by_source_boundary": 39,
         "returned_chunks": 6
       },
       "hits": [
@@ -238,7 +230,7 @@
           "source": "C",
           "page": 5,
           "section": "5.2 渠道合作",
-          "score": 8.549111,
+          "score": 8.04358,
           "matched_terms": [
             "平台",
             "会员",
@@ -250,7 +242,7 @@
           "source": "C",
           "page": 2,
           "section": "【企业健康管家】员工健康管理SaaS",
-          "score": 7.881025,
+          "score": 7.387098,
           "matched_terms": [
             "平台",
             "企业",
@@ -262,7 +254,7 @@
           "source": "C",
           "page": 4,
           "section": "4.2 企业客户案例",
-          "score": 7.455769,
+          "score": 6.979023,
           "matched_terms": [
             "平台",
             "企业",
@@ -274,7 +266,7 @@
           "source": "C",
           "page": 1,
           "section": "1.2 平台定位",
-          "score": 6.83718,
+          "score": 6.324651,
           "matched_terms": [
             "平台",
             "企业",
@@ -286,7 +278,7 @@
           "source": "C",
           "page": 4,
           "section": "5.1 API 开放平台",
-          "score": 6.608842,
+          "score": 6.12857,
           "matched_terms": [
             "平台",
             "企业",
@@ -298,7 +290,7 @@
           "source": "C",
           "page": 3,
           "section": "2.3 增值服务",
-          "score": 5.807641,
+          "score": 5.384737,
           "matched_terms": [
             "平台",
             "企业",
@@ -326,21 +318,21 @@
       ],
       "trace": {
         "mode": "keyword",
-        "examined_chunks": 67,
-        "eligible_chunks": 67,
+        "examined_chunks": 59,
+        "eligible_chunks": 59,
         "rejected_by_source_boundary": 0,
         "returned_chunks": 6
       },
       "hits": [
         {
-          "chunk_id": "B-p05-c02",
+          "chunk_id": "B-p07-c05",
           "source": "B",
-          "page": 5,
-          "section": "2.4 食材替换指南",
-          "score": 4.141802,
+          "page": 7,
+          "section": "5.2 方案切换与过渡",
+          "score": 4.1153,
           "matched_terms": [
-            "获得",
-            "饮食"
+            "饮食",
+            "建议"
           ]
         },
         {
@@ -348,7 +340,7 @@
           "source": "C",
           "page": 2,
           "section": "【专业版】深度健康管理",
-          "score": 15.164762,
+          "score": 14.672623,
           "matched_terms": [
             "平台",
             "饮食",
@@ -363,7 +355,7 @@
           "source": "C",
           "page": 5,
           "section": "5.2 渠道合作",
-          "score": 6.039961,
+          "score": 5.68665,
           "matched_terms": [
             "平台",
             "会员"
@@ -374,7 +366,7 @@
           "source": "C",
           "page": 3,
           "section": "2.3 增值服务",
-          "score": 3.934873,
+          "score": 4.114479,
           "matched_terms": [
             "平台",
             "饮食",
@@ -386,21 +378,21 @@
           "source": "A",
           "page": 2,
           "section": "2.3 三餐热量分配建议",
-          "score": 3.885087,
+          "score": 4.08372,
           "matched_terms": [
             "平台",
             "建议"
           ]
         },
         {
-          "chunk_id": "B-p07-c05",
+          "chunk_id": "B-p05-c02",
           "source": "B",
-          "page": 7,
-          "section": "5.2 方案切换与过渡",
-          "score": 3.718353,
+          "page": 5,
+          "section": "2.4 食材替换指南",
+          "score": 3.980048,
           "matched_terms": [
-            "饮食",
-            "建议"
+            "获得",
+            "饮食"
           ]
         }
       ]
@@ -416,9 +408,9 @@
       ],
       "trace": {
         "mode": "keyword",
-        "examined_chunks": 67,
+        "examined_chunks": 59,
         "eligible_chunks": 0,
-        "rejected_by_source_boundary": 67,
+        "rejected_by_source_boundary": 59,
         "returned_chunks": 0
       },
       "hits": []

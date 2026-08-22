@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "evidence_id": "ACTION-02-03-REAL-MODELS",
+  "action_ids": [
+    "ACTION-02",
+    "ACTION-03"
+  ],
+  "scope": "ollama-local/openai-compatible/chinese",
+  "captured_at": "2026-08-22T10:33:28.419773+08:00",
+  "runtime": {
+    "provider": "ollama_local",
+    "base_url": "http://127.0.0.1:11434/v1",
+    "quota": "local hardware; no remote token quota"
+  },
+  "llm": {
+    "model": "qwen2.5:3b-instruct",
+    "digest": "357c53fb659c5076de1d65ccb0b397446227b71a42be9d1603d46168015c9e4b",
+    "mode": "real",
+    "latency_ms": 2903,
+    "prompt_tokens": 35,
+    "completion_tokens": 9,
+    "finish_reason": "stop",
+    "output_chars": 21,
+    "output_sha256": "221c43fc4210c7eaa26602b848a061300d5abe59beddc951bd706017b0739119",
+    "status": "PASS"
+  },
+  "embedding": {
+    "model": "qwen3-embedding:0.6b",
+    "digest": "ac6da0dfba84a81fdbfbaf330198c33cd77c4cdfc53e8bc50eb581914a15621d",
+    "dimensions": 1024,
+    "input_count": 3,
+    "latency_ms": 1553,
+    "positive_similarity": 0.818295,
+    "negative_similarity": 0.21057,
+    "ranking_margin": 0.607725,
+    "status": "PASS"
+  },
+  "status": "PASS"
+}

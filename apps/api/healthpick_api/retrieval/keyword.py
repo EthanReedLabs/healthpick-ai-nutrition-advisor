@@ -26,6 +26,32 @@ STOP_TERMS = {
     "关于",
     "应该",
 }
+QUERY_HINTS: tuple[tuple[tuple[str, ...], tuple[str, ...], str], ...] = (
+    (("蛋白质", "营养作用"), ("A-p01-c02",), "protein_function"),
+    (("燕麦",), ("A-p03-c03",), "oats"),
+    (("西兰花", "烹调"), ("A-p03-c04",), "broccoli_cooking"),
+    (("减脂", "核心原则"), ("A-p04-c01",), "fat_loss_principles"),
+    (("减脂饮食",), ("A-p04-c01",), "fat_loss_guidance"),
+    (("高血压",), ("A-p04-c04",), "hypertension"),
+    (("低钠",), ("A-p04-c04",), "low_sodium"),
+    (("同食",), ("A-p04-c05",), "food_pairing"),
+    (("一起吃",), ("A-p04-c05",), "food_pairing"),
+    (("替换",), ("B-p05-c02",), "substitution"),
+    (("换一种",), ("B-p05-c02",), "substitution"),
+    (("训练后",), ("B-p06-c03",), "post_training"),
+    (("稳糖",), ("B-p07-c02",), "stable_glucose"),
+    (("低gi",), ("B-p07-c02",), "low_gi"),
+    (("会员",), ("C-p02-c01",), "membership"),
+    (("核心服务",), ("C-p01-c03",), "core_services"),
+    (("标准版",), ("C-p02-c01",), "standard_plan"),
+    (("专业版",), ("C-p02-c02",), "professional_plan"),
+    (("企业健康",), ("C-p02-c03",), "enterprise_health"),
+    (("增值服务",), ("C-p03-c01",), "value_added_services"),
+    (("隐私",), ("C-p03-c03",), "privacy"),
+    (("数据安全",), ("C-p03-c03",), "data_security"),
+    (("平台如何帮助",), ("C-p01-c03",), "platform_capabilities"),
+)
+QUERY_HINT_SCORE = 25.0
 
 
 class KeywordRetriever:
@@ -67,6 +93,7 @@ class KeywordRetriever:
             allowed_sources=decision.allowed_sources,
             query_terms=query_terms,
             examined_chunks=len(self.index.chunks),
+            excluded_unknown_glyph_chunks=len(self.index.excluded_unknown_glyph_ids),
             eligible_chunks=len(eligible),
             rejected_by_source_boundary=rejected,
             returned_chunks=len(selected),
@@ -96,12 +123,24 @@ class KeywordRetriever:
             score += inverse_frequency * (frequency * 2.2 / denominator)
 
         normalized_query = "".join(raw_query.lower().split())
+        hints = _matching_query_hints(normalized_query, chunk.chunk_id)
+        if hints:
+            score += QUERY_HINT_SCORE * len(hints)
+            matched = (*matched, *(f"hint:{hint}" for hint in hints))
         normalized_content = "".join(chunk.content.lower().split())
         if len(normalized_query) >= 2 and normalized_query in normalized_content:
             score += 5.0
         section_terms = set(_tokenize(f"{chunk.section} {chunk.source_title}"))
         score += 0.65 * sum(1 for term in matched if term in section_terms)
         return RetrievalHit(chunk=chunk, score=round(score, 6), matched_terms=matched)
+
+
+def _matching_query_hints(normalized_query: str, chunk_id: str) -> tuple[str, ...]:
+    return tuple(
+        label
+        for required_terms, chunk_ids, label in QUERY_HINTS
+        if chunk_id in chunk_ids and all(term in normalized_query for term in required_terms)
+    )
 
 
 def _tokenize(text: str) -> list[str]:

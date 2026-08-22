@@ -4,13 +4,20 @@ from __future__ import annotations
 
 import asyncio
 import json
+import sys
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
-from healthpick_api.config import Settings
-from healthpick_api.providers import LLMMessage, LLMRequest, build_llm_provider
-
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "apps" / "api"))
+
+from healthpick_api.config import Settings  # noqa: E402
+from healthpick_api.providers import (  # noqa: E402
+    LLMMessage,
+    LLMRequest,
+    build_llm_provider,
+)
+
 OUTPUT = ROOT / "docs" / "evidence" / "phase-03-provider-runtime.json"
 
 

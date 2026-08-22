@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "task_id": "P07-05",
+  "captured_at": "2026-08-22T14:08:33+08:00",
+  "runtime": {
+    "api_origin": "http://127.0.0.1:8010",
+    "web_origin": "http://127.0.0.1:3100",
+    "llm_mode": "real",
+    "conversation_store": "postgres"
+  },
+  "desktop": {
+    "conversation_id": "2e3bdbcf-fd1f-4dc3-845a-d2bf4eade604",
+    "cancelled_request_id": "4502df60-bf38-46f4-aca6-8f7dafba35df",
+    "cancel_status": 204,
+    "turn_count_after_wait": 0,
+    "persisted_request_ids": [],
+    "status": "PASS"
+  },
+  "mobile": {
+    "viewport": "375x812",
+    "conversation_id": "e6aed995-a723-4160-b9fe-8e243f38d91a",
+    "cancelled_request_id": "c122eb29-b316-4898-b594-78935c72f1fe",
+    "cancel_status": 204,
+    "turn_count_after_wait": 0,
+    "persisted_request_ids": [],
+    "scroll_width": 375,
+    "no_horizontal_overflow": true,
+    "stop_button_css_pixels": {"width": 95.25, "height": 38},
+    "input_preserved": true,
+    "input_focused": true,
+    "status": "PASS"
+  },
+  "browser_console": {"errors": 0, "warnings": 0},
+  "status": "PASS"
+}

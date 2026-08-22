@@ -1,5 +1,15 @@
 schema_version: 1
 generated_at: "2026-08-21T00:00:00+08:00"
+embedding:
+  provider: ollama_local
+  api_contract: openai_compatible
+  model: qwen3-embedding:0.6b
+  digest: ac6da0dfba84a81fdbfbaf330198c33cd77c4cdfc53e8bc50eb581914a15621d
+  dimensions: 1024
+  distance: cosine
+  vector_migration: infra/migrations/003_chunk_embedding_qwen3_1024.sql
+  evidence: docs/evidence/action-02-03-real-model-runtime.json
+  status: local_real_smoke_passed
 sources:
   - code: A
     file: knowledge/raw/A-2026-fall-healthy-diet-guide.pdf

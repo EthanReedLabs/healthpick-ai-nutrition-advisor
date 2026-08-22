@@ -1,0 +1,38 @@
+{
+  "schema_version": 1,
+  "evidence_id": "PHASE-05-P05-01-POSTGRES",
+  "captured_at": "2026-08-22T00:20:48.675577+08:00",
+  "database_target": "127.0.0.1:54329/healthpick",
+  "repository": {
+    "status": "PASS",
+    "checks": {
+      "canonical_ids": true,
+      "concurrent_turn_count": true,
+      "idempotent_request_id": true,
+      "repository_reinstantiation_restored": true,
+      "ownership_fail_closed": true,
+      "rename_round_trip": true,
+      "safety_context_cleared": true,
+      "transcript_retained_after_context_clear": true,
+      "cascade_delete": true
+    },
+    "concurrent_turn_ids": [
+      "44e2e9f7-d82d-4459-ad30-78b530c86342",
+      "a306657c-cc48-423f-aa55-8bb8af9a0109",
+      "279becf3-8996-4196-a5ca-9f5411ab0399",
+      "3d65e002-8a53-40e3-8823-9a76ba19e6e6",
+      "7873c661-e16f-46e1-8f29-62089b4779ee"
+    ]
+  },
+  "api": {
+    "status": "PASS",
+    "checks": {
+      "health_database_configured": true,
+      "session_created": true,
+      "conversation_created": true,
+      "chat_persisted": true,
+      "delete_completed": true
+    }
+  },
+  "status": "PASS"
+}

@@ -1,0 +1,28 @@
+schema_version: 1
+task_id: P05-06
+phase_id: PHASE-05
+outcome: pass_with_action
+started_at: "2026-08-22T10:40:00+08:00"
+completed_at: "2026-08-22T10:43:00+08:00"
+recorded_at: "2026-08-22"
+backfilled: false
+owner: LEAD
+summary: Phase05本地P0、Compose复现、全回归、三视口和追踪矩阵达到退出门，三项后续行动保持显式开放。
+deliverables:
+  - docs/evidence/phase-05-baseline-record.md
+acceptance_checks:
+  - name: P05_01至P05_05独立记录和验收齐全
+    result: pass
+    evidence: [control/records/P05-01.yaml, control/records/P05-02.yaml, control/records/P05-03.yaml, control/records/P05-04.yaml, control/records/P05-05.yaml]
+  - name: 本地空库复现重启保留和真实运行
+    result: pass
+    evidence: [docs/evidence/phase-05-p05-04-compose.json, docs/evidence/phase-05-p05-05-database-runtime.json, docs/evidence/local-real-stack-runtime.json]
+  - name: P0矩阵无未解释空项且全回归为绿
+    result: pass
+    evidence: [docs/evidence/phase-05-p05-05-p0-traceability.md, docs/evidence/phase-05-p05-05-quality.md]
+  - name: 控制面结构审计通过并保留最终门
+    result: pass
+    evidence: [docs/evidence/phase-05-baseline-record.md, docs/evidence/control-plane-validation.json]
+issues: [ISSUE-005, ISSUE-009, ISSUE-014, ISSUE-017, ISSUE-048]
+residual_actions: [ACTION-05, ACTION-06]
+review: {status: accepted, reviewer: Project Lead, reviewed_at: "2026-08-22T10:43:00+08:00", notes: 允许进入Phase06；残余行动继续开放，不得将本阶段签署解释为最终交付READY}

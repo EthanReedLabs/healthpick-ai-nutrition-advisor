@@ -11,6 +11,7 @@ coverage/
 playwright-report/
 test-results/
 .playwright-cli/
+tools/render-cli/
 
 # Python
 __pycache__/
@@ -28,11 +29,11 @@ build/
 tmp/
 .tmp/
 
-# Local databases and generated evaluation output
+# Local databases and transient runtime output
 *.sqlite
 *.sqlite3
-evals/reports/*
-!evals/reports/.gitkeep
+output/runtime/
+output/playwright/phase-07-p07-05-stopped-immediate.png
 
 # OS / editors
 .DS_Store

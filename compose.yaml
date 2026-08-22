@@ -1,0 +1,138 @@
+name: healthpick
+
+x-api-image: &api-image
+  image: healthpick-api:${IMAGE_TAG:-local}
+  build:
+    context: .
+    dockerfile: infra/docker/api.Dockerfile
+
+x-database-environment: &database-environment
+  DATABASE_URL: postgresql://${POSTGRES_USER:-healthpick}:${POSTGRES_PASSWORD:-healthpick-local-only}@postgres:5432/${POSTGRES_DB:-healthpick}
+
+services:
+  postgres:
+    image: pgvector/pgvector:0.8.6-pg17-bookworm
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-healthpick}
+      POSTGRES_USER: ${POSTGRES_USER:-healthpick}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-healthpick-local-only}
+    ports:
+      - "${POSTGRES_PORT:-54329}:5432"
+    volumes:
+      - healthpick_postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-healthpick} -d ${POSTGRES_DB:-healthpick}"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+      start_period: 10s
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+
+  migrate:
+    <<: *api-image
+    environment:
+      <<: *database-environment
+    command: ["python", "scripts/migrate_database.py"]
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: "no"
+    read_only: true
+    tmpfs:
+      - /tmp
+    security_opt:
+      - no-new-privileges:true
+
+  seed:
+    <<: *api-image
+    environment:
+      <<: *database-environment
+    command: ["python", "scripts/seed_database.py"]
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+    restart: "no"
+    read_only: true
+    tmpfs:
+      - /tmp
+    security_opt:
+      - no-new-privileges:true
+
+  api:
+    <<: *api-image
+    environment:
+      <<: *database-environment
+      APP_ENV: ${COMPOSE_APP_ENV:-development}
+      WEB_ORIGIN: ${COMPOSE_WEB_ORIGIN:-http://127.0.0.1:3000}
+      API_ORIGIN: ${COMPOSE_API_ORIGIN:-http://127.0.0.1:8010}
+      CONVERSATION_STORE_MODE: postgres
+      DATABASE_CONNECT_TIMEOUT_SECONDS: ${COMPOSE_DATABASE_CONNECT_TIMEOUT_SECONDS:-5}
+      DATABASE_STATEMENT_TIMEOUT_MS: ${COMPOSE_DATABASE_STATEMENT_TIMEOUT_MS:-5000}
+      MAX_REQUEST_BODY_BYTES: ${COMPOSE_MAX_REQUEST_BODY_BYTES:-32768}
+      LLM_MODE: ${COMPOSE_LLM_MODE:-real}
+      LLM_PROVIDER: openai_compatible
+      LLM_BASE_URL: ${COMPOSE_LLM_BASE_URL:-http://host.docker.internal:11434/v1}
+      LLM_API_KEY: ${COMPOSE_LLM_API_KEY:-ollama-local}
+      LLM_MODEL: ${COMPOSE_LLM_MODEL:-qwen2.5:3b-instruct}
+      LLM_TIMEOUT_SECONDS: ${COMPOSE_LLM_TIMEOUT_SECONDS:-30}
+      EMBEDDING_MODE: ${COMPOSE_EMBEDDING_MODE:-disabled}
+      RETRIEVAL_MODE: ${COMPOSE_RETRIEVAL_MODE:-keyword}
+    ports:
+      - "${API_PORT:-8010}:8010"
+    extra_hosts:
+      - host.docker.internal:host-gateway
+    healthcheck:
+      test:
+        - CMD
+        - python
+        - -c
+        - import urllib.request; urllib.request.urlopen('http://127.0.0.1:8010/healthz', timeout=3)
+      interval: 5s
+      timeout: 5s
+      retries: 20
+      start_period: 10s
+    depends_on:
+      postgres:
+        condition: service_healthy
+      seed:
+        condition: service_completed_successfully
+    restart: unless-stopped
+    read_only: true
+    tmpfs:
+      - /tmp
+    security_opt:
+      - no-new-privileges:true
+
+  web:
+    image: healthpick-web:${IMAGE_TAG:-local}
+    build:
+      context: .
+      dockerfile: infra/docker/web.Dockerfile
+      args:
+        NEXT_PUBLIC_API_ORIGIN: ${COMPOSE_PUBLIC_API_ORIGIN:-http://127.0.0.1:8010}
+    environment:
+      NODE_ENV: production
+      HOSTNAME: 0.0.0.0
+      PORT: 3000
+    ports:
+      - "${WEB_PORT:-3000}:3000"
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://127.0.0.1:3000/"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+      start_period: 10s
+    depends_on:
+      api:
+        condition: service_healthy
+    restart: unless-stopped
+    read_only: true
+    tmpfs:
+      - /tmp
+    security_opt:
+      - no-new-privileges:true
+
+volumes:
+  healthpick_postgres_data:

@@ -1,0 +1,37 @@
+schema_version: 1
+task_id: P04-02
+phase_id: PHASE-04
+outcome: pass_with_action
+started_at: "2026-08-21T22:00:00+08:00"
+completed_at: "2026-08-21T22:13:30+08:00"
+recorded_at: "2026-08-21"
+backfilled: false
+owner: API/KNOWLEDGE
+summary: 确定性目标映射、候选资格门禁、匹配分、主方案结构、三步行动、同类替换及 A/B 依据契约已实现；真实目录因第二人复核未完成而正确阻断。
+deliverables:
+  - apps/api/healthpick_api/recommendation/catalog.py
+  - apps/api/healthpick_api/recommendation/models.py
+  - apps/api/healthpick_api/recommendation/service.py
+  - apps/api/healthpick_api/main.py
+  - tests/api/test_recommendation.py
+  - scripts/smoke_recommendation.py
+  - packages/shared/openapi/healthpick.openapi.json
+acceptance_checks:
+  - name: 仅 verified、无未知缺字且有第二人复核记录的 A/B 规则可进入候选池
+    result: pass
+    evidence: [docs/evidence/phase-04-p04-02-api-pytest.xml, docs/evidence/phase-04-p04-02-runtime.json]
+  - name: 缺目标、年龄不明确及 S1/S2 医疗约束 fail-closed
+    result: pass
+    evidence: [docs/evidence/phase-04-p04-02-api-pytest.xml, docs/evidence/phase-04-p04-02-runtime.json]
+  - name: 减脂增肌稳糖合成已复核目录生成确定性主方案
+    result: pass
+    evidence: [docs/evidence/phase-04-p04-02-api-pytest.xml]
+  - name: 主方案包含匹配分、原因、关键目标、三步行动、替换和 A/B 依据
+    result: pass
+    evidence: [docs/evidence/phase-04-p04-02-api-pytest.xml, docs/evidence/phase-04-p04-02-design.md]
+  - name: 真实本地 API 和浏览器明确阻断未复核目录且不展示占位方案
+    result: pass
+    evidence: [docs/evidence/phase-04-p04-02-runtime.json, output/playwright/phase-04-p04-02-review-gate-375x812.png]
+issues: []
+residual_actions: [ACTION-06]
+review: {status: pending_final_review, reviewer: Project Lead, reviewed_at: null, notes: ACTION-06 完成前保持门禁，不得把当前规则改成 verified}

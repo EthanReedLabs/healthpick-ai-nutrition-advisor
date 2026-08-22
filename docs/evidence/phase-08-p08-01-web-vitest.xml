@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuites name="vitest tests" tests="30" failures="0" errors="0" time="1.5091915">
+    <testsuite name="src/components/chat-workspace.test.tsx" timestamp="2026-08-22T06:35:06.224Z" hostname="Eric" tests="22" failures="0" errors="0" skipped="0" time="1.496626">
+        <testcase classname="src/components/chat-workspace.test.tsx" name="ChatWorkspace &gt; shows the explicit API and model mode" time="0.1388221">
+        </testcase>
+        <testcase classname="src/components/chat-workspace.test.tsx" name="ChatWorkspace &gt; registers the current anonymous session and adopts the server canonical session" time="0.1016917">
+        </testcase>
+        <testcase classname="src/components/chat-workspace.test.tsx" name="ChatWorkspace &gt; exports personal data and permanently deletes the account after password re-entry" time="0.2478111">
+        </testcase>
+        <testcase classname="src/components/chat-workspace.test.tsx" name="ChatWorkspace &gt; fills the composer from a quick question without fabricating an answer" time="0.0243051">
+        </testcase>
+        <testcase classname="src/components/chat-workspace.test.tsx" name="ChatWorkspace &gt; restores a persisted server conversation from the anonymous session id" time="0.0478682">
+        </testcase>
+        <testcase classname="src/components/chat-workspace.test.tsx" name="ChatWorkspace &gt; keeps a health-profile editor entry in the mobile header" time="0.0273011">
+        </testcase>
+        <testcase classname="src/components/chat-workspace.test.tsx" name="ChatWorkspace &gt; surfaces the API error and states that no preset answer is used" time="0.0416076">
+        </testcase>
+        <testcase classname="src/components/chat-workspace.test.tsx" name="ChatWorkspace &gt; stops an active generation, confirms the server cancel, and preserves input" time="0.089576">
+        </testcase>
+        <testcase classname="src/components/chat-workspace.test.tsx" name="ChatWorkspace &gt; retries a transient failure with the same request id" time="0.0762826">
+        </testcase>
+        <testcase classname="src/components/chat-workspace.test.tsx" name="ChatWorkspace &gt; renders the validated final event from an SSE response" time="0.0513697">
+        </testcase>
+        <testcase classname="src/components/chat-workspace.test.tsx" name="ChatWorkspace &gt; validates an ephemeral profile and sends it with the next chat request" time="0.1168944">
+        </testcase>
+        <testcase classname="src/components/chat-workspace.test.tsx" name="ChatWorkspace &gt; renders a deterministic primary recommendation card from a ready contract" time="0.0607964">
+        </testcase>
+        <testcase classname="src/components/chat-workspace.test.tsx" name="ChatWorkspace &gt; shows readable S1 restrictions and every blocked food tag" time="0.0338001">
+        </testcase>
+        <testcase classname="src/components/chat-workspace.test.tsx" name="ChatWorkspace &gt; renders S3 as an explicit emergency stop without citations" time="0.0290163">
+        </testcase>
+        <testcase classname="src/components/chat-workspace.test.tsx" name="ChatWorkspace &gt; distinguishes evidence-gate failure from a connection error" time="0.028566">
+        </testcase>
+        <testcase classname="src/components/chat-workspace.test.tsx" name="ChatWorkspace &gt; creates a fresh conversation id when the user starts a new chat" time="0.05139">
+        </testcase>
+        <testcase classname="src/components/chat-workspace.test.tsx" name="ChatWorkspace &gt; distinguishes initial restoration from the ready empty state" time="0.0245731">
+        </testcase>
+        <testcase classname="src/components/chat-workspace.test.tsx" name="ChatWorkspace &gt; recovers a failed session initialization in place" time="0.0604464">
+        </testcase>
+        <testcase classname="src/components/chat-workspace.test.tsx" name="ChatWorkspace &gt; opens mobile history and closes it with Escape" time="0.0482629">
+        </testcase>
+        <testcase classname="src/components/chat-workspace.test.tsx" name="ChatWorkspace &gt; sends with Enter and preserves Shift+Enter for a newline" time="0.0315543">
+        </testcase>
+        <testcase classname="src/components/chat-workspace.test.tsx" name="ChatWorkspace &gt; selects the next conversation after deleting the active one" time="0.0791276">
+        </testcase>
+        <testcase classname="src/components/chat-workspace.test.tsx" name="ChatWorkspace &gt; filters history by title and persists an inline rename through the API" time="0.0840796">
+        </testcase>
+    </testsuite>
+    <testsuite name="src/lib/api.test.ts" timestamp="2026-08-22T06:35:06.240Z" hostname="Eric" tests="8" failures="0" errors="0" skipped="0" time="0.0125655">
+        <testcase classname="src/lib/api.test.ts" name="account authorization &gt; adds the bearer token to protected history requests without leaking it into the URL" time="0.00306">
+        </testcase>
+        <testcase classname="src/lib/api.test.ts" name="chat transport error boundaries &gt; rejects a malformed final event with a stable retryable error" time="0.0008904">
+        </testcase>
+        <testcase classname="src/lib/api.test.ts" name="chat transport error boundaries &gt; rejects a successful response whose content type is not SSE" time="0.000749">
+        </testcase>
+        <testcase classname="src/lib/api.test.ts" name="chat transport error boundaries &gt; aborts a stalled request and preserves its request id for safe retry" time="0.0040667">
+        </testcase>
+        <testcase classname="src/lib/api.test.ts" name="chat transport error boundaries &gt; distinguishes an explicit caller cancellation from a timeout" time="0.0004806">
+        </testcase>
+        <testcase classname="src/lib/api.test.ts" name="chat transport error boundaries &gt; uses an idempotent server cancellation endpoint" time="0.0014612">
+        </testcase>
+        <testcase classname="src/lib/api.test.ts" name="chat transport error boundaries &gt; does not expose an invalid upstream error body" time="0.0004786">
+        </testcase>
+        <testcase classname="src/lib/api.test.ts" name="chat transport error boundaries &gt; keeps the client request id when an error body contains a mismatched id" time="0.0003342">
+        </testcase>
+    </testsuite>
+</testsuites>

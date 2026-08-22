@@ -1,0 +1,114 @@
+{
+  "schema_version": 1,
+  "evidence_id": "PHASE-04-P04-03-RUNTIME",
+  "task_id": "P04-03",
+  "captured_at": "2026-08-22T10:34:24.146349+08:00",
+  "api_origin": "http://127.0.0.1:8010",
+  "cases": [
+    {
+      "name": "s0_standard",
+      "status_code": 200,
+      "latency_ms": 310,
+      "risk_level": "S0",
+      "response_mode": "normal",
+      "provider": "ollama_local",
+      "citation_count": 6,
+      "blocked_food_tags": [],
+      "allow_personalized_targets": true,
+      "answer_chars": 53,
+      "answer_sha256": "4b62c50b62565633bb8fd35b68f3a539d17a354748916f44864d91802e380eda",
+      "status": "PASS"
+    },
+    {
+      "name": "s1_profile_constraints",
+      "status_code": 200,
+      "latency_ms": 273,
+      "risk_level": "S1",
+      "response_mode": "general_only",
+      "provider": "ollama_local",
+      "citation_count": 6,
+      "blocked_food_tags": [
+        "shellfish",
+        "high_sodium"
+      ],
+      "allow_personalized_targets": false,
+      "answer_chars": 73,
+      "answer_sha256": "d40e08a16398a177c023d5fbde3fcc21a45f69684b5b13151a67fcbd4cf965f4",
+      "status": "PASS"
+    },
+    {
+      "name": "s2_general_only",
+      "status_code": 200,
+      "latency_ms": 395,
+      "risk_level": "S2",
+      "response_mode": "general_only",
+      "provider": "ollama_local",
+      "citation_count": 6,
+      "blocked_food_tags": [],
+      "allow_personalized_targets": false,
+      "answer_chars": 101,
+      "answer_sha256": "815169a8000476693b13df1ff5968728c5596869e4ca765207d8ab814458019c",
+      "status": "PASS"
+    },
+    {
+      "name": "s2_medication_refusal",
+      "status_code": 200,
+      "latency_ms": 12,
+      "risk_level": "S2",
+      "response_mode": "refuse",
+      "provider": "healthpick_guard",
+      "citation_count": 0,
+      "blocked_food_tags": [],
+      "allow_personalized_targets": false,
+      "answer_chars": 116,
+      "answer_sha256": "e452288978b69e96fbbeb73f7448e40fd3a18c13bf87a98c57eacead3bf6b112",
+      "status": "PASS"
+    },
+    {
+      "name": "s2_precise_prescription_refusal",
+      "status_code": 200,
+      "latency_ms": 12,
+      "risk_level": "S2",
+      "response_mode": "refuse",
+      "provider": "healthpick_guard",
+      "citation_count": 0,
+      "blocked_food_tags": [],
+      "allow_personalized_targets": false,
+      "answer_chars": 116,
+      "answer_sha256": "e452288978b69e96fbbeb73f7448e40fd3a18c13bf87a98c57eacead3bf6b112",
+      "status": "PASS"
+    },
+    {
+      "name": "s3_emergency_stop",
+      "status_code": 200,
+      "latency_ms": 20,
+      "risk_level": "S3",
+      "response_mode": "emergency_stop",
+      "provider": "healthpick_guard",
+      "citation_count": 0,
+      "blocked_food_tags": [],
+      "allow_personalized_targets": false,
+      "answer_chars": 52,
+      "answer_sha256": "93c3202f1fb0f346b5907940f1c6cd2fd1d949e2a28439f8a3d4846a153a5637",
+      "status": "PASS"
+    }
+  ],
+  "candidate_filter": {
+    "allowed_ids": [
+      "oatmeal"
+    ],
+    "rejected_ids": [
+      "shrimp-bowl",
+      "salty-soup"
+    ],
+    "status": "PASS"
+  },
+  "authority_notes": "docs/evidence/phase-04-safety-authorities.md",
+  "downstream_output_gate": {
+    "task": "P04-04",
+    "issue": "ISSUE-029",
+    "scope": "professional notice and claim-level output validation",
+    "status": "PASSED_RESOLVED"
+  },
+  "status": "PASS"
+}

@@ -1,0 +1,32 @@
+schema_version: 1
+task_id: P07-05
+phase_id: PHASE-07
+outcome: passed
+started_at: "2026-08-22T13:53:00+08:00"
+completed_at: "2026-08-22T14:08:33+08:00"
+recorded_at: "2026-08-22"
+backfilled: false
+owner: WEB/QA_DOCS
+summary: 用户主动停止生成已形成Web AbortSignal、API任务取消和PostgreSQL不落库闭环；34项API、30项Web及桌面移动真实验收通过。
+deliverables:
+  - apps/api/healthpick_api/main.py
+  - apps/web/src/lib/api.ts
+  - apps/web/src/components/chat-workspace.tsx
+  - docs/evidence/phase-07-p07-05-cancellation.json
+  - docs/evidence/phase-07-p07-05-quality.md
+acceptance_checks:
+  - name: 用户可在生成期间主动停止且状态可访问
+    result: pass
+    evidence: [apps/web/src/components/chat-workspace.tsx, docs/evidence/phase-07-p07-05-web-vitest.xml, output/playwright/phase-07-p07-05-generating.png]
+  - name: 同一请求编号完成客户端和服务端取消
+    result: pass
+    evidence: [apps/web/src/lib/api.ts, apps/api/healthpick_api/main.py, docs/evidence/phase-07-p07-05-cancellation.json]
+  - name: 取消请求不会保存半成品
+    result: pass
+    evidence: [tests/api/test_chat_sse.py, docs/evidence/phase-07-p07-05-api-pytest.xml, docs/evidence/phase-07-p07-05-cancellation.json]
+  - name: 桌面移动端无溢出且输入和焦点恢复
+    result: pass
+    evidence: [docs/evidence/phase-07-p07-05-browser.md, output/playwright/phase-07-p07-05-stopped.png, output/playwright/phase-07-p07-05-stopped-mobile.png]
+issues: [ISSUE-048, ISSUE-064]
+residual_actions: []
+review: {status: accepted, reviewer: Project Lead, reviewed_at: "2026-08-22T14:08:33+08:00", notes: ACTION-08和最终体验阻断已关闭，允许进入P07-06}

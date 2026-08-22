@@ -1,0 +1,34 @@
+schema_version: 1
+task_id: P06-04
+phase_id: PHASE-06
+outcome: passed
+started_at: "2026-08-22T11:41:22+08:00"
+completed_at: "2026-08-22T12:03:59+08:00"
+recorded_at: "2026-08-22"
+backfilled: false
+owner: API/WEB
+summary: 账号导出计数与永久删除覆盖同一五表个人数据面，秘密字段和静态知识被排除，并通过真实PostgreSQL和浏览器闭环验收。
+deliverables:
+  - apps/api/healthpick_api/auth.py
+  - apps/api/healthpick_api/main.py
+  - apps/api/healthpick_api/models.py
+  - apps/web/src/lib/api.ts
+  - apps/web/src/components/chat-workspace.tsx
+  - docs/evidence/phase-06-p06-04-quality.md
+  - docs/evidence/phase-06-p06-04-browser.md
+acceptance_checks:
+  - name: 导出计数和删除覆盖同一五表个人数据面
+    result: pass
+    evidence: [docs/evidence/phase-06-p06-04-api-pytest.xml, docs/evidence/phase-06-p06-04-postgres.json]
+  - name: 导出不包含密码令牌哈希和静态知识内容
+    result: pass
+    evidence: [docs/evidence/phase-06-p06-04-postgres.json, docs/evidence/phase-06-p06-04-browser.md]
+  - name: 删除要求密码重验并在成功后彻底失效账号
+    result: pass
+    evidence: [docs/evidence/phase-06-p06-04-api-pytest.xml, docs/evidence/phase-06-p06-04-postgres.json, docs/evidence/phase-06-p06-04-browser.md]
+  - name: Web真实下载删除和干净控制台门禁通过
+    result: pass
+    evidence: [docs/evidence/phase-06-p06-04-web-vitest.xml, docs/evidence/phase-06-p06-04-browser.md, output/playwright/phase-06-p06-04-account-export-delete.png, output/playwright/phase-06-p06-04-account-delete-confirm.png]
+issues: [ISSUE-055, ISSUE-056]
+residual_actions: []
+review: {status: accepted, reviewer: Project Lead, reviewed_at: "2026-08-22T12:03:59+08:00", notes: 同数据面导出计数删除与静态知识保留均有真实证据，进入P06-05退出验收}

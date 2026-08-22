@@ -12,7 +12,6 @@ from typing import Any
 import yaml
 from jsonschema import Draft202012Validator
 
-
 ROOT = Path(__file__).resolve().parents[1]
 CONTROL = ROOT / "control" / "project-control.yaml"
 CONTROL_SCHEMA = ROOT / "control" / "schemas" / "project-control.schema.json"
@@ -159,9 +158,11 @@ def audit() -> dict[str, Any]:
             for action_id in task["residual_actions"]:
                 action = actions.get(action_id)
                 if action and action["status"] in {"closed", "waived"}:
-                    errors.append(
-                        f"{task_id}: residual action {action_id} is closed; rerun evidence and promote task"
+                    message = (
+                        f"{task_id}: residual action {action_id} is closed; "
+                        "rerun evidence and promote task"
                     )
+                    errors.append(message)
         for artifact in task["evidence"]:
             if not artifact_exists(artifact):
                 errors.append(f"{task_id}: missing task evidence {artifact}")
@@ -175,9 +176,7 @@ def audit() -> dict[str, Any]:
     for phase_id, phase in phases.items():
         derived = derive_phase_status(tasks_by_phase[phase_id])
         if phase["status"] != derived:
-            errors.append(
-                f"{phase_id}: declared status {phase['status']} != derived {derived}"
-            )
+            errors.append(f"{phase_id}: declared status {phase['status']} != derived {derived}")
         if phase["status"] in {"passed", "pass_with_action"}:
             if not phase["exit_record"] or not artifact_exists(phase["exit_record"]):
                 errors.append(f"{phase_id}: closed phase has no exit record")
@@ -201,9 +200,7 @@ def audit() -> dict[str, Any]:
         if issue["status"] == "resolved":
             if not issue["cause"] or not issue["resolution"] or not issue["evidence"]:
                 errors.append(f"{issue_id}: resolved issue lacks cause/resolution/evidence")
-        if issue["status"] == "mitigated" and (
-            not issue["resolution"] or not issue["action_ids"]
-        ):
+        if issue["status"] == "mitigated" and (not issue["resolution"] or not issue["action_ids"]):
             errors.append(f"{issue_id}: mitigated issue lacks mitigation/action")
         for artifact in issue["evidence"]:
             if not artifact_exists(artifact):
@@ -273,7 +270,8 @@ def render_board(report: dict[str, Any]) -> str:
     lines = [
         "# 项目统一控制板",
         "",
-        "> 本文件由 `scripts/control_plane.py` 从 `control/project-control.yaml` 生成；请勿手工修改状态。",
+        "> 本文件由 `scripts/control_plane.py` 从 "
+        "`control/project-control.yaml` 生成；请勿手工修改状态。",
         "",
         f"- 结构校验：`{report['structural_status']}`",
         f"- 最终验收就绪度：`{report['final_readiness']}`",
@@ -293,8 +291,7 @@ def render_board(report: dict[str, Any]) -> str:
     ready = [task for task in control["tasks"] if task["status"] == "ready"]
     if ready:
         lines.extend(
-            f"- `{task['id']}` {task['title']}（Owner: {task['owner']}）"
-            for task in ready
+            f"- `{task['id']}` {task['title']}（Owner: {task['owner']}）" for task in ready
         )
     else:
         lines.append("- 无")
@@ -310,28 +307,46 @@ def render_board(report: dict[str, Any]) -> str:
     )
     for task in control["tasks"]:
         record = task["record"] or "—"
-        lines.append(
-            f"| {task['phase']} | {task['id']} | {task['title']} | {task['owner']} | `{task['status']}` | {record} |"
+        task_cells = (
+            task["phase"],
+            task["id"],
+            task["title"],
+            task["owner"],
+            task["status"],
+            record,
         )
+        lines.append("| {} | {} | {} | {} | `{}` | {} |".format(*task_cells))
 
-    lines.extend(["", "## 开放行动", "", "| ID | 行动 | Owner | 截止 | 阻断 |", "|---|---|---|---|---|"])
+    lines.extend(
+        ["", "## 开放行动", "", "| ID | 行动 | Owner | 截止 | 阻断 |", "|---|---|---|---|---|"]
+    )
     open_actions = [
-        action
-        for action in control["actions"]
-        if action["status"] not in {"closed", "waived"}
+        action for action in control["actions"] if action["status"] not in {"closed", "waived"}
     ]
     for action in open_actions:
+        blocked_tasks = ", ".join(action["blocks"])
         lines.append(
-            f"| {action['id']} | {action['title']} | {action['owner']} | {action['deadline']} | {', '.join(action['blocks'])} |"
+            f"| {action['id']} | {action['title']} | {action['owner']} | "
+            f"{action['deadline']} | {blocked_tasks} |"
         )
     if not open_actions:
         lines.append("| — | 无 | — | — | — |")
 
-    lines.extend(["", "## 未关闭问题", "", "| ID | 状态 | 严重度 | 现象 | 后续行动 |", "|---|---|---|---|---|"])
+    lines.extend(
+        [
+            "",
+            "## 未关闭问题",
+            "",
+            "| ID | 状态 | 严重度 | 现象 | 后续行动 |",
+            "|---|---|---|---|---|",
+        ]
+    )
     open_issues = [issue for issue in control["issues"] if issue["status"] != "resolved"]
     for issue in open_issues:
+        follow_up = ", ".join(issue["action_ids"]) or "—"
         lines.append(
-            f"| {issue['id']} | `{issue['status']}` | {issue['severity']} | {issue['symptom']} | {', '.join(issue['action_ids']) or '—'} |"
+            f"| {issue['id']} | `{issue['status']}` | {issue['severity']} | "
+            f"{issue['symptom']} | {follow_up} |"
         )
     if not open_issues:
         lines.append("| — | — | — | 无 | — |")
@@ -346,7 +361,8 @@ def render_board(report: dict[str, Any]) -> str:
             "",
             "## 最终验收",
             "",
-            f"当前共有 `{len(report['final_blockers'])}` 个机器判定阻断项。完整清单见 `docs/evidence/control-plane-validation.md`。",
+            f"当前共有 `{len(report['final_blockers'])}` 个机器判定阻断项。"
+            "完整清单见 `docs/evidence/control-plane-validation.md`。",
             "",
             "| Gate | 验收项 | 状态 |",
             "|---|---|---|",
@@ -412,15 +428,9 @@ def write_outputs(report: dict[str, Any]) -> None:
     md_lines.extend(["", "## Final blockers", ""])
     md_lines.extend(f"- `{blocker}`" for blocker in report["final_blockers"] or ["None"])
     md_lines.append("")
-    (EVIDENCE / "control-plane-validation.md").write_text(
-        "\n".join(md_lines), encoding="utf-8"
-    )
-    (GOVERNANCE / "CONTROL_BOARD.md").write_text(
-        render_board(report), encoding="utf-8"
-    )
-    (GOVERNANCE / "ISSUE_LOG.md").write_text(
-        render_issue_log(report), encoding="utf-8"
-    )
+    (EVIDENCE / "control-plane-validation.md").write_text("\n".join(md_lines), encoding="utf-8")
+    (GOVERNANCE / "CONTROL_BOARD.md").write_text(render_board(report), encoding="utf-8")
+    (GOVERNANCE / "ISSUE_LOG.md").write_text(render_issue_log(report), encoding="utf-8")
 
 
 def main() -> int:

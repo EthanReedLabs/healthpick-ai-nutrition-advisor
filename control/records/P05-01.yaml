@@ -1,0 +1,42 @@
+schema_version: 1
+task_id: P05-01
+phase_id: PHASE-05
+outcome: passed
+started_at: "2026-08-21T23:05:00+08:00"
+completed_at: "2026-08-21T23:54:00+08:00"
+recorded_at: "2026-08-21"
+backfilled: false
+owner: API/WEB
+summary: PostgreSQL 匿名会话、多对话和轮次持久化 CRUD 完成；服务端规范 ID、并发幂等、归属隔离、刷新及 API 重启恢复均通过自动化和真实浏览器验收。
+deliverables:
+  - infra/migrations/004_conversation_persistence.sql
+  - apps/api/healthpick_api/chat/conversation.py
+  - apps/api/healthpick_api/chat/pipeline.py
+  - apps/api/healthpick_api/main.py
+  - apps/api/healthpick_api/models.py
+  - apps/web/src/lib/api.ts
+  - apps/web/src/components/chat-workspace.tsx
+  - packages/shared/openapi/healthpick.openapi.json
+  - scripts/smoke_conversation_persistence.py
+acceptance_checks:
+  - name: 服务端规范会话对话轮次 ID 与完整 CRUD
+    result: pass
+    evidence: [docs/evidence/phase-05-p05-01-api-pytest.xml, docs/evidence/phase-05-p05-01-postgres.json]
+  - name: 并发追加幂等请求重启恢复与级联删除
+    result: pass
+    evidence: [docs/evidence/phase-05-p05-01-postgres.json]
+  - name: 跨匿名会话归属隔离并统一失败关闭
+    result: pass
+    evidence: [docs/evidence/phase-05-p05-01-api-pytest.xml, docs/evidence/phase-05-p05-01-postgres.json]
+  - name: 页面刷新和 API 重启后完整历史恢复
+    result: pass
+    evidence: [docs/evidence/phase-05-p05-01-web-vitest.xml, docs/evidence/phase-05-p05-01-browser.md, output/playwright/phase-05-p05-01-persistent-history-1440x1000.png]
+  - name: 安全终止记录可见但不污染后续模型上下文
+    result: pass
+    evidence: [docs/evidence/phase-05-p05-01-api-pytest.xml, docs/evidence/phase-05-p05-01-postgres.json]
+  - name: 全量测试静态检查类型检查和生产构建
+    result: pass
+    evidence: [docs/evidence/phase-05-p05-01-quality.md, docs/evidence/phase-05-p05-01-api-pytest.xml, docs/evidence/phase-05-p05-01-web-vitest.xml]
+issues: [ISSUE-017, ISSUE-033, ISSUE-034]
+residual_actions: []
+review: {status: pending_final_review, reviewer: Project Lead, reviewed_at: null, notes: P05-01 无残余行动；由 P05-02 继续输入边界与统一超时}

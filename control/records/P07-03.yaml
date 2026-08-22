@@ -1,0 +1,31 @@
+schema_version: 1
+task_id: P07-03
+phase_id: PHASE-07
+outcome: passed
+started_at: "2026-08-22T13:23:00+08:00"
+completed_at: "2026-08-22T13:39:57+08:00"
+recorded_at: "2026-08-22"
+backfilled: false
+owner: API/DEVOPS
+summary: 主备模型一跳故障切换、稳定双故障契约、透明度披露和失败不持久化均完成；48项回归与真实Ollama备用演练通过。
+deliverables:
+  - apps/api/healthpick_api/providers/failover.py
+  - apps/api/healthpick_api/providers/factory.py
+  - scripts/smoke_provider_failover.py
+  - docs/evidence/phase-07-p07-03-quality.md
+acceptance_checks:
+  - name: 可重试或协议错误切换备用且不可重试请求不切换
+    result: pass
+    evidence: [tests/api/test_providers.py, docs/evidence/phase-07-p07-03-pytest.xml]
+  - name: 真实本地备用模型完成回答并披露切换标记
+    result: pass
+    evidence: [docs/evidence/phase-07-p07-03-failover.json]
+  - name: 主备同时失败返回稳定错误且不持久化
+    result: pass
+    evidence: [tests/api/test_chat_sse.py, docs/evidence/phase-07-p07-03-pytest.xml, docs/evidence/phase-07-p07-03-failover.json]
+  - name: 备用配置完整校验且透明度不泄露秘密
+    result: pass
+    evidence: [apps/api/healthpick_api/config.py, apps/api/healthpick_api/main.py, tests/api/test_app.py]
+issues: [ISSUE-062]
+residual_actions: []
+review: {status: accepted, reviewer: Project Lead, reviewed_at: "2026-08-22T13:39:57+08:00", notes: 主备与双故障路径均有自动及真实运行证据，允许进入P07-04}

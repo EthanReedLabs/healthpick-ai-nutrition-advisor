@@ -1,0 +1,35 @@
+schema_version: 1
+task_id: P05-03
+phase_id: PHASE-05
+outcome: passed
+started_at: "2026-08-22T09:55:00+08:00"
+completed_at: "2026-08-22T10:27:00+08:00"
+recorded_at: "2026-08-22"
+backfilled: false
+owner: WEB
+summary: 三档响应式、移动历史入口、会话生命周期状态、动作级恢复和键盘无障碍全部完成并通过真实浏览器验收。
+deliverables:
+  - apps/web/src/components/chat-workspace.tsx
+  - apps/web/src/app/globals.css
+  - apps/web/src/components/chat-workspace.test.tsx
+  - docs/evidence/phase-05-p05-03-quality.md
+  - docs/evidence/phase-05-p05-03-browser.md
+acceptance_checks:
+  - name: 375_768_1440三档无横向溢出且关键入口可达
+    result: pass
+    evidence: [docs/evidence/phase-05-p05-03-browser.md, output/playwright/phase-05-p05-03-mobile-history-375x812.png, output/playwright/phase-05-p05-03-tablet-768x1024.png, output/playwright/phase-05-p05-03-desktop-1440x1000.png]
+  - name: 初始化加载会话切换删除生成失败恢复状态独立
+    result: pass
+    evidence: [apps/web/src/components/chat-workspace.tsx, apps/web/src/components/chat-workspace.test.tsx, docs/evidence/phase-05-p05-03-web-vitest.xml]
+  - name: 删除当前对话后自动选择下一条或创建新对话
+    result: pass
+    evidence: [apps/web/src/components/chat-workspace.test.tsx, docs/evidence/phase-05-p05-03-web-vitest.xml]
+  - name: 可访问名称焦点Escape和Enter键盘契约
+    result: pass
+    evidence: [docs/evidence/phase-05-p05-03-browser.md, apps/web/src/components/chat-workspace.test.tsx]
+  - name: Web完整自动质量门和生产构建
+    result: pass
+    evidence: [docs/evidence/phase-05-p05-03-quality.md, docs/evidence/phase-05-p05-03-web-vitest.xml]
+issues: [ISSUE-042, ISSUE-043, ISSUE-044, ISSUE-045, ISSUE-046]
+residual_actions: []
+review: {status: pending_final_review, reviewer: Project Lead, reviewed_at: null, notes: P05-03 无残余行动；下一任务为 P05-05 P0追踪矩阵与全回归}

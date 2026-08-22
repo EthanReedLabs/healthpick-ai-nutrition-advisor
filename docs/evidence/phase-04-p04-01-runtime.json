@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "evidence_id": "PHASE-04-P04-01-RUNTIME",
+  "task_id": "P04-01",
+  "captured_at": "2026-08-22T10:34:20.609766+08:00",
+  "api_origin": "http://127.0.0.1:8010",
+  "assessment": {
+    "status_code": 200,
+    "persistence": "ephemeral",
+    "collected_fields": [
+      "age_band",
+      "height_cm",
+      "weight_kg",
+      "goal",
+      "allergies",
+      "disliked_foods",
+      "conditions"
+    ],
+    "normalized_allergies": [
+      "shellfish"
+    ],
+    "bmi": {
+      "value": 22.5,
+      "height_cm": 170.0,
+      "weight_kg": 65.0,
+      "formula": "weight_kg / (height_m ** 2)",
+      "label": "系统估算"
+    },
+    "status": "PASS"
+  },
+  "invalid_profile": {
+    "status_code": 422,
+    "error_code": "validation_error",
+    "status": "PASS"
+  },
+  "openapi": {
+    "status_code": 200,
+    "profile_path": true,
+    "profile_fields": [
+      "activity_level",
+      "age_band",
+      "allergies",
+      "conditions",
+      "dietary_preferences",
+      "disliked_foods",
+      "goal",
+      "height_cm",
+      "sex",
+      "weight_kg"
+    ],
+    "status": "PASS"
+  },
+  "chat_transport": {
+    "status_code": 200,
+    "route": "nutrition",
+    "model_mode": "real",
+    "profile_field_names_sent": [
+      "activity_level",
+      "age_band",
+      "allergies",
+      "conditions",
+      "dietary_preferences",
+      "disliked_foods",
+      "goal",
+      "height_cm",
+      "sex",
+      "weight_kg"
+    ],
+    "status": "PASS"
+  },
+  "browser_evidence": "docs/evidence/phase-04-p04-01-browser.md",
+  "downstream_safety_gate": "P04-03_PASSED",
+  "status": "PASS"
+}

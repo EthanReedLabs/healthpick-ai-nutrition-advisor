@@ -18,12 +18,18 @@ class ChunkPolicyError(ValueError):
 
 
 class KnowledgeIndex:
-    def __init__(self, chunks: Iterable[ChunkRecord]) -> None:
+    def __init__(
+        self,
+        chunks: Iterable[ChunkRecord],
+        *,
+        excluded_unknown_glyph_ids: Iterable[str] = (),
+    ) -> None:
         values = tuple(chunks)
         ids = [item.chunk_id for item in values]
         if len(ids) != len(set(ids)):
             raise ChunkPolicyError("Chunk IDs must be globally unique")
         self.chunks = values
+        self.excluded_unknown_glyph_ids = tuple(excluded_unknown_glyph_ids)
         self.by_source = {
             source: tuple(item for item in values if item.source_code == source)
             for source in ("A", "B", "C")
@@ -37,6 +43,7 @@ class KnowledgeIndex:
     @classmethod
     def load_paths(cls, paths: Iterable[Path]) -> KnowledgeIndex:
         records: list[ChunkRecord] = []
+        excluded_unknown_glyph_ids: list[str] = []
         for path in paths:
             expected_source = path.name.split(".", maxsplit=1)[0]
             with path.open("r", encoding="utf-8") as stream:
@@ -56,8 +63,14 @@ class KnowledgeIndex:
                             f"does not match file {expected_source}"
                         )
                     _validate_source_policy(chunk)
+                    if chunk.unknown_glyph_count > 0:
+                        excluded_unknown_glyph_ids.append(chunk.chunk_id)
+                        continue
                     records.append(chunk)
-        return cls(records)
+        return cls(
+            records,
+            excluded_unknown_glyph_ids=excluded_unknown_glyph_ids,
+        )
 
 
 def _parse_chunk(raw: dict[str, object]) -> ChunkRecord:
@@ -73,6 +86,7 @@ def _parse_chunk(raw: dict[str, object]) -> ChunkRecord:
         allowed_routes=_string_tuple(raw, "allowed_routes"),
         forbidden_routes=_string_tuple(raw, "forbidden_routes"),
         review_status=_required_str(raw, "review_status"),
+        unknown_glyph_count=_nonnegative_int(raw, "unknown_glyph_count"),
     )
 
 
@@ -91,6 +105,8 @@ def _validate_source_policy(chunk: ChunkRecord) -> None:
             raise ChunkPolicyError(f"{chunk.chunk_id}: C chunk violates platform-only policy")
     else:
         raise ChunkPolicyError(f"{chunk.chunk_id}: unknown source {chunk.source_code}")
+    if chunk.unknown_glyph_count > 0 and chunk.review_status == "verified":
+        raise ChunkPolicyError(f"{chunk.chunk_id}: unknown glyph chunk cannot be verified")
 
 
 def _required_str(raw: dict[str, object], key: str) -> str:
@@ -112,3 +128,10 @@ def _string_tuple(raw: dict[str, object], key: str) -> tuple[str, ...]:
     if not isinstance(value, list) or not all(isinstance(item, str) for item in value):
         raise ValueError(f"{key} must be a string array")
     return tuple(value)
+
+
+def _nonnegative_int(raw: dict[str, object], key: str) -> int:
+    value = raw.get(key, 0)
+    if isinstance(value, bool) or not isinstance(value, int) or value < 0:
+        raise ValueError(f"{key} must be a non-negative integer")
+    return value

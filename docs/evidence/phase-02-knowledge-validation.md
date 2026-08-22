@@ -1,7 +1,7 @@
 # Phase 02 Knowledge Validation
 
 - Status: `PASS`
-- Generated: `2026-08-21T17:21:29.676400+08:00`
+- Generated: `2026-08-21T20:41:15.591005+08:00`
 
 ## Counts
 
@@ -17,8 +17,9 @@
 ## Runtime gates
 
 - file_validation: `PASS`
-- database_migration: `NOT_RUN`
-- embedding_index: `NOT_RUN`
+- database_migration: `PASS`
+- embedding_index: `PASS`
+- unknown_glyph_exclusion: `PASS`
 - second_person_review: `REQUIRED`
 
 ## Errors
@@ -29,5 +30,6 @@
 
 - 6 pages / 8 chunks contain source-level unknown glyphs; affected rules remain review_required.
 - 80 structured records require participant second-person review before production import.
-- Database migration execution: NOT_RUN (ACTION-01 Docker/PostgreSQL).
-- Embedding/vector build: NOT_RUN (ACTION-03 model and dimensions).
+- Unknown-glyph runtime exclusion: PASS.
+- Database migration execution: PASS.
+- Embedding/vector build: PASS.
