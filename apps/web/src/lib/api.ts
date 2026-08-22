@@ -22,7 +22,10 @@ export type TransparencyResponse = components["schemas"]["TransparencyResponse"]
 const apiOrigin =
   process.env.NEXT_PUBLIC_API_ORIGIN?.replace(/\/$/, "") ??
   "http://127.0.0.1:8010";
-const defaultChatTimeoutMs = 45_000;
+// Production allows the model provider up to 45 seconds. Keep the browser
+// deadline comfortably beyond that boundary so retrieval, validation and SSE
+// delivery cannot lose a race with the client timer.
+const defaultChatTimeoutMs = 75_000;
 let activeAuthToken: string | null = null;
 
 export type SendChatOptions = {

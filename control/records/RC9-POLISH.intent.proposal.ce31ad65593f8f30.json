@@ -7,15 +7,12 @@
     "公网 HTTPS、healthz、Web 容器健康，空输入和 2001 字输入提示通过真实浏览器验证且不发送聊天请求；真实模型首轮得到服务端成功或 provider_timeout 结果，不得在服务端 45 秒边界先出现 client_timeout",
     "记录 commit、镜像 ID/哈希、容器不变量、浏览器结果、问题与回滚命令，服务器临时镜像归档删除"
   ],
-  "applied_at": "2026-08-22T16:04:36.966837+00:00",
-  "applied_by": "agent-after-human-approval",
-  "applied_proposal_digest": "ce31ad65593f8f302361411152a812d57ffcdec01fe7bfbf32d383ba7fba7e0e",
   "approved_event_fingerprints": [],
   "confirmation": {
     "reason": "",
     "required": false
   },
-  "confirmed_by": "human-proposal-approval",
+  "confirmed_by": "unconfirmed-proposal",
   "constraints": {
     "allowed_paths": [
       "apps/web/src/app/globals.css",
@@ -60,6 +57,7 @@
     "external_write": "confirm",
     "local_write": true
   },
+  "proposal_digest": "ce31ad65593f8f302361411152a812d57ffcdec01fe7bfbf32d383ba7fba7e0e",
   "proposal_for": {
     "base_policy_digest": "b936ae51d3944dd6f26b028f6c34768531ffb73b07a9d329a1392224e10fd41e",
     "base_revision": 5,
@@ -93,6 +91,6 @@
     "deny": []
   },
   "status": "active",
-  "updated_at": "2026-08-22T16:04:36.966945+00:00",
+  "updated_at": "2026-08-22T16:02:16.523978+00:00",
   "workspace_root": "D:\\OPC_competition\\healthpick-ai-nutrition-advisor"
 }

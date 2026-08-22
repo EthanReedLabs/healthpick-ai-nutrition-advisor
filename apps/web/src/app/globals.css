@@ -1115,6 +1115,12 @@ textarea:focus-visible {
   box-shadow: 0 14px 42px rgba(31, 121, 88, 0.15);
 }
 
+.composer.has-error,
+.composer.has-error:focus-within {
+  border-color: #b9664d;
+  box-shadow: 0 14px 42px rgba(159, 73, 53, 0.13);
+}
+
 .composer textarea {
   width: 100%;
   min-height: 76px;
@@ -1137,6 +1143,14 @@ textarea:focus-visible {
   color: #70837b;
   background: #f5f8f6;
   cursor: wait;
+}
+
+.composer-error {
+  margin: 0;
+  padding: 0 18px 8px;
+  color: #8f3c2a;
+  font-size: 12px;
+  font-weight: 700;
 }
 
 .composer-foot {

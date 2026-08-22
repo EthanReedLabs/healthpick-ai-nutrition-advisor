@@ -1,0 +1,93 @@
+{
+  "acceptance_criteria": [
+    "默认客户端聊天等待预算必须明显大于线上服务端 45 秒模型调用上限，慢请求在服务端窗口结束及传输收尾期间不得先触发 client_timeout，同时保留用户取消和同一请求编号重试语义",
+    "提交空白内容时显示请输入您的问题类明确提示，且不调用聊天接口",
+    "输入超过 2000 字时实时或提交时显示输入内容过长请精简后重试类明确提示，且不调用聊天接口、不静默截断，计数和无障碍状态可见",
+    "相关 Web 单元测试、Lint、类型检查和生产构建通过，并记录问题、修复与验收结果"
+  ],
+  "approved_event_fingerprints": [],
+  "confirmation": {
+    "reason": "",
+    "required": false
+  },
+  "confirmed_by": "unconfirmed-proposal",
+  "constraints": {
+    "allowed_paths": [
+      "apps/web/src/components/chat-workspace.tsx",
+      "apps/web/src/components/chat-workspace.test.tsx",
+      "apps/web/src/lib/api.ts",
+      "apps/web/src/lib/api.test.ts",
+      "apps/web/src/app/globals.css",
+      "control/records"
+    ],
+    "frozen_paths": [],
+    "preserve": [
+      "现有 API、RAG、医学安全、引用、对话持久化、请求取消和同请求编号恢复语义",
+      "当前公网 RC9 预览、RC8 API/数据库/Caddy 与回滚点；本轮不部署、不推送、不打标签"
+    ],
+    "reject": [
+      "盲目修改服务端或百炼超时配置、关闭超时、伪造或硬编码模型回答、修改后端/知识库/医学规则",
+      "部署、推送、打标签、提交临时部署产物或进行无关 UI/功能改动"
+    ]
+  },
+  "correction_limit": 2,
+  "created_at": "2026-08-22T13:39:08.019496+00:00",
+  "critic": {
+    "cadence_writes": 1,
+    "enabled": true,
+    "min_confidence": 0.9,
+    "timeout_seconds": 120.0
+  },
+  "intent_id": "l3:rc9-existing-feature-polish",
+  "mcp": {
+    "allow_servers": [],
+    "allow_tools": [],
+    "local_servers": [
+      "sulde-kb"
+    ],
+    "unknown_effect": "confirm"
+  },
+  "mode": "enforce",
+  "objective": "修复 RC9 真实模型首轮请求因前后端同为 45 秒而发生的客户端超时竞态，并为聊天空输入和超过 2000 字输入提供明确、可访问且不发请求的提示",
+  "permissions": {
+    "destructive": "deny",
+    "external_write": "confirm",
+    "local_write": true
+  },
+  "proposal_digest": "006ada68838f3b1ef5f04386e9da8ce1fa3bbb47d0895c42f2bac4c7d82b6f7c",
+  "proposal_for": {
+    "base_policy_digest": "2d36005ea246d9d48587c2b8feb056121481171e14617e5af9039b9867ad8905",
+    "base_revision": 4,
+    "contract_path": "D:\\OPC_competition\\healthpick-ai-nutrition-advisor\\control\\records\\RC9-POLISH.intent.json"
+  },
+  "rationale": "消除公网首轮演示的假失败体验，并满足赛题对空输入、超长输入和系统异常显式反馈的基础验收要求",
+  "revision": 5,
+  "runtime": {
+    "active_skill_frames": [],
+    "active_skills": [],
+    "approved_proposal_digests": [],
+    "authorized_events": [],
+    "corrections": [],
+    "inconclusive_outcomes": [],
+    "integrity_breaches": [],
+    "local_write_completions": 0,
+    "open_events": [],
+    "pause_event_fingerprint": "",
+    "pause_reason": "",
+    "pause_requires_revision": false,
+    "pause_revision": 0,
+    "pending_verifications": [],
+    "sequence": 0,
+    "verified_effects": []
+  },
+  "schema": "sulde-intent-contract-v1",
+  "skills": {
+    "allow": [
+      "*"
+    ],
+    "deny": []
+  },
+  "status": "active",
+  "updated_at": "2026-08-22T15:48:04.061121+00:00",
+  "workspace_root": "D:\\OPC_competition\\healthpick-ai-nutrition-advisor"
+}

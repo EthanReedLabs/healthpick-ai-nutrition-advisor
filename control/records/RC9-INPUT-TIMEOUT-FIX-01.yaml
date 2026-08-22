@@ -1,0 +1,66 @@
+schema_version: 1
+record_id: RC9-INPUT-TIMEOUT-FIX-01
+captured_at: "2026-08-22T23:54:41+08:00"
+status: PASS
+intent:
+  contract: control/records/RC9-POLISH.intent.json
+  revision: 5
+  proposal_digest: 006ada68838f3b1ef5f04386e9da8ce1fa3bbb47d0895c42f2bac4c7d82b6f7c
+scope:
+  - real_model_first_request_timeout_experience
+  - explicit_empty_input_feedback
+  - explicit_overlong_input_feedback
+problems_found:
+  - id: ISSUE-RC9-INPUT-01
+    symptom: 公网真实模型首轮请求在客户端显示 client_timeout，同一请求编号重试后可恢复完整回答。
+    root_cause: 线上服务端模型调用上限与 Web 默认客户端等待窗口均为 45 秒，检索、校验和 SSE 收尾使客户端与服务端形成确定性超时竞态。
+  - id: ISSUE-RC9-INPUT-02
+    symptom: 空输入提交被静默忽略，用户看不到赛题要求的明确提示。
+    root_cause: 提交函数直接返回且空输入时发送按钮不可用，没有可触发的表单错误状态。
+  - id: ISSUE-RC9-INPUT-03
+    symptom: 超过 2000 字的内容没有明确提示。
+    root_cause: textarea 的原生 maxLength 在输入层静默截断，组件无法识别超长状态。
+knowledge_search:
+  result: no_direct_match
+  queries: 2
+  note: Sulde 知识库未命中可直接采用的同类 Web LLM 超时竞态或表单反馈案例。
+sedimentation_candidate:
+  title: Web LLM 客户端与服务端使用相同超时预算导致边界竞态
+  summary: 客户端总请求截止时间不能与服务端 provider 调用上限相同；还应覆盖检索、校验、持久化和传输收尾，并用边界定时器测试证明服务端截止点到达时客户端仍未中止。
+  privacy: 已脱敏，不含地址、密钥、请求编号或供应商账号信息。
+changes:
+  - Web 默认聊天等待窗口由 45 秒调整为 75 秒，为线上 45 秒服务端模型窗口及检索、校验、传输收尾保留 30 秒余量。
+  - client_timeout 与 provider_timeout 使用一致的明确超时呈现，保留同一请求编号重试语义。
+  - 空白提交显示“请输入您的问题”，聚焦输入框且不调用聊天接口。
+  - 超过 2000 字时保留原输入、不静默截断，显示“输入内容过长，请精简后重试”，计数与 aria-invalid/role=alert 同步可见且不调用聊天接口。
+  - 快捷问题和成功提交会清除输入错误状态。
+verification:
+  focused_tests:
+    command: npm --prefix apps/web test -- src/lib/api.test.ts src/components/chat-workspace.test.tsx
+    result: PASS
+    tests: 33
+  full_tests:
+    command: npm --prefix apps/web test
+    result: PASS
+    tests: 33
+  lint:
+    command: npm --prefix apps/web run lint
+    result: PASS
+  typecheck:
+    command: npm --prefix apps/web run typecheck
+    result: PASS
+  production_build:
+    command: npm --prefix apps/web run build
+    result: PASS
+acceptance:
+  client_deadline_exceeds_server_provider_budget: PASS
+  explicit_empty_input_feedback_without_request: PASS
+  explicit_overlong_feedback_without_truncation_or_request: PASS
+  cancellation_and_same_request_retry_preserved: PASS
+release_effect:
+  deployed: false
+  pushed: false
+  tagged: false
+  public_rc9_changed: false
+  backend_or_model_configuration_changed: false
+next_action: 经用户单独批准后再提交或部署本次 Web 修复。

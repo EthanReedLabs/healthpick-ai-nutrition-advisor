@@ -377,6 +377,38 @@ describe("ChatWorkspace", () => {
     expect(screen.getByRole("dialog", { name: "编辑健康档案" })).toBeInTheDocument();
   });
 
+  it("shows an explicit prompt for empty input without sending a chat request", async () => {
+    render(<ChatWorkspace />);
+
+    fireEvent.click(screen.getByRole("button", { name: /发送/ }));
+
+    expect(screen.getByRole("alert")).toHaveTextContent("请输入您的问题");
+    expect(screen.getByLabelText("输入营养或平台问题")).toHaveAttribute(
+      "aria-invalid",
+      "true",
+    );
+    expect(vi.mocked(fetch).mock.calls.some(([input]) =>
+      String(input).endsWith("/v1/chat/stream")
+    )).toBe(false);
+  });
+
+  it("shows an explicit prompt for overlong input without silently truncating or sending", () => {
+    render(<ChatWorkspace />);
+    const composer = screen.getByLabelText("输入营养或平台问题");
+    const overlongMessage = "低".repeat(2_001);
+
+    fireEvent.change(composer, { target: { value: overlongMessage } });
+
+    expect(composer).toHaveValue(overlongMessage);
+    expect(composer).toHaveAttribute("aria-invalid", "true");
+    expect(screen.getByRole("alert")).toHaveTextContent("输入内容过长，请精简后重试");
+    expect(screen.getByText("2001/2000", { exact: false })).toBeInTheDocument();
+    fireEvent.click(screen.getByRole("button", { name: /发送/ }));
+    expect(vi.mocked(fetch).mock.calls.some(([input]) =>
+      String(input).endsWith("/v1/chat/stream")
+    )).toBe(false);
+  });
+
   it("surfaces the API error and states that no preset answer is used", async () => {
     queueResponses(() =>
       jsonResponse(

@@ -17,6 +17,7 @@ const chatPayload = {
 
 afterEach(() => {
   setAuthToken(null);
+  vi.useRealTimers();
   vi.unstubAllGlobals();
 });
 
@@ -98,6 +99,38 @@ describe("chat transport error boundaries", () => {
       },
       status: 408,
     });
+  });
+
+  it("keeps the default client deadline beyond the 45-second provider budget", async () => {
+    vi.useFakeTimers();
+    const signals: AbortSignal[] = [];
+    vi.stubGlobal(
+      "fetch",
+      vi.fn((_url: string, init?: RequestInit) =>
+        new Promise<Response>((_resolve, reject) => {
+          const signal = init?.signal;
+          if (signal) {
+            signals.push(signal);
+            signal.addEventListener("abort", () => {
+              reject(new DOMException("aborted", "AbortError"));
+            });
+          }
+        }),
+      ),
+    );
+
+    const pending = sendChat(chatPayload, { requestId });
+    const rejection = expect(pending).rejects.toMatchObject({
+      payload: { code: "client_timeout", request_id: requestId },
+      status: 408,
+    });
+
+    await vi.advanceTimersByTimeAsync(45_000);
+    expect(signals[0]?.aborted).toBe(false);
+    await vi.advanceTimersByTimeAsync(29_999);
+    expect(signals[0]?.aborted).toBe(false);
+    await vi.advanceTimersByTimeAsync(1);
+    await rejection;
   });
 
   it("distinguishes an explicit caller cancellation from a timeout", async () => {

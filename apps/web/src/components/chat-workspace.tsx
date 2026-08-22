@@ -67,6 +67,8 @@ const sessionActivityCopy: Record<Exclude<SessionActivity, null>, [string, strin
   deleting: ["正在删除对话", "删除完成后会自动选择下一条可用对话。"],
 };
 
+const maxMessageLength = 2_000;
+
 function errorPresentation(error: WorkspaceError, isSessionError: boolean) {
   const evidenceFailure = ["insufficient_evidence", "evidence_validation_failed"].includes(
     error.code,
@@ -85,7 +87,7 @@ function errorPresentation(error: WorkspaceError, isSessionError: boolean) {
       guidance: "已保留当前输入；可使用下方操作恢复，不需要前往其他面板。",
     };
   }
-  if (error.code === "provider_timeout") {
+  if (["provider_timeout", "client_timeout"].includes(error.code)) {
     return {
       evidenceFailure: false,
       title: "回答等待超时",
@@ -690,6 +692,7 @@ export default function ChatWorkspace() {
   const [transparency, setTransparency] = useState<TransparencyResponse | null>(null);
   const [evaluation, setEvaluation] = useState<EvaluationSummaryResponse | null>(null);
   const [message, setMessage] = useState("");
+  const [composerError, setComposerError] = useState("");
   const [turns, setTurns] = useState<ConversationTurn[]>([]);
   const [conversations, setConversations] = useState<ConversationSummary[]>([]);
   const [error, setError] = useState<WorkspaceError | null>(null);
@@ -854,12 +857,23 @@ export default function ChatWorkspace() {
 
   async function submitMessage(retryRequestId?: string) {
     const trimmed = message.trim();
-    if (!trimmed || pending) return;
+    if (pending) return;
+    if (!trimmed) {
+      setComposerError("请输入您的问题。");
+      messageInputRef.current?.focus();
+      return;
+    }
+    if (message.length > maxMessageLength) {
+      setComposerError("输入内容过长，请精简后重试（最多 2000 字）。");
+      messageInputRef.current?.focus();
+      return;
+    }
 
     const requestId = retryRequestId ?? globalThis.crypto.randomUUID();
     const controller = new AbortController();
     activeChatRef.current = { requestId, controller };
     setPending(true);
+    setComposerError("");
     setError(null);
     setCancellationNotice("");
     setRecoveryAction(null);
@@ -887,6 +901,7 @@ export default function ChatWorkspace() {
         },
       ]);
       setMessage("");
+      setComposerError("");
       try {
         const latest = await listConversations(active.sessionId);
         setConversations(latest.items);
@@ -1631,6 +1646,7 @@ export default function ChatWorkspace() {
                 disabled={pending}
                 onClick={() => {
                   setMessage(question);
+                  setComposerError("");
                   messageInputRef.current?.focus();
                 }}
               >
@@ -1640,7 +1656,7 @@ export default function ChatWorkspace() {
           </div>
         </section>
 
-        <form className="composer" onSubmit={submit}>
+        <form className={`composer ${composerError ? "has-error" : ""}`} onSubmit={submit}>
           <label htmlFor="chat-message" className="sr-only">
             输入营养或平台问题
           </label>
@@ -1648,16 +1664,31 @@ export default function ChatWorkspace() {
             ref={messageInputRef}
             id="chat-message"
             value={message}
-            onChange={(event) => setMessage(event.target.value)}
+            onChange={(event) => {
+              const nextMessage = event.target.value;
+              setMessage(nextMessage);
+              setComposerError(
+                nextMessage.length > maxMessageLength
+                  ? "输入内容过长，请精简后重试（最多 2000 字）。"
+                  : "",
+              );
+            }}
             onKeyDown={handleComposerKeyDown}
             placeholder="输入营养、健康饮食或平台相关问题…"
             rows={2}
-            maxLength={2000}
             disabled={pending}
-            aria-describedby="composer-hint"
+            aria-invalid={Boolean(composerError)}
+            aria-describedby={composerError ? "composer-hint composer-error" : "composer-hint"}
           />
+          {composerError && (
+            <p className="composer-error" id="composer-error" role="alert">
+              {composerError}
+            </p>
+          )}
           <div className="composer-foot">
-            <span id="composer-hint">{message.length}/2000 · Enter 发送 · Shift+Enter 换行</span>
+            <span id="composer-hint">
+              {message.length}/{maxMessageLength} · Enter 发送 · Shift+Enter 换行
+            </span>
             {pending ? (
               <button
                 className="stop-generation"
@@ -1668,7 +1699,7 @@ export default function ChatWorkspace() {
                 停止生成 <span aria-hidden="true">■</span>
               </button>
             ) : (
-              <button type="submit" disabled={!message.trim()}>
+              <button type="submit">
                 发送 <span aria-hidden="true">↗</span>
               </button>
             )}
