@@ -1,18 +1,28 @@
 {
   "schema_version": 1,
   "task_id": "P04-02",
-  "status": "PASS_WITH_ACTION",
-  "recorded_at": "2026-08-21T22:12:26.764113+08:00",
+  "status": "PASS",
+  "recorded_at": "2026-08-22T17:46:36.238240+08:00",
   "api_origin": "http://127.0.0.1:8010",
   "generated_by": "deterministic_rules",
   "checks": {
-    "live_review_gate": {
-      "status": "blocked",
-      "blocked_reasons": [
-        "knowledge_second_person_review_required"
-      ],
-      "blocked_rule_count": 3,
-      "primary_present": false
+    "fat_loss_ready": {
+      "status": "ready",
+      "blocked_reasons": [],
+      "blocked_rule_count": 0,
+      "primary_present": true
+    },
+    "muscle_gain_ready": {
+      "status": "ready",
+      "blocked_reasons": [],
+      "blocked_rule_count": 0,
+      "primary_present": true
+    },
+    "stable_glucose_ready": {
+      "status": "ready",
+      "blocked_reasons": [],
+      "blocked_rule_count": 0,
+      "primary_present": true
     },
     "missing_goal": {
       "status": "blocked",
@@ -47,5 +57,7 @@
       "primary_present": false
     }
   },
-  "residual_action": "ACTION-06"
+  "released_core_rule_count": 7,
+  "remaining_quarantined_record_count": 73,
+  "residual_action": null
 }

@@ -17,6 +17,15 @@ ROOT = Path(__file__).resolve().parents[1]
 KNOWLEDGE = ROOT / "knowledge"
 EVIDENCE = ROOT / "docs" / "evidence"
 MANIFEST = KNOWLEDGE / "manifests" / "sources.yaml"
+CORE_RECOMMENDATION_RULE_IDS = {
+    "rule-A-fat_loss_guidance",
+    "rule-A-plate_211",
+    "rule-B-food_substitutions",
+    "rule-B-gi_categories",
+    "rule-B-muscle_targets",
+    "rule-B-muscle_timing",
+    "rule-B-plate_321",
+}
 
 
 def load_jsonl(path: Path) -> list[dict[str, Any]]:
@@ -235,6 +244,38 @@ def main() -> int:
                 errors,
             )
 
+    verified_records = [
+        record
+        for record in food_facts + plan_rules + platform_facts
+        if record["review_status"] == "verified"
+    ]
+    verified_ids = {
+        record.get("fact_id", record.get("rule_id")) for record in verified_records
+    }
+    require(
+        verified_ids == CORE_RECOMMENDATION_RULE_IDS,
+        "verified record set must exactly match the seven released core recommendation rules; "
+        f"found {sorted(verified_ids)}",
+        errors,
+    )
+    for record in verified_records:
+        record_id = record.get("fact_id", record.get("rule_id"))
+        require(
+            not record.get("unknown_glyph", False),
+            f"{record_id}: verified record contains an unresolved glyph",
+            errors,
+        )
+    core_release_gate = (
+        verified_ids == CORE_RECOMMENDATION_RULE_IDS
+        and len(verified_records) == len(CORE_RECOMMENDATION_RULE_IDS)
+        and all(
+            not record.get("unknown_glyph", False)
+            and isinstance(record.get("second_person_review"), dict)
+            and record["first_pass_review"].get("second_person_review_required") is False
+            for record in verified_records
+        )
+    )
+
     migration = (ROOT / "infra" / "migrations" / "001_knowledge_base.sql").read_text(
         encoding="utf-8"
     )
@@ -255,6 +296,7 @@ def main() -> int:
         record["review_status"] == "review_required"
         for record in food_facts + plan_rules + platform_facts
     )
+    verified_count = len(verified_records)
     database_evidence = load_json_if_present(EVIDENCE / "action-01-database-runtime.json")
     model_evidence = load_json_if_present(EVIDENCE / "action-02-03-real-model-runtime.json")
     glyph_evidence = load_json_if_present(EVIDENCE / "action-07-unknown-glyph-exclusion.json")
@@ -282,8 +324,17 @@ def main() -> int:
                 "unknown glyphs; affected rules remain review_required."
             ),
             (
-                f"{review_required} structured records require participant second-person "
-                "review before production import."
+                f"{verified_count} core recommendation rules "
+                + (
+                    "completed the authorized assisted review and are released to the "
+                    "deterministic engine."
+                    if core_release_gate
+                    else "did not satisfy the release gate."
+                )
+            ),
+            (
+                f"{review_required} remaining structured records still require participant "
+                "second-person review and remain quarantined from deterministic recommendations."
             ),
             "Unknown-glyph runtime exclusion: "
             + ("PASS." if unknown_glyph_gate else "NOT_RUN (ACTION-07)."),
@@ -301,6 +352,7 @@ def main() -> int:
         "platform_facts": len(platform_facts),
         "unknown_glyph_pages": unknown_pages,
         "unknown_glyph_chunks": unknown_chunks,
+        "verified_records": verified_count,
         "review_required_records": review_required,
     }
     report = {
@@ -315,7 +367,9 @@ def main() -> int:
             "database_migration": "PASS" if database_gate else "NOT_RUN",
             "embedding_index": "PASS" if embedding_gate else "NOT_RUN",
             "unknown_glyph_exclusion": "PASS" if unknown_glyph_gate else "NOT_RUN",
-            "second_person_review": "REQUIRED",
+            "core_recommendation_review": "PASS" if core_release_gate else "FAIL",
+            "remaining_structured_records": "QUARANTINED_REVIEW_REQUIRED",
+            "second_person_review": "PARTIAL_CORE_RELEASED",
         },
     }
     EVIDENCE.mkdir(parents=True, exist_ok=True)

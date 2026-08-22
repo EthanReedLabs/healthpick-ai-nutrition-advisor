@@ -37,6 +37,11 @@ items:
     section: 2.1 「211 餐盘法则」
     rule_type: plate_method
     title: 211 餐盘
+    review_status: verified
+    second_person_review:
+      reviewer: "Project Lead-authorized review / Codex-assisted"
+      date: "2026-08-22"
+      notes: "逐页对照 A-p01/A-p02；2/1/1 份、1/2/1/4/1/4 餐盘比例、食材示例和约 1 拇指健康脂肪均一致。"
     content:
       vegetables: {parts: 2, plate_fraction: 0.5, examples: [西兰花, 菠菜, 胡萝卜, 南瓜]}
       protein: {parts: 1, plate_fraction: 0.25, examples: [鸡胸肉, 鱼, 豆腐, 鸡蛋, 瘦牛肉]}
@@ -55,6 +60,11 @@ items:
     section: 4.1 减脂人群
     rule_type: goal_guidance
     title: 减脂一般原则
+    review_status: verified
+    second_person_review:
+      reviewer: "Project Lead-authorized review / Codex-assisted"
+      date: "2026-08-22"
+      notes: "对照 A-p04；每日能量缺口 300-500 千卡、蛋白质 1.2-1.6 g/kg、糖油限制、进食顺序和饮水量均一致。"
     content: {energy_delta_kcal: [-500, -300], protein_g_per_kg: [1.2, 1.6], added_sugar: {operator: "<", value: 25, unit: g_per_day}, cooking_oil: {operator: "<", value: 25, unit: g_per_day}, water_ml_per_day: [2000, 2500], eating_order: [蔬菜, 蛋白质, 碳水]}
   - id: muscle_gain_guidance
     source: A
@@ -205,6 +215,11 @@ items:
     section: 2.4 食材替换指南
     rule_type: substitution
     title: 食材等量替换
+    review_status: verified
+    second_person_review:
+      reviewer: "Project Lead-authorized review / Codex-assisted"
+      date: "2026-08-22"
+      notes: "对照 B-p05；蛋白质约 100-120g、碳水约 80g 生重、蔬菜约 200g 及各替换组逐项一致。"
     content:
       protein_100_120g: [[鸡胸肉, 火鸡胸肉, 去皮鸡腿肉], [鳕鱼或鲈鱼, 龙利鱼, 比目鱼], [虾仁, 蛤蜊肉, 鱿鱼], [北豆腐, 南豆腐1.5倍量], [鸡蛋, 蛋清2个]]
       carbohydrate_about_80g_raw: [[糙米, 燕麦米, 黑米], [红薯, 紫薯, 山药], [藜麦, 糙米], [全麦面包2片, 全麦馒头1个]]
@@ -223,6 +238,11 @@ items:
     section: 3.1 方案定位与目标人群
     rule_type: nutrient_target
     title: 力量增肌核心目标
+    review_status: verified
+    second_person_review:
+      reviewer: "Project Lead-authorized review / Codex-assisted"
+      date: "2026-08-22"
+      notes: "对照 B-p06；能量盈余 300-500 千卡、蛋白质 1.8-2.2 g/kg、碳水 4-6 g/kg 和月增瘦体重 0.5-1kg 一致。"
     content: {energy_delta_kcal: [300, 500], protein_g_per_kg: [1.8, 2.2], carbohydrate_g_per_kg: [4, 6], lean_mass_gain_kg_per_month: [0.5, 1]}
   - id: muscle_training_rest_targets
     source: B
@@ -237,6 +257,11 @@ items:
     section: 3.3 关键补充时机
     rule_type: timing
     title: 增肌关键补充时机
+    review_status: verified
+    second_person_review:
+      reviewer: "Project Lead-authorized review / Codex-assisted"
+      date: "2026-08-22"
+      notes: "对照 B-p06；训练前 1-2 小时、训练后 30-60 分钟、睡前 1 小时及示例食物一致。"
     content: {pre_training: {hours_before: [1, 2], examples: [燕麦+香蕉+鸡蛋, 全麦面包+花生酱]}, post_training: {minutes_after: [30, 60], examples: [乳清蛋白粉1勺+香蕉1根, 鸡胸肉+白米饭]}, before_sleep: {hours_before: 1, examples: [酪蛋白粉, 希腊酸奶+坚果]}}
   - id: glucose_plan_eligibility
     source: B
@@ -251,6 +276,11 @@ items:
     section: 4.2 低GI饮食核心原则
     rule_type: classification
     title: GI 食物分类
+    review_status: verified
+    second_person_review:
+      reviewer: "Project Lead-authorized review / Codex-assisted"
+      date: "2026-08-22"
+      notes: "对照 B-p07；低 GI <55、中 GI 55-70、高 GI >70 的边界及所列主食/高 GI 示例一致。"
     content: {low: {operator: "<", value: 55, examples: [糙米, 燕麦, 藜麦, 荞麦, 全麦面包, 红薯]}, medium: {range: [55, 70], examples: [白米饭, 南瓜, 玉米, 香蕉]}, high: {operator: ">", value: 70, examples: [白面包, 白馒头, 糯米, 西瓜, 荔枝, 龙眼, 果汁, 含糖饮料, 糖果, 蛋糕]}}
   - id: plate_321
     source: B
@@ -258,6 +288,11 @@ items:
     section: 4.3 控糖餐盘法则
     rule_type: plate_method
     title: 控糖321餐盘
+    review_status: verified
+    second_person_review:
+      reviewer: "Project Lead-authorized review / Codex-assisted"
+      date: "2026-08-22"
+      notes: "对照 B-p07；3/2/1 份、1/2/1/4/1/4 餐盘比例、低 GI 主食约拳头大小和进食顺序一致。"
     content: {vegetables: {parts: 3, plate_fraction: 0.5}, protein: {parts: 2, plate_fraction: 0.25}, low_gi_carbohydrate: {parts: 1, plate_fraction: 0.25, amount: 约拳头大小}, eating_order: [蔬菜, 蛋白质, 碳水]}
   - id: plan_selection
     source: B
@@ -282,4 +317,3 @@ items:
     title: 方案使用常见问题
     content: {cycle_weeks_before_replacement: 4, replacement_percent: 20, exercise_minutes_for_glucose_plan: 30, meal_replacement_times_per_week_value: 2, meal_replacement_comparator: unknown_missing_glyph}
     unknown_glyph: true
-

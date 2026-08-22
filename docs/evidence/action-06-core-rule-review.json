@@ -1,0 +1,76 @@
+{
+  "schema_version": 1,
+  "evidence_id": "ACTION-06-CORE-RULE-REVIEW",
+  "action_id": "ACTION-06",
+  "scope": "deterministic-recommendation-core",
+  "captured_at": "2026-08-22T17:46:36+08:00",
+  "review_method": "Project Lead-authorized review / Codex-assisted",
+  "core_release_status": "PASS",
+  "action_status": "OPEN_REMAINING_REVIEW",
+  "released_rule_count": 7,
+  "remaining_quarantined_record_count": 73,
+  "released_rules": [
+    {
+      "rule_id": "rule-A-plate_211",
+      "source": "A",
+      "pages": [1, 2],
+      "evidence_images": [
+        "docs/evidence/phase-02-page-review/A-p01.png",
+        "docs/evidence/phase-02-page-review/A-p02.png"
+      ]
+    },
+    {
+      "rule_id": "rule-A-fat_loss_guidance",
+      "source": "A",
+      "pages": [4],
+      "evidence_images": ["docs/evidence/phase-02-page-review/A-p04.png"]
+    },
+    {
+      "rule_id": "rule-B-food_substitutions",
+      "source": "B",
+      "pages": [5],
+      "evidence_images": ["docs/evidence/phase-02-page-review/B-p05.png"]
+    },
+    {
+      "rule_id": "rule-B-muscle_targets",
+      "source": "B",
+      "pages": [6],
+      "evidence_images": ["docs/evidence/phase-02-page-review/B-p06.png"]
+    },
+    {
+      "rule_id": "rule-B-muscle_timing",
+      "source": "B",
+      "pages": [6],
+      "evidence_images": ["docs/evidence/phase-02-page-review/B-p06.png"]
+    },
+    {
+      "rule_id": "rule-B-gi_categories",
+      "source": "B",
+      "pages": [7],
+      "evidence_images": ["docs/evidence/phase-02-page-review/B-p07.png"]
+    },
+    {
+      "rule_id": "rule-B-plate_321",
+      "source": "B",
+      "pages": [7],
+      "evidence_images": ["docs/evidence/phase-02-page-review/B-p07.png"]
+    }
+  ],
+  "explicitly_excluded_rule_ids": ["rule-B-fat_loss_targets"],
+  "checks": {
+    "released_set_is_exactly_seven": true,
+    "all_released_rules_have_complete_review_records": true,
+    "no_released_rule_has_unresolved_glyph": true,
+    "ambiguous_b_fat_loss_rule_remains_quarantined": true,
+    "fat_loss_muscle_gain_and_stable_glucose_are_ready": true,
+    "missing_profile_and_medical_constraints_fail_closed": true,
+    "remaining_records_are_not_imported_into_deterministic_recommendations": true
+  },
+  "evidence": [
+    "docs/evidence/phase-02-knowledge-validation.json",
+    "docs/evidence/phase-04-p04-02-runtime.json",
+    "tests/api/test_recommendation.py",
+    "tests/test_knowledge_artifacts.py"
+  ],
+  "status": "PASS_WITH_ACTION"
+}

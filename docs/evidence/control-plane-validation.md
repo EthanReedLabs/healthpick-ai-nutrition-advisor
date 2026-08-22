@@ -3,14 +3,14 @@
 - Structural status: `PASS`
 - Final readiness: `NOT_READY`
 - Current phase: `PHASE-08`
-- Generated: `2026-08-22T17:13:21.917905+08:00`
+- Generated: `2026-08-22T17:52:54.470010+08:00`
 
 ## Counts
 
 - phases: {"in_progress": 1, "pass_with_action": 6, "passed": 1}
-- tasks: {"in_progress": 1, "pass_with_action": 18, "passed": 36}
+- tasks: {"in_progress": 1, "pass_with_action": 16, "passed": 38}
 - actions: {"closed": 7, "open": 1}
-- issues: {"open": 3, "resolved": 74}
+- issues: {"open": 3, "resolved": 75}
 - final_gates: {"not_started": 10}
 
 ## Structural errors
@@ -55,12 +55,8 @@
 - `task:P03-08=pass_with_action`
 - `record-review:P03-08=pending_final_review`
 - `record-review:P04-01=pending_final_review`
-- `task:P04-02=pass_with_action`
-- `record-review:P04-02=pending_final_review`
 - `record-review:P04-03=pending_final_review`
 - `record-review:P04-04=pending_final_review`
-- `task:P04-05=pass_with_action`
-- `record-review:P04-05=pending_final_review`
 - `record-review:P04-06=pending_final_review`
 - `task:P04-07=pass_with_action`
 - `record-review:P04-07=pending_final_review`

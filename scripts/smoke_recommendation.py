@@ -27,9 +27,17 @@ def post_json(origin: str, payload: dict[str, object]) -> dict[str, object]:
 def main() -> int:
     origin = os.getenv("API_ORIGIN", "http://127.0.0.1:8010")
     cases = {
-        "live_review_gate": post_json(
+        "fat_loss_ready": post_json(
             origin,
             {"age_band": "adult_18_44", "sex": "female", "goal": "fat_loss"},
+        ),
+        "muscle_gain_ready": post_json(
+            origin,
+            {"age_band": "adult_18_44", "sex": "male", "goal": "muscle_gain"},
+        ),
+        "stable_glucose_ready": post_json(
+            origin,
+            {"age_band": "adult_18_44", "sex": "female", "goal": "stable_glucose"},
         ),
         "missing_goal": post_json(origin, {"age_band": "adult_18_44"}),
         "ambiguous_age": post_json(
@@ -53,10 +61,11 @@ def main() -> int:
             },
         ),
     }
-    assert cases["live_review_gate"]["status"] == "blocked"
-    assert cases["live_review_gate"]["primary"] is None
-    assert cases["live_review_gate"]["requires_second_person_review"] is True
-    assert len(cases["live_review_gate"]["blocked_rule_ids"]) == 3
+    for name in ("fat_loss_ready", "muscle_gain_ready", "stable_glucose_ready"):
+        assert cases[name]["status"] == "ready"
+        assert cases[name]["primary"] is not None
+        assert cases[name]["requires_second_person_review"] is False
+        assert cases[name]["blocked_rule_ids"] == []
     assert cases["missing_goal"]["blocked_reasons"] == ["missing_goal"]
     assert cases["ambiguous_age"]["blocked_reasons"] == ["age_outside_or_ambiguous_plan_scope"]
     assert cases["allergy_general_only"]["blocked_reasons"] == ["safety_s1_general_only"]
@@ -65,7 +74,7 @@ def main() -> int:
     report = {
         "schema_version": 1,
         "task_id": "P04-02",
-        "status": "PASS_WITH_ACTION",
+        "status": "PASS",
         "recorded_at": datetime.now().astimezone().isoformat(),
         "api_origin": origin,
         "generated_by": "deterministic_rules",
@@ -78,7 +87,9 @@ def main() -> int:
             }
             for name, value in cases.items()
         },
-        "residual_action": "ACTION-06",
+        "released_core_rule_count": 7,
+        "remaining_quarantined_record_count": 73,
+        "residual_action": None,
     }
     OUTPUT.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(json.dumps(report, ensure_ascii=False, indent=2))

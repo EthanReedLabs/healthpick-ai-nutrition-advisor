@@ -1,13 +1,13 @@
 schema_version: 1
 task_id: P04-02
 phase_id: PHASE-04
-outcome: pass_with_action
+outcome: passed
 started_at: "2026-08-21T22:00:00+08:00"
 completed_at: "2026-08-21T22:13:30+08:00"
 recorded_at: "2026-08-21"
 backfilled: false
 owner: API/KNOWLEDGE
-summary: 确定性目标映射、候选资格门禁、匹配分、主方案结构、三步行动、同类替换及 A/B 依据契约已实现；真实目录因第二人复核未完成而正确阻断。
+summary: 确定性目标映射、候选资格门禁、匹配分、主方案结构、三步行动、同类替换及 A/B 依据契约已实现；实际使用的7条核心规则完成授权复核并在真实目录放行。
 deliverables:
   - apps/api/healthpick_api/recommendation/catalog.py
   - apps/api/healthpick_api/recommendation/models.py
@@ -16,6 +16,7 @@ deliverables:
   - tests/api/test_recommendation.py
   - scripts/smoke_recommendation.py
   - packages/shared/openapi/healthpick.openapi.json
+  - docs/evidence/action-06-core-rule-review.json
 acceptance_checks:
   - name: 仅 verified、无未知缺字且有第二人复核记录的 A/B 规则可进入候选池
     result: pass
@@ -29,9 +30,9 @@ acceptance_checks:
   - name: 主方案包含匹配分、原因、关键目标、三步行动、替换和 A/B 依据
     result: pass
     evidence: [docs/evidence/phase-04-p04-02-api-pytest.xml, docs/evidence/phase-04-p04-02-design.md]
-  - name: 真实本地 API 和浏览器明确阻断未复核目录且不展示占位方案
+  - name: 真实本地 API 对减脂增肌稳糖返回已复核确定性方案，其他未复核规则继续隔离
     result: pass
-    evidence: [docs/evidence/phase-04-p04-02-runtime.json, output/playwright/phase-04-p04-02-review-gate-375x812.png]
-issues: []
-residual_actions: [ACTION-06]
-review: {status: pending_final_review, reviewer: Project Lead, reviewed_at: null, notes: ACTION-06 完成前保持门禁，不得把当前规则改成 verified}
+    evidence: [docs/evidence/phase-04-p04-02-runtime.json, docs/evidence/action-06-core-rule-review.json]
+issues: [ISSUE-078]
+residual_actions: []
+review: {status: accepted, reviewer: Project Lead, reviewed_at: "2026-08-22T17:46:36+08:00", notes: 核心7条规则按授权辅助复核放行；其余73条仍由ACTION-06隔离跟踪}

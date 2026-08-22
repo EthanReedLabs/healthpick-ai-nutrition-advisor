@@ -16,7 +16,7 @@ from .models import (
 
 GOAL_RULES: dict[str, tuple[str, ...]] = {
     "fat_loss": (
-        "rule-B-fat_loss_targets",
+        "rule-A-fat_loss_guidance",
         "rule-A-plate_211",
         "rule-B-food_substitutions",
     ),
@@ -108,7 +108,7 @@ def _build_option(
     goal = profile.goal
     assert goal is not None
     if goal == "fat_loss":
-        targets = _fat_loss_targets(profile, by_id["rule-B-fat_loss_targets"].content)
+        targets = _fat_loss_targets(by_id["rule-A-fat_loss_guidance"].content)
         actions = (
             "每餐先按 2 份蔬菜、1 份蛋白质、1 份主食组织餐盘。",
             "从可用替换组中选择食材，保持同类替换并避开禁忌标签。",
@@ -162,19 +162,15 @@ def _build_option(
     )
 
 
-def _fat_loss_targets(profile: ProfilePatch, content: dict[str, Any]) -> list[str]:
-    targets = [f"建议周期：{_range_text(content['cycle_weeks'])} 周"]
-    if profile.sex in {"female", "male"}:
-        sex_targets = content[profile.sex]
-        targets.extend(
-            (
-                f"资料能量范围：{_range_text(sex_targets['energy_kcal'])} kcal",
-                f"资料蛋白质范围：{_range_text(sex_targets['protein_g'])} g",
-            )
-        )
-    else:
-        targets.append("未设置二元性别，不输出资料中的性别分组数值。")
-    return targets
+def _fat_loss_targets(content: dict[str, Any]) -> list[str]:
+    energy_delta = content["energy_delta_kcal"]
+    energy_deficit = sorted(abs(value) for value in energy_delta)
+    return [
+        f"每日能量缺口：{_range_text(energy_deficit)} kcal",
+        f"蛋白质范围：{_range_text(content['protein_g_per_kg'])} g/kg",
+        f"每日饮水：{_range_text(content['water_ml_per_day'])} ml",
+        f"进食顺序：{' → '.join(content['eating_order'])}",
+    ]
 
 
 def _substitutions(content: dict[str, Any], blocked_tags: list[str]) -> list[str]:

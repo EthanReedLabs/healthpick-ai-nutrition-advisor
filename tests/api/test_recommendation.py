@@ -37,12 +37,14 @@ def verified_service() -> RecommendationService:
         RecommendationCatalog(
             (
                 rule(
-                    "rule-B-fat_loss_targets",
+                    "rule-A-fat_loss_guidance",
                     {
-                        "cycle_weeks": [8, 12],
-                        "female": {"energy_kcal": [1200, 1500], "protein_g": [60, 75]},
-                        "male": {"energy_kcal": [1500, 1800], "protein_g": [75, 90]},
+                        "energy_delta_kcal": [-500, -300],
+                        "protein_g_per_kg": [1.2, 1.6],
+                        "water_ml_per_day": [2000, 2500],
+                        "eating_order": ["蔬菜", "蛋白质", "碳水"],
                     },
+                    source="A",
                 ),
                 rule("rule-A-plate_211", {"plate": "211"}, source="A"),
                 rule("rule-B-food_substitutions", substitution_content()),
@@ -65,20 +67,17 @@ def verified_service() -> RecommendationService:
     )
 
 
-def test_live_catalog_blocks_every_unreviewed_rule_from_candidate_pool() -> None:
-    result = RecommendationService.load_default().evaluate(
-        ProfilePatch(
-            age_band="adult_18_44",
-            sex="female",
-            goal="fat_loss",
-        )
-    )
-    assert result.status == "blocked"
-    assert result.primary is None
-    assert result.requires_second_person_review is True
-    assert result.blocked_reasons == ["knowledge_second_person_review_required"]
-    assert set(result.blocked_rule_ids) == {
-        "rule-B-fat_loss_targets",
+def test_live_catalog_releases_the_reviewed_core_rules_for_all_goals() -> None:
+    service = RecommendationService.load_default()
+    results = {
+        goal: service.evaluate(ProfilePatch(age_band="adult_18_44", goal=goal))
+        for goal in ("fat_loss", "muscle_gain", "stable_glucose")
+    }
+    assert all(result.status == "ready" for result in results.values())
+    assert all(result.primary is not None for result in results.values())
+    assert results["fat_loss"].primary is not None
+    assert {item.rule_id for item in results["fat_loss"].primary.evidence} == {
+        "rule-A-fat_loss_guidance",
         "rule-A-plate_211",
         "rule-B-food_substitutions",
     }
@@ -130,7 +129,8 @@ def test_verified_fat_loss_rules_create_one_deterministic_primary_plan() -> None
     assert result.primary.title == "轻盈减脂"
     assert result.primary.selection_score == 95
     assert len(result.primary.actions) == 3
-    assert "资料能量范围：1200–1500 kcal" in result.primary.key_targets
+    assert "每日能量缺口：300–500 kcal" in result.primary.key_targets
+    assert "蛋白质范围：1.2–1.6 g/kg" in result.primary.key_targets
     assert {item.source for item in result.primary.evidence} == {"A", "B"}
 
 
@@ -146,12 +146,14 @@ def test_verified_muscle_and_glucose_rules_create_goal_specific_targets() -> Non
 
 def test_unknown_glyph_or_missing_second_review_is_ineligible() -> None:
     unsafe_rule = rule(
-        "rule-B-fat_loss_targets",
+        "rule-A-fat_loss_guidance",
         {
-            "cycle_weeks": [8, 12],
-            "female": {"energy_kcal": [1200, 1500], "protein_g": [60, 75]},
-            "male": {"energy_kcal": [1500, 1800], "protein_g": [75, 90]},
+            "energy_delta_kcal": [-500, -300],
+            "protein_g_per_kg": [1.2, 1.6],
+            "water_ml_per_day": [2000, 2500],
+            "eating_order": ["蔬菜", "蛋白质", "碳水"],
         },
+        source="A",
     )
     unsafe_rule = replace(
         unsafe_rule,
@@ -169,10 +171,10 @@ def test_unknown_glyph_or_missing_second_review_is_ineligible() -> None:
     )
     result = service.evaluate(ProfilePatch(age_band="adult_18_44", goal="fat_loss"))
     assert result.status == "blocked"
-    assert result.blocked_rule_ids == ["rule-B-fat_loss_targets"]
+    assert result.blocked_rule_ids == ["rule-A-fat_loss_guidance"]
 
 
-def test_recommendation_endpoint_reports_live_review_gate_without_fabrication() -> None:
+def test_recommendation_endpoint_returns_the_live_reviewed_candidate() -> None:
     app = create_app(Settings(app_env="test", llm_mode="mock", embedding_mode="disabled"))
     with TestClient(app) as client:
         response = client.post(
@@ -181,6 +183,7 @@ def test_recommendation_endpoint_reports_live_review_gate_without_fabrication() 
         )
     assert response.status_code == 200
     payload = response.json()
-    assert payload["status"] == "blocked"
-    assert payload["primary"] is None
-    assert payload["requires_second_person_review"] is True
+    assert payload["status"] == "ready"
+    assert payload["primary"]["title"] == "轻盈减脂"
+    assert payload["primary"]["key_targets"][0] == "每日能量缺口：300–500 kcal"
+    assert payload["requires_second_person_review"] is False

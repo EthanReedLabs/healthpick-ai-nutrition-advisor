@@ -103,9 +103,36 @@ def test_review_evidence_images_exist() -> None:
         + read_jsonl(facts_dir / "platform_facts.jsonl")
     )
     for record in records:
-        assert record["first_pass_review"]["second_person_review_required"] is True
+        review_required = record["first_pass_review"]["second_person_review_required"]
+        if record["review_status"] == "verified":
+            assert review_required is False
+            assert record["second_person_review"]["reviewer"]
+            assert record["second_person_review"]["notes"]
+        else:
+            assert review_required is True
         for path in record["first_pass_review"]["evidence_images"]:
             assert (ROOT / path).is_file()
+
+
+def test_only_the_seven_reviewed_recommendation_rules_are_released() -> None:
+    rules = read_jsonl(KNOWLEDGE / "normalized" / "facts" / "plan_rules.jsonl")
+    verified_ids = {
+        rule["rule_id"] for rule in rules if rule["review_status"] == "verified"
+    }
+    assert verified_ids == {
+        "rule-A-plate_211",
+        "rule-A-fat_loss_guidance",
+        "rule-B-food_substitutions",
+        "rule-B-muscle_targets",
+        "rule-B-muscle_timing",
+        "rule-B-gi_categories",
+        "rule-B-plate_321",
+    }
+    assert all(
+        not rule.get("unknown_glyph", False)
+        for rule in rules
+        if rule["rule_id"] in verified_ids
+    )
 
 
 def test_verified_record_requires_second_person_review() -> None:

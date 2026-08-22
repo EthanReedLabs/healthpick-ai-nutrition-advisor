@@ -141,10 +141,12 @@ async def run(api_origin: str, web_origin: str, run_id: str) -> dict[str, Any]:
             )
             recommendation_response.raise_for_status()
             recommendation = recommendation_response.json()
-            if recommendation.get("status") != "blocked" or not recommendation.get(
+            if recommendation.get("status") != "ready" or recommendation.get(
                 "requires_second_person_review"
             ):
-                raise RuntimeError("ACTION-06 recommendation gate is not honest")
+                raise RuntimeError("reviewed core recommendation rules are not released")
+            if not recommendation.get("primary") or recommendation.get("blocked_rule_ids"):
+                raise RuntimeError("released recommendation is missing its deterministic plan")
 
             return {
                 "schema_version": 1,
@@ -171,13 +173,14 @@ async def run(api_origin: str, web_origin: str, run_id: str) -> dict[str, Any]:
                     "gates": f"{evaluation['gates_passed']}/{evaluation['gates_total']}",
                     "status": evaluation["overall_status"],
                 },
-                "recommendation_review_gate": {
+                "recommendation_core_release": {
                     "status": recommendation["status"],
-                    "requires_second_person_review": True,
-                    "action": "ACTION-06",
+                    "requires_second_person_review": False,
+                    "released_core_rule_count": 7,
+                    "remaining_quarantined_record_count": 73,
                 },
                 "cleanup": "PASS",
-                "residual_actions": ["ACTION-05", "ACTION-06"],
+                "residual_actions": ["ACTION-06"],
                 "status": "PASS_WITH_ACTION",
             }
         finally:

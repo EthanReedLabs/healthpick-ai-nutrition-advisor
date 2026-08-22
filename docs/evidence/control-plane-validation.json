@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-22T17:13:21.917905+08:00",
+  "generated_at": "2026-08-22T17:52:54.470010+08:00",
   "structural_status": "PASS",
   "final_readiness": "NOT_READY",
   "current_phase": "PHASE-08",
@@ -11,8 +11,8 @@
       "in_progress": 1
     },
     "tasks": {
-      "passed": 36,
-      "pass_with_action": 18,
+      "passed": 38,
+      "pass_with_action": 16,
       "in_progress": 1
     },
     "actions": {
@@ -20,7 +20,7 @@
       "open": 1
     },
     "issues": {
-      "resolved": 74,
+      "resolved": 75,
       "open": 3
     },
     "final_gates": {
@@ -62,12 +62,8 @@
     "task:P03-08=pass_with_action",
     "record-review:P03-08=pending_final_review",
     "record-review:P04-01=pending_final_review",
-    "task:P04-02=pass_with_action",
-    "record-review:P04-02=pending_final_review",
     "record-review:P04-03=pending_final_review",
     "record-review:P04-04=pending_final_review",
-    "task:P04-05=pass_with_action",
-    "record-review:P04-05=pending_final_review",
     "record-review:P04-06=pending_final_review",
     "task:P04-07=pass_with_action",
     "record-review:P04-07=pending_final_review",

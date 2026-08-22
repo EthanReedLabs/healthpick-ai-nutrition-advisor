@@ -41,10 +41,10 @@ tasks:
   - {id: P03-08, phase: PHASE-03, title: Phase 03 退出验收, priority: GATE, required: true, owner: LEAD, status: pass_with_action, dependencies: [P03-07], record: control/records/P03-08.yaml, evidence: [docs/evidence/phase-03-baseline-record.md, docs/evidence/phase-03-api-pytest.xml, docs/evidence/phase-03-web-vitest.xml, docs/evidence/phase-03-browser-closed-loop.json, docs/evidence/action-02-03-real-model-runtime.json, docs/evidence/action-07-unknown-glyph-exclusion.json], residual_actions: [ACTION-06]}
 
   - {id: P04-01, phase: PHASE-04, title: 健康档案与约束模型, priority: P0, required: true, owner: API/WEB, status: passed, dependencies: [P03-08], record: control/records/P04-01.yaml, evidence: [docs/phases/phase-04-recommendation-safety.md, docs/evidence/phase-04-p04-01-runtime.json, docs/evidence/phase-04-p04-01-api-pytest.xml, docs/evidence/phase-04-p04-01-web-vitest.xml, docs/evidence/phase-04-p04-01-browser.md, output/playwright/phase-04-p04-01-profile-1440x1000.png], residual_actions: []}
-  - {id: P04-02, phase: PHASE-04, title: 确定性推荐候选与方案解释, priority: P0, required: true, owner: API/KNOWLEDGE, status: pass_with_action, dependencies: [P04-01, DATA-03], record: control/records/P04-02.yaml, evidence: [docs/evidence/phase-04-p04-02-design.md, docs/evidence/phase-04-p04-02-runtime.json, docs/evidence/phase-04-p04-02-api-pytest.xml, packages/shared/openapi/healthpick.openapi.json, output/playwright/phase-04-p04-02-review-gate-375x812.png], residual_actions: [ACTION-06]}
+  - {id: P04-02, phase: PHASE-04, title: 确定性推荐候选与方案解释, priority: P0, required: true, owner: API/KNOWLEDGE, status: passed, dependencies: [P04-01, DATA-03], record: control/records/P04-02.yaml, evidence: [docs/evidence/phase-04-p04-02-design.md, docs/evidence/phase-04-p04-02-runtime.json, docs/evidence/phase-04-p04-02-api-pytest.xml, docs/evidence/action-06-core-rule-review.json, packages/shared/openapi/healthpick.openapi.json, output/playwright/phase-04-p04-02-review-gate-375x812.png], residual_actions: []}
   - {id: P04-03, phase: PHASE-04, title: 禁忌硬过滤与风险分级, priority: P0, required: true, owner: API/KNOWLEDGE, status: passed, dependencies: [P04-01], record: control/records/P04-03.yaml, evidence: [docs/phases/phase-04-recommendation-safety.md, docs/evidence/phase-04-p04-03-runtime.json, docs/evidence/phase-04-p04-03-api-pytest.xml, docs/evidence/phase-04-safety-authorities.md, docs/evidence/current-pytest.xml], residual_actions: []}
   - {id: P04-04, phase: PHASE-04, title: 输出校验拒答与免责声明, priority: P0, required: true, owner: API, status: passed, dependencies: [P04-02, P04-03], record: control/records/P04-04.yaml, evidence: [docs/evidence/phase-04-p04-04-design.md, docs/evidence/phase-04-p04-04-runtime.json, docs/evidence/phase-04-p04-04-api-pytest.xml, docs/evidence/current-pytest.xml], residual_actions: []}
-  - {id: P04-05, phase: PHASE-04, title: 方案卡片与安全提示 UI, priority: P0, required: true, owner: WEB, status: pass_with_action, dependencies: [P04-01, P03-06], record: control/records/P04-05.yaml, evidence: [docs/phases/phase-04-recommendation-safety.md, docs/evidence/phase-04-p04-05-runtime.json, docs/evidence/phase-04-p04-05-browser.md, docs/evidence/phase-04-p04-05-web-vitest.xml, output/playwright/phase-04-p04-05-s3-1440x1000.png, output/playwright/phase-04-p04-05-s0-768x1024.png, output/playwright/phase-04-p04-05-s1-375x812.png, output/playwright/phase-04-p04-02-review-gate-375x812.png], residual_actions: [ACTION-06]}
+  - {id: P04-05, phase: PHASE-04, title: 方案卡片与安全提示 UI, priority: P0, required: true, owner: WEB, status: passed, dependencies: [P04-01, P03-06], record: control/records/P04-05.yaml, evidence: [docs/phases/phase-04-recommendation-safety.md, docs/evidence/phase-04-p04-05-runtime.json, docs/evidence/phase-04-p04-05-browser.md, docs/evidence/phase-04-p04-05-web-vitest.xml, docs/evidence/action-06-core-rule-review.json, output/playwright/phase-04-p04-05-s3-1440x1000.png, output/playwright/phase-04-p04-05-s0-768x1024.png, output/playwright/phase-04-p04-05-s1-375x812.png, output/playwright/phase-04-p04-02-review-gate-375x812.png, output/playwright/phase-04-p04-02-reviewed-plan-1440x1000.png], residual_actions: []}
   - {id: P04-06, phase: PHASE-04, title: 推荐安全黄金集与 API 测试, priority: GATE, required: true, owner: QA_DOCS, status: passed, dependencies: [P04-04, P04-05], record: control/records/P04-06.yaml, evidence: [docs/evidence/phase-04-p04-06-quality.md, docs/evidence/phase-04-p04-06-golden.json, docs/evidence/phase-04-p04-06-api-pytest.xml, docs/evidence/current-pytest.xml, docs/evidence/local-real-stack-runtime.json], residual_actions: []}
   - {id: P04-07, phase: PHASE-04, title: Phase 04 退出验收, priority: GATE, required: true, owner: LEAD, status: pass_with_action, dependencies: [P04-06], record: control/records/P04-07.yaml, evidence: [docs/evidence/phase-04-baseline-record.md, docs/evidence/phase-04-p04-06-golden.json, docs/evidence/phase-04-p04-06-api-pytest.xml, docs/evidence/current-pytest.xml, docs/evidence/current-web-vitest.xml, docs/evidence/local-real-stack-runtime.json, docs/evidence/control-plane-validation.json], residual_actions: [ACTION-06]}
 
@@ -82,7 +82,7 @@ actions:
   - {id: ACTION-03, title: Embedding model/dimensions/中文 smoke, owner: API/LEAD, deadline: T+6, status: closed, blocks: [DATA-05, DATA-06, P03-03], evidence: [docs/evidence/action-02-03-real-model-runtime.json, docs/evidence/action-01-database-runtime.json]}
   - {id: ACTION-04, title: 建立远端 Git 仓库及最小权限, owner: DEVOPS/LEAD, deadline: T+12, status: closed, blocks: [P08-02, P08-05], evidence: [docs/evidence/action-04-git-remote-runtime.json]}
   - {id: ACTION-05, title: ECS 短期公网可用性与停机责任确认, owner: DEVOPS/LEAD, deadline: Phase-08 最终验收前, status: closed, blocks: [P08-06], evidence: [docs/evidence/phase-08-p08-02-ecs-production.json, docs/evidence/phase-08-p08-02-ecs-public-browser.json, docs/evidence/phase-08-p08-06-availability.json]}
-  - {id: ACTION-06, title: 80 条结构化事实第二人逐条复核, owner: KNOWLEDGE/LEAD, deadline: T+12, status: open, blocks: [DATA-03, DATA-04, DATA-06, P04-02, P04-05, P04-07], evidence: []}
+  - {id: ACTION-06, title: 80 条结构化事实第二人逐条复核（核心7条已放行，剩余73条隔离）, owner: KNOWLEDGE/LEAD, deadline: T+12, status: open, blocks: [DATA-03, DATA-04, DATA-06, P04-07], evidence: [docs/evidence/action-06-core-rule-review.json, docs/evidence/action-06-core-rule-review.md]}
   - {id: ACTION-07, title: 取得缺字符号修正版来源或维持排除, owner: LEAD, deadline: T+18, status: closed, blocks: [DATA-03, P04-02], evidence: [docs/evidence/action-07-unknown-glyph-exclusion.json]}
   - {id: ACTION-08, title: 增加用户主动停止生成与中断不落库验收, owner: WEB/QA_DOCS, deadline: P07-05, status: closed, blocks: [P07-05, P08-04, P08-07], evidence: [docs/evidence/phase-07-p07-05-quality.md, docs/evidence/phase-07-p07-05-cancellation.json, docs/evidence/phase-07-p07-05-browser.md]}
 
@@ -1011,6 +1011,18 @@ issues:
     resolution: 在Caddy全局配置中设置default_sni为PUBLIC_HOST；Windows curl、Python和Chromium均通过受信HTTPS。
     evidence: [infra/caddy/Caddyfile, tests/test_production_deployment.py, docs/evidence/phase-08-p08-02-ecs-public-browser.json]
     action_ids: []
+  - id: ISSUE-078
+    discovered_at: "2026-08-22T17:44:39+08:00"
+    phase: PHASE-04
+    task_ids: [P04-02, DATA-03]
+    severity: medium
+    status: resolved
+    blocks_final: false
+    symptom: 首版核心规则验证把规则所在整页的其他缺字符号也算作本规则缺字，导致5条逐字段核对无误的核心规则被误报。
+    cause: 页面级OCR质量标志与规则级结构化字段风险混用；同页其他段落的缺字不代表已复核规则字段含缺字。
+    resolution: 放行门改为校验规则级unknown_glyph、完整授权复核记录和精确7条白名单；含未知符号的具体规则继续隔离。
+    evidence: [scripts/validate_knowledge.py, docs/evidence/action-06-core-rule-review.json, docs/evidence/phase-02-knowledge-validation.json]
+    action_ids: [ACTION-06, ACTION-07]
 final_gates:
   - {id: FINAL-01, title: 注册范围内全部任务关闭且无 PASS WITH ACTION, status: not_started, required_task_ids: [P08-07], evidence: []}
   - {id: FINAL-02, title: 全部任务完成记录已复核接受, status: not_started, required_task_ids: [P08-07], evidence: []}

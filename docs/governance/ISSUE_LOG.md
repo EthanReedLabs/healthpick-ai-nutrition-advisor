@@ -848,3 +848,14 @@
 - 解决/缓解：在Caddy全局配置中设置default_sni为PUBLIC_HOST；Windows curl、Python和Chromium均通过受信HTTPS。
 - 行动：无
 - 证据：infra/caddy/Caddyfile, tests/test_production_deployment.py, docs/evidence/phase-08-p08-02-ecs-public-browser.json
+
+## ISSUE-078 · RESOLVED
+
+- 发现时间：2026-08-22T17:44:39+08:00
+- 阶段/任务：PHASE-04 / P04-02, DATA-03
+- 严重度：medium；阻断最终验收：False
+- 现象：首版核心规则验证把规则所在整页的其他缺字符号也算作本规则缺字，导致5条逐字段核对无误的核心规则被误报。
+- 原因：页面级OCR质量标志与规则级结构化字段风险混用；同页其他段落的缺字不代表已复核规则字段含缺字。
+- 解决/缓解：放行门改为校验规则级unknown_glyph、完整授权复核记录和精确7条白名单；含未知符号的具体规则继续隔离。
+- 行动：ACTION-06, ACTION-07
+- 证据：scripts/validate_knowledge.py, docs/evidence/action-06-core-rule-review.json, docs/evidence/phase-02-knowledge-validation.json

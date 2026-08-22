@@ -5,7 +5,7 @@
 - 结构校验：`PASS`
 - 最终验收就绪度：`NOT_READY`
 - 当前阶段：`PHASE-08`
-- 最近审计：`2026-08-22T17:13:21.917905+08:00`
+- 最近审计：`2026-08-22T17:52:54.470010+08:00`
 
 ## 阶段
 
@@ -53,10 +53,10 @@
 | PHASE-03 | P03-07 | 浏览器动态问答最薄闭环 | WEB/API/QA_DOCS | `pass_with_action` | control/records/P03-07.yaml |
 | PHASE-03 | P03-08 | Phase 03 退出验收 | LEAD | `pass_with_action` | control/records/P03-08.yaml |
 | PHASE-04 | P04-01 | 健康档案与约束模型 | API/WEB | `passed` | control/records/P04-01.yaml |
-| PHASE-04 | P04-02 | 确定性推荐候选与方案解释 | API/KNOWLEDGE | `pass_with_action` | control/records/P04-02.yaml |
+| PHASE-04 | P04-02 | 确定性推荐候选与方案解释 | API/KNOWLEDGE | `passed` | control/records/P04-02.yaml |
 | PHASE-04 | P04-03 | 禁忌硬过滤与风险分级 | API/KNOWLEDGE | `passed` | control/records/P04-03.yaml |
 | PHASE-04 | P04-04 | 输出校验拒答与免责声明 | API | `passed` | control/records/P04-04.yaml |
-| PHASE-04 | P04-05 | 方案卡片与安全提示 UI | WEB | `pass_with_action` | control/records/P04-05.yaml |
+| PHASE-04 | P04-05 | 方案卡片与安全提示 UI | WEB | `passed` | control/records/P04-05.yaml |
 | PHASE-04 | P04-06 | 推荐安全黄金集与 API 测试 | QA_DOCS | `passed` | control/records/P04-06.yaml |
 | PHASE-04 | P04-07 | Phase 04 退出验收 | LEAD | `pass_with_action` | control/records/P04-07.yaml |
 | PHASE-05 | P05-01 | 多轮记忆与会话持久化 CRUD | API/WEB | `passed` | control/records/P05-01.yaml |
@@ -88,7 +88,7 @@
 
 | ID | 行动 | Owner | 截止 | 阻断 |
 |---|---|---|---|---|
-| ACTION-06 | 80 条结构化事实第二人逐条复核 | KNOWLEDGE/LEAD | T+12 | DATA-03, DATA-04, DATA-06, P04-02, P04-05, P04-07 |
+| ACTION-06 | 80 条结构化事实第二人逐条复核（核心7条已放行，剩余73条隔离） | KNOWLEDGE/LEAD | T+12 | DATA-03, DATA-04, DATA-06, P04-07 |
 
 ## 未关闭问题
 
@@ -101,12 +101,12 @@
 ## 任务状态计数
 
 - in_progress: 1
-- pass_with_action: 18
-- passed: 36
+- pass_with_action: 16
+- passed: 38
 
 ## 最终验收
 
-当前共有 `66` 个机器判定阻断项。完整清单见 `docs/evidence/control-plane-validation.md`。
+当前共有 `62` 个机器判定阻断项。完整清单见 `docs/evidence/control-plane-validation.md`。
 
 | Gate | 验收项 | 状态 |
 |---|---|---|
