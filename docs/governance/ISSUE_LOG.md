@@ -859,3 +859,25 @@
 - 解决/缓解：放行门改为校验规则级unknown_glyph、完整授权复核记录和精确7条白名单；含未知符号的具体规则继续隔离。
 - 行动：ACTION-06, ACTION-07
 - 证据：scripts/validate_knowledge.py, docs/evidence/action-06-core-rule-review.json, docs/evidence/phase-02-knowledge-validation.json
+
+## ISSUE-079 · RESOLVED
+
+- 发现时间：2026-08-22T19:35:54+08:00
+- 阶段/任务：PHASE-08 / DATA-06, P08-07
+- 严重度：low；阻断最终验收：False
+- 现象：ACTION-06 关闭后缺字隔离审计仍只接受旧状态 review_required，导致实际隔离正确但报告为 FAIL。
+- 原因：审计状态断言没有随最终处置模型从待复核更新为驳回。
+- 解决/缓解：门禁改为精确校验 6 条模糊规则全部为 rejected；8 个 Chunk 未加载、6 条规则驳回和专项回归全部 PASS。
+- 行动：无
+- 证据：scripts/audit_unknown_glyph_exclusion.py, docs/evidence/action-07-unknown-glyph-exclusion.json, tests/test_knowledge_artifacts.py
+
+## ISSUE-080 · RESOLVED
+
+- 发现时间：2026-08-22T19:44:40+08:00
+- 阶段/任务：PHASE-08 / P08-02, P08-07
+- 严重度：low；阻断最终验收：False
+- 现象：rc7 首次切换前复制运行描述文件时按发布根目录寻找 Caddyfile，文件不存在而安全停止。
+- 原因：Caddyfile 实际位于 infra/caddy/Caddyfile，部署命令使用了错误相对路径。
+- 解决/缓解：切换前只读确认目录结构，按真实嵌套路径复制并校验恰好 3 个描述文件、源码文件为 0；rc7 和最终 rc8 均无构建健康切换。
+- 行动：无
+- 证据：docs/deployment/ecs-production.md, docs/evidence/phase-08-rc8-final-deployment.json
