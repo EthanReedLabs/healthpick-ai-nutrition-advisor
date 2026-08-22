@@ -1,36 +1,48 @@
 {
   "schema_version": 1,
   "evidence_id": "PHASE-08-P08-05-RELEASE-CANDIDATE",
-  "captured_at": "2026-08-22T17:02:00+08:00",
+  "captured_at": "2026-08-22T20:33:00+08:00",
   "status": "PASS",
   "release": {
-    "commit": "b8cd3f1ee243cbf5a83ba8019b44cb40f4152184",
-    "tag": "v0.1.0-rc5",
-    "annotated_tag_object": "f00b7fa72305320aa9101677ea0eb11cb0766be1",
-    "tree": "d4633fabcff5bd42037a45fee0aeb0d056e3c9df",
-    "application_image_tag": "v0.1.0-rc5"
+    "commit": "6e56b96f7d5ac4ffd306cdcedabfac7366034f44",
+    "tag": "v0.1.0-rc8",
+    "annotated_tag_object": "ee2c6c5fee5e4ed4ad78af4977e04295ed4e4ffa",
+    "tree": "cc45e0163bdb489cec1476efe084fc805d8cf9ae",
+    "application_image_tag": "v0.1.0-rc8",
+    "evidence_branch_commit": "bb67e9c7cb2535a65546e824638c43f29c1a5d78"
   },
-  "anonymous_clone": {
-    "location": "../healthpick-rc5-anonymous",
-    "head": "b8cd3f1ee243cbf5a83ba8019b44cb40f4152184",
-    "tag_commit": "b8cd3f1ee243cbf5a83ba8019b44cb40f4152184",
-    "tree": "d4633fabcff5bd42037a45fee0aeb0d056e3c9df",
-    "tracked_worktree_clean": true,
-    "dependency_install": "npm ci: PASS, 0 vulnerabilities"
+  "remote": {
+    "url": "https://github.com/EthanReedLabs/healthpick-ai-nutrition-advisor.git",
+    "main_commit_after_push": "bb67e9c7cb2535a65546e824638c43f29c1a5d78",
+    "tag_object": "ee2c6c5fee5e4ed4ad78af4977e04295ed4e4ffa",
+    "tag_peeled_commit": "6e56b96f7d5ac4ffd306cdcedabfac7366034f44",
+    "visibility": "private",
+    "anonymous_probe": "AUTHENTICATION_REQUIRED",
+    "visibility_change_performed": false
+  },
+  "remote_clean_clone": {
+    "location": "../healthpick-rc8-clean-20260822-2028",
+    "access": "existing authorized GitHub credentials",
+    "head": "6e56b96f7d5ac4ffd306cdcedabfac7366034f44",
+    "tag_commit": "6e56b96f7d5ac4ffd306cdcedabfac7366034f44",
+    "tree": "cc45e0163bdb489cec1476efe084fc805d8cf9ae",
+    "tracked_worktree_clean_at_checkout": true,
+    "dependency_install": "uv sync --frozen: PASS; apps/web npm ci: PASS, 0 vulnerabilities",
+    "post_validation_tracked_changes": "timestamped generated evidence and governance reports only; no source, configuration, lockfile, or migration changes"
   },
   "verification": {
-    "python_tests": {"passed": 260, "status": "PASS"},
+    "python_tests": {"passed": 261, "status": "PASS"},
     "web_tests": {"passed": 30, "status": "PASS"},
     "ruff": "PASS",
     "eslint": "PASS",
     "typescript": "PASS",
     "production_build": "PASS",
     "release_document_checks": {"passed": 7, "errors": 0, "status": "PASS"},
-    "repository_secret_scan": {"scanned_files": 504, "findings": 0, "status": "PASS"},
+    "repository_secret_scan": {"scanned_files": 520, "findings": 0, "status": "PASS"},
     "control_plane": {"structural_status": "PASS", "errors": 0}
   },
   "ecs_release_descriptor": {
-    "current_target": "/opt/healthpick/releases/b8cd3f1ee243cbf5a83ba8019b44cb40f4152184",
+    "current_target": "/opt/healthpick/releases/6e56b96f7d5ac4ffd306cdcedabfac7366034f44",
     "files": ["compose.yaml", "compose.production.yaml", "infra/caddy/Caddyfile"],
     "application_source_files": 0,
     "compose_config": "PASS",
@@ -38,7 +50,9 @@
     "containers_healthy": true,
     "public_root_status": 200,
     "public_health_status": 200,
-    "llm_mode": "real"
+    "llm_mode": "real",
+    "llm_model": "qwen3.7-plus",
+    "image_archive_sha256": "5FBBF5BC1F89F1F0785C3D21C59ABA21D951F2D5D81351D4385A8498F59B3D51"
   },
   "secrets_recorded": false,
   "residual_actions": []

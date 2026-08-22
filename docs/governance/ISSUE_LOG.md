@@ -881,3 +881,14 @@
 - 解决/缓解：切换前只读确认目录结构，按真实嵌套路径复制并校验恰好 3 个描述文件、源码文件为 0；rc7 和最终 rc8 均无构建健康切换。
 - 行动：无
 - 证据：docs/deployment/ecs-production.md, docs/evidence/phase-08-rc8-final-deployment.json
+
+## ISSUE-081 · RESOLVED
+
+- 发现时间：2026-08-22T20:32:00+08:00
+- 阶段/任务：PHASE-08 / P08-05, P08-07
+- 严重度：low；阻断最终验收：False
+- 现象：禁用Git凭据助手后匿名查询远端RC8标签要求认证，不能把私有仓库复验写成匿名克隆。
+- 原因：GitHub origin保持私有可见性，匿名访问不在当前授权范围。
+- 解决/缓解：不擅自公开源码；改用现有授权凭据从远端RC8标签创建全新浅克隆，提交、tag、tree、锁定安装和全部质量门一致通过；提交时如需评委读源码须授予访问权或上传归档。
+- 行动：无
+- 证据：docs/evidence/phase-08-p08-05-release-candidate.json, docs/evidence/phase-08-p08-05-quality.md

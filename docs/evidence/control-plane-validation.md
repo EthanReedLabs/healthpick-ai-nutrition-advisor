@@ -3,14 +3,14 @@
 - Structural status: `PASS`
 - Final readiness: `NOT_READY`
 - Current phase: `PHASE-08`
-- Generated: `2026-08-22T20:26:22.410994+08:00`
+- Generated: `2026-08-22T20:35:13.820931+08:00`
 
 ## Counts
 
 - phases: {"in_progress": 1, "passed": 7}
 - tasks: {"in_progress": 1, "passed": 54}
 - actions: {"closed": 8}
-- issues: {"open": 3, "resolved": 77}
+- issues: {"open": 3, "resolved": 78}
 - final_gates: {"not_started": 10}
 
 ## Structural errors

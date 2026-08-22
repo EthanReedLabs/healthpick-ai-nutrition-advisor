@@ -27,7 +27,7 @@ Phase 08 的实现、部署、文档和演示资产完成后执行。它不是�
 | FINAL-05 | 工程质量与隐私 | lint/typecheck/unit/API/RAG/E2E/安全/Secret 报告 | 未处理失败、真实密钥、跨用户越权 |
 | FINAL-06 | 双部署可复现 | 公网 HTTPS probe；干净环境 Compose 录屏/日志 | URL 不可用或 15 分钟无法复现 |
 | FINAL-07 | 文档和演示完整 | README、架构、测试、AI 披露、视频、截图 | 字数/内容不足或演示不是实际系统 |
-| FINAL-08 | Release 一致性 | commit、tag、构建 hash、匿名克隆日志 | 证据不是同一 release scope |
+| FINAL-08 | Release 一致性 | commit、tag、构建 hash、远端干净克隆日志（公开仓库匿名、私有仓库只读授权） | 证据不是同一 release scope |
 | FINAL-09 | 七天可用性 | 到期时间、Owner、监测与故障预案 | 无责任人、资源将在要求前失效 |
 | FINAL-10 | 最终签署 | Project Lead 签字、时间、无开放阻断 | 任一前置 Gate 未通过 |
 
@@ -65,4 +65,3 @@ Notes:
 ```
 
 最终结果只能是 `ACCEPTED` 或 `REJECTED`。若证据不足，控制面保持 `NOT_READY`，等价于不能验收，不使用“有条件接受”绕过未完成任务。
-

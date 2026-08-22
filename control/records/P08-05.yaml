@@ -3,19 +3,20 @@ task_id: P08-05
 phase_id: PHASE-08
 outcome: passed
 started_at: "2026-08-22T16:51:30+08:00"
-completed_at: "2026-08-22T17:02:00+08:00"
+completed_at: "2026-08-22T20:33:00+08:00"
 recorded_at: "2026-08-22"
 backfilled: false
 owner: DEVOPS/LEAD
-summary: rc5发布提交和annotated tag已冻结；匿名克隆提交与tree一致且全质量门通过，ECS current已映射到同一提交的纯运行描述目录。
+summary: rc8应用提交和annotated tag已推送；私有远端授权干净克隆的提交与tree一致且全质量门通过，ECS current映射到同一提交的纯镜像运行目录。
 deliverables:
   - docs/evidence/phase-08-p08-05-quality.md
   - docs/evidence/phase-08-p08-05-release-candidate.json
+  - docs/evidence/phase-08-rc8-final-deployment.json
 acceptance_checks:
   - name: Release提交标签和tree可解析且一致
     result: pass
     evidence: [docs/evidence/phase-08-p08-05-release-candidate.json]
-  - name: 匿名克隆HEAD与tag commit一致且跟踪区干净
+  - name: 私有远端授权干净克隆HEAD与tag commit一致且检出时跟踪区干净
     result: pass
     evidence: [docs/evidence/phase-08-p08-05-release-candidate.json]
   - name: 匿名克隆全量测试静态检查构建文档密钥和控制面门通过
@@ -24,6 +25,6 @@ acceptance_checks:
   - name: ECS current目录仅含运行描述且强制no-build启动健康
     result: pass
     evidence: [docs/evidence/phase-08-p08-05-release-candidate.json, docs/evidence/phase-08-p08-02-ecs-production.json]
-issues: [ISSUE-071, ISSUE-072, ISSUE-073]
+issues: [ISSUE-071, ISSUE-072, ISSUE-073, ISSUE-081]
 residual_actions: []
-review: {status: accepted, reviewer: Project Lead, reviewed_at: "2026-08-22T17:02:00+08:00", notes: rc5候选提交标签tree匿名克隆和ECS运行描述映射全部一致}
+review: {status: accepted, reviewer: Project Lead, reviewed_at: "2026-08-22T20:33:00+08:00", notes: 用户授权推进最终验收；rc8远端tag、授权干净克隆、全质量门和ECS纯镜像映射均已接受}

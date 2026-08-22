@@ -72,7 +72,7 @@ tasks:
   - {id: P08-02, phase: PHASE-08, title: 公网部署与 Compose 干净环境复现, priority: P0, required: true, owner: DEVOPS, status: passed, dependencies: [P05-04, P08-01], record: control/records/P08-02.yaml, evidence: [docs/evidence/phase-08-p08-02-quality.md, docs/evidence/phase-08-p08-02-compose.json, docs/evidence/phase-08-p08-02-container-security.json, docs/evidence/phase-08-p08-02-ecs-production.json, docs/evidence/phase-08-p08-02-ecs-public-browser.json, docs/evidence/phase-08-rc6-core-recommendation-deployment.json, output/playwright/phase-08-rc6-public-reviewed-plan-1440x1000.png], residual_actions: []}
   - {id: P08-03, phase: PHASE-08, title: 文档 AI 披露许可证与隐私冻结, priority: P0, required: true, owner: QA_DOCS/LEAD, status: passed, dependencies: [P08-01], record: control/records/P08-03.yaml, evidence: [docs/evidence/phase-08-p08-03-quality.md, docs/evidence/phase-08-p08-03-doc-validation.json, README.md, docs/AI_USAGE.md, LICENSE, PRIVACY.md, SECURITY.md, THIRD_PARTY_NOTICES.md, docs/release-data-map.json], residual_actions: []}
   - {id: P08-04, phase: PHASE-08, title: 演示资产与双次连续演练, priority: GATE, required: true, owner: LEAD/QA_DOCS, status: passed, dependencies: [P08-02, P08-03], record: control/records/P08-04.yaml, evidence: [docs/evidence/phase-08-p08-04-quality.md, docs/evidence/phase-08-p08-04-rehearsal-01.json, docs/evidence/phase-08-p08-04-rehearsal-02.json, docs/evidence/phase-08-rc8-final-rehearsal.json, docs/evidence/phase-08-rc8-final-demo.json, docs/demo/DEMO_SCRIPT_6MIN.md, docs/demo/DEMO_RUNBOOK.md, docs/demo/JUDGE_QA.md, docs/demo/ASSET_INDEX.md, docs/demo/assets/healthpick-rc8-final-s3.png, output/playwright/final-rc8/healthpick-rc8-final-demo-6min.mp4, output/playwright/final-rc8/healthpick-rc8-final-demo.webm, docs/evidence/action-06-full-structured-fact-review.json], residual_actions: []}
-  - {id: P08-05, phase: PHASE-08, title: Release tag 匿名克隆与提交候选冻结, priority: GATE, required: true, owner: DEVOPS/LEAD, status: passed, dependencies: [P08-02, P08-03, P08-04], record: control/records/P08-05.yaml, evidence: [docs/evidence/phase-08-p08-05-quality.md, docs/evidence/phase-08-p08-05-release-candidate.json], residual_actions: []}
+  - {id: P08-05, phase: PHASE-08, title: Release tag 远端干净克隆与提交候选冻结, priority: GATE, required: true, owner: DEVOPS/LEAD, status: passed, dependencies: [P08-02, P08-03, P08-04], record: control/records/P08-05.yaml, evidence: [docs/evidence/phase-08-p08-05-quality.md, docs/evidence/phase-08-p08-05-release-candidate.json, docs/evidence/phase-08-rc8-final-deployment.json], residual_actions: []}
   - {id: P08-06, phase: PHASE-08, title: 短期公网可用性与停机责任确认, priority: P0, required: true, owner: DEVOPS/LEAD, status: passed, dependencies: [P08-05], record: control/records/P08-06.yaml, evidence: [docs/evidence/phase-08-p08-06-quality.md, docs/evidence/phase-08-p08-06-availability.json], residual_actions: []}
   - {id: P08-07, phase: PHASE-08, title: 执行最终总纲验收并签署, priority: GATE, required: true, owner: LEAD, status: in_progress, dependencies: [P08-05, P08-06], record: null, evidence: [], residual_actions: []}
 
@@ -1047,6 +1047,18 @@ issues:
     resolution: 切换前只读确认目录结构，按真实嵌套路径复制并校验恰好 3 个描述文件、源码文件为 0；rc7 和最终 rc8 均无构建健康切换。
     evidence: [docs/deployment/ecs-production.md, docs/evidence/phase-08-rc8-final-deployment.json]
     action_ids: []
+  - id: ISSUE-081
+    discovered_at: "2026-08-22T20:32:00+08:00"
+    phase: PHASE-08
+    task_ids: [P08-05, P08-07]
+    severity: low
+    status: resolved
+    blocks_final: false
+    symptom: 禁用Git凭据助手后匿名查询远端RC8标签要求认证，不能把私有仓库复验写成匿名克隆。
+    cause: GitHub origin保持私有可见性，匿名访问不在当前授权范围。
+    resolution: 不擅自公开源码；改用现有授权凭据从远端RC8标签创建全新浅克隆，提交、tag、tree、锁定安装和全部质量门一致通过；提交时如需评委读源码须授予访问权或上传归档。
+    evidence: [docs/evidence/phase-08-p08-05-release-candidate.json, docs/evidence/phase-08-p08-05-quality.md]
+    action_ids: []
 final_gates:
   - {id: FINAL-01, title: 注册范围内全部任务关闭且无 PASS WITH ACTION, status: not_started, required_task_ids: [P08-07], evidence: []}
   - {id: FINAL-02, title: 全部任务完成记录已复核接受, status: not_started, required_task_ids: [P08-07], evidence: []}
@@ -1055,7 +1067,7 @@ final_gates:
   - {id: FINAL-05, title: 自动测试回归性能安全和隐私全绿, status: not_started, required_task_ids: [P07-02, P08-01], evidence: []}
   - {id: FINAL-06, title: 公网 HTTPS 与 Compose 干净环境复现通过, status: not_started, required_task_ids: [P08-02], evidence: []}
   - {id: FINAL-07, title: 文档 AI 披露演示和提交资产齐全, status: not_started, required_task_ids: [P08-03, P08-04], evidence: []}
-  - {id: FINAL-08, title: Release commit/tag/hash/匿名克隆一致, status: not_started, required_task_ids: [P08-05], evidence: []}
+  - {id: FINAL-08, title: Release commit/tag/hash/远端干净克隆一致, status: not_started, required_task_ids: [P08-05], evidence: []}
   - {id: FINAL-09, title: 短期公网可用性与赛后停机责任已确认, status: not_started, required_task_ids: [P08-06], evidence: []}
   - {id: FINAL-10, title: Project Lead 最终签署且不存在开放阻断, status: not_started, required_task_ids: [P08-07], evidence: []}
 

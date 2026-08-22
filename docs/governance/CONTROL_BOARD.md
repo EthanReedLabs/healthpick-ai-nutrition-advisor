@@ -5,7 +5,7 @@
 - 结构校验：`PASS`
 - 最终验收就绪度：`NOT_READY`
 - 当前阶段：`PHASE-08`
-- 最近审计：`2026-08-22T20:26:22.410994+08:00`
+- 最近审计：`2026-08-22T20:35:13.820931+08:00`
 
 ## 阶段
 
@@ -80,7 +80,7 @@
 | PHASE-08 | P08-02 | 公网部署与 Compose 干净环境复现 | DEVOPS | `passed` | control/records/P08-02.yaml |
 | PHASE-08 | P08-03 | 文档 AI 披露许可证与隐私冻结 | QA_DOCS/LEAD | `passed` | control/records/P08-03.yaml |
 | PHASE-08 | P08-04 | 演示资产与双次连续演练 | LEAD/QA_DOCS | `passed` | control/records/P08-04.yaml |
-| PHASE-08 | P08-05 | Release tag 匿名克隆与提交候选冻结 | DEVOPS/LEAD | `passed` | control/records/P08-05.yaml |
+| PHASE-08 | P08-05 | Release tag 远端干净克隆与提交候选冻结 | DEVOPS/LEAD | `passed` | control/records/P08-05.yaml |
 | PHASE-08 | P08-06 | 短期公网可用性与停机责任确认 | DEVOPS/LEAD | `passed` | control/records/P08-06.yaml |
 | PHASE-08 | P08-07 | 执行最终总纲验收并签署 | LEAD | `in_progress` | — |
 
@@ -116,6 +116,6 @@
 | FINAL-05 | 自动测试回归性能安全和隐私全绿 | `not_started` |
 | FINAL-06 | 公网 HTTPS 与 Compose 干净环境复现通过 | `not_started` |
 | FINAL-07 | 文档 AI 披露演示和提交资产齐全 | `not_started` |
-| FINAL-08 | Release commit/tag/hash/匿名克隆一致 | `not_started` |
+| FINAL-08 | Release commit/tag/hash/远端干净克隆一致 | `not_started` |
 | FINAL-09 | 短期公网可用性与赛后停机责任已确认 | `not_started` |
 | FINAL-10 | Project Lead 最终签署且不存在开放阻断 | `not_started` |
