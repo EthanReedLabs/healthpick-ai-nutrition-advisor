@@ -1,0 +1,51 @@
+schema_version: 1
+task_id: RC10-07
+phase_id: PHASE-09
+outcome: passed
+started_at: "2026-08-23T01:32:00+08:00"
+completed_at: "2026-08-23T01:56:43+08:00"
+recorded_at: "2026-08-23T01:56:43+08:00"
+backfilled: false
+owner: LEAD/DEPLOY/QA
+summary: 代码两次非amend提交并推送；同标签API/Web镜像以镜像归档方式部署；公网总纲验收通过，数据库与Caddy不变，测试数据已清理。
+deliverables:
+  - docs/evidence/phase-09-rc10-07-public-acceptance.json
+  - docs/evidence/phase-09-rc10-07-public-acceptance.md
+  - output/deployment/healthpick-rc10-rubric-closure-20260823.tar
+acceptance_checks:
+  - name: 本地HEAD与远端main一致
+    result: pass
+    evidence: [docs/evidence/phase-09-rc10-07-public-acceptance.json]
+  - name: 服务器仅接收镜像且只替换API和Web
+    result: pass
+    evidence: [docs/evidence/phase-09-rc10-07-public-acceptance.json]
+  - name: PostgreSQL与Caddy镜像启动时间和重启次数不变
+    result: pass
+    evidence: [docs/evidence/phase-09-rc10-07-public-acceptance.json]
+  - name: 三类诉求推荐引用真实模型和医疗安全通过
+    result: pass
+    evidence: [docs/evidence/phase-09-rc10-07-public-acceptance.json]
+  - name: 输入边界系统异常多轮账号历史和控制台通过
+    result: pass
+    evidence: [docs/evidence/phase-09-rc10-07-public-acceptance.json]
+issues:
+  - id: RC10-ISSUE-07
+    status: resolved
+    problem: 公网首次验收发现血糖偏高自然表达未触发赛题指定疾病免责声明。
+    cause: 路由与检索同义词未同步到安全词表，专业级旧文案也不是赛题指定原句。
+    solution: 增加三种血糖偏高安全表达，统一专业级强制文案，补测试并以b422d7e重建部署。
+    evidence: [docs/evidence/phase-09-rc10-07-public-acceptance.json]
+  - id: RC10-ISSUE-08
+    status: resolved
+    problem: 特殊符号与无关问题的首个验收脚本把SSE误按普通JSON解析。
+    cause: 该接口成功响应固定为text/event-stream。
+    solution: 改为解析最后一个final事件后复验，两种输入均得到out_of_scope友好回答且无引用。
+    evidence: [docs/evidence/phase-09-rc10-07-public-acceptance.json]
+residual_actions:
+  - 参赛者实际提交表单后记录真实提交时间，并按其后至少七天重新计算最终停机时间。
+  - 提交前确认评委对代码仓库和文档链接具有访问权限。
+review:
+  status: passed
+  reviewer: Project Lead
+  reviewed_at: "2026-08-23T01:56:43+08:00"
+  notes: 技术阻断为零；自定义域名是未提供可用域名条件下的可选加分项，不影响当前IP HTTPS交付。

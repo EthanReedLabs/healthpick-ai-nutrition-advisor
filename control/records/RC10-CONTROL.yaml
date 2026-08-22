@@ -3,7 +3,7 @@ control_id: RC10-RUBRIC-CLOSURE
 parent_control: control/project-control.yaml
 phase_id: PHASE-09
 title: 补充赛题说明收口
-status: in_progress
+status: passed
 started_at: "2026-08-23T00:49:04+08:00"
 plan: docs/phases/phase-09-rubric-closure.md
 intent_contract: control/records/RC9-POLISH.intent.json
@@ -14,7 +14,7 @@ tasks:
   - {id: RC10-04, status: passed, record: control/records/RC10-04.yaml, evidence: [docs/evidence/phase-09-rc10-04-exact-age.json]}
   - {id: RC10-05, status: passed, record: control/records/RC10-05.yaml, evidence: [docs/evidence/phase-09-rc10-05-doc-validation.json, docs/evidence/phase-09-rc10-05-availability.json]}
   - {id: RC10-06, status: passed, record: control/records/RC10-06.yaml, evidence: [docs/evidence/phase-09-rc10-06-local-gates.json]}
-  - {id: RC10-07, status: in_progress, record: control/records/RC10-07.yaml, evidence: []}
+  - {id: RC10-07, status: passed, record: control/records/RC10-07.yaml, evidence: [docs/evidence/phase-09-rc10-07-public-acceptance.json, docs/evidence/phase-09-rc10-07-public-acceptance.md]}
 issues:
   - id: RC10-ISSUE-01
     task_id: RC10-02
@@ -64,8 +64,27 @@ issues:
     cause: 历史文件与当前安装的Ruff格式版本存在机械差异；冻结发布门是ruff check而不是全仓format。
     solution: 仅格式化RC10改动文件并证明10个改动Python文件全部通过；不越界制造无关历史diff，Ruff lint全仓通过。
     evidence: [docs/evidence/phase-09-rc10-06-local-gates.json]
+  - id: RC10-ISSUE-07
+    task_id: RC10-07
+    severity: high
+    status: resolved
+    problem: 公网首次验收发现血糖偏高自然表达未触发赛题指定疾病免责声明。
+    cause: 路由与检索同义词未同步到安全词表，专业级旧文案也不是赛题指定原句。
+    solution: 增加三种血糖偏高安全表达，统一专业级强制文案，补回归并重新构建部署；公网复验通过。
+    evidence: [docs/evidence/phase-09-rc10-07-public-acceptance.json]
+  - id: RC10-ISSUE-08
+    task_id: RC10-07
+    severity: low
+    status: resolved
+    problem: 边界验收脚本首次把SSE成功响应误按普通JSON解析。
+    cause: 验收脚本没有按text/event-stream提取final事件。
+    solution: 改用SSE final解析后复验特殊符号与无关问题，均得到out_of_scope友好回答。
+    evidence: [docs/evidence/phase-09-rc10-07-public-acceptance.json]
 final_gate:
   id: RC10-FINAL
-  status: not_started
+  status: passed
   required_tasks: [RC10-01, RC10-02, RC10-03, RC10-04, RC10-05, RC10-06, RC10-07]
-  evidence: []
+  evidence:
+    - docs/evidence/phase-09-rc10-06-local-gates.json
+    - docs/evidence/phase-09-rc10-07-public-acceptance.json
+    - docs/evidence/phase-09-rc10-07-public-acceptance.md
