@@ -38,6 +38,8 @@ PLAN_TITLES = {
     "stable_glucose": "稳糖调理",
 }
 
+PLAN_MAX_AGE_YEARS = 55
+
 BLOCKED_TAG_TERMS: dict[str, tuple[str, ...]] = {
     "animal_product": ("鸡", "鱼", "虾", "肉", "蛋", "奶", "乳清", "酪蛋白"),
     "dairy": ("牛奶", "酸奶", "乳清", "酪蛋白", "乳制品"),
@@ -71,8 +73,12 @@ class RecommendationService:
     def evaluate(self, profile: ProfilePatch) -> RecommendationEvaluation:
         if profile.goal is None:
             return _blocked("missing_goal")
-        if profile.age_band != "adult_18_44":
+        if profile.age_band == "adult_45_64" and profile.age_years is None:
             return _blocked("age_outside_or_ambiguous_plan_scope")
+        if profile.age_band == "adult_45_64" and profile.age_years <= PLAN_MAX_AGE_YEARS:
+            pass
+        elif profile.age_band != "adult_18_44":
+            return _blocked("age_outside_plan_scope")
 
         safety = self.safety.assess("请评估结构化饮食方案", profile)
         if not safety.allow_personalized_targets:
@@ -146,6 +152,8 @@ def _build_option(
     reasons = [f"健康目标匹配：{PLAN_TITLES[goal]}"]
     if profile.activity_level:
         reasons.append(f"活动水平已纳入规则输入：{profile.activity_level}")
+    if profile.age_years is not None:
+        reasons.append(f"精确年龄已验证：{profile.age_years} 岁")
     return RecommendationOption(
         plan_id=f"plan-{goal}",
         title=PLAN_TITLES[goal],

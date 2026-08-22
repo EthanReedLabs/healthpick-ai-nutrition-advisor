@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "evidence_id": "PHASE-09-RC10-05-SEVEN-DAY-AVAILABILITY-COMMITMENT",
+  "captured_at": "2026-08-23T01:12:00+08:00",
+  "status": "COMMITTED",
+  "public_url": "https://106.14.13.139",
+  "availability_rule": {
+    "duration_after_actual_competition_submission": "P7D",
+    "absolute_not_before": "2026-08-30T01:00:00+08:00",
+    "minimum_available_until": "max(actual_competition_submission_at + P7D, 2026-08-30T01:00:00+08:00)",
+    "actual_competition_submission_at": null,
+    "submission_timestamp_owner": "entrant",
+    "shutdown_before_minimum": "forbidden"
+  },
+  "operator_commitment": {
+    "ecs_kept_running": true,
+    "security_group_tcp_80_443_kept_open": true,
+    "outbound_dns_and_tcp_443_kept_available": true,
+    "manual_stop_only_after_minimum": true,
+    "automatic_shutdown_configured": false,
+    "data_deletion_authorized": false
+  },
+  "runtime_safeguards": {
+    "postgres_healthcheck": true,
+    "api_healthcheck": true,
+    "web_healthcheck": true,
+    "restart_policy": "unless-stopped",
+    "caddy_automatic_certificate_renewal": true,
+    "persistent_caddy_data_volume": true,
+    "global_monitoring_or_system_service_added": false
+  },
+  "certificate_note": "The public IP uses a short-lived certificate profile; Caddy automatic renewal and its persistent data volume remain enabled throughout the commitment window.",
+  "custom_domain": {
+    "implemented": false,
+    "blocking": false,
+    "reason": "No authorized filed domain was supplied; an unfiled temporary domain is blocked on the mainland China ECS. Trusted IP HTTPS remains the delivery URL."
+  },
+  "finalization": "RC10-07 records the post-deployment probe. After the entrant submits the competition form, actual_competition_submission_at must be recorded and the calculated deadline must not be shortened."
+}

@@ -75,6 +75,35 @@ def test_router_covers_supported_natural_language_aliases(query: str, expected_r
 
 
 @pytest.mark.parametrize(
+    ("query", "expected_chunk_ids"),
+    [
+        ("我想减重", {"A-p04-c01"}),
+        ("我在健身", {"A-p04-c02", "B-p06-c01"}),
+        ("我血糖有点高", {"B-p06-c04", "B-p07-c03"}),
+    ],
+)
+def test_competition_intent_examples_route_to_core_recommendation_evidence(
+    retriever: KeywordRetriever,
+    query: str,
+    expected_chunk_ids: set[str],
+) -> None:
+    decision = QueryRouter().route(query)
+    result = retriever.search(query, decision)
+
+    assert decision.route == "recommendation"
+    assert decision.allowed_sources == ("A", "B")
+    assert expected_chunk_ids <= {hit.chunk.chunk_id for hit in result.hits}
+    assert {hit.chunk.source_code for hit in result.hits} <= {"A", "B"}
+
+
+def test_competition_intent_aliases_do_not_capture_unrelated_gym_membership() -> None:
+    decision = QueryRouter().route("健身房会员卡怎么退款？")
+
+    assert decision.route == "platform"
+    assert decision.allowed_sources == ("C",)
+
+
+@pytest.mark.parametrize(
     "query",
     ["明天北京会下雨吗？", "给我写一段Python爬虫", "如何修复汽车发动机？"],
 )

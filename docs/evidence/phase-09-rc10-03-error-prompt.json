@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "evidence_id": "PHASE-09-RC10-03-ERROR-PROMPT",
+  "captured_at": "2026-08-23T00:57:00+08:00",
+  "status": "PASS",
+  "required_user_prompt": "服务繁忙，请稍后重试",
+  "layers": {
+    "api_unexpected_exception": {
+      "status": 500,
+      "code": "internal_error",
+      "retryable": true,
+      "request_id_preserved": true,
+      "prompt_exact": true
+    },
+    "web_connection_failure": {
+      "status": 0,
+      "code": "connection_failed",
+      "retryable": true,
+      "request_id_preserved": true,
+      "prompt_exact": true
+    },
+    "web_session_failure": {
+      "display_title_exact": true,
+      "underlying_code": "database_unavailable",
+      "request_id": "req-bootstrap-failed",
+      "recovery_action_preserved": true
+    }
+  },
+  "semantic_invariants": {
+    "provider_timeout_remains_distinct": true,
+    "client_timeout_remains_distinct": true,
+    "evidence_failure_remains_distinct": true,
+    "request_cancelled_remains_distinct": true,
+    "empty_and_overlong_validation_unchanged": true
+  },
+  "verification": [
+    {
+      "command": ".\\.venv\\Scripts\\pytest.exe tests/api/test_app.py -q",
+      "result": "PASS",
+      "tests": 14
+    },
+    {
+      "command": ".\\.venv\\Scripts\\pytest.exe tests/api/test_chat_sse.py -q",
+      "result": "PASS",
+      "tests": 21
+    },
+    {
+      "command": "npm --prefix apps/web test -- src/lib/api.test.ts src/components/chat-workspace.test.tsx",
+      "result": "PASS",
+      "tests": 34
+    }
+  ]
+}

@@ -1,0 +1,71 @@
+schema_version: 1
+control_id: RC10-RUBRIC-CLOSURE
+parent_control: control/project-control.yaml
+phase_id: PHASE-09
+title: 补充赛题说明收口
+status: in_progress
+started_at: "2026-08-23T00:49:04+08:00"
+plan: docs/phases/phase-09-rubric-closure.md
+intent_contract: control/records/RC9-POLISH.intent.json
+tasks:
+  - {id: RC10-01, status: passed, record: control/records/RC10-01.yaml, evidence: [docs/phases/phase-09-rubric-closure.md]}
+  - {id: RC10-02, status: passed, record: control/records/RC10-02.yaml, evidence: [docs/evidence/phase-09-rc10-02-intent-routing.json]}
+  - {id: RC10-03, status: passed, record: control/records/RC10-03.yaml, evidence: [docs/evidence/phase-09-rc10-03-error-prompt.json]}
+  - {id: RC10-04, status: passed, record: control/records/RC10-04.yaml, evidence: [docs/evidence/phase-09-rc10-04-exact-age.json]}
+  - {id: RC10-05, status: passed, record: control/records/RC10-05.yaml, evidence: [docs/evidence/phase-09-rc10-05-doc-validation.json, docs/evidence/phase-09-rc10-05-availability.json]}
+  - {id: RC10-06, status: passed, record: control/records/RC10-06.yaml, evidence: [docs/evidence/phase-09-rc10-06-local-gates.json]}
+  - {id: RC10-07, status: in_progress, record: control/records/RC10-07.yaml, evidence: []}
+issues:
+  - id: RC10-ISSUE-01
+    task_id: RC10-02
+    severity: high
+    status: resolved
+    problem: 三句题面示例均被判为范围外。
+    cause: 缺少受控自然语言同义短语和对应检索提示。
+    solution: 补充四个完整短语并绑定A/B复核知识块，增加三组正向和一组负向回归。
+    evidence: [docs/evidence/phase-09-rc10-02-intent-routing.json]
+  - id: RC10-ISSUE-02
+    task_id: RC10-03
+    severity: high
+    status: resolved
+    problem: 系统异常缺少赛题指定用户提示。
+    cause: API和Web文案分散，没有评分文案层。
+    solution: 统一用户可见主提示，底层错误码、请求编号、可重试和恢复策略保持分离。
+    evidence: [docs/evidence/phase-09-rc10-03-error-prompt.json]
+  - id: RC10-ISSUE-03
+    task_id: RC10-04
+    severity: medium
+    status: resolved
+    problem: 45岁目标用户被宽年龄段安全门整体阻断。
+    cause: 档案缺少可验证的精确年龄。
+    solution: 新增age_years与年龄段一致性校验；45至55岁精确值可在其他安全条件满足时进入资料B方案，未填、56岁以上、冲突和高风险仍阻断。
+    evidence: [docs/evidence/phase-09-rc10-04-exact-age.json]
+  - id: RC10-ISSUE-04
+    task_id: RC10-05
+    severity: high
+    status: resolved
+    problem: README和AI_USAGE与当前公网百炼运行态不一致。
+    cause: RC8后变更未同步到公开交付文档。
+    solution: 重写公开使用、架构、RAG和AI披露，更新隐私安全数据路径与发布校验，准确标注ECS、百炼qwen3.7-plus、keyword、Embedding disabled及关闭行动。
+    evidence: [docs/evidence/phase-09-rc10-05-doc-validation.json]
+  - id: RC10-ISSUE-05
+    task_id: RC10-05
+    severity: high
+    status: resolved
+    problem: 现有可用性记录没有明确提交后至少七天的最早停机时间。
+    cause: 补充赛题说明晚于原可用性证据。
+    solution: 冻结max(实际提交时间+7天, 2026-08-30T01:00:00+08:00)规则，承诺期保持ECS、安全组、出站、健康检查、restart和Caddy自动续期，不配置自动停机。
+    evidence: [docs/evidence/phase-09-rc10-05-availability.json]
+  - id: RC10-ISSUE-06
+    task_id: RC10-06
+    severity: low
+    status: accepted_baseline
+    problem: 可选的全仓ruff format诊断发现5个本轮未触碰历史文件会被当前Ruff版本重排。
+    cause: 历史文件与当前安装的Ruff格式版本存在机械差异；冻结发布门是ruff check而不是全仓format。
+    solution: 仅格式化RC10改动文件并证明10个改动Python文件全部通过；不越界制造无关历史diff，Ruff lint全仓通过。
+    evidence: [docs/evidence/phase-09-rc10-06-local-gates.json]
+final_gate:
+  id: RC10-FINAL
+  status: not_started
+  required_tasks: [RC10-01, RC10-02, RC10-03, RC10-04, RC10-05, RC10-06, RC10-07]
+  evidence: []

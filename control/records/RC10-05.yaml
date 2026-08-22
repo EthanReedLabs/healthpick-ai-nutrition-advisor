@@ -1,0 +1,58 @@
+schema_version: 1
+task_id: RC10-05
+phase_id: PHASE-09
+outcome: passed
+started_at: "2026-08-23T01:04:00+08:00"
+completed_at: "2026-08-23T01:28:00+08:00"
+recorded_at: "2026-08-23T01:28:00+08:00"
+backfilled: false
+owner: QA_DOCS/DEVOPS
+summary: 已把使用说明、架构、RAG、AI辅助披露、隐私安全、数据路径、提交清单和测试记录同步到公网阿里云百炼真实运行态，并建立提交后至少七天且不早于指定时间的在线承诺。
+deliverables:
+  - README.md
+  - docs/AI_USAGE.md
+  - docs/02-architecture.md
+  - docs/03-rag-and-knowledge.md
+  - docs/07-demo-and-submission.md
+  - docs/08-basic-test-records.md
+  - PRIVACY.md
+  - SECURITY.md
+  - THIRD_PARTY_NOTICES.md
+  - docs/release-data-map.json
+  - docs/evidence/phase-09-rc10-05-availability.json
+  - docs/evidence/phase-09-rc10-05-availability.md
+  - docs/evidence/phase-09-rc10-05-doc-validation.json
+acceptance_checks:
+  - name: README含公网入口完整操作步骤和不少于200字技术核心逻辑
+    result: pass
+    evidence:
+      - docs/evidence/phase-09-rc10-05-doc-validation.json
+  - name: 架构说明不少于300字且覆盖知识挂载推荐多轮异常Prompt和部署
+    result: pass
+    evidence:
+      - docs/02-architecture.md
+      - docs/evidence/phase-09-rc10-05-doc-validation.json
+  - name: AI披露准确区分Codex辅助人工优化和生产百炼模型
+    result: pass
+    evidence:
+      - docs/AI_USAGE.md
+  - name: 基础测试记录不少于5组
+    result: pass
+    evidence:
+      - docs/08-basic-test-records.md
+      - docs/evidence/phase-09-rc10-05-doc-validation.json
+  - name: 公网承诺覆盖实际比赛提交后7天且不早于2026年8月30日01时
+    result: pass
+    evidence:
+      - docs/evidence/phase-09-rc10-05-availability.json
+      - docs/evidence/phase-09-rc10-05-availability.md
+issues:
+  - RC10-ISSUE-04
+  - RC10-ISSUE-05
+residual_actions:
+  - 参赛者提交比赛表单后把实际提交时间补入可用性记录并按公式计算最终可停机时间。
+review:
+  status: pending_final_review
+  reviewer: Project Lead
+  reviewed_at: null
+  notes: 文档校验首轮仅缺RAG文档具体模型名，补充qwen3.7-plus后14项检查和专项pytest通过；自定义域名因无已备案授权域名保持条件性未实施。

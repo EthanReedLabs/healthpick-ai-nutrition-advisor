@@ -907,6 +907,8 @@ export interface components {
             activity_level?: ("sedentary" | "light" | "moderate" | "high") | null;
             /** Age Band */
             age_band?: ("under_18" | "adult_18_44" | "adult_45_64" | "older_65_plus") | null;
+            /** Age Years */
+            age_years?: number | null;
             /** Allergies */
             allergies?: ("eggs" | "milk" | "peanuts" | "tree_nuts" | "wheat" | "soy" | "fish" | "shellfish" | "sesame")[];
             /** Conditions */

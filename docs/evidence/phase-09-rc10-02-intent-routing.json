@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "evidence_id": "PHASE-09-RC10-02-INTENT-ROUTING",
+  "captured_at": "2026-08-23T00:55:00+08:00",
+  "status": "PASS",
+  "implementation": {
+    "route_aliases": ["想减重", "在健身", "血糖偏高", "血糖有点高"],
+    "scope_strategy": "controlled_phrase_match",
+    "retrieval_mode": "keyword",
+    "allowed_sources": ["A", "B"],
+    "platform_source_excluded": true
+  },
+  "competition_examples": [
+    {
+      "query": "我想减重",
+      "route": "recommendation",
+      "required_evidence": ["A-p04-c01"]
+    },
+    {
+      "query": "我在健身",
+      "route": "recommendation",
+      "required_evidence": ["A-p04-c02", "B-p06-c01"]
+    },
+    {
+      "query": "我血糖有点高",
+      "route": "recommendation",
+      "required_evidence": ["B-p06-c04", "B-p07-c03"]
+    }
+  ],
+  "negative_control": {
+    "query": "健身房会员卡怎么退款？",
+    "route": "platform",
+    "allowed_sources": ["C"],
+    "reason": "generic gym wording is not a recommendation alias"
+  },
+  "verification": {
+    "command": ".\\.venv\\Scripts\\pytest.exe tests/api/test_retrieval.py -q",
+    "result": "PASS",
+    "tests": 47
+  }
+}

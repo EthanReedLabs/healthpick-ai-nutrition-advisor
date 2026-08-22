@@ -1,0 +1,103 @@
+{
+  "acceptance_criteria": [
+    "新增一份可执行计划，列明顺序、逐项验收、问题与解决记录、部署回滚和最终未完成项核验",
+    "题面示例我想减重、我在健身、我血糖有点高均进入正确的A/B推荐链路并有正反路由回归，无关输入和C库边界不扩张",
+    "系统级异常的用户可见区域明确显示服务繁忙请稍后重试，同时保留具体错误码、请求编号、超时取消和可重试语义",
+    "以可验证的精确年龄字段支持45岁目标用户；年龄段与精确年龄不一致时拒绝，未成年人、高风险条件和知识适用范围外仍安全阻断",
+    "README满足当前公网入口和用户操作说明，AI_USAGE如实反映Codex辅助、人工优化理由、百炼qwen3.7-plus、keyword检索、Embedding disabled和已关闭行动；架构及测试文档状态同步真实",
+    "记录公网系统保持到实际提交时间加7天之后，且不早于2026-08-30T01:00:00+08:00；ECS、安全组、restart策略和Caddy自动续期在此期间保持有效",
+    "全量Python和Web测试、Ruff、Lint、类型检查、生产构建、控制面、OpenAPI同步及密钥扫描全部通过",
+    "创建非amend提交并推送origin/main；部署后证据再以独立提交推送，不打标签、不重写历史",
+    "构建同一rc10-rubric-closure-20260823标签的API/Web镜像，双端哈希一致后仅替换API和Web；PostgreSQL与Caddy镜像和重启次数不变，旧API/Web镜像保留回滚",
+    "公网验证三句自然诉求、空输入、超长输入、模拟系统异常、45岁推荐、真实模型、安全免责声明、A/B/C隔离、控制台和容器不变量，清理测试数据和服务器临时归档"
+  ],
+  "approved_event_fingerprints": [],
+  "confirmation": {
+    "reason": "",
+    "required": false
+  },
+  "confirmed_by": "unconfirmed-proposal",
+  "constraints": {
+    "allowed_paths": [
+      "README.md",
+      "docs",
+      "apps/api",
+      "apps/web",
+      "packages/shared/openapi",
+      "tests",
+      "control/records",
+      "output/deployment",
+      ".git"
+    ],
+    "frozen_paths": [],
+    "preserve": [
+      "A/B核心营养与C辅助平台硬隔离、逐条引用、S0-S3医疗安全、禁忌过滤、请求取消、同请求编号恢复、PostgreSQL数据、账号与历史、当前公网HTTPS和全部已有证据",
+      "当前healthpick-web:rc9-input-timeout-fix-20260823、healthpick-web:rc9-preview-20260822和healthpick-api:v0.1.0-rc8回滚能力；数据库与Caddy不重建不重启"
+    ],
+    "reject": [
+      "把不同底层故障合并为同一错误码或重试策略、放宽医疗诊断和精确处方边界、让C进入营养推荐、硬编码或伪造模型回答",
+      "使用未备案临时域名、修改DNS或申请域名、安装全局监控或系统服务、泄露密钥环境文件或健康原文、上传源码到服务器",
+      "amend、rebase、reset、force、标签变更、提交output/deployment或依赖临时目录；自定义域名在没有用户提供可用域名前不阻断本轮基础验收"
+    ]
+  },
+  "correction_limit": 2,
+  "created_at": "2026-08-22T13:39:08.019496+00:00",
+  "critic": {
+    "cadence_writes": 1,
+    "enabled": true,
+    "min_confidence": 0.9,
+    "timeout_seconds": 120.0
+  },
+  "intent_id": "l3:rc9-existing-feature-polish",
+  "mcp": {
+    "allow_servers": [],
+    "allow_tools": [],
+    "local_servers": [
+      "sulde-kb"
+    ],
+    "unknown_effect": "confirm"
+  },
+  "mode": "enforce",
+  "objective": "按基础硬门槛优先顺序关闭新增赛题说明发现的缺口：自然语言诉求识别、系统异常提示、45岁目标用户覆盖、交付文档与AI披露真实性、七天在线承诺、代码仓库提交，并完成全回归、API/Web纯镜像部署和公网总验收",
+  "permissions": {
+    "destructive": "deny",
+    "external_write": "confirm",
+    "local_write": true
+  },
+  "proposal_digest": "1d24741042906ea7406ee4ca32b402b24d784ff19915d99dcd37d21e04951bd6",
+  "proposal_for": {
+    "base_policy_digest": "fba8ee746928ce1c90d9bb4a93fc030899fb5ddd12b8a88b7af1b44421e203ab",
+    "base_revision": 6,
+    "contract_path": "D:\\OPC_competition\\healthpick-ai-nutrition-advisor\\control\\records\\RC9-POLISH.intent.json"
+  },
+  "rationale": "避免基础需求缺失导致59分封顶以及AI披露或代码未提交造成资格风险，同时在不扩大医疗能力和基础设施变更的前提下补齐目标人群覆盖",
+  "revision": 7,
+  "runtime": {
+    "active_skill_frames": [],
+    "active_skills": [],
+    "approved_proposal_digests": [],
+    "authorized_events": [],
+    "corrections": [],
+    "inconclusive_outcomes": [],
+    "integrity_breaches": [],
+    "local_write_completions": 0,
+    "open_events": [],
+    "pause_event_fingerprint": "",
+    "pause_reason": "",
+    "pause_requires_revision": false,
+    "pause_revision": 0,
+    "pending_verifications": [],
+    "sequence": 0,
+    "verified_effects": []
+  },
+  "schema": "sulde-intent-contract-v1",
+  "skills": {
+    "allow": [
+      "*"
+    ],
+    "deny": []
+  },
+  "status": "active",
+  "updated_at": "2026-08-22T16:42:00.907751+00:00",
+  "workspace_root": "D:\\OPC_competition\\healthpick-ai-nutrition-advisor"
+}

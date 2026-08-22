@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "evidence_id": "PHASE-09-RC10-04-EXACT-AGE",
+  "captured_at": "2026-08-23T01:04:00+08:00",
+  "status": "PASS",
+  "source_scope": {
+    "source": "B",
+    "verified_plan_age_range": [18, 55],
+    "artifact": "knowledge/normalized/facts/plan_rules.jsonl"
+  },
+  "contract": {
+    "field": "age_years",
+    "range": [1, 120],
+    "requires_matching_age_band_when_present": true,
+    "adult_18_44_without_exact_age_backwards_compatible": true,
+    "adult_45_64_requires_exact_age_for_recommendation": true,
+    "maximum_personalized_plan_age": 55
+  },
+  "acceptance_cases": [
+    {"age_band": "adult_45_64", "age_years": 45, "result": "ready", "plan": "轻盈减脂"},
+    {"age_band": "adult_45_64", "age_years": null, "result": "blocked", "reason": "age_outside_or_ambiguous_plan_scope"},
+    {"age_band": "adult_45_64", "age_years": 56, "result": "blocked", "reason": "age_outside_plan_scope"},
+    {"age_band": "adult_18_44", "age_years": 45, "result": "validation_error"},
+    {"age_band": "adult_45_64", "age_years": 45, "condition": "kidney_disease", "result": "blocked", "reason": "safety_s2_general_only"}
+  ],
+  "verification": [
+    {
+      "command": ".\\.venv\\Scripts\\pytest.exe tests/api/test_profile.py tests/api/test_recommendation.py -q",
+      "result": "PASS",
+      "tests": 20
+    },
+    {
+      "command": "npm --prefix apps/web test -- src/components/chat-workspace.test.tsx",
+      "result": "PASS",
+      "tests": 24
+    },
+    {
+      "command": "npm --prefix apps/web run typecheck",
+      "result": "PASS"
+    },
+    {
+      "command": "python scripts/export_openapi.py && openapi-typescript",
+      "result": "PASS",
+      "artifacts": [
+        "packages/shared/openapi/healthpick.openapi.json",
+        "apps/web/src/lib/api-schema.d.ts"
+      ]
+    }
+  ]
+}

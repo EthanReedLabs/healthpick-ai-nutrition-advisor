@@ -1,0 +1,45 @@
+schema_version: 1
+task_id: RC10-04
+phase_id: PHASE-09
+outcome: passed
+started_at: "2026-08-23T00:57:00+08:00"
+completed_at: "2026-08-23T01:04:00+08:00"
+recorded_at: "2026-08-23T01:04:00+08:00"
+backfilled: false
+owner: API/WEB/QA_DOCS
+summary: 新增可验证精确年龄字段并打通API、OpenAPI和Web档案；45岁目标用户可生成规则方案，年龄冲突、模糊45–64、56岁以上及高风险条件继续阻断。
+deliverables:
+  - apps/api/healthpick_api/profile/models.py
+  - apps/api/healthpick_api/recommendation/service.py
+  - apps/web/src/components/chat-workspace.tsx
+  - packages/shared/openapi/healthpick.openapi.json
+  - apps/web/src/lib/api-schema.d.ts
+  - tests/api/test_profile.py
+  - tests/api/test_recommendation.py
+  - apps/web/src/components/chat-workspace.test.tsx
+  - docs/evidence/phase-09-rc10-04-exact-age.json
+acceptance_checks:
+  - name: 精确45岁用户可生成轻盈减脂规则方案
+    result: pass
+    evidence:
+      - docs/evidence/phase-09-rc10-04-exact-age.json
+  - name: 年龄段与精确年龄冲突在API输入层拒绝
+    result: pass
+    evidence:
+      - tests/api/test_profile.py
+  - name: 模糊45至64、56岁以上和高风险条件继续阻断
+    result: pass
+    evidence:
+      - tests/api/test_recommendation.py
+  - name: Web可填写45岁并把字段传入推荐接口
+    result: pass
+    evidence:
+      - apps/web/src/components/chat-workspace.test.tsx
+issues:
+  - RC10-ISSUE-03
+residual_actions: []
+review:
+  status: pending_final_review
+  reviewer: Project Lead
+  reviewed_at: null
+  notes: 首轮Web补丁命中相邻测试数据，已恢复两个用例的独立职责；20项API、24项Web与类型检查通过。

@@ -2,17 +2,25 @@
 
 第二届 OPC 软件与智能体开发赛道参赛项目。HealthPick 不是普通聊天壳，而是一套可审计的健康领域 RAG 产品：Next.js Web、FastAPI API、PostgreSQL、真实 LLM Provider、A/B/C 知识硬隔离、逐条引用、医疗安全门、多轮历史、账号数据权利、自动评测和 Docker Compose 复现均已落地。
 
-## 发布候选状态
+## 公网访问与当前状态
 
-截至 2026-08-22，Phase 01～07 已退出，Phase 08 正在执行。当前客观基线：
+公开演示入口：**<https://106.14.13.139>**。浏览器直接访问即可，不需要安装软件。当前生产环境部署在阿里云 ECS，使用受信 HTTPS 公网 IP 证书；Web、API 和 PostgreSQL 均有健康检查及 `unless-stopped` 重启策略，Caddy 数据卷持久化并自动续期证书。生产回答由阿里云百炼北京地域 Token Plan 的 `qwen3.7-plus` 动态生成，页面会如实展示模型来源；检索为可审计的 `keyword` 模式，Embedding 当前明确为 `disabled`。
 
-- Python 全仓 254 项、Web 30 项测试通过，Ruff、TypeScript、ESLint、Next.js production build 通过；
-- 真实 Ollama + PostgreSQL 执行 72 cases / 80 turns，路由 100%、来源泄漏 0、数字准确率 100%、引用支持率 95.5882%、高风险召回 100%、多轮保持 100%、未处理 5xx 为 0、首字 P95 2814ms；
-- 独立 Compose 新卷完成 001～005 migration、seed、真实问答、PostgreSQL/API/Web 重启和会话持久化；
-- 438 个已跟踪及未跟踪提交候选文件密钥扫描为 0；JavaScript 和 32 个 Python 生产依赖已知漏洞为 0；
-- 公网 Render 地址仍等待 `ACTION-05` 的区域、预算和七天在线责任授权；80 条结构化事实第二人复核 `ACTION-06` 仍开放。因此最终状态必须保持 `NOT_READY`，不能把本地通过写成最终提交完成。
+Phase 01～08 的工程与发布验收已完成，`ACTION-05`、`ACTION-06` 等遗留动作已关闭：80 条结构化事实最终处置为 74 条通过、6 条含缺字符号规则驳回、0 条待复核；推荐引擎只使用其中 7 条已复核核心规则。本轮补充赛题说明收口由 [Phase 09 执行计划](docs/phases/phase-09-rubric-closure.md) 和 `control/records/RC10-CONTROL.yaml` 单独追踪，不改写此前验收记录。
 
-实时状态以 [统一控制板](docs/governance/CONTROL_BOARD.md) 和 `control/project-control.yaml` 为唯一真值。
+## 如何使用
+
+1. 打开公网入口，首页会显示欢迎语、三个快捷问题、健康档案入口、对话区和来源透明度。
+2. 直接输入“我想减重”“我在健身”或“我血糖有点高”，系统会识别减脂、增肌或稳糖倾向，只从资料 A/B 检索匹配依据并给出带文档、章节、页码和 Chunk ID 的回答。
+3. 需要规则方案时点击“编辑健康档案”，选择目标、年龄段、活动水平、过敏原和安全标签。45–64 岁用户需填写精确年龄；45 岁在资料适用范围内可生成方案，年龄冲突、资料范围外或高风险条件会被安全阻断。
+4. 询问会员、企业合作或 API 服务时，系统只使用资料 C；平台资料不会进入营养推荐。登录或注册后可跨设备保存、搜索、改名和删除对话，也可导出或永久删除账号数据。
+5. 输入为空、超过 2000 字或系统异常时会显示明确提示；生成期间可主动停止。模型超时可使用同一请求编号重试，不会保存半成品。
+
+疾病、用药、孕哺、严重过敏或其他高风险问题只提供一般信息并触发专业提示。**本建议仅供参考，不构成医疗建议，请咨询专业医师或注册营养师。** 胸痛、呼吸困难、意识异常等紧急情况应立即联系当地急救或前往急诊。
+
+## 技术选型与核心逻辑
+
+前端采用 Next.js、React 和 TypeScript，以响应式页面承载问答、档案、方案卡、引用、历史和透明度；后端采用 FastAPI、Pydantic 与 Python，把输入校验、权限、意图路由、安全分级、检索、真实模型调用、证据校验和持久化组织成单一路径。PostgreSQL 保存匿名/账号会话与对话历史，健康档案只随请求临时使用。知识资料在离线阶段按页解析为带来源角色、章节、页码和哈希的 Chunk，并生成经过复核的结构化方案规则；运行时先由确定性路由决定允许来源，再在允许分区内执行关键词评分和受控别名提示，不能让模型自行决定是否忽略资料 C。模型只接收本轮允许的证据，回答必须逐条带合法 Chunk 引用；引用或医疗安全后校验失败时会修复一次，仍失败则使用可验证的证据回退或拒答。该设计选择可解释的关键词检索而非未启用的向量检索，适合三份小规模、数字和禁忌敏感的赛题资料，也便于证明来源隔离和零编造边界。
 
 ## 核心能力
 
@@ -25,7 +33,7 @@
 
 ## 15 分钟本地运行
 
-前置条件：Docker Desktop、Docker Compose，以及宿主机可访问的 OpenAI-compatible 模型服务。默认 Compose 指向宿主 Ollama：
+前置条件：Docker Desktop、Docker Compose，以及宿主机可访问的 OpenAI-compatible 模型服务。仓库默认 Compose 复现配置指向宿主 Ollama；这只是本地替代方案，不代表公网生产模型：
 
 ```powershell
 ollama pull qwen2.5:3b-instruct
@@ -40,6 +48,8 @@ macOS/Linux 将第二行改为 `cp .env.example .env`。默认入口：
 - OpenAPI：<http://127.0.0.1:8010/openapi.json>
 
 `.env.example` 只有占位值。使用远程 Provider 时，必须在本机 `.env` 或部署平台 Secret 中设置真实值；`.env` 已被 Git 忽略。生产环境禁止 `LLM_MODE=mock`，并强制 PostgreSQL 会话存储。
+
+如需复现公网同类配置，可把 `COMPOSE_LLM_BASE_URL`、`COMPOSE_LLM_MODEL` 和 `COMPOSE_LLM_API_KEY` 改为自己的百炼 OpenAI-compatible 端点、`qwen3.7-plus` 和 Secret；真实密钥不得提交。`EMBEDDING_MODE=disabled` 与 `RETRIEVAL_MODE=keyword` 是当前已验证组合。
 
 停止服务：
 
@@ -112,6 +122,8 @@ npm run build
 11. [控制面规则](docs/governance/README.md)
 12. [问题与解决日志](docs/governance/ISSUE_LOG.md)
 13. [最终总纲验收](docs/governance/FINAL_ACCEPTANCE_MASTER.md)
+14. [基础功能测试记录](docs/08-basic-test-records.md)
+15. [公网七天可用性承诺](docs/evidence/phase-09-rc10-05-availability.md)
 
 ## 医疗边界
 

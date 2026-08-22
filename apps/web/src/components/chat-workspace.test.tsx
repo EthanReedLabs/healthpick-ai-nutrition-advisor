@@ -711,7 +711,8 @@ describe("ChatWorkspace", () => {
     queueResponses(
       () => jsonResponse({
           profile: {
-            age_band: "adult_18_44",
+            age_band: "adult_45_64",
+            age_years: 45,
             sex: "female",
             height_cm: null,
             weight_kg: null,
@@ -724,7 +725,7 @@ describe("ChatWorkspace", () => {
           },
           bmi: null,
           persistence: "ephemeral",
-          collected_fields: ["age_band", "sex", "activity_level", "goal"],
+          collected_fields: ["age_band", "age_years", "sex", "activity_level", "goal"],
       }),
       () => jsonResponse({
           status: "ready",
@@ -733,7 +734,7 @@ describe("ChatWorkspace", () => {
             plan_id: "plan-fat_loss",
             title: "轻盈减脂",
             selection_score: 95,
-            match_reasons: ["健康目标匹配：轻盈减脂", "活动水平已纳入规则输入：moderate"],
+            match_reasons: ["健康目标匹配：轻盈减脂", "活动水平已纳入规则输入：moderate", "精确年龄已验证：45 岁"],
             key_targets: ["建议周期：8–12 周", "资料能量范围：1200–1500 kcal"],
             actions: ["先组织餐盘。", "再选择同类替换。", "按周记录并复核。"],
             substitutions: ["糙米 / 燕麦米 / 黑米"],
@@ -759,7 +760,8 @@ describe("ChatWorkspace", () => {
     render(<ChatWorkspace />);
     fireEvent.click(screen.getByRole("button", { name: "编辑健康档案" }));
     fireEvent.change(screen.getByLabelText("健康目标"), { target: { value: "fat_loss" } });
-    fireEvent.change(screen.getByLabelText("年龄段"), { target: { value: "adult_18_44" } });
+    fireEvent.change(screen.getByLabelText("年龄段"), { target: { value: "adult_45_64" } });
+    fireEvent.change(screen.getByLabelText("精确年龄（岁）"), { target: { value: "45" } });
     fireEvent.change(screen.getByLabelText("性别"), { target: { value: "female" } });
     fireEvent.change(screen.getByLabelText("活动水平"), { target: { value: "moderate" } });
     fireEvent.click(screen.getByRole("button", { name: "保存档案" }));
@@ -769,6 +771,13 @@ describe("ChatWorkspace", () => {
     expect(card).toHaveTextContent("资料能量范围：1200–1500 kcal");
     expect(card).toHaveTextContent("糙米 / 燕麦米 / 黑米");
     expect(card).toHaveTextContent("资料 B · 第 1 页");
+    expect(card).toHaveTextContent("精确年龄已验证：45 岁");
+    const recommendationCall = vi.mocked(fetch).mock.calls.find(([input]) =>
+      String(input).endsWith("/v1/recommendations/evaluate")
+    );
+    expect(JSON.parse(String(recommendationCall?.[1]?.body))).toEqual(
+      expect.objectContaining({ age_band: "adult_45_64", age_years: 45 }),
+    );
   });
 
   it("shows readable S1 restrictions and every blocked food tag", async () => {
@@ -952,7 +961,9 @@ describe("ChatWorkspace", () => {
     render(<ChatWorkspace />);
 
     const alert = await screen.findByRole("alert");
-    expect(alert).toHaveTextContent("对话暂时未就绪");
+    expect(alert).toHaveTextContent("服务繁忙，请稍后重试");
+    expect(alert).toHaveTextContent("database_unavailable");
+    expect(alert).toHaveTextContent("请求编号：req-bootstrap-failed");
     expect(alert).toHaveTextContent("不需要前往其他面板");
     fireEvent.click(within(alert).getByRole("button", { name: "重新恢复对话" }));
     expect(await screen.findByText(/完善健康档案后可生成规则匹配方案/)).toBeInTheDocument();

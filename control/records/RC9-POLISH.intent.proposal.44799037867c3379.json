@@ -2,15 +2,12 @@
   "acceptance_criteria": [
     "revision 7全部九项验收标准保持有效；README、AI_USAGE、PRIVACY、SECURITY、THIRD_PARTY_NOTICES、release-data-map和env说明准确反映公网阿里云百炼qwen3.7-plus、keyword、Embedding disabled、ACTION-05/06关闭和七天承诺；发布文档校验脚本及测试不再要求旧测试计数或pending ACTION-05，改为验证当前公网入口、模型、检索、AI披露和数据路径；全量质量门、提交、推送、纯镜像部署与公网总验收仍按revision 7执行"
   ],
-  "applied_at": "2026-08-22T17:25:15.666982+00:00",
-  "applied_by": "agent-after-human-approval",
-  "applied_proposal_digest": "44799037867c33796879375f1c9bc4b8f56ff4825baab972964c275846396a42",
   "approved_event_fingerprints": [],
   "confirmation": {
     "reason": "",
     "required": false
   },
-  "confirmed_by": "human-proposal-approval",
+  "confirmed_by": "unconfirmed-proposal",
   "constraints": {
     "allowed_paths": [
       "README.md",
@@ -60,6 +57,7 @@
     "external_write": "confirm",
     "local_write": true
   },
+  "proposal_digest": "44799037867c33796879375f1c9bc4b8f56ff4825baab972964c275846396a42",
   "proposal_for": {
     "base_policy_digest": "df559ccf0333211017fa8569fea699e1a5b58413f4d5ef54a753e37883393880",
     "base_revision": 7,
@@ -93,6 +91,6 @@
     "deny": []
   },
   "status": "active",
-  "updated_at": "2026-08-22T17:25:15.667091+00:00",
+  "updated_at": "2026-08-22T17:12:55.602910+00:00",
   "workspace_root": "D:\\OPC_competition\\healthpick-ai-nutrition-advisor"
 }

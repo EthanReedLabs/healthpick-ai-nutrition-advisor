@@ -1,189 +1,49 @@
-# 系统架构设计
+# 系统架构说明
 
-## 1. 架构目标
+## 1. 技术选型与平台理由
 
-架构必须同时满足：动态 LLM、知识隔离、来源引用、确定性安全、多轮记忆、历史持久化、公网部署、本地一键运行和自动评测。三份资料规模较小，因此优先保证可解释性和召回，不做过早分布式化。
+系统采用 Next.js/React/TypeScript Web、FastAPI/Pydantic API、PostgreSQL、Docker Compose 和 Caddy。Next.js 适合快速交付响应式单页体验并进行生产构建；FastAPI 能以强类型模型生成 OpenAPI，使前后端错误、档案和推荐契约保持一致；PostgreSQL 用于匿名/账号身份、会话和对话历史的持久化；Docker 镜像保证本地与 ECS 使用同一运行单元；Caddy 在公网入口负责 HTTPS 和反向代理。生产 LLM 为阿里云百炼 `qwen3.7-plus`，通过 OpenAI-compatible Provider Adapter 调用，密钥只存在服务器 Secret 文件。三份资料规模小且来源/数字敏感，因此当前使用可审计关键词检索，Embedding 明确禁用，不为了技术复杂度牺牲可解释性。
 
-## 2. 逻辑架构
+## 2. 当前生产架构
 
 ```mermaid
 flowchart LR
-    U[用户浏览器] --> W[Next.js Web]
-    W -->|HTTPS/SSE| A[FastAPI]
-
-    subgraph Orchestration[问答编排]
-      V[输入校验]
-      S1[安全预检查]
-      R[意图路由/问题拆分]
-      Q[查询扩展]
-      H[混合检索与RRF]
-      E[证据充分性门]
-      G[LLM生成]
-      C[引用与安全后校验]
-    end
-
-    A --> V --> S1 --> R --> Q --> H --> E --> G --> C --> A
-
-    H -->|营养过滤| AB[(A/B核心营养库)]
-    H -->|平台过滤| PC[(C辅助平台库)]
-    H --> FF[(食材事实/方案规则)]
-    A --> DB[(用户/会话/消息/评测)]
-    G --> LP[LLM Provider Adapter]
-    H --> EP[Embedding Provider Adapter]
-
-    M[离线Ingest] --> AB
-    M --> PC
-    M --> FF
-    T[Eval Runner] --> A
-    T --> ER[(评测报告)]
+  U[浏览器] -->|HTTPS| C[Caddy]
+  C --> W[Next.js Web]
+  C --> A[FastAPI API]
+  A --> V[输入与权限校验]
+  V --> S[确定性安全预检]
+  S --> R[意图路由/来源白名单]
+  R -->|nutrition/recommendation| AB[A/B 核心知识]
+  R -->|platform| P[C 辅助平台资料]
+  AB --> K[KeywordRetriever]
+  P --> K
+  K --> E[证据与引用构建]
+  E --> L[百炼 qwen3.7-plus]
+  L --> O[引用/安全后校验]
+  O --> A
+  A <--> D[(PostgreSQL 会话与账号)]
+  A --> G[7条复核推荐规则]
 ```
 
-隔离要点：A/B 与 C 可以位于同一 PostgreSQL 实例，但必须拥有不同 `source_role`，查询必须先应用角色过滤再排序。不能先检索全库后让 LLM 自行忽略 C。
+知识资料在构建前离线解析为带 `source_code`、来源角色、文档名、章节、页码、Chunk ID、哈希和允许路由的 JSONL；API 镜像加载这些只读产物。营养/推荐/禁忌路由只允许 A/B，平台路由只允许 C，混合问题在检索层保证两类证据配额。C 无法被推荐服务访问。PostgreSQL 不保存健康档案；档案仅随请求临时参与安全与推荐，减少敏感数据持久化。
 
-## 3. 服务职责
+## 3. 核心工作流与 Prompt
 
-### 3.1 Next.js Web
+问答工作流依次执行：请求体和 2000 字边界校验；S0～S3 安全分级；确定性意图路由；按允许来源关键词评分与受控别名提示；证据不足门；构造只包含本轮证据、最近四轮可用上下文和临时档案的 Prompt；调用真实模型；验证每条事实是否带允许的 `【A-p01-c01】` 类引用，并再次检查医疗安全。Prompt 明确要求只能使用 EVIDENCE、每句只陈述一个事实、引用紧随事实、不得编造诊断或资料外数字。首次输出失败时只允许一次受约束修复；仍失败则生成直接引用资料的确定性证据回退，回退也失败时返回稳定错误，不展示草稿。
 
-- 页面、响应式布局和可访问性；
-- 会话历史、健康档案和快捷操作；
-- SSE 流式事件消费；
-- 答案、引用、免责声明和透明度元数据展示；
-- 不在浏览器中持有模型密钥；
-- 只做非敏感的即时校验，服务端再次验证。
+结构化推荐不让 LLM 选择候选。用户目标映射到轻盈减脂、力量增肌或稳糖调理的已复核规则组合；禁忌和疾病先硬过滤，再生成一个主方案、匹配原因、关键目标、三步行动、替换组和 A/B 页码证据。45–64 岁必须填写精确年龄，只有资料 B 18–55 岁适用范围内且年龄段一致才进入推荐。
 
-### 3.2 FastAPI
+## 4. 多轮、账号与异常处理
 
-- API 契约和 Pydantic schema；
-- 鉴权、会话权限和幂等；
-- 问答编排、规则引擎和 Provider adapter；
-- 数据库事务、迁移和审计日志；
-- 离线 ingest/评测入口；
-- 统一错误处理和健康检查。
+匿名访问先获得服务端 session，注册可把匿名历史迁移到账号；登录后可列出、搜索、改名、删除和恢复对话。只有通过最终校验的完整回答才与用户消息一起写入 PostgreSQL；S3 安全记录可见但标记为不可进入后续模型上下文，主动取消和失败半成品不落库。账号令牌只通过 Authorization header 发送，公开 URL 不携带 Secret。
 
-### 3.3 PostgreSQL + pgvector
+错误处理保留 `code`、`request_id`、`retryable` 和 HTTP 状态。空输入显示“请输入您的问题”，超长显示“输入内容过长，请精简后重试”，系统异常用户区域显示“服务繁忙，请稍后重试”；客户端超时、Provider 超时、证据不足、数据库不可用和主动取消仍使用不同错误码与恢复动作。Web 在请求期间显示加载/停止状态，成功后清空输入，失败时保留输入并在可重试场景复用同一请求编号。
 
-- 用户、档案、会话、消息和引用；
-- 文档 manifest、Chunk 和 embedding；
-- 结构化食材事实和方案规则；
-- retrieval trace 与 eval run；
-- 小规模语料采用精确向量查询；
-- 关键词层使用规范化关键字、别名和字符相似度；
-- 数据增长或实测延迟不达标后再评估 HNSW。
+## 5. 部署、环境变量与回滚
 
-### 3.4 Provider Adapter
+公网部署为 Caddy + Web + API + PostgreSQL 四容器，只有 Caddy 暴露 80/443，其他端口绑定回环地址。API/Web 镜像在可信构建机生成并做 SHA-256 双端核验，服务器只 `docker load`，不接收源码、不构建。`.env.example` 和 `infra/ecs.env.example` 列出全部配置占位符；真实百炼 Key、数据库密码不进入仓库。发布只替换 API/Web，数据库卷和 Caddy 证书卷保留；失败时切回上一已知良好镜像并复用原卷。
 
-业务层只依赖内部接口：
+## 6. 验收策略
 
-```text
-LLMClient.generate(messages, response_schema, timeout) -> GenerationResult
-LLMClient.stream(messages, response_schema, timeout) -> AsyncIterator[Event]
-EmbeddingClient.embed(texts) -> list[vector]
-```
-
-Provider、模型名、Base URL、超时和维度均由环境变量提供。每条 assistant message 保存实际 provider/model，前端如实展示。
-
-## 4. 请求时序
-
-```mermaid
-sequenceDiagram
-    participant Web
-    participant API
-    participant Rules as Safety/Router
-    participant DB
-    participant LLM
-
-    Web->>API: chat/stream(message, conversation_id, client_message_id)
-    API->>API: 校验、限流、幂等检查
-    API->>Rules: 安全标签与意图
-    Rules-->>API: allowed sources + response policy
-    API->>DB: 写入用户消息
-    API->>DB: 过滤后混合检索
-    DB-->>API: top evidence + scores
-    API->>API: 证据充分性检查
-    API->>LLM: 仅证据上下文 + JSON schema
-    LLM-->>API: 流式草稿/结构化结果
-    API->>API: 引用与安全后校验
-    API->>DB: 原子写入答案、引用、trace
-    API-->>Web: final event(answer, citations, model, safety)
-```
-
-只有最终校验通过的答案才持久化为 `completed`。超时或中断消息保存为 `failed/cancelled`，以便 UI 允许重试而不产生重复答案。
-
-## 5. 内部模块边界
-
-建议 FastAPI 目录：
-
-```text
-apps/api/app/
-├─ api/                 # route 和依赖注入
-├─ core/                # settings、security、errors、logging
-├─ db/                  # models、repositories、migrations
-├─ schemas/             # 外部/内部 Pydantic 契约
-├─ chat/                # 会话服务和流式事件
-├─ routing/             # 意图、混合问题拆分、置信度
-├─ retrieval/           # lexical/vector/RRF/evidence gate
-├─ recommendations/     # 方案匹配和替换规则
-├─ safety/              # 风险标签、拒答、免责声明
-├─ citations/           # 引用映射和校验
-├─ providers/           # LLM/embedding adapter
-├─ ingest/              # PDF/表格/Chunk/manifest
-└─ evals/               # 数据集和指标
-```
-
-Web 目录：
-
-```text
-apps/web/src/
-├─ app/                 # 页面与 route groups
-├─ components/          # chat、citation、plan、profile、history
-├─ features/            # 按业务能力组织状态和 API 调用
-├─ lib/                 # API client、SSE、format、validation
-├─ generated/           # OpenAPI 生成类型，不手改
-└─ styles/              # token 与全局样式
-```
-
-## 6. 数据一致性
-
-- 消息正文、引用和 retrieval trace 使用同一数据库事务提交；
-- `client_message_id` 在用户/会话范围内唯一；
-- 每条引用固定到 `document_id + content_hash`，资料重建后旧回答仍可复核；
-- Embedding 记录模型和维度，模型变更必须整批重建，禁止同一索引混用维度；
-- 删除会话级联删除消息和健康上下文快照；
-- 删除账号使用后台任务清除个人数据，但保留匿名聚合评测统计。
-
-## 7. 错误与降级
-
-统一错误码示例：
-
-- `INPUT_EMPTY`
-- `INPUT_TOO_LONG`
-- `RATE_LIMITED`
-- `EVIDENCE_INSUFFICIENT`
-- `SAFETY_RESTRICTED`
-- `MODEL_TIMEOUT`
-- `MODEL_UNAVAILABLE`
-- `DATABASE_UNAVAILABLE`
-- `INTERNAL_ERROR`
-
-降级顺序：
-
-1. LLM 主 Provider 超时后只重试一次；
-2. 配置了备用 Provider 时切换，并在元数据中标注；
-3. Embedding 失败可退化为关键词检索，但仍需证据门；
-4. 任一安全或引用校验失败时不返回未经验证的草稿；
-5. 前端保留用户输入并显示可重试状态。
-
-## 8. 部署拓扑
-
-公网环境可分为 Web、API、托管 PostgreSQL 三个组件。Docker Compose 环境包含相同逻辑组件。两种环境必须使用同一迁移、seed 和健康检查，避免“线上能跑、本地不能跑”或相反。
-
-## 9. 架构验收
-
-- OpenAPI 可生成且 Web 类型与之同步；
-- 数据库从空库执行迁移和 seed 后可用；
-- A/B/C 隔离由集成测试验证；
-- 主 Provider 切换不改业务代码；
-- 删除会话后无法通过 API 越权访问；
-- 模型超时、数据库断开和证据不足均返回稳定错误事件；
-- 公网与 Docker Compose 都通过同一 smoke suite。
-
+架构验收覆盖 OpenAPI 与前端类型同步、Python/Web 全量测试、Ruff/ESLint/TypeScript/Next 构建、A/B/C 串库测试、7 条推荐规则、S0～S3、空/长/特殊/无关输入、多轮与账号权限、密钥扫描、Compose 生命周期、公网 HTTPS/真实模型/浏览器控制台以及部署前后容器镜像和重启次数不变量。证据统一保存到 `docs/evidence` 和 `control/records`。

@@ -24,6 +24,7 @@ import {
   registerAccount,
   sendChat,
   setAuthToken,
+  SYSTEM_BUSY_MESSAGE,
   type AuthResponse,
   type ChatFinalEvent,
   type Citation,
@@ -83,7 +84,7 @@ function errorPresentation(error: WorkspaceError, isSessionError: boolean) {
   if (isSessionError) {
     return {
       evidenceFailure: false,
-      title: "对话暂时未就绪",
+      title: SYSTEM_BUSY_MESSAGE,
       guidance: "已保留当前输入；可使用下方操作恢复，不需要前往其他面板。",
     };
   }
@@ -96,7 +97,7 @@ function errorPresentation(error: WorkspaceError, isSessionError: boolean) {
   }
   return {
     evidenceFailure: false,
-    title: "回答服务尚未就绪",
+    title: SYSTEM_BUSY_MESSAGE,
     guidance: "当前界面不会用预置文本冒充模型结果。",
   };
 }
@@ -920,7 +921,7 @@ export default function ChatWorkspace() {
           ? caught.payload
           : {
               code: "connection_failed",
-              message: "暂时无法连接服务，请确认 API 已启动。",
+              message: SYSTEM_BUSY_MESSAGE,
               request_id: requestId,
               retryable: true,
             },
@@ -1358,6 +1359,7 @@ export default function ChatWorkspace() {
   const profileItems = [
     ["目标", optionLabel(goalOptions, profile.goal)],
     ["年龄段", optionLabel(ageOptions, profile.age_band)],
+    ["精确年龄", profile.age_years ? `${profile.age_years} 岁` : undefined],
     ["过敏原", listLabels(allergyOptions, profile.allergies)],
     ["安全标签", listLabels(conditionOptions, profile.conditions)],
   ];
@@ -2003,6 +2005,7 @@ export default function ChatWorkspace() {
                       setProfileDraft({
                         ...profileDraft,
                         age_band: (event.target.value || undefined) as ProfilePatch["age_band"],
+                        age_years: undefined,
                       })
                     }
                   >
@@ -2011,6 +2014,24 @@ export default function ChatWorkspace() {
                       <option key={option.value} value={option.value}>{option.label}</option>
                     ))}
                   </select>
+                </label>
+                <label>
+                  <span>精确年龄（45–64 岁时必填）</span>
+                  <input
+                    aria-label="精确年龄（岁）"
+                    type="number"
+                    min="1"
+                    max="120"
+                    step="1"
+                    required={profileDraft.age_band === "adult_45_64"}
+                    value={profileDraft.age_years ?? ""}
+                    onChange={(event) =>
+                      setProfileDraft({
+                        ...profileDraft,
+                        age_years: event.target.value ? Number(event.target.value) : undefined,
+                      })
+                    }
+                  />
                 </label>
                 <label>
                   <span>性别</span>

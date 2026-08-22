@@ -19,6 +19,8 @@ export type ProfileAssessment = components["schemas"]["ProfileAssessment"];
 export type RecommendationEvaluation = components["schemas"]["RecommendationEvaluation"];
 export type TransparencyResponse = components["schemas"]["TransparencyResponse"];
 
+export const SYSTEM_BUSY_MESSAGE = "服务繁忙，请稍后重试";
+
 const apiOrigin =
   process.env.NEXT_PUBLIC_API_ORIGIN?.replace(/\/$/, "") ??
   "http://127.0.0.1:8010";
@@ -297,7 +299,7 @@ export async function sendChat(
     throw new ApiClientError(
       {
         code: "connection_failed",
-        message: "暂时无法连接服务，请确认 API 已启动。",
+        message: SYSTEM_BUSY_MESSAGE,
         request_id: requestId,
         retryable: true,
       },

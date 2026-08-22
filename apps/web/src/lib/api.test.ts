@@ -42,6 +42,20 @@ describe("account authorization", () => {
 });
 
 describe("chat transport error boundaries", () => {
+  it("maps an unexpected connection failure to the required busy prompt", async () => {
+    vi.stubGlobal("fetch", vi.fn().mockRejectedValue(new TypeError("network unavailable")));
+
+    await expect(sendChat(chatPayload, { requestId, timeoutMs: 100 })).rejects.toMatchObject({
+      payload: {
+        code: "connection_failed",
+        message: "服务繁忙，请稍后重试",
+        request_id: requestId,
+        retryable: true,
+      },
+      status: 0,
+    });
+  });
+
   it("rejects a malformed final event with a stable retryable error", () => {
     let caught: unknown;
     try {

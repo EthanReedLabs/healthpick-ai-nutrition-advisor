@@ -302,7 +302,7 @@ def create_app(
             request,
             status_code=500,
             code="internal_error",
-            message="服务暂时不可用，请稍后重试。",
+            message="服务繁忙，请稍后重试",
             retryable=True,
         )
 

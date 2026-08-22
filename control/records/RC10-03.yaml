@@ -1,0 +1,44 @@
+schema_version: 1
+task_id: RC10-03
+phase_id: PHASE-09
+outcome: passed
+started_at: "2026-08-23T00:55:00+08:00"
+completed_at: "2026-08-23T00:57:00+08:00"
+recorded_at: "2026-08-23T00:57:00+08:00"
+backfilled: false
+owner: API/WEB/QA_DOCS
+summary: API未预期异常、Web网络异常和会话异常均明确展示赛题指定提示，同时保留底层错误码、请求编号、可重试标记和各自恢复动作。
+deliverables:
+  - apps/api/healthpick_api/main.py
+  - apps/web/src/lib/api.ts
+  - apps/web/src/components/chat-workspace.tsx
+  - tests/api/test_app.py
+  - apps/web/src/lib/api.test.ts
+  - apps/web/src/components/chat-workspace.test.tsx
+  - docs/evidence/phase-09-rc10-03-error-prompt.json
+acceptance_checks:
+  - name: 系统异常用户可见主提示精确为服务繁忙请稍后重试
+    result: pass
+    evidence:
+      - docs/evidence/phase-09-rc10-03-error-prompt.json
+  - name: 内部错误码请求编号和可重试语义未被评分文案覆盖
+    result: pass
+    evidence:
+      - tests/api/test_app.py
+      - apps/web/src/components/chat-workspace.test.tsx
+  - name: 超时证据不足取消和输入边界继续保持独立处理
+    result: pass
+    evidence:
+      - docs/evidence/phase-09-rc10-03-error-prompt.json
+issues:
+  - ISSUE-084
+residual_actions: []
+review:
+  status: pending_final_review
+  reviewer: Project Lead
+  reviewed_at: null
+  notes: 首轮测试误把真实database_unavailable写成占位码，已纠正断言并证明真实诊断语义仍在；69项专项测试通过。
+knowledge_basis:
+  source: knowledge/anti-patterns/0223-error-message-collapses-distinct-failure-causes.md
+  application: 只统一用户可见评分标题，不合并错误码、请求编号、重试策略或日志。
+sedimentation_candidate: null

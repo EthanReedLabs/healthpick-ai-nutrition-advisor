@@ -6,7 +6,7 @@ The competition prompt and documents A/B/C are used only as the fixed source mat
 
 ## Software dependencies
 
-Primary runtime/build dependencies include Python, FastAPI, Pydantic, psycopg, PyMuPDF, Uvicorn, Next.js, React, TypeScript, Node.js, PostgreSQL/pgvector, Docker, Ollama and the selected Qwen models. Each dependency/model remains under its own upstream license and terms. Exact versions are frozen in `uv.lock`, `apps/web/package-lock.json`, Dockerfiles and runtime evidence; users redistributing a release must review those upstream licenses and notices.
+Primary runtime/build dependencies include Python, FastAPI, Pydantic, psycopg, PyMuPDF, Uvicorn, Next.js, React, TypeScript, Node.js, PostgreSQL/pgvector, Docker and Caddy. The public deployment calls Alibaba Cloud Model Studio (Bailian) `qwen3.7-plus`; local reproduction may use Ollama and a compatible Qwen model. Each dependency, model and hosted service remains under its own upstream license and terms. Exact package versions are frozen in `uv.lock`, `apps/web/package-lock.json`, Dockerfiles and runtime evidence; users redistributing or operating a release must review those upstream licenses, model terms and service notices.
 
 ## Generated and captured artifacts
 

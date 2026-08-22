@@ -91,6 +91,19 @@ def test_missing_goal_and_ambiguous_age_fail_closed() -> None:
     assert ambiguous_age.blocked_reasons == ["age_outside_or_ambiguous_plan_scope"]
 
 
+def test_exact_45_is_ready_but_age_outside_verified_source_scope_is_blocked() -> None:
+    service = verified_service()
+
+    exact_45 = service.evaluate(ProfilePatch(age_band="adult_45_64", age_years=45, goal="fat_loss"))
+    age_56 = service.evaluate(ProfilePatch(age_band="adult_45_64", age_years=56, goal="fat_loss"))
+
+    assert exact_45.status == "ready"
+    assert exact_45.primary is not None
+    assert "精确年龄已验证：45 岁" in exact_45.primary.match_reasons
+    assert age_56.status == "blocked"
+    assert age_56.blocked_reasons == ["age_outside_plan_scope"]
+
+
 def test_medical_or_allergy_constraint_never_receives_personalized_targets() -> None:
     service = verified_service()
     allergy = service.evaluate(
@@ -107,10 +120,20 @@ def test_medical_or_allergy_constraint_never_receives_personalized_targets() -> 
             conditions=["kidney_disease"],
         )
     )
+    exact_45_kidney = service.evaluate(
+        ProfilePatch(
+            age_band="adult_45_64",
+            age_years=45,
+            goal="fat_loss",
+            conditions=["kidney_disease"],
+        )
+    )
     assert allergy.blocked_reasons == ["safety_s1_general_only"]
     assert kidney.blocked_reasons == ["safety_s2_general_only"]
     assert allergy.primary is None
     assert kidney.primary is None
+    assert exact_45_kidney.blocked_reasons == ["safety_s2_general_only"]
+    assert exact_45_kidney.primary is None
 
 
 def test_verified_fat_loss_rules_create_one_deterministic_primary_plan() -> None:
@@ -187,3 +210,23 @@ def test_recommendation_endpoint_returns_the_live_reviewed_candidate() -> None:
     assert payload["primary"]["title"] == "轻盈减脂"
     assert payload["primary"]["key_targets"][0] == "每日能量缺口：300–500 kcal"
     assert payload["requires_second_person_review"] is False
+
+
+def test_recommendation_endpoint_supports_verified_exact_age_45() -> None:
+    app = create_app(Settings(app_env="test", llm_mode="mock", embedding_mode="disabled"))
+    with TestClient(app) as client:
+        response = client.post(
+            "/v1/recommendations/evaluate",
+            json={
+                "age_band": "adult_45_64",
+                "age_years": 45,
+                "sex": "female",
+                "goal": "fat_loss",
+            },
+        )
+
+    assert response.status_code == 200
+    payload = response.json()
+    assert payload["status"] == "ready"
+    assert payload["primary"]["title"] == "轻盈减脂"
+    assert "精确年龄已验证：45 岁" in payload["primary"]["match_reasons"]

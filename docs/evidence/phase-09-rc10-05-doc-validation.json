@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "captured_at": "2026-08-23T01:30:09.851239+08:00",
+  "checks": [
+    {
+      "path": "README.md",
+      "required_phrases": 7,
+      "status": "PASS"
+    },
+    {
+      "path": "docs/AI_USAGE.md",
+      "required_phrases": 6,
+      "status": "PASS"
+    },
+    {
+      "path": "docs/02-architecture.md",
+      "required_phrases": 6,
+      "status": "PASS"
+    },
+    {
+      "path": "docs/03-rag-and-knowledge.md",
+      "required_phrases": 4,
+      "status": "PASS"
+    },
+    {
+      "path": "docs/08-basic-test-records.md",
+      "required_phrases": 5,
+      "status": "PASS"
+    },
+    {
+      "path": "PRIVACY.md",
+      "required_phrases": 4,
+      "status": "PASS"
+    },
+    {
+      "path": "SECURITY.md",
+      "required_phrases": 3,
+      "status": "PASS"
+    },
+    {
+      "path": "THIRD_PARTY_NOTICES.md",
+      "required_phrases": 4,
+      "status": "PASS"
+    },
+    {
+      "path": "LICENSE",
+      "required_phrases": 2,
+      "status": "PASS"
+    },
+    {
+      "path": "README.md",
+      "characters": 4701,
+      "minimum_characters": 500,
+      "status": "PASS"
+    },
+    {
+      "path": "docs/02-architecture.md",
+      "characters": 2377,
+      "minimum_characters": 300,
+      "status": "PASS"
+    },
+    {
+      "path": "docs/08-basic-test-records.md",
+      "test_groups": 10,
+      "status": "PASS"
+    },
+    {
+      "path": "docs/release-data-map.json",
+      "data_paths": 6,
+      "status": "PASS"
+    },
+    {
+      "path": "docs/evidence/phase-09-rc10-05-availability.json",
+      "status": "PASS"
+    }
+  ],
+  "error_count": 0,
+  "errors": [],
+  "status": "PASS"
+}

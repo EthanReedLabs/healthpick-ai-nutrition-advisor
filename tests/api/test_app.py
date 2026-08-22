@@ -213,6 +213,29 @@ def test_method_not_allowed_uses_stable_error_contract(client: TestClient) -> No
     assert set(response.json()) >= {"request_id", "code", "message", "retryable"}
 
 
+def test_unexpected_error_uses_required_busy_prompt_without_losing_diagnostics(
+    client: TestClient,
+) -> None:
+    @client.app.get("/__test/unexpected-error")
+    async def unexpected_error() -> None:
+        raise RuntimeError("injected test failure")
+
+    request_id = "9f501450-82af-4a67-a32f-a51d27de9ea2"
+    response = client.get(
+        "/__test/unexpected-error",
+        headers={"X-Request-ID": request_id},
+    )
+
+    assert response.status_code == 500
+    assert response.json() == {
+        "request_id": request_id,
+        "code": "internal_error",
+        "message": "服务繁忙，请稍后重试",
+        "retryable": True,
+        "details": None,
+    }
+
+
 def test_production_cannot_start_with_mock_llm() -> None:
     with pytest.raises(ValidationError, match="LLM_MODE=mock is forbidden"):
         Settings(app_env="production", llm_mode="mock")

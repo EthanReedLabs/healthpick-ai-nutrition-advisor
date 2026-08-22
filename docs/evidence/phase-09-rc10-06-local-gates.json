@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "evidence_id": "PHASE-09-RC10-06-LOCAL-GATES",
+  "captured_at": "2026-08-23T01:32:00+08:00",
+  "status": "PASS",
+  "gates": {
+    "python_pytest": {"status": "PASS", "tests": 271, "duration_seconds": 4.82},
+    "ruff_lint": {"status": "PASS", "command": "ruff check ."},
+    "changed_python_format": {"status": "PASS", "files": 10},
+    "web_vitest": {"status": "PASS", "tests": 34, "files": 2},
+    "web_eslint": {"status": "PASS"},
+    "web_typecheck": {"status": "PASS", "includes_next_typegen": true},
+    "web_production_build": {"status": "PASS", "next_version": "16.3.2"},
+    "release_docs": {"status": "PASS", "checks": 14, "errors": 0},
+    "openapi_sync": {
+      "status": "PASS",
+      "regeneration_stable": true,
+      "openapi_sha256": "7DE37F6A7D5E434799B553F68809479726C55E00EDD0EDA6B664468EB8C1ECAB",
+      "typescript_sha256": "1E7784167C1882672E92870E45852C50030F6E6A12673767C9EDBEC1F1647547"
+    },
+    "repository_secret_scan": {
+      "status": "PASS",
+      "scanned_files": 583,
+      "binary_location_checks": 68,
+      "findings": 0,
+      "evidence": "output/deployment/rc10-rubric-closure-secret-scan.json"
+    },
+    "phase_01_08_control_plane": {
+      "status": "PASS",
+      "final_readiness": "READY",
+      "errors": 0,
+      "final_blockers": 0
+    },
+    "diff_whitespace": {"status": "PASS"}
+  },
+  "non_blocking_observation": {
+    "check": "ruff format --check .",
+    "result": "five pre-existing, untouched files remain formatted differently by the installed Ruff version",
+    "action": "All ten Python files changed in RC10 pass Ruff format. Historical out-of-scope files were not mechanically rewritten; Ruff lint, which is the frozen release gate, passes.",
+    "blocks_release": false
+  }
+}

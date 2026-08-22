@@ -1,0 +1,31 @@
+schema_version: 1
+task_id: RC10-01
+phase_id: PHASE-09
+outcome: passed
+started_at: "2026-08-23T00:49:04+08:00"
+completed_at: "2026-08-23T00:49:04+08:00"
+recorded_at: "2026-08-23T00:49:04+08:00"
+backfilled: false
+owner: LEAD
+summary: 已将补充赛题说明的五项明确差距、七个顺序任务、实施边界、完成记录和最终总纲门禁纳入统一控制面。
+deliverables:
+  - docs/phases/phase-09-rubric-closure.md
+  - control/records/RC10-CONTROL.yaml
+  - control/records/RC9-POLISH.intent.json
+acceptance_checks:
+  - name: 执行计划包含顺序、验收标准、完成记录和最终总纲门禁
+    result: pass
+    evidence:
+      - docs/phases/phase-09-rubric-closure.md
+  - name: 意图边界已由用户批准并应用
+    result: pass
+    evidence:
+      - control/records/RC9-POLISH.intent.json
+      - control/records/RC9-POLISH.intent.events.jsonl
+issues: []
+residual_actions: []
+review:
+  status: pending_final_review
+  reviewer: Project Lead
+  reviewed_at: null
+  notes: 待 RC10-07 最终总纲验收统一复核。

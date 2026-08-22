@@ -1,0 +1,41 @@
+schema_version: 1
+task_id: RC10-06
+phase_id: PHASE-09
+outcome: passed
+started_at: "2026-08-23T01:28:00+08:00"
+completed_at: "2026-08-23T01:32:00+08:00"
+recorded_at: "2026-08-23T01:32:00+08:00"
+backfilled: false
+owner: QA_DOCS/LEAD
+summary: RC10本地候选通过271项Python、34项Web、Ruff lint、变更文件格式、ESLint、TypeScript、Next生产构建、文档、OpenAPI、密钥和既有控制面全部门禁。
+deliverables:
+  - docs/evidence/phase-09-rc10-06-local-gates.json
+  - docs/evidence/phase-09-rc10-05-doc-validation.json
+  - packages/shared/openapi/healthpick.openapi.json
+  - apps/web/src/lib/api-schema.d.ts
+  - output/deployment/rc10-rubric-closure-secret-scan.json
+acceptance_checks:
+  - name: Python与Web全量自动测试通过
+    result: pass
+    evidence:
+      - docs/evidence/phase-09-rc10-06-local-gates.json
+  - name: Ruff ESLint TypeScript和Next生产构建通过
+    result: pass
+    evidence:
+      - docs/evidence/phase-09-rc10-06-local-gates.json
+  - name: OpenAPI重生后哈希稳定且前端类型同步
+    result: pass
+    evidence:
+      - docs/evidence/phase-09-rc10-06-local-gates.json
+  - name: 文档密钥与控制面门禁通过
+    result: pass
+    evidence:
+      - docs/evidence/phase-09-rc10-06-local-gates.json
+      - docs/evidence/phase-09-rc10-05-doc-validation.json
+issues: []
+residual_actions: []
+review:
+  status: pending_final_review
+  reviewer: Project Lead
+  reviewed_at: null
+  notes: 可选全仓format诊断发现5个未触碰历史文件与当前Ruff格式版本有差异；RC10改动的10个Python文件全部格式通过，冻结的Ruff lint门为PASS，不构成功能或发布阻断。

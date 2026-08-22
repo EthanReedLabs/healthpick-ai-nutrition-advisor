@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "captured_at": "2026-08-22T14:50:00+08:00",
+  "captured_at": "2026-08-23T01:15:00+08:00",
   "product": "HealthPick competition release candidate",
   "paths": [
     {
@@ -37,7 +37,7 @@
     },
     {
       "id": "health_profile",
-      "data": ["goal", "age band", "height", "weight", "activity", "preferences", "allergies", "medical flags"],
+      "data": ["goal", "age band", "optional exact age", "height", "weight", "activity", "preferences", "allergies", "medical flags"],
       "source": "user input",
       "browser_storage": "React in-memory state for the active page",
       "server_storage": "ephemeral request processing; not a standalone PostgreSQL profile",
@@ -73,5 +73,14 @@
   "automatic_personal_data_retention_worker": false,
   "advertising_sdk": false,
   "analytics_sdk": false,
-  "public_deployment_status": "pending ACTION-05"
+  "public_deployment_status": "deployed https://106.14.13.139",
+  "production_runtime": {
+    "platform": "Alibaba Cloud ECS",
+    "llm_provider": "Alibaba Cloud Model Studio Bailian Token Plan (Beijing)",
+    "llm_model": "qwen3.7-plus",
+    "retrieval_mode": "keyword",
+    "embedding_mode": "disabled",
+    "conversation_store": "postgres",
+    "health_profile_persistence": "ephemeral"
+  }
 }

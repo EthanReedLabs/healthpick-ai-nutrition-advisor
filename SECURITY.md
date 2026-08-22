@@ -2,7 +2,7 @@
 
 ## Supported scope
 
-The competition release candidate is the only supported version. Public deployment is not yet active; local and Compose evidence must not be interpreted as a production security certification.
+The competition release candidate is the only supported version. A short-lived public deployment is active at `https://106.14.13.139`; this deployment and the local/Compose evidence are competition engineering evidence, not a general production security certification.
 
 ## Reporting a vulnerability
 
@@ -22,7 +22,7 @@ Contact the project owner through the competition submission contact or reposito
 
 - Web authentication currently stores the bearer token in `localStorage`, not an HttpOnly Cookie. A production service should migrate to HttpOnly/Secure/SameSite cookies and CSRF protection.
 - There is no automatic conversation-retention worker. Users must delete conversations/accounts, and the competition operator must clean demonstration data.
-- HTTPS, managed-database TLS, rate limiting, public monitoring and seven-day availability depend on the final deployment and remain behind ACTION-05.
+- HTTPS is active through Caddy, and the operator has committed to keep the ECS and certificate renewal available for at least seven days after the actual competition submission. There is no external uptime monitor or application rate limiter; PostgreSQL is an on-host container rather than a managed TLS database.
 - The project is a nutrition information assistant, not a medical device or substitute for professional care.
 
-Security evidence is summarized in `docs/evidence/phase-08-p08-01-quality.md` and the live task status remains in `docs/governance/CONTROL_BOARD.md`.
+Security evidence is summarized in `docs/evidence/phase-08-p08-01-quality.md`; the supplemental RC10 status and seven-day commitment are recorded in `control/records/RC10-CONTROL.yaml` and `docs/evidence/phase-09-rc10-05-availability.md`.

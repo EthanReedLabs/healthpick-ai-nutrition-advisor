@@ -28,6 +28,16 @@ def test_profile_rejects_unknown_medical_flags_and_extra_fields() -> None:
         ProfilePatch(full_name="private person")
 
 
+def test_profile_accepts_exact_45_and_rejects_age_band_mismatch() -> None:
+    profile = ProfilePatch(age_band="adult_45_64", age_years=45, goal="fat_loss")
+    assert profile.age_years == 45
+
+    with pytest.raises(ValidationError, match="age_years does not match age_band"):
+        ProfilePatch(age_band="adult_18_44", age_years=45)
+    with pytest.raises(ValidationError, match="age_band is required"):
+        ProfilePatch(age_years=45)
+
+
 @pytest.mark.parametrize(
     ("field", "value"),
     [("height_cm", 99), ("height_cm", 231), ("weight_kg", 24), ("weight_kg", 301)],
@@ -72,6 +82,18 @@ def test_profile_assessment_endpoint_is_ephemeral_and_normalized() -> None:
         "goal",
         "allergies",
     }
+
+
+def test_profile_endpoint_rejects_inconsistent_exact_age() -> None:
+    app = create_app(Settings(app_env="test", llm_mode="mock", embedding_mode="disabled"))
+    with TestClient(app, raise_server_exceptions=False) as client:
+        response = client.post(
+            "/v1/profile/assess",
+            json={"age_band": "adult_18_44", "age_years": 45, "goal": "fat_loss"},
+        )
+
+    assert response.status_code == 422
+    assert response.json()["code"] == "validation_error"
 
 
 def test_chat_rejects_invalid_profile_patch_with_stable_422() -> None:

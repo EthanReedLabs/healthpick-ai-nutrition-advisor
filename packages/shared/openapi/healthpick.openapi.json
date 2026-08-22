@@ -1419,6 +1419,19 @@
             ],
             "title": "Age Band"
           },
+          "age_years": {
+            "anyOf": [
+              {
+                "maximum": 120.0,
+                "minimum": 1.0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Age Years"
+          },
           "allergies": {
             "items": {
               "enum": [

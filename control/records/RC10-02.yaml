@@ -1,0 +1,36 @@
+schema_version: 1
+task_id: RC10-02
+phase_id: PHASE-09
+outcome: passed
+started_at: "2026-08-23T00:49:04+08:00"
+completed_at: "2026-08-23T00:55:00+08:00"
+recorded_at: "2026-08-23T00:55:00+08:00"
+backfilled: false
+owner: API/QA_DOCS
+summary: 补齐赛题列举的三类自然语言诉求短语，并把每类短语定向到已通过复核的A/B核心知识块；没有扩大通用健身或平台词的推荐范围。
+deliverables:
+  - apps/api/healthpick_api/routing/router.py
+  - apps/api/healthpick_api/retrieval/keyword.py
+  - tests/api/test_retrieval.py
+  - docs/evidence/phase-09-rc10-02-intent-routing.json
+acceptance_checks:
+  - name: 三个赛题示例均路由为recommendation且只允许A/B
+    result: pass
+    evidence:
+      - docs/evidence/phase-09-rc10-02-intent-routing.json
+  - name: 三个示例均命中对应减脂增肌稳糖核心证据
+    result: pass
+    evidence:
+      - docs/evidence/phase-09-rc10-02-intent-routing.json
+  - name: 宽泛健身房会员问题不被吞并为营养推荐
+    result: pass
+    evidence:
+      - tests/api/test_retrieval.py
+issues:
+  - ISSUE-083
+residual_actions: []
+review:
+  status: pending_final_review
+  reviewer: Project Lead
+  reviewed_at: null
+  notes: 专项47项测试通过，待全量与公网复验。
