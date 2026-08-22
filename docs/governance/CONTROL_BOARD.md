@@ -5,7 +5,7 @@
 - 结构校验：`PASS`
 - 最终验收就绪度：`NOT_READY`
 - 当前阶段：`PHASE-08`
-- 最近审计：`2026-08-22T17:06:54.925675+08:00`
+- 最近审计：`2026-08-22T17:13:21.917905+08:00`
 
 ## 阶段
 
@@ -81,14 +81,13 @@
 | PHASE-08 | P08-03 | 文档 AI 披露许可证与隐私冻结 | QA_DOCS/LEAD | `passed` | control/records/P08-03.yaml |
 | PHASE-08 | P08-04 | 演示资产与双次连续演练 | LEAD/QA_DOCS | `pass_with_action` | control/records/P08-04.yaml |
 | PHASE-08 | P08-05 | Release tag 匿名克隆与提交候选冻结 | DEVOPS/LEAD | `passed` | control/records/P08-05.yaml |
-| PHASE-08 | P08-06 | 公网七天可用性责任与监测 | DEVOPS/LEAD | `in_progress` | — |
-| PHASE-08 | P08-07 | 执行最终总纲验收并签署 | LEAD | `not_started` | — |
+| PHASE-08 | P08-06 | 短期公网可用性与停机责任确认 | DEVOPS/LEAD | `passed` | control/records/P08-06.yaml |
+| PHASE-08 | P08-07 | 执行最终总纲验收并签署 | LEAD | `in_progress` | — |
 
 ## 开放行动
 
 | ID | 行动 | Owner | 截止 | 阻断 |
 |---|---|---|---|---|
-| ACTION-05 | ECS 七天可用性与短期 IP 证书续期监测 | DEVOPS/LEAD | Phase-08 最终验收前 | P08-06 |
 | ACTION-06 | 80 条结构化事实第二人逐条复核 | KNOWLEDGE/LEAD | T+12 | DATA-03, DATA-04, DATA-06, P04-02, P04-05, P04-07 |
 
 ## 未关闭问题
@@ -102,13 +101,12 @@
 ## 任务状态计数
 
 - in_progress: 1
-- not_started: 1
 - pass_with_action: 18
-- passed: 35
+- passed: 36
 
 ## 最终验收
 
-当前共有 `68` 个机器判定阻断项。完整清单见 `docs/evidence/control-plane-validation.md`。
+当前共有 `66` 个机器判定阻断项。完整清单见 `docs/evidence/control-plane-validation.md`。
 
 | Gate | 验收项 | 状态 |
 |---|---|---|
@@ -120,5 +118,5 @@
 | FINAL-06 | 公网 HTTPS 与 Compose 干净环境复现通过 | `not_started` |
 | FINAL-07 | 文档 AI 披露演示和提交资产齐全 | `not_started` |
 | FINAL-08 | Release commit/tag/hash/匿名克隆一致 | `not_started` |
-| FINAL-09 | 七天可用性责任和监测已确认 | `not_started` |
+| FINAL-09 | 短期公网可用性与赛后停机责任已确认 | `not_started` |
 | FINAL-10 | Project Lead 最终签署且不存在开放阻断 | `not_started` |

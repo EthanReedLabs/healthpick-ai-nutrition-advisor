@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-22T17:06:54.925675+08:00",
+  "generated_at": "2026-08-22T17:13:21.917905+08:00",
   "structural_status": "PASS",
   "final_readiness": "NOT_READY",
   "current_phase": "PHASE-08",
@@ -11,14 +11,13 @@
       "in_progress": 1
     },
     "tasks": {
-      "passed": 35,
+      "passed": 36,
       "pass_with_action": 18,
-      "in_progress": 1,
-      "not_started": 1
+      "in_progress": 1
     },
     "actions": {
-      "closed": 6,
-      "open": 2
+      "closed": 7,
+      "open": 1
     },
     "issues": {
       "resolved": 74,
@@ -84,9 +83,7 @@
     "task:P07-02=pass_with_action",
     "task:P07-06=pass_with_action",
     "task:P08-04=pass_with_action",
-    "task:P08-06=in_progress",
-    "task:P08-07=not_started",
-    "action:ACTION-05=open",
+    "task:P08-07=in_progress",
     "action:ACTION-06=open",
     "gate:FINAL-01=not_started",
     "gate:FINAL-02=not_started",

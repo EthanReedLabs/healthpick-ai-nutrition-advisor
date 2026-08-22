@@ -3,13 +3,13 @@
 - Structural status: `PASS`
 - Final readiness: `NOT_READY`
 - Current phase: `PHASE-08`
-- Generated: `2026-08-22T17:06:54.925675+08:00`
+- Generated: `2026-08-22T17:13:21.917905+08:00`
 
 ## Counts
 
 - phases: {"in_progress": 1, "pass_with_action": 6, "passed": 1}
-- tasks: {"in_progress": 1, "not_started": 1, "pass_with_action": 18, "passed": 35}
-- actions: {"closed": 6, "open": 2}
+- tasks: {"in_progress": 1, "pass_with_action": 18, "passed": 36}
+- actions: {"closed": 7, "open": 1}
 - issues: {"open": 3, "resolved": 74}
 - final_gates: {"not_started": 10}
 
@@ -76,9 +76,7 @@
 - `task:P07-02=pass_with_action`
 - `task:P07-06=pass_with_action`
 - `task:P08-04=pass_with_action`
-- `task:P08-06=in_progress`
-- `task:P08-07=not_started`
-- `action:ACTION-05=open`
+- `task:P08-07=in_progress`
 - `action:ACTION-06=open`
 - `gate:FINAL-01=not_started`
 - `gate:FINAL-02=not_started`

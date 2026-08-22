@@ -1,0 +1,29 @@
+schema_version: 1
+task_id: P08-06
+phase_id: PHASE-08
+outcome: passed
+started_at: "2026-08-22T17:02:00+08:00"
+completed_at: "2026-08-22T17:11:59+08:00"
+recorded_at: "2026-08-22"
+backfilled: false
+owner: DEVOPS/LEAD
+summary: 参赛者确认公网环境仅需在比赛演示期短期运行并在使用后手动停机；保留Compose健康检查、自动重启和Caddy续期，不安装持久系统监控。
+deliverables:
+  - docs/evidence/phase-08-p08-06-quality.md
+  - docs/evidence/phase-08-p08-06-availability.json
+acceptance_checks:
+  - name: 公网首页与健康检查当前可用
+    result: pass
+    evidence: [docs/evidence/phase-08-p08-06-availability.json]
+  - name: 容器健康检查自动重启与Caddy续期保障存在
+    result: pass
+    evidence: [compose.yaml, compose.production.yaml, infra/caddy/Caddyfile, docs/evidence/phase-08-p08-06-quality.md]
+  - name: 短期运行和赛后手动停机责任已确认
+    result: pass
+    evidence: [docs/evidence/phase-08-p08-06-availability.json, docs/evidence/phase-08-p08-06-quality.md]
+  - name: 未安装不必要的全局监控配置
+    result: pass
+    evidence: [docs/evidence/phase-08-p08-06-availability.json]
+issues: [ISSUE-005, ISSUE-074, ISSUE-076, ISSUE-077]
+residual_actions: []
+review: {status: accepted, reviewer: Project Lead, reviewed_at: "2026-08-22T17:11:59+08:00", notes: 用户明确选择短期运行和赛后手动停机，不需要systemd或外部持续监测}

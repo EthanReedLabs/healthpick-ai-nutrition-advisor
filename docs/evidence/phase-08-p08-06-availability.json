@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "evidence_id": "PHASE-08-P08-06-SHORT-LIVED-AVAILABILITY",
+  "captured_at": "2026-08-22T17:11:59+08:00",
+  "status": "PASS",
+  "operation_mode": "short_lived_competition_demo",
+  "operator_decision": {
+    "keep_running_for_competition_demo_period": true,
+    "stop_manually_after_use": true,
+    "persistent_system_monitoring_required": false,
+    "decision_confirmed_by_user": true
+  },
+  "runtime_safeguards": {
+    "postgres_healthcheck": true,
+    "api_healthcheck": true,
+    "web_healthcheck": true,
+    "restart_policy": "unless-stopped",
+    "caddy_automatic_certificate_renewal": true,
+    "persistent_caddy_data_volume": true
+  },
+  "public_probe": {
+    "endpoint": "https://106.14.13.139",
+    "root_status": 200,
+    "health_status": 200,
+    "health_body_status": "ok",
+    "llm_mode": "real"
+  },
+  "system_changes": {
+    "systemd_timer_installed": false,
+    "global_configuration_added": false,
+    "reason": "The deployment is intentionally temporary and the user declined permanent monitoring configuration."
+  },
+  "shutdown": {
+    "trigger": "manual user decision after competition/demo use",
+    "automatic_shutdown_configured": false,
+    "data_deletion_authorized": false
+  },
+  "residual_actions": []
+}
