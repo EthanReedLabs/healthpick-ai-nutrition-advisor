@@ -1,0 +1,24 @@
+name: Repository security
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  secret-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Scan current repository tree
+        run: python scripts/audit_repository_security.py --output "$RUNNER_TEMP/current-tree-secret-scan.json"
+      - name: Scan all reachable Git history
+        run: python scripts/audit_git_history_security.py --output "$RUNNER_TEMP/history-secret-scan.json"

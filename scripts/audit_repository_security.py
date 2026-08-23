@@ -10,8 +10,10 @@ import argparse
 import json
 import re
 import subprocess
+import zipfile
 from dataclasses import asdict, dataclass
 from datetime import UTC, datetime
+from io import BytesIO
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -19,6 +21,21 @@ DEFAULT_OUTPUT = ROOT / "docs" / "evidence" / "phase-08-p08-01-secret-scan.json"
 
 FORBIDDEN_SUFFIXES = {".key", ".p12", ".pfx", ".pem"}
 ASSIGNMENT_SUFFIXES = {".cfg", ".env", ".ini", ".json", ".properties", ".toml", ".yaml", ".yml"}
+ARCHIVE_SUFFIXES = {".docx", ".pptx", ".xlsx", ".zip"}
+ARCHIVE_TEXT_SUFFIXES = {
+    ".cfg",
+    ".csv",
+    ".ini",
+    ".json",
+    ".properties",
+    ".rels",
+    ".toml",
+    ".txt",
+    ".xml",
+    ".yaml",
+    ".yml",
+}
+MAX_ARCHIVE_MEMBER_BYTES = 8 * 1024 * 1024
 PLACEHOLDER_MARKERS = (
     "***",
     "$",
@@ -47,6 +64,16 @@ TEXT_RULES = (
     ("openai_style_token", re.compile(r"\bsk-[A-Za-z0-9_-]{20,}\b")),
     ("slack_token", re.compile(r"\bxox[baprs]-[A-Za-z0-9-]{20,}\b")),
 )
+TEXT_RULE_HINTS = {
+    "private_key_material": "PRIVATE KEY",
+    "aws_access_key": ("AKIA", "ASIA"),
+    "github_token": ("ghp_", "gho_", "ghu_", "ghs_", "ghr_"),
+    "github_fine_grained_token": "github_pat_",
+    "openai_style_token": "sk-",
+    "slack_token": ("xoxb-", "xoxa-", "xoxp-", "xoxr-", "xoxs-"),
+}
+ASSIGNMENT_HINTS = ("API_KEY", "SECRET", "PASSWORD", "TOKEN", "DSN")
+URI_HINTS = ("postgres://", "postgresql://", "mysql://", "mongodb://", "mongodb+srv://", "redis://")
 ASSIGNMENT = re.compile(
     r"(?im)^\s*\{?\s*[\"']?(?:[A-Z0-9_]*(?:API_KEY|SECRET|PASSWORD|TOKEN|DSN))\b"
     r"[\"']?\s*[=:]\s*[\"']?([^\s\"'\r\n,#{}]+)"
@@ -88,41 +115,95 @@ def _line_number(text: str, offset: int) -> int:
     return text.count("\n", 0, offset) + 1
 
 
-def scan_file(path: Path, relative_path: str) -> tuple[list[Finding], bool]:
+def _scan_text(text: str, relative_path: str, *, assignments: bool) -> list[Finding]:
     findings: list[Finding] = []
+    for rule, pattern in TEXT_RULES:
+        hints = TEXT_RULE_HINTS[rule]
+        if isinstance(hints, str):
+            hints = (hints,)
+        if not any(hint in text for hint in hints):
+            continue
+        for match in pattern.finditer(text):
+            findings.append(Finding(relative_path, _line_number(text, match.start()), rule))
+
+    lowered = text.lower()
+    if any(hint in lowered for hint in URI_HINTS):
+        for line_number, line in enumerate(text.splitlines(), start=1):
+            if "://" not in line:
+                continue
+            for match in URI_CREDENTIAL.finditer(line):
+                password = match.group(2)
+                host = match.group(3).lower()
+                local_development_source = (
+                    host in {"127.0.0.1", "localhost"}
+                    and relative_path.startswith(("scripts/", "tools/"))
+                )
+                if not _is_placeholder(password) and not local_development_source:
+                    findings.append(Finding(relative_path, line_number, "credential_in_uri"))
+
+    if assignments and any(hint in text.upper() for hint in ASSIGNMENT_HINTS):
+        for line_number, line in enumerate(text.splitlines(), start=1):
+            for match in ASSIGNMENT.finditer(line):
+                if not _is_placeholder(match.group(1)):
+                    findings.append(Finding(relative_path, line_number, "secret_assignment"))
+    return findings
+
+
+def _scan_archive(raw: bytes, relative_path: str) -> list[Finding]:
+    findings: list[Finding] = []
+    try:
+        with zipfile.ZipFile(BytesIO(raw)) as archive:
+            for member in archive.infolist():
+                member_suffix = Path(member.filename).suffix.lower()
+                if member.is_dir() or member_suffix not in ARCHIVE_TEXT_SUFFIXES:
+                    continue
+                member_path = f"{relative_path}!{member.filename}"
+                if member.flag_bits & 0x1:
+                    findings.append(Finding(member_path, 1, "encrypted_archive_member"))
+                    continue
+                if member.file_size > MAX_ARCHIVE_MEMBER_BYTES:
+                    findings.append(Finding(member_path, 1, "oversized_archive_member"))
+                    continue
+                text = archive.read(member).decode("utf-8", errors="replace")
+                findings.extend(_scan_text(text, member_path, assignments=False))
+                if member.filename.lower().endswith((".xml", ".rels")):
+                    visible_text = re.sub(r"<[^>]+>", "", text)
+                    findings.extend(_scan_text(visible_text, member_path, assignments=True))
+                else:
+                    findings.extend(_scan_text(text, member_path, assignments=True))
+    except (OSError, RuntimeError, zipfile.BadZipFile):
+        findings.append(Finding(relative_path, 1, "unreadable_archive"))
+    return sorted(set(findings), key=lambda item: (item.path, item.line, item.rule))
+
+
+def scan_bytes(raw: bytes, relative_path: str) -> tuple[list[Finding], bool]:
+    findings: list[Finding] = []
+    path = Path(relative_path.split("!", 1)[0])
     name = path.name.lower()
     if name == ".env" or (name.startswith(".env.") and name != ".env.example"):
         findings.append(Finding(relative_path, 1, "forbidden_environment_file"))
     if path.suffix.lower() in FORBIDDEN_SUFFIXES:
         findings.append(Finding(relative_path, 1, "private_key_container"))
 
-    raw = path.read_bytes()
+    if path.suffix.lower() in ARCHIVE_SUFFIXES and raw.startswith(b"PK"):
+        findings.extend(_scan_archive(raw, relative_path))
+        return findings, True
     if b"\0" in raw[:8192]:
         return findings, True
+
     text = raw.decode("utf-8", errors="replace")
-
-    for rule, pattern in TEXT_RULES:
-        for match in pattern.finditer(text):
-            findings.append(Finding(relative_path, _line_number(text, match.start()), rule))
-
-    for match in URI_CREDENTIAL.finditer(text):
-        password = match.group(2)
-        host = match.group(3).lower()
-        local_development_source = host in {"127.0.0.1", "localhost"} and relative_path.startswith(
-            ("scripts/", "tools/")
+    findings.extend(
+        _scan_text(
+            text,
+            relative_path,
+            assignments=path.suffix.lower() in ASSIGNMENT_SUFFIXES or name.startswith(".env"),
         )
-        if not _is_placeholder(password) and not local_development_source:
-            findings.append(
-                Finding(relative_path, _line_number(text, match.start()), "credential_in_uri")
-            )
-
-    if path.suffix.lower() in ASSIGNMENT_SUFFIXES or name.startswith(".env"):
-        for match in ASSIGNMENT.finditer(text):
-            if not _is_placeholder(match.group(1)):
-                findings.append(
-                    Finding(relative_path, _line_number(text, match.start()), "secret_assignment")
-                )
+    )
     return findings, False
+
+
+def scan_file(path: Path, relative_path: str) -> tuple[list[Finding], bool]:
+    return scan_bytes(path.read_bytes(), relative_path)
 
 
 def audit(root: Path) -> dict[str, object]:

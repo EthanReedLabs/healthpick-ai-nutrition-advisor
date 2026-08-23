@@ -7,7 +7,7 @@
 | 项目名称 | AI智能膳食顾问（AI Smart Nutrition Advisor） | ready |
 | 公网演示 | `https://106.14.13.139` | RC11 HTTPS、真实模型与浏览器验收已通过 |
 | 健康检查 | `https://106.14.13.139/healthz` | 不需要写入普通用户入口，可供技术验收 |
-| 代码仓库 | `https://github.com/EthanReedLabs/healthpick-ai-nutrition-advisor`，默认分支 `main` | 仓库当前为私有时，提交前必须给评委账号权限或另交平台允许的源码归档 |
+| 代码仓库 | `https://github.com/EthanReedLabs/healthpick-ai-nutrition-advisor`，默认分支 `main` | 公共仓库；无需评委账号即可浏览和下载 |
 | 使用说明 | `docs/deliverables/word/03-使用说明文档.docx` | 2591 个中文字符；技术选型与核心逻辑 506 个中文字符 |
 | 架构说明 | `docs/deliverables/word/04-系统架构说明.docx` | 2883 个中文字符；包含架构、知识挂载、推荐、多轮、异常、Prompt 和部署 |
 | 测试记录 | `docs/deliverables/word/05-基础功能测试记录.docx` | 12 组测试，另有全量机器证据与公网验收证据 |

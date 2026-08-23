@@ -1,3 +1,5 @@
+import zipfile
+from io import BytesIO
 from pathlib import Path
 
 from scripts.audit_repository_security import scan_file
@@ -74,3 +76,20 @@ def test_secret_scan_allows_loopback_script_default_but_not_evidence(tmp_path: P
 
     assert script_findings == []
     assert [item.rule for item in evidence_findings] == ["credential_in_uri"]
+
+
+def test_secret_scan_inspects_docx_xml_without_returning_value(tmp_path: Path) -> None:
+    candidate = "sk-" + "b" * 32
+    payload = BytesIO()
+    with zipfile.ZipFile(payload, "w") as archive:
+        archive.writestr("word/document.xml", f"<w:t>{candidate}</w:t>")
+    path = tmp_path / "submission.docx"
+    path.write_bytes(payload.getvalue())
+
+    findings, is_binary = scan_file(path, "submission.docx")
+
+    assert is_binary
+    assert [(item.path, item.rule) for item in findings] == [
+        ("submission.docx!word/document.xml", "openai_style_token")
+    ]
+    assert candidate not in repr(findings)

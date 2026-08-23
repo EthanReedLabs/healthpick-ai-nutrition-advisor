@@ -125,6 +125,11 @@ npm run build
 14. [基础功能测试记录](docs/08-basic-test-records.md)
 15. [公网七天可用性承诺](docs/evidence/phase-09-rc10-05-availability.md)
 16. [赛题正式交付文档（Word）](docs/deliverables/README.md)
+17. [公开仓库安全与漏洞报告](SECURITY.md)
+
+## 公开仓库与密钥
+
+本仓库不提交真实 API Key、数据库密码、私钥、访问令牌或部署凭据。`.env.example` 与 `infra/ecs.env.example` 仅提供变量名和占位符；真实值必须放在 Git 已忽略的本地环境文件或服务器环境中。CI 会同时扫描当前提交候选和全部可达 Git 历史，报告只包含位置与规则名，不回显候选值。
 
 ## 医疗边界
 

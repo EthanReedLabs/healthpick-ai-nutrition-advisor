@@ -2,6 +2,10 @@
 .env
 .env.*
 !.env.example
+*.key
+*.pem
+*.p12
+*.pfx
 
 # JavaScript / Next.js
 node_modules/
@@ -43,3 +47,4 @@ output/playwright/phase-07-p07-05-stopped-immediate.png
 Thumbs.db
 .idea/
 .vscode/
+~$*.docx
