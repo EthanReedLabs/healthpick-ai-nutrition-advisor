@@ -4,15 +4,12 @@
     "服务器仅切换新Web镜像，API、数据库、模型配置和历史数据不变，健康检查通过",
     "公网发送后立即显示用户问题并清空输入框，等待光标不旋转，完整回答成功且控制台无错误，测试对话已清理"
   ],
-  "applied_at": "2026-08-23T02:54:53.687858+00:00",
-  "applied_by": "agent-after-human-approval",
-  "applied_proposal_digest": "e662fce95f2c7ddcae4c812b4815450d83ec9852468bade5da8bba851498246d",
   "approved_event_fingerprints": [],
   "confirmation": {
     "reason": "",
     "required": false
   },
-  "confirmed_by": "human-proposal-approval",
+  "confirmed_by": "unconfirmed-proposal",
   "constraints": {
     "allowed_paths": [
       "apps/web/**",
@@ -54,6 +51,7 @@
     "external_write": "confirm",
     "local_write": true
   },
+  "proposal_digest": "e662fce95f2c7ddcae4c812b4815450d83ec9852468bade5da8bba851498246d",
   "proposal_for": {
     "base_policy_digest": "0585a7a2461caec5ce9c88d776697a819eb7203fe7cbf0483707f117695c46d7",
     "base_revision": 8,
@@ -87,6 +85,6 @@
     "deny": []
   },
   "status": "active",
-  "updated_at": "2026-08-23T02:54:53.687965+00:00",
+  "updated_at": "2026-08-23T02:52:43.457625+00:00",
   "workspace_root": "D:\\OPC_competition\\healthpick-ai-nutrition-advisor"
 }

@@ -436,6 +436,36 @@ describe("ChatWorkspace", () => {
     );
   });
 
+  it("shows the submitted question immediately while the answer is still pending", async () => {
+    const baselineFetch = vi.mocked(fetch).getMockImplementation();
+    vi.mocked(fetch).mockImplementation((input: RequestInfo | URL, init?: RequestInit) => {
+      if (String(input).endsWith("/v1/chat/stream")) {
+        return new Promise<Response>((_resolve, reject) => {
+          init?.signal?.addEventListener("abort", () => {
+            reject(new DOMException("aborted", "AbortError"));
+          });
+        });
+      }
+      if (!baselineFetch) throw new Error("baseline fetch is unavailable");
+      return baselineFetch(input, init);
+    });
+
+    render(<ChatWorkspace />);
+    const composer = screen.getByLabelText("输入营养或平台问题");
+    fireEvent.change(composer, { target: { value: "我想减重" } });
+    fireEvent.click(screen.getByRole("button", { name: /发送/ }));
+
+    await waitFor(() => {
+      expect(vi.mocked(fetch).mock.calls.some(([input]) =>
+        String(input).endsWith("/v1/chat/stream")
+      )).toBe(true);
+    });
+    expect(composer).toHaveValue("");
+    expect(screen.getByText("我想减重")).toBeInTheDocument();
+    expect(screen.getByRole("status", { name: "正在接收并安全校验回答" }))
+      .toBeInTheDocument();
+  });
+
   it("stops an active generation, confirms the server cancel, and preserves input", async () => {
     const baselineFetch = vi.mocked(fetch).getMockImplementation();
     vi.mocked(fetch).mockImplementation((input: RequestInfo | URL, init?: RequestInit) => {

@@ -729,6 +729,7 @@ export default function ChatWorkspace() {
   const [transparency, setTransparency] = useState<TransparencyResponse | null>(null);
   const [evaluation, setEvaluation] = useState<EvaluationSummaryResponse | null>(null);
   const [message, setMessage] = useState("");
+  const [pendingMessage, setPendingMessage] = useState<string | null>(null);
   const [composerError, setComposerError] = useState("");
   const [turns, setTurns] = useState<ConversationTurn[]>([]);
   const [conversations, setConversations] = useState<ConversationSummary[]>([]);
@@ -862,7 +863,7 @@ export default function ChatWorkspace() {
 
   useEffect(() => {
     conversationEndRef.current?.scrollIntoView?.({ block: "nearest" });
-  }, [turns, pending, error]);
+  }, [turns, pendingMessage, pending, error]);
 
   useEffect(() => {
     if (!historyOpen && !profileOpen && !authOpen) return;
@@ -909,6 +910,8 @@ export default function ChatWorkspace() {
     const requestId = retryRequestId ?? globalThis.crypto.randomUUID();
     const controller = new AbortController();
     activeChatRef.current = { requestId, controller };
+    setPendingMessage(trimmed);
+    setMessage("");
     setPending(true);
     setComposerError("");
     setError(null);
@@ -937,7 +940,7 @@ export default function ChatWorkspace() {
           response: result,
         },
       ]);
-      setMessage("");
+      setPendingMessage(null);
       setComposerError("");
       try {
         const latest = await listConversations(active.sessionId);
@@ -946,6 +949,8 @@ export default function ChatWorkspace() {
         // The committed turn remains visible even if the sidebar refresh fails.
       }
     } catch (caught) {
+      setPendingMessage(null);
+      setMessage((current) => current || trimmed);
       setRecoveryAction(null);
       if (caught instanceof ApiClientError && caught.payload.code === "request_cancelled") {
         setError(null);
@@ -1588,7 +1593,7 @@ export default function ChatWorkspace() {
             </div>
           )}
 
-          {!sessionPending && !turns.length && !error && (
+          {!sessionPending && !turns.length && !pendingMessage && !error && (
             <div className="assistant-welcome">
               <Mark>H</Mark>
               <div>
@@ -1607,6 +1612,15 @@ export default function ChatWorkspace() {
           )}
 
           {turns.map((turn) => <ConversationTurnCard key={turn.turn_id} turn={turn} />)}
+
+          {pendingMessage && (
+            <article className="conversation-turn is-pending" aria-label="已发送的问题">
+              <div className="user-message">
+                <strong>你</strong>
+                <p>{pendingMessage}</p>
+              </div>
+            </article>
+          )}
 
           {pending && (
             <div

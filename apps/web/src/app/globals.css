@@ -541,6 +541,10 @@ textarea:focus-visible {
   margin-top: 4px;
 }
 
+.conversation-turn.is-pending .user-message {
+  margin-bottom: 0;
+}
+
 .workspace-state {
   display: flex;
   align-items: flex-start;
@@ -1142,7 +1146,7 @@ textarea:focus-visible {
 .composer textarea:disabled {
   color: #70837b;
   background: #f5f8f6;
-  cursor: wait;
+  cursor: default;
 }
 
 .composer-error {

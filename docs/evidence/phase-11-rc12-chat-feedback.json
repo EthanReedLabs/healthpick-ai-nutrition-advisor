@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "evidence_id": "PHASE-11-RC12-CHAT-FEEDBACK",
+  "recorded_at": "2026-08-23T10:39:37+08:00",
+  "status": "PASS",
+  "scope": "发送问题后的即时用户消息、输入框清空、取消恢复和等待光标",
+  "reproduction": {
+    "command": "npm test -- src/components/chat-workspace.test.tsx",
+    "before_fix": "FAIL: expected empty composer, received 我想减重; 25 passed, 1 failed",
+    "root_cause": "submitMessage 仅在 await sendChat 完成后追加 turns 并清空 message，渲染区没有独立的待处理用户消息。"
+  },
+  "implementation": [
+    "发送时立即保存 pendingMessage、清空受控输入并显示临时用户气泡",
+    "成功时追加正式轮次并移除临时气泡",
+    "失败或取消时恢复原输入，保留同请求编号重试能力",
+    "禁用输入框的 cursor 从 wait 改为 default"
+  ],
+  "validation": [
+    {"name": "定向组件回归", "command": "npm test -- src/components/chat-workspace.test.tsx", "result": "PASS", "detail": "26/26"},
+    {"name": "Web 全量测试", "command": "npm test", "result": "PASS", "detail": "36/36"},
+    {"name": "ESLint", "command": "npm run lint", "result": "PASS"},
+    {"name": "TypeScript", "command": "npm run typecheck", "result": "PASS"},
+    {"name": "Next.js 生产构建", "command": "npm run build", "result": "PASS"}
+  ],
+  "issues": [
+    {
+      "id": "RC12-ISSUE-01",
+      "severity": "medium",
+      "status": "resolved",
+      "symptom": "等待最终回答期间，问题未显示且仍留在输入框。",
+      "cause": "本地提交反馈错误地绑定在远端最终事件之后。",
+      "resolution": "增加与持久化历史分离的 pendingMessage 状态，并在失败或取消时恢复草稿。"
+    },
+    {
+      "id": "RC12-ISSUE-02",
+      "severity": "low",
+      "status": "contained",
+      "blocks_release": false,
+      "symptom": "本机自动化浏览器访问开发服务时部分 Next.js 静态分块被验证通道返回 403。",
+      "resolution": "停止无关环境深挖，不把该通道记为视觉通过；以先红后绿的确定性组件回归、全量静态门和生产构建作为本地验收证据，部署后再做公网视觉复核。"
+    }
+  ],
+  "sediment_candidate": {
+    "title": "长耗时聊天的本地提交事件与正式历史事件必须分离",
+    "draft": "发送后立即回显用户问题并清空草稿应绑定本地提交事件；正式历史仍绑定最终安全事件。失败或取消时恢复草稿，避免为了即时反馈牺牲可重试性。",
+    "routing": "跨项目通用，但本轮仅记录候选，不直接写入 Sulde 知识库。"
+  },
+  "files": [
+    "apps/web/src/components/chat-workspace.tsx",
+    "apps/web/src/components/chat-workspace.test.tsx",
+    "apps/web/src/app/globals.css"
+  ]
+}

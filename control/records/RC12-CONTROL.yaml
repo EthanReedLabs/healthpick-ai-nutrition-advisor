@@ -1,0 +1,22 @@
+schema_version: 1
+control_id: RC12-CHAT-FEEDBACK
+parent_control: control/project-control.yaml
+phase_id: PHASE-11
+title: 发送后即时反馈修复
+status: passed_with_post_deploy_check
+started_at: "2026-08-23T10:15:00+08:00"
+plan: docs/phases/phase-11-immediate-chat-feedback.md
+tasks:
+  - id: RC12-01
+    status: passed
+    record: control/records/RC12-01.yaml
+    evidence: [docs/evidence/phase-11-rc12-chat-feedback.json]
+issues:
+  - {id: RC12-ISSUE-01, task_id: RC12-01, severity: medium, status: resolved, summary: 发送反馈错误绑定最终回答}
+  - {id: RC12-ISSUE-02, task_id: RC12-01, severity: low, status: contained, blocks_release: false, summary: 本机自动化浏览器静态分块403}
+final_gate:
+  id: RC12-FINAL
+  status: pending_post_deploy_visual
+  required_tasks: [RC12-01]
+  evidence:
+    - docs/evidence/phase-11-rc12-chat-feedback.json
