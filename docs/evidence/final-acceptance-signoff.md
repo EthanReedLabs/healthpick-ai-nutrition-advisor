@@ -6,7 +6,7 @@
 - Image archive SHA-256：`639F56C8778507A3C73BC3DE2BCAC1264B8BAECE2B82939B499099087DB07465`
 - Full test：Python `294/294`；Web `35/35`；Ruff/ESLint/TypeScript/Build `PASS`
 - Release evaluation：`9/9 PASS`
-- Repository secret scan：615 个候选文件，0 发现
+- Repository secret scan：596 个候选文件，0 发现
 - RC11 required tasks open：`0`
 - RC11 final gate：`passed`
 - Open technical blockers：`0`

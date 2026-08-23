@@ -26,7 +26,7 @@
     "typescript": "PASS",
     "production_build": "PASS",
     "release_evaluation": "9/9 frozen gates PASS",
-    "repository_secret_scan": "615 candidates / 0 findings PASS",
+    "repository_secret_scan": "596 candidates / 0 findings PASS",
     "release_document_checks": "PASS",
     "structured_fact_disposition": "74 verified / 6 rejected / 0 pending",
     "released_core_rules": 7,

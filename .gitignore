@@ -32,6 +32,8 @@ tmp/
 # Local databases and transient runtime output
 *.sqlite
 *.sqlite3
+control/records/*.lock
+output/deployment/
 output/runtime/
 output/playwright/phase-07-p07-05-stopped-immediate.png
 
