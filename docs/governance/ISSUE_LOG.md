@@ -912,7 +912,7 @@
 - 现象：三句赛题自然诉求能进入A/B聊天链路，但结构化方案卡仍依赖用户先手工选择健康档案目标。
 - 原因：自然语言路由与档案推荐服务之间没有受控目标映射。
 - 解决/缓解：新增单目标确定性推断，只形成带理由的未落档候选；同句多目标不猜测，档案仍由用户控制。
-- 行动：RC11-05公网复验
+- 行动：无
 - 证据：tests/api/test_recommendation.py, tests/api/test_chat_sse.py, docs/evidence/phase-10-rc11-local-gates.json
 
 ## ISSUE-084 · RESOLVED
@@ -923,7 +923,7 @@
 - 现象：赛题明确用例“我尿酸高”未命中高嘌呤过滤；血压偏高和未明确家族病史表达也不完整。
 - 原因：路由、检索和安全词表只覆盖部分同义词及固定词序。
 - 解决/缓解：同步补齐受控别名；家族病史只进入专业级一般信息和澄清边界，不推断具体疾病。
-- 行动：RC11-05公网复验
+- 行动：无
 - 证据：tests/api/test_retrieval.py, tests/api/test_safety.py
 
 ## ISSUE-085 · RESOLVED
@@ -934,7 +934,7 @@
 - 现象：疾病或过敏触发后结构化推荐直接阻断，没有展示过滤后的食材替换，也没有赛题指定的方案使用提示原句。
 - 原因：推荐服务在加载规则和执行替换前提前返回安全阻断。
 - 解决/缓解：保持primary为空、S1/S2个体化目标关闭；新增不含精确数值的safe_alternative，并在API回答和Web卡片强制显示指定提示。
-- 行动：RC11-05公网复验
+- 行动：无
 - 证据：tests/api/test_recommendation.py, tests/api/test_chat_sse.py, apps/web/src/components/chat-workspace.test.tsx
 
 ## ISSUE-086 · RESOLVED
@@ -958,3 +958,25 @@
 - 解决/缓解：撤回痛风和高尿酸的路由变化，仅保留赛题缺失词序；SafetyService对两者的S1和高嘌呤过滤继续生效，全量测试恢复通过。
 - 行动：无
 - 证据：tests/fixtures/phase04_safety_golden.jsonl, tests/api/test_safety_golden.py
+
+## ISSUE-088 · RESOLVED
+
+- 发现时间：2026-08-23T09:20:00+08:00
+- 阶段/任务：PHASE-10 / RC11-05
+- 严重度：medium；阻断最终验收：False
+- 现象：本地完整 Dockerfile 构建连续在 Docker Hub 的 Dockerfile frontend 和 Python 基础镜像元数据请求处 TLS handshake timeout。
+- 原因：Docker Hub 外部链路不可用；Docker 引擎、GHCR 元数据和本地已验收 RC10 linux/amd64 镜像正常。
+- 解决/缓解：本轮依赖文件未变，改从 RC10 API/Web 镜像增量覆盖当前 API 源码和本地生产 Web standalone 产物，显式固定 linux/amd64；完成镜像健康、功能 smoke、双端哈希和公网验收，未改代理/证书/Docker 全局配置。
+- 行动：网络恢复后可按原 Dockerfile做可选完整重建，不阻断当前短期比赛运行。
+- 证据：docs/evidence/phase-10-rc11-05-public-acceptance.json
+
+## ISSUE-089 · RESOLVED
+
+- 发现时间：2026-08-23T09:42:00+08:00
+- 阶段/任务：PHASE-10 / RC11-05
+- 严重度：low；阻断最终验收：False
+- 现象：首次 RC11 API 镜像 smoke 启动即退出。
+- 原因：smoke 命令误用不存在的 LLM_MODE=stub 和 CONVERSATION_STORE_MODE=memory；项目合法值为 mock 和 ephemeral，Pydantic 按设计启动前拒绝错误配置。
+- 解决/缓解：不修改应用，改用合法的隔离 smoke 参数后健康检查与尿酸安全替换功能均通过；生产继续使用原有 real/postgres 配置。
+- 行动：无
+- 证据：docs/evidence/phase-10-rc11-05-public-acceptance.json

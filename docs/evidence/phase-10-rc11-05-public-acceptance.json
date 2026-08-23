@@ -1,0 +1,144 @@
+{
+  "schema_version": 1,
+  "evidence_id": "phase-10-rc11-05-public-acceptance",
+  "captured_at": "2026-08-23T09:51:00+08:00",
+  "status": "PASS",
+  "public_url": "https://106.14.13.139",
+  "release": {
+    "source_commit": "02d6f4f85e4657f4fb02f489ff4cc0ae3f01737e",
+    "remote_main": "02d6f4f85e4657f4fb02f489ff4cc0ae3f01737e",
+    "image_tag": "rc11-final-rubric-repair-20260823",
+    "tagged_in_git": false,
+    "source_uploaded_to_server": false,
+    "server_application_source_files": 0
+  },
+  "image_build": {
+    "platform": "linux/amd64",
+    "dependency_files_changed_from_rc10": false,
+    "method": "incremental overlay on verified RC10 API/Web images",
+    "reason": "Docker Hub metadata requests repeatedly timed out during full rebuild; no global Docker or network configuration was changed",
+    "api_image_smoke": "PASS",
+    "web_image_smoke": "PASS",
+    "api_feature_smoke": "S1 + high_purine + safe alternative + exact notices PASS"
+  },
+  "image_transfer": {
+    "archive": "output/deployment/healthpick-rc11-final-rubric-repair-20260823.tar",
+    "bytes": 196482048,
+    "sha256": "639F56C8778507A3C73BC3DE2BCAC1264B8BAECE2B82939B499099087DB07465",
+    "server_hash_match": true,
+    "server_archive_removed": true,
+    "server_incoming_files_after_cleanup": 0
+  },
+  "deployment": {
+    "scope": "api_and_web_only",
+    "no_build_on_server": true,
+    "no_dependencies": true,
+    "api": {
+      "image": "healthpick-api:rc11-final-rubric-repair-20260823",
+      "image_id": "sha256:7ed9e13acd7035bc0022769045b37bf50d95665914fd00f02e5d7db7bb77de5f",
+      "status": "healthy",
+      "restart_count": 0
+    },
+    "web": {
+      "image": "healthpick-web:rc11-final-rubric-repair-20260823",
+      "image_id": "sha256:7485579889beed4643196541a9f5618f32eb1a923321e0ad58ed870f4791b86f",
+      "status": "healthy",
+      "restart_count": 0
+    }
+  },
+  "unchanged_invariants": {
+    "postgres": {
+      "image_id_before": "sha256:17a06c0a60bf6fb548a8493b8f6057dc830b791bbbe1f1ab706ca4b9d97c8180",
+      "image_id_after": "sha256:17a06c0a60bf6fb548a8493b8f6057dc830b791bbbe1f1ab706ca4b9d97c8180",
+      "started_at": "2026-08-22T08:01:48.47190895Z",
+      "restart_count": 0,
+      "status": "healthy"
+    },
+    "caddy": {
+      "image_id_before": "sha256:af555904a0961945f16bb323a501457b13a4f7e9bde969b145b97da80b38ecbe",
+      "image_id_after": "sha256:af555904a0961945f16bb323a501457b13a4f7e9bde969b145b97da80b38ecbe",
+      "started_at": "2026-08-22T11:54:55.911481114Z",
+      "restart_count": 0,
+      "status": "running"
+    },
+    "rollback_rc10_images_retained": true
+  },
+  "public_checks": {
+    "https_home": "PASS",
+    "healthz": {
+      "status": "ok",
+      "environment": "production",
+      "llm": "real",
+      "retrieval": "keyword",
+      "database": "conversation schema ready"
+    },
+    "natural_intents": [
+      {
+        "input": "我想减重，三餐应该怎么搭配？",
+        "goal": "fat_loss",
+        "plan": "轻盈减脂方案",
+        "selection_basis": "message",
+        "model": "openai_compatible/qwen3.7-plus/real",
+        "sources": ["A", "B"],
+        "result": "PASS"
+      },
+      {
+        "input": "我在健身，训练前后应该怎么吃？",
+        "goal": "muscle_gain",
+        "plan": "力量增肌方案",
+        "selection_basis": "message",
+        "model": "openai_compatible/qwen3.7-plus/real",
+        "sources": ["A", "B"],
+        "result": "PASS"
+      },
+      {
+        "input": "我血糖有点高，应该怎样选择低 GI 食物？",
+        "goal": "stable_glucose",
+        "plan": "稳糖调理方案 · 安全替换",
+        "risk_level": "S1",
+        "response_mode": "general_only",
+        "personalized_targets": false,
+        "exact_health_notice": true,
+        "exact_plan_notice": true,
+        "sources": ["A", "B"],
+        "result": "PASS"
+      }
+    ],
+    "uric_acid_fat_loss": {
+      "plan": "轻盈减脂方案 · 安全替换",
+      "risk_level": "S1",
+      "response_mode": "general_only",
+      "personalized_targets": false,
+      "blocked_food_tags": ["high_purine"],
+      "exact_health_notice": true,
+      "exact_plan_notice": true,
+      "sources": ["A", "B"],
+      "result": "PASS"
+    },
+    "browser": {
+      "structured_safe_alternative_visible": true,
+      "profile_goal_remained_unset": true,
+      "errors": 0,
+      "warnings": 0,
+      "screenshot": "apps/web/output/playwright/rc11-public/rc11-public-safe-alternative.png",
+      "result": "PASS"
+    },
+    "cleanup": {
+      "direct_api_test_conversations_deleted": true,
+      "direct_api_rc11_title_count_after_cleanup": 0,
+      "browser_test_conversation_deleted": true,
+      "server_transfer_archive_deleted": true
+    }
+  },
+  "availability": {
+    "actual_competition_submission_at": null,
+    "shutdown_not_before_rule": "max(actual_competition_submission_at + P7D, 2026-08-30T01:00:00+08:00)",
+    "automatic_shutdown_configured": false
+  },
+  "open_technical_blockers": 0,
+  "user_only_external_actions": [
+    "grant judge repository access or provide an allowed source archive",
+    "submit the competition form",
+    "record the actual submission time and keep the service online for at least seven days"
+  ]
+}

@@ -24,7 +24,7 @@ issues:
   - "RC11-ISSUE-03（已解决）：禁忌阻断后无替换与指定提示；保持个体化关闭并新增安全替换。"
 residual_actions: []
 review:
-  status: pending_final_review
+  status: accepted
   reviewer: Project Lead
-  reviewed_at: null
-  notes: 待RC11公网验收复核。
+  reviewed_at: "2026-08-23T09:51:00+08:00"
+  notes: 公网血糖和尿酸安全替换、指定提示及过滤均通过。

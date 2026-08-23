@@ -22,7 +22,7 @@ issues:
   - "RC11-ISSUE-01（已解决）：自然诉求与档案推荐未连接；新增未落档单目标候选，冲突目标不猜测。"
 residual_actions: []
 review:
-  status: pending_final_review
+  status: accepted
   reviewer: Project Lead
-  reviewed_at: null
-  notes: 待RC11公网验收复核。
+  reviewed_at: "2026-08-23T09:51:00+08:00"
+  notes: 本地回归与公网三类自然诉求均通过。

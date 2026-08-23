@@ -5,7 +5,7 @@
 | 项目 | 填写内容 | 状态 |
 |---|---|---|
 | 项目名称 | AI智能膳食顾问（AI Smart Nutrition Advisor） | ready |
-| 公网演示 | `https://106.14.13.139` | HTTPS 可访问；当前为 RC10，RC11 修复部署后需更新公网证据 |
+| 公网演示 | `https://106.14.13.139` | RC11 HTTPS、真实模型与浏览器验收已通过 |
 | 健康检查 | `https://106.14.13.139/healthz` | 不需要写入普通用户入口，可供技术验收 |
 | 代码仓库 | `https://github.com/EthanReedLabs/healthpick-ai-nutrition-advisor`，默认分支 `main` | 仓库当前为私有时，提交前必须给评委账号权限或另交平台允许的源码归档 |
 | 使用说明 | `README.md` | 已包含入口、步骤、技术逻辑、限制和本地运行 |
@@ -34,10 +34,11 @@
 - [x] RC11 本地 Python/Web 全量测试、Ruff、ESLint、TypeScript、Next production build 通过。
 - [x] OpenAPI 已从当前 API 导出，前端类型重新生成且通过类型检查。
 - [x] A/B/C 隔离、三句诉求、45 岁、高风险、尿酸/血压别名、空/长/特殊/无关输入均有回归。
-- [x] `.env.example` 只有占位值，本轮无敏感配置改动，`output/deployment` 保持未跟踪且不提交。
-- [ ] 非 amend 提交已推送 `origin/main`，本地与远端提交一致。
-- [ ] API/Web 使用同一 RC11 镜像标签部署；数据库/Caddy 镜像、卷和重启次数不变；旧镜像仍可回滚。
-- [ ] 公网首页、`/healthz`、三句自动候选、尿酸安全替换、真实问答、账号历史和浏览器控制台通过，测试数据已清理。
+- [x] `.env.example` 只有占位值，仓库密钥扫描 0 发现，`output/deployment` 保持未跟踪且不提交。
+- [x] 非 amend 提交 `02d6f4f` 已推送 `origin/main`，本地与远端提交一致。
+- [x] API/Web 使用同一 RC11 镜像标签部署；数据库/Caddy 镜像、卷和重启次数不变；旧镜像仍可回滚。
+- [x] 公网首页、`/healthz`、三句自动候选、尿酸安全替换、真实问答和浏览器控制台通过，测试数据已清理。
+- [ ] 比赛表单已由参赛者本人提交，平台回执或提交时间已留存。
 - [ ] ECS、安全组 80/443、出站 443、Caddy 自动续期和 `unless-stopped` 保持到实际提交后至少 7 天，且不早于 2026-08-30 01:00 +08:00。
 - [ ] 若 GitHub 仓库保持私有，评委已获得有效访问权；否则源码交付不完整。
 

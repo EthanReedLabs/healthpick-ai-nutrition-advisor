@@ -4,7 +4,7 @@
   "generated_at": "2026-08-23T09:18:28+08:00",
   "environment": "local",
   "base_commit": "c4d2a597e47a0e37de7613a57dcc6d539f331850",
-  "status": "PASS_LOCAL",
+  "status": "PASS",
   "scope": [
     "natural_intent_recommendation_preview",
     "contraindication_aliases",
@@ -54,9 +54,6 @@
     "overbroad router alias change temporarily broke one frozen golden expectation"
   ],
   "pending_external": [
-    "commit_and_push_rc11",
-    "image_only_server_deployment",
-    "public_rc11_acceptance",
     "judge_repository_access_or_source_archive",
     "competition_form_submission",
     "record_actual_submission_time_and_keep_service_for_at_least_7_days"

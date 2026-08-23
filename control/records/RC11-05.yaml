@@ -1,0 +1,38 @@
+schema_version: 1
+task_id: RC11-05
+phase_id: PHASE-10
+outcome: passed
+started_at: "2026-08-23T09:19:00+08:00"
+completed_at: "2026-08-23T09:51:00+08:00"
+recorded_at: "2026-08-23T09:51:00+08:00"
+backfilled: false
+owner: LEAD/DEVOPS/QA
+summary: 非amend提交已推送，RC11以纯镜像方式部署；公网真实模型、三类自然诉求、尿酸安全替换和浏览器均通过。
+deliverables:
+  - docs/evidence/phase-10-rc11-05-public-acceptance.json
+  - docs/evidence/phase-10-rc11-05-public-acceptance.md
+  - apps/web/output/playwright/rc11-public/rc11-public-safe-alternative.png
+acceptance_checks:
+  - name: 本地提交与远端main一致
+    result: pass
+    evidence: [docs/evidence/phase-10-rc11-05-public-acceptance.json]
+  - name: 服务器仅加载API和Web镜像且不含应用源码
+    result: pass
+    evidence: [docs/evidence/phase-10-rc11-05-public-acceptance.json]
+  - name: 三类自然诉求与尿酸安全替换由公网真实模型通过
+    result: pass
+    evidence: [docs/evidence/phase-10-rc11-05-public-acceptance.json]
+  - name: 公网浏览器控制台无错误且测试数据清理完成
+    result: pass
+    evidence: [apps/web/output/playwright/rc11-public/rc11-public-safe-alternative.png]
+issues:
+  - "RC11-ISSUE-06（已解决）：Docker Hub元数据TLS超时；依赖未变时从已验收RC10镜像增量构建，固定linux/amd64并完成镜像smoke。"
+  - "RC11-ISSUE-07（已解决）：首次API smoke使用无效枚举值；改用mock/ephemeral后通过，无需修改应用。"
+residual_actions:
+  - 参赛者授予评委源码访问权或提交平台允许的源码归档。
+  - 参赛者提交比赛表单并记录真实提交时间，按规则保持服务至少七天。
+review:
+  status: accepted
+  reviewer: Project Lead
+  reviewed_at: "2026-08-23T09:51:00+08:00"
+  notes: RC11技术范围全部通过；剩余动作均为参赛者身份或比赛平台外部操作。

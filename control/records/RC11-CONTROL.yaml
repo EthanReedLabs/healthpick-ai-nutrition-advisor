@@ -3,7 +3,7 @@ control_id: RC11-FINAL-RUBRIC-REPAIR
 parent_control: control/project-control.yaml
 phase_id: PHASE-10
 title: 最终赛题复核高风险缺口修复
-status: in_progress
+status: passed
 started_at: "2026-08-23T08:30:00+08:00"
 plan: docs/phases/phase-10-final-rubric-repair.md
 tasks:
@@ -11,16 +11,19 @@ tasks:
   - {id: RC11-02, status: passed, record: control/records/RC11-02.yaml, evidence: [docs/evidence/phase-10-rc11-local-gates.json]}
   - {id: RC11-03, status: passed, record: control/records/RC11-03.yaml, evidence: [docs/evidence/phase-10-rc11-local-gates.json]}
   - {id: RC11-04, status: passed, record: control/records/RC11-04.yaml, evidence: [docs/evidence/phase-10-rc11-local-gates.json]}
-  - {id: RC11-05, status: pending, record: null, evidence: []}
+  - {id: RC11-05, status: passed, record: control/records/RC11-05.yaml, evidence: [docs/evidence/phase-10-rc11-05-public-acceptance.json]}
 issues:
   - {id: RC11-ISSUE-01, task_id: RC11-01, severity: high, status: resolved, summary: 自然诉求结构化推荐依赖手工档案目标}
   - {id: RC11-ISSUE-02, task_id: RC11-02, severity: high, status: resolved, summary: 尿酸和血压自然别名缺失}
   - {id: RC11-ISSUE-03, task_id: RC11-02, severity: high, status: resolved, summary: 禁忌阻断后没有安全替换和指定方案提示}
   - {id: RC11-ISSUE-04, task_id: RC11-04, severity: medium, status: resolved, summary: 受控提示未稳定将主证据排首位}
   - {id: RC11-ISSUE-05, task_id: RC11-04, severity: low, status: resolved, summary: 首版路由别名扩展破坏冻结黄金预期}
+  - {id: RC11-ISSUE-06, task_id: RC11-05, severity: medium, status: resolved, summary: Docker Hub元数据TLS超时阻断完整镜像重建}
+  - {id: RC11-ISSUE-07, task_id: RC11-05, severity: low, status: resolved, summary: 首次镜像smoke使用无效枚举配置}
 final_gate:
   id: RC11-FINAL
-  status: pending
+  status: passed
   required_tasks: [RC11-01, RC11-02, RC11-03, RC11-04, RC11-05]
   evidence:
     - docs/evidence/phase-10-rc11-local-gates.json
+    - docs/evidence/phase-10-rc11-05-public-acceptance.json

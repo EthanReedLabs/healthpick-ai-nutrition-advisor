@@ -1,59 +1,58 @@
 {
   "schema_version": 1,
-  "evidence_id": "FINAL-ACCEPTANCE-RC8",
-  "signed_at": "2026-08-22T20:43:00+08:00",
-  "decision": "ACCEPTED",
+  "evidence_id": "FINAL-ACCEPTANCE-RC11",
+  "signed_at": "2026-08-23T09:51:00+08:00",
+  "decision": "ACCEPTED_TECHNICAL_WITH_EXTERNAL_ACTIONS",
   "release_scope": {
-    "application_commit": "6e56b96f7d5ac4ffd306cdcedabfac7366034f44",
-    "tag": "v0.1.0-rc8",
-    "tag_object": "ee2c6c5fee5e4ed4ad78af4977e04295ed4e4ffa",
-    "tree": "cc45e0163bdb489cec1476efe084fc805d8cf9ae",
-    "evidence_base_commit": "c624b4996b757d0a6e917991d2304350060d226a",
+    "application_commit": "02d6f4f85e4657f4fb02f489ff4cc0ae3f01737e",
+    "remote_main_at_application_deployment": "02d6f4f85e4657f4fb02f489ff4cc0ae3f01737e",
+    "tag": null,
     "public_url": "https://106.14.13.139",
-    "image_archive_sha256": "5FBBF5BC1F89F1F0785C3D21C59ABA21D951F2D5D81351D4385A8498F59B3D51",
-    "api_image_manifest": "sha256:79eb5896e2171464ce4cdef7ee54d343aff74a06a1b97476670d63fc35e4b436",
-    "web_image_manifest": "sha256:7c43d96e155face41d983d671d4c9bbc2ce45a5e90f925432451115158cb48e1",
-    "knowledge_manifest_sha256": "718385EFE40C60D276C9AA5F7F683EE8A3DB175E20A93DF9431FEAD0182EDC27",
+    "image_tag": "rc11-final-rubric-repair-20260823",
+    "image_archive_sha256": "639F56C8778507A3C73BC3DE2BCAC1264B8BAECE2B82939B499099087DB07465",
+    "api_image_id": "sha256:7ed9e13acd7035bc0022769045b37bf50d95665914fd00f02e5d7db7bb77de5f",
+    "web_image_id": "sha256:7485579889beed4643196541a9f5618f32eb1a923321e0ad58ed870f4791b86f",
     "provider": "Bailian OpenAI-compatible",
     "llm_model": "qwen3.7-plus",
     "public_retrieval_mode": "keyword",
-    "database_migrations": [
-      "001_knowledge_base.sql",
-      "002_enable_vector.sql",
-      "003_chunk_embedding_qwen3_1024.sql"
-    ]
+    "conversation_store": "postgres",
+    "health_profile_store": "ephemeral"
   },
   "quality": {
-    "application_release_python_tests": "261/261 PASS in the clean v0.1.0-rc8 tag clone",
-    "final_governance_python_tests": "262/262 PASS including final readiness invariants",
-    "web_tests": "30/30 PASS",
+    "python_tests": "294/294 PASS",
+    "web_tests": "35/35 PASS",
     "ruff": "PASS",
     "eslint": "PASS",
     "typescript": "PASS",
     "production_build": "PASS",
     "release_evaluation": "9/9 frozen gates PASS",
-    "repository_secret_scan": "540 candidates / 0 findings PASS",
-    "release_document_checks": "7/7 PASS",
+    "repository_secret_scan": "615 candidates / 0 findings PASS",
+    "release_document_checks": "PASS",
     "structured_fact_disposition": "74 verified / 6 rejected / 0 pending",
-    "released_core_rules": 7
+    "released_core_rules": 7,
+    "local_real_model_browser": "PASS desktop and 375px; 0 console errors",
+    "public_real_model_api": "PASS for fat loss, muscle gain, stable glucose and uric-acid safe alternative",
+    "public_browser": "PASS; 0 errors and 0 warnings"
   },
   "governance": {
-    "required_tasks_open": 0,
-    "actions_open": 0,
-    "final_blocking_issues_open": 0,
-    "task_record_reviews_pending": 0,
-    "final_gates_passed": "10/10",
-    "non_blocking_open_issues": ["ISSUE-009", "ISSUE-014", "ISSUE-017"]
+    "rc11_required_tasks_open": 0,
+    "rc11_final_gate": "passed",
+    "open_technical_blockers": 0,
+    "test_data_remaining": 0,
+    "server_application_source_files": 0,
+    "server_incoming_files": 0,
+    "postgres_and_caddy_unchanged": true,
+    "rollback_images_retained": true
   },
   "signoff": {
     "role": "Project Lead",
-    "authorization": "User instructed Codex to complete all remaining tasks and perform unified final acceptance",
-    "executed_by": "Codex-assisted evidence audit",
+    "authorization": "User instructed Codex to repair the recommended gaps and complete every action available within scope",
+    "executed_by": "Codex-assisted implementation, deployment and evidence audit",
     "signature_type": "repository project record; not a cryptographic signature or competition-platform receipt"
   },
-  "external_operator_notes": [
-    "The competition-platform upload and receipt remain external actions and are not fabricated in the repository.",
-    "The GitHub repository is private; grant judge access or upload a source archive if the submission channel requires source review.",
-    "Rotate the Bailian API key after delivery because it appeared once in private tool output; repository, image, report, and video scans contain no key finding."
+  "external_operator_actions": [
+    "Grant judge access to the private GitHub repository or upload an allowed source archive.",
+    "Submit the competition form; this record does not fabricate a platform receipt.",
+    "Record the actual submission time and keep the public service online until at least max(submission + 7 days, 2026-08-30T01:00:00+08:00)."
   ]
 }
