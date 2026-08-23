@@ -103,6 +103,35 @@ def test_blood_glucose_concern_requires_professional_notice(message: str) -> Non
     assert "message_blood_glucose_concern" in result.matched_rules
 
 
+@pytest.mark.parametrize(
+    ("message", "rule_id", "blocked_tag"),
+    [
+        ("我尿酸高", "message_gout", "high_purine"),
+        ("我尿酸偏高", "message_gout", "high_purine"),
+        ("我血压偏高", "message_hypertension", "high_sodium"),
+        ("我血压有点高", "message_hypertension", "high_sodium"),
+    ],
+)
+def test_competition_condition_aliases_enable_professional_safety_filter(
+    message: str,
+    rule_id: str,
+    blocked_tag: str,
+) -> None:
+    result = SafetyService().assess(message)
+    assert result.risk_level == "S1"
+    assert result.response_mode == "general_only"
+    assert rule_id in result.matched_rules
+    assert blocked_tag in result.blocked_food_tags
+
+
+def test_unspecified_family_history_requests_clarification_without_diagnosis() -> None:
+    result = SafetyService().assess("我有家族病史，饮食应该注意什么？")
+    assert result.risk_level == "S1"
+    assert result.response_mode == "general_only"
+    assert "message_family_history" in result.matched_rules
+    assert result.blocked_food_tags == []
+
+
 def test_candidate_filter_rejects_before_any_model_prompt() -> None:
     service = SafetyService()
     safety = service.assess(

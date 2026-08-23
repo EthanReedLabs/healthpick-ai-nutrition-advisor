@@ -4,10 +4,12 @@ from __future__ import annotations
 
 from typing import Any
 
+from healthpick_api.models import SafetyResult
 from healthpick_api.profile import ProfilePatch
 from healthpick_api.safety import SafetyService
 
 from .catalog import PlanRule, RecommendationCatalog
+from .intent import GoalInference, GoalName, infer_goal
 from .models import (
     RecommendationEvaluation,
     RecommendationEvidence,
@@ -33,12 +35,13 @@ GOAL_RULES: dict[str, tuple[str, ...]] = {
 }
 
 PLAN_TITLES = {
-    "fat_loss": "轻盈减脂",
-    "muscle_gain": "力量增肌",
-    "stable_glucose": "稳糖调理",
+    "fat_loss": "轻盈减脂方案",
+    "muscle_gain": "力量增肌方案",
+    "stable_glucose": "稳糖调理方案",
 }
 
 PLAN_MAX_AGE_YEARS = 55
+PLAN_USAGE_NOTICE = "建议您在使用本方案前咨询专业医师或注册营养师"
 
 BLOCKED_TAG_TERMS: dict[str, tuple[str, ...]] = {
     "animal_product": ("鸡", "鱼", "虾", "肉", "蛋", "奶", "乳清", "酪蛋白"),
@@ -53,6 +56,8 @@ BLOCKED_TAG_TERMS: dict[str, tuple[str, ...]] = {
     "soy": ("豆腐", "大豆", "豆制品"),
     "tree_nut": ("坚果", "核桃"),
     "wheat": ("小麦", "全麦", "面包", "馒头"),
+    "high_purine": ("动物内脏", "浓肉汤", "沙丁鱼", "啤酒"),
+    "high_sodium": ("腌制", "加工肉", "浓汤宝", "方便面调料"),
 }
 
 
@@ -80,24 +85,100 @@ class RecommendationService:
         elif profile.age_band != "adult_18_44":
             return _blocked("age_outside_plan_scope")
 
-        safety = self.safety.assess("请评估结构化饮食方案", profile)
-        if not safety.allow_personalized_targets:
-            return _blocked(f"safety_{safety.risk_level.lower()}_general_only")
-
         required_rule_ids = GOAL_RULES[profile.goal]
         blocked_rule_ids = self.catalog.blocked_rule_ids(required_rule_ids)
         if blocked_rule_ids:
             return RecommendationEvaluation(
                 status="blocked",
+                selected_goal=profile.goal,
                 blocked_reasons=["knowledge_second_person_review_required"],
                 blocked_rule_ids=list(blocked_rule_ids),
                 requires_second_person_review=True,
             )
 
         rules = self.catalog.required(required_rule_ids)
+        safety = self.safety.assess("请评估结构化饮食方案", profile)
+        if not safety.allow_personalized_targets:
+            return RecommendationEvaluation(
+                status="blocked",
+                selected_goal=profile.goal,
+                safe_alternative=_build_safe_alternative(
+                    profile.goal,
+                    safety.blocked_food_tags,
+                    rules,
+                    selection_basis="profile",
+                ),
+                professional_notice=PLAN_USAGE_NOTICE,
+                blocked_reasons=[f"safety_{safety.risk_level.lower()}_general_only"],
+            )
+
         return RecommendationEvaluation(
             status="ready",
-            primary=_build_option(profile, safety.blocked_food_tags, rules),
+            selected_goal=profile.goal,
+            primary=_build_option(
+                profile,
+                safety.blocked_food_tags,
+                rules,
+                selection_basis="profile",
+            ),
+        )
+
+    def preview_for_message(
+        self,
+        message: str,
+        profile: ProfilePatch | None = None,
+        *,
+        safety: SafetyResult | None = None,
+    ) -> RecommendationEvaluation | None:
+        """Build a non-persistent candidate from one unambiguous user intent."""
+        inference = infer_goal(message)
+        if inference is None:
+            return None
+        assessed = safety or self.safety.assess(message, profile)
+        if assessed.response_mode in {"refuse", "emergency_stop"}:
+            return None
+
+        required_rule_ids = GOAL_RULES[inference.goal]
+        blocked_rule_ids = self.catalog.blocked_rule_ids(required_rule_ids)
+        if blocked_rule_ids:
+            return RecommendationEvaluation(
+                status="blocked",
+                selection_basis="message",
+                selected_goal=inference.goal,
+                blocked_reasons=["knowledge_second_person_review_required"],
+                blocked_rule_ids=list(blocked_rule_ids),
+                requires_second_person_review=True,
+            )
+
+        rules = self.catalog.required(required_rule_ids)
+        if not assessed.allow_personalized_targets:
+            return RecommendationEvaluation(
+                status="blocked",
+                selection_basis="message",
+                selected_goal=inference.goal,
+                safe_alternative=_build_safe_alternative(
+                    inference.goal,
+                    assessed.blocked_food_tags,
+                    rules,
+                    selection_basis="message",
+                    inference=inference,
+                ),
+                professional_notice=PLAN_USAGE_NOTICE,
+                blocked_reasons=[f"safety_{assessed.risk_level.lower()}_general_only"],
+            )
+
+        preview_profile = (profile or ProfilePatch()).model_copy(update={"goal": inference.goal})
+        return RecommendationEvaluation(
+            status="ready",
+            selection_basis="message",
+            selected_goal=inference.goal,
+            primary=_build_option(
+                preview_profile,
+                assessed.blocked_food_tags,
+                rules,
+                selection_basis="message",
+                inference=inference,
+            ),
         )
 
 
@@ -109,6 +190,9 @@ def _build_option(
     profile: ProfilePatch,
     blocked_food_tags: list[str],
     rules: tuple[PlanRule, ...],
+    *,
+    selection_basis: str,
+    inference: GoalInference | None = None,
 ) -> RecommendationOption:
     by_id = {rule.rule_id: rule for rule in rules}
     goal = profile.goal
@@ -149,11 +233,12 @@ def _build_option(
         by_id["rule-B-food_substitutions"].content,
         blocked_food_tags,
     )
-    reasons = [f"健康目标匹配：{PLAN_TITLES[goal]}"]
-    if profile.activity_level:
-        reasons.append(f"活动水平已纳入规则输入：{profile.activity_level}")
-    if profile.age_years is not None:
-        reasons.append(f"精确年龄已验证：{profile.age_years} 岁")
+    reasons = _match_reasons(
+        profile,
+        goal,
+        selection_basis=selection_basis,
+        inference=inference,
+    )
     return RecommendationOption(
         plan_id=f"plan-{goal}",
         title=PLAN_TITLES[goal],
@@ -168,6 +253,95 @@ def _build_option(
         evidence=[_evidence(rule) for rule in rules],
         blocked_food_tags=blocked_food_tags,
     )
+
+
+def _build_safe_alternative(
+    goal: GoalName,
+    blocked_food_tags: list[str],
+    rules: tuple[PlanRule, ...],
+    *,
+    selection_basis: str,
+    inference: GoalInference | None = None,
+) -> RecommendationOption:
+    by_id = {rule.rule_id: rule for rule in rules}
+    substitutions = _substitutions(
+        by_id["rule-B-food_substitutions"].content,
+        blocked_food_tags,
+    )
+    if goal == "fat_loss":
+        targets = [
+            "采用 211 餐盘结构，优先安排蔬菜、蛋白质与主食的均衡组合。",
+            "本卡不提供个体化热量或营养素数值目标。",
+        ]
+    elif goal == "muscle_gain":
+        targets = [
+            "训练前后采用资料中的碳水与蛋白质组合，具体摄入量由专业人员评估。",
+            "本卡不提供个体化热量或营养素数值目标。",
+        ]
+    else:
+        targets = [
+            "采用控糖 321 餐盘与低 GI 优先原则。",
+            "本卡不提供疾病个体化数值目标。",
+        ]
+
+    matched_text = _inference_text(inference)
+    if selection_basis == "message":
+        reasons = [
+            f"根据本轮“{matched_text}”表达，系统识别出相应健康诉求并展示“{PLAN_TITLES[goal]}”的通用安全替换。",
+            "当前疾病或过敏信息使个体化目标保持关闭，候选食材已经应用禁忌标签过滤且尚未写入健康档案。",
+        ]
+    else:
+        reasons = [
+            f"您的健康目标与“{PLAN_TITLES[goal]}”匹配，但医疗或过敏标签使个体化目标保持关闭。",
+            "以下仅展示基于已复核 A/B 资料并经过禁忌过滤的通用替换，不构成个体化处方。",
+        ]
+    return RecommendationOption(
+        plan_id=f"safe-plan-{goal}",
+        title=f"{PLAN_TITLES[goal]} · 安全替换",
+        selection_score=70,
+        match_reasons=reasons,
+        key_targets=targets,
+        actions=[
+            "从已验证的同类替换组选择食材，并避开页面标出的受限类别。",
+            "核对配料表和交叉接触风险，不确定时暂停食用。",
+            "如有疾病、用药或不适，由专业医师或注册营养师进一步评估。",
+        ],
+        substitutions=substitutions,
+        evidence=[_evidence(rule) for rule in rules],
+        blocked_food_tags=blocked_food_tags,
+    )
+
+
+def _match_reasons(
+    profile: ProfilePatch,
+    goal: GoalName,
+    *,
+    selection_basis: str,
+    inference: GoalInference | None,
+) -> list[str]:
+    if selection_basis == "message":
+        return [
+            f"根据本轮“{_inference_text(inference)}”表达，系统识别为相应健康诉求，因此优先展示“{PLAN_TITLES[goal]}”通用预览。",
+            "该候选尚未写入健康档案；补充年龄、活动水平和禁忌后可进行个体化规则评估。",
+        ]
+
+    reasons = [
+        f"您的健康目标与“{PLAN_TITLES[goal]}”匹配，系统仅使用已复核的核心营养资料 A/B 生成该方案。"
+    ]
+    details: list[str] = []
+    if profile.activity_level:
+        details.append(f"活动水平 {profile.activity_level}")
+    if profile.age_years is not None:
+        details.append(f"精确年龄 {profile.age_years} 岁")
+    if details:
+        reasons.append(f"规则校验已纳入{'、'.join(details)}，用于确认方案适用范围与匹配度。")
+    return reasons
+
+
+def _inference_text(inference: GoalInference | None) -> str:
+    if inference and inference.matched_terms:
+        return inference.matched_terms[0]
+    return "当前诉求"
 
 
 def _fat_loss_targets(content: dict[str, Any]) -> list[str]:

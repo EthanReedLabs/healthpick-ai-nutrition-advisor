@@ -27,9 +27,10 @@ MESSAGE_S2_RULES: tuple[tuple[str, tuple[str, ...]], ...] = (
 
 MESSAGE_S1_RULES: tuple[tuple[str, tuple[str, ...]], ...] = (
     ("message_allergy_or_intolerance", ("过敏", "不耐受")),
-    ("message_gout", ("痛风", "高尿酸")),
-    ("message_hypertension", ("高血压",)),
+    ("message_gout", ("痛风", "高尿酸", "尿酸高", "尿酸偏高")),
+    ("message_hypertension", ("高血压", "血压偏高", "血压有点高")),
     ("message_blood_glucose_concern", ("血糖偏高", "血糖有点高", "血糖高")),
+    ("message_family_history", ("家族病史", "家族史")),
     ("message_gluten_restriction", ("乳糜泻", "麸质")),
 )
 
@@ -44,8 +45,8 @@ MESSAGE_BLOCK_TAGS: tuple[tuple[str, tuple[str, ...]], ...] = (
     ("soy", ("大豆过敏", "豆制品过敏")),
     ("sesame", ("芝麻过敏",)),
     ("gluten", ("乳糜泻", "麸质")),
-    ("high_purine", ("痛风", "高尿酸")),
-    ("high_sodium", ("高血压", "低钠")),
+    ("high_purine", ("痛风", "高尿酸", "尿酸高", "尿酸偏高")),
+    ("high_sodium", ("高血压", "血压偏高", "血压有点高", "低钠")),
 )
 
 MEDICATION_TERMS = (

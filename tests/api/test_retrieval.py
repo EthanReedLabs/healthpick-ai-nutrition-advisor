@@ -68,6 +68,9 @@ def test_router_is_deterministic_and_exposes_source_policy(
         ("API开放平台有哪些套餐？", "platform"),
         ("给我稳糖食谱并介绍企业健康服务", "mixed"),
         ("训练后怎么补充？", "recommendation"),
+        ("我尿酸高，饮食需要注意什么？", "contraindication"),
+        ("我血压偏高，应该怎么吃？", "contraindication"),
+        ("我有家族病史，需要注意什么？", "contraindication"),
     ],
 )
 def test_router_covers_supported_natural_language_aliases(query: str, expected_route: str) -> None:
@@ -178,6 +181,9 @@ def test_keyword_ranking_is_stable_and_auditable(retriever: KeywordRetriever) ->
         ("减脂饮食有哪些核心原则？", "A-p04-c01"),
         ("会员能获得什么减脂饮食帮助？", "A-p04-c01"),
         ("高血压饮食需要注意什么？", "A-p04-c04"),
+        ("我尿酸高，饮食需要注意什么？", "A-p04-c06"),
+        ("我血压有点高，应该怎么吃？", "A-p04-c04"),
+        ("我有家族病史，需要注意什么？", "A-p05-c02"),
         ("糙米可以用什么同类食材替换？", "B-p05-c02"),
         ("训练后怎么补充？", "B-p06-c03"),
         ("HealthPick提供哪些核心服务？", "C-p01-c03"),

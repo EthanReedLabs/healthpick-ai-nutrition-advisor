@@ -903,3 +903,58 @@
 - 解决/缓解：只读核对Caddyfile和OpenAPI后改探/healthz，返回production、llm real和database schema ready；HTTPS根页及评测摘要同时通过。
 - 行动：无
 - 证据：infra/caddy/Caddyfile, packages/shared/openapi/healthpick.openapi.json, docs/evidence/final-public-probe.json
+
+## ISSUE-083 · RESOLVED
+
+- 发现时间：2026-08-23T08:31:00+08:00
+- 阶段/任务：PHASE-10 / RC11-01
+- 严重度：high；阻断最终验收：False
+- 现象：三句赛题自然诉求能进入A/B聊天链路，但结构化方案卡仍依赖用户先手工选择健康档案目标。
+- 原因：自然语言路由与档案推荐服务之间没有受控目标映射。
+- 解决/缓解：新增单目标确定性推断，只形成带理由的未落档候选；同句多目标不猜测，档案仍由用户控制。
+- 行动：RC11-05公网复验
+- 证据：tests/api/test_recommendation.py, tests/api/test_chat_sse.py, docs/evidence/phase-10-rc11-local-gates.json
+
+## ISSUE-084 · RESOLVED
+
+- 发现时间：2026-08-23T08:34:00+08:00
+- 阶段/任务：PHASE-10 / RC11-02
+- 严重度：high；阻断最终验收：False
+- 现象：赛题明确用例“我尿酸高”未命中高嘌呤过滤；血压偏高和未明确家族病史表达也不完整。
+- 原因：路由、检索和安全词表只覆盖部分同义词及固定词序。
+- 解决/缓解：同步补齐受控别名；家族病史只进入专业级一般信息和澄清边界，不推断具体疾病。
+- 行动：RC11-05公网复验
+- 证据：tests/api/test_retrieval.py, tests/api/test_safety.py
+
+## ISSUE-085 · RESOLVED
+
+- 发现时间：2026-08-23T08:37:00+08:00
+- 阶段/任务：PHASE-10 / RC11-02, RC11-03
+- 严重度：high；阻断最终验收：False
+- 现象：疾病或过敏触发后结构化推荐直接阻断，没有展示过滤后的食材替换，也没有赛题指定的方案使用提示原句。
+- 原因：推荐服务在加载规则和执行替换前提前返回安全阻断。
+- 解决/缓解：保持primary为空、S1/S2个体化目标关闭；新增不含精确数值的safe_alternative，并在API回答和Web卡片强制显示指定提示。
+- 行动：RC11-05公网复验
+- 证据：tests/api/test_recommendation.py, tests/api/test_chat_sse.py, apps/web/src/components/chat-workspace.test.tsx
+
+## ISSUE-086 · RESOLVED
+
+- 发现时间：2026-08-23T08:51:00+08:00
+- 阶段/任务：PHASE-10 / RC11-04
+- 严重度：medium；阻断最终验收：False
+- 现象：家族病史的受控免责声明片段已获得提示加分，但仍被另一普通关键词片段以小幅分差挤出首位。
+- 原因：人工核验提示固定权重25不足以压过真实查询中的BM25累计分。
+- 解决/缓解：提示权重提高到50，并用全部策划主证据的首位断言回归；A/B/C边界不变。
+- 行动：无
+- 证据：apps/api/healthpick_api/retrieval/keyword.py, tests/api/test_retrieval.py
+
+## ISSUE-087 · RESOLVED
+
+- 发现时间：2026-08-23T08:56:00+08:00
+- 阶段/任务：PHASE-10 / RC11-04
+- 严重度：low；阻断最终验收：False
+- 现象：首版把“痛风/高尿酸”也升级为禁忌路由，导致冻结黄金集POP-GOUT-02路由不一致。
+- 原因：为修“尿酸高”词序时扩大了不必要的既有路由范围。
+- 解决/缓解：撤回痛风和高尿酸的路由变化，仅保留赛题缺失词序；SafetyService对两者的S1和高嘌呤过滤继续生效，全量测试恢复通过。
+- 行动：无
+- 证据：tests/fixtures/phase04_safety_golden.jsonl, tests/api/test_safety_golden.py

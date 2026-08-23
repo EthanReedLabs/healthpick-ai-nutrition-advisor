@@ -35,6 +35,13 @@ QUERY_HINTS: tuple[tuple[tuple[str, ...], tuple[str, ...], str], ...] = (
     (("想减重",), ("A-p04-c01",), "fat_loss_intent_alias"),
     (("在健身",), ("A-p04-c02", "B-p06-c01"), "muscle_gain_intent_alias"),
     (("高血压",), ("A-p04-c04",), "hypertension"),
+    (("血压偏高",), ("A-p04-c04",), "hypertension_intent_alias"),
+    (("血压有点高",), ("A-p04-c04",), "hypertension_intent_alias"),
+    (("尿酸高",), ("A-p04-c06",), "gout_intent_alias"),
+    (("尿酸偏高",), ("A-p04-c06",), "gout_intent_alias"),
+    (("高尿酸",), ("A-p04-c06",), "gout"),
+    (("家族病史",), ("A-p05-c02",), "family_history_clarification"),
+    (("家族史",), ("A-p05-c02",), "family_history_clarification"),
     (("低钠",), ("A-p04-c04",), "low_sodium"),
     (("同食",), ("A-p04-c05",), "food_pairing"),
     (("一起吃",), ("A-p04-c05",), "food_pairing"),
@@ -55,7 +62,7 @@ QUERY_HINTS: tuple[tuple[tuple[str, ...], tuple[str, ...], str], ...] = (
     (("数据安全",), ("C-p03-c03",), "data_security"),
     (("平台如何帮助",), ("C-p01-c03",), "platform_capabilities"),
 )
-QUERY_HINT_SCORE = 25.0
+QUERY_HINT_SCORE = 50.0
 
 
 class KeywordRetriever:

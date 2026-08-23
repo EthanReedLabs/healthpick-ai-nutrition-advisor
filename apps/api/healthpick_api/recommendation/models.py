@@ -35,8 +35,12 @@ class RecommendationOption(RecommendationModel):
 class RecommendationEvaluation(RecommendationModel):
     status: Literal["ready", "blocked"]
     generated_by: Literal["deterministic_rules"] = "deterministic_rules"
+    selection_basis: Literal["profile", "message"] = "profile"
+    selected_goal: Literal["fat_loss", "muscle_gain", "stable_glucose"] | None = None
     primary: RecommendationOption | None = None
     alternate: RecommendationOption | None = None
+    safe_alternative: RecommendationOption | None = None
+    professional_notice: str | None = None
     blocked_reasons: list[str] = Field(default_factory=list)
     blocked_rule_ids: list[str] = Field(default_factory=list)
     requires_second_person_review: bool = False

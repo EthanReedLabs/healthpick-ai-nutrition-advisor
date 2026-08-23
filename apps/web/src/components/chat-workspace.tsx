@@ -39,9 +39,10 @@ import {
 } from "@/lib/api";
 
 const starterQuestions = [
-  "低钠饮食应该怎样搭配一日三餐？",
-  "帮我设计一份高蛋白早餐",
-  "平台能否替代医生给出诊断？",
+  "我想减重，三餐应该怎么搭配？",
+  "我在健身，训练前后应该怎么吃？",
+  "我血糖有点高，应该怎样选择低 GI 食物？",
+  "平台专业版包含哪些服务？",
 ];
 
 type Option = { value: string; label: string };
@@ -190,6 +191,8 @@ const safetyRuleLabels: Record<string, string> = {
   message_allergy_or_intolerance: "提问包含过敏或不耐受",
   message_gout: "提问包含痛风或高尿酸",
   message_hypertension: "提问包含高血压",
+  message_blood_glucose_concern: "提问包含血糖偏高",
+  message_family_history: "提问包含尚未明确疾病类型的家族病史",
   message_gluten_restriction: "提问包含麸质限制",
   standard_nutrition_scope: "普通营养信息范围",
 };
@@ -380,7 +383,8 @@ function SafetyPanel({ safety }: { safety: ChatFinalEvent["safety"] }) {
 }
 
 function RecommendationCard({ evaluation }: { evaluation: RecommendationEvaluation }) {
-  if (evaluation.status === "blocked" || !evaluation.primary) {
+  const safeAlternative = evaluation.safe_alternative;
+  if ((evaluation.status === "blocked" || !evaluation.primary) && !safeAlternative) {
     const reviewBlocked = evaluation.requires_second_person_review;
     return (
       <section className="recommendation-card is-blocked" aria-label="结构化方案暂未放行">
@@ -405,16 +409,30 @@ function RecommendationCard({ evaluation }: { evaluation: RecommendationEvaluati
     );
   }
 
-  const plan = evaluation.primary;
+  const plan = evaluation.primary ?? safeAlternative!;
+  const isSafeAlternative = Boolean(safeAlternative && !evaluation.primary);
+  const isIntentPreview = evaluation.selection_basis === "message";
   return (
-    <section className="recommendation-card" aria-label={`结构化主方案：${plan.title}`}>
+    <section
+      className={`recommendation-card ${isSafeAlternative ? "is-safe-alternative" : ""}`}
+      aria-label={`${isSafeAlternative ? "通用安全替换" : "结构化主方案"}：${plan.title}`}
+    >
       <div className="recommendation-head">
         <div>
-          <span className="eyebrow">DETERMINISTIC PLAN</span>
+          <span className="eyebrow">
+            {isIntentPreview ? "INTENT PREVIEW" : "DETERMINISTIC PLAN"}
+          </span>
           <h2>{plan.title}</h2>
         </div>
-        <span className="plan-state">规则匹配 {plan.selection_score} 分</span>
+        <span className="plan-state">
+          {isSafeAlternative ? "个体化目标已关闭" : `规则匹配 ${plan.selection_score} 分`}
+        </span>
       </div>
+      {isIntentPreview && (
+        <p className="guard-note">
+          这是根据本轮自然语言生成的通用候选，尚未写入健康档案。
+        </p>
+      )}
       <div className="match-reasons">
         {plan.match_reasons.map((reason) => <span key={reason}>{reason}</span>)}
       </div>
@@ -433,6 +451,21 @@ function RecommendationCard({ evaluation }: { evaluation: RecommendationEvaluati
           <h3>同类替换</h3>
           <div>{plan.substitutions.map((item) => <span key={item}>{item}</span>)}</div>
         </div>
+      )}
+      {plan.blocked_food_tags && plan.blocked_food_tags.length > 0 && (
+        <div className="safety-detail">
+          <strong>已排除的禁忌类别</strong>
+          <div className="blocked-tags">
+            {plan.blocked_food_tags.map((tag) => (
+              <span key={tag}>{blockedFoodLabels[tag] ?? "受限食材"}</span>
+            ))}
+          </div>
+        </div>
+      )}
+      {evaluation.professional_notice && (
+        <p className="guard-note" role="note">
+          {evaluation.professional_notice}。
+        </p>
       )}
       <div className="plan-evidence">
         <strong>已复核依据</strong>
@@ -455,6 +488,9 @@ function AnswerResult({ answer }: { answer: ChatFinalEvent }) {
       </div>
       <SafetyPanel safety={answer.safety} />
       <p>{answer.answer}</p>
+      {answer.recommendation_preview && (
+        <RecommendationCard evaluation={answer.recommendation_preview} />
+      )}
       {answer.citations.length > 0 ? (
         <div className="inline-citations">
           {answer.citations.map((citation) => (

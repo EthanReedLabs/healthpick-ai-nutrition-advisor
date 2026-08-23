@@ -556,6 +556,16 @@
           "model": {
             "$ref": "#/components/schemas/ModelInfo"
           },
+          "recommendation_preview": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/RecommendationEvaluation"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
           "request_id": {
             "title": "Request Id",
             "type": "string"
@@ -1601,10 +1611,56 @@
               }
             ]
           },
+          "professional_notice": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Professional Notice"
+          },
           "requires_second_person_review": {
             "default": false,
             "title": "Requires Second Person Review",
             "type": "boolean"
+          },
+          "safe_alternative": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/RecommendationOption"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "selected_goal": {
+            "anyOf": [
+              {
+                "enum": [
+                  "fat_loss",
+                  "muscle_gain",
+                  "stable_glucose"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Selected Goal"
+          },
+          "selection_basis": {
+            "default": "profile",
+            "enum": [
+              "profile",
+              "message"
+            ],
+            "title": "Selection Basis",
+            "type": "string"
           },
           "status": {
             "enum": [

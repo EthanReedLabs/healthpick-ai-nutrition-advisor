@@ -122,6 +122,47 @@ def test_mixed_sse_returns_core_and_platform_citations() -> None:
     assert "C" in sources
 
 
+@pytest.mark.parametrize(
+    ("message", "expected_goal", "expected_title"),
+    [
+        ("我想减重，三餐应该怎么搭配？", "fat_loss", "轻盈减脂方案"),
+        ("我在健身，训练前后应该怎么吃？", "muscle_gain", "力量增肌方案"),
+        ("我血糖有点高，应该怎样选择低 GI 食物？", "stable_glucose", "稳糖调理方案"),
+    ],
+)
+def test_competition_intent_examples_return_structured_preview(
+    message: str,
+    expected_goal: str,
+    expected_title: str,
+) -> None:
+    with TestClient(create_app(mock_settings()), raise_server_exceptions=False) as client:
+        response = request(client, message)
+
+    assert response.status_code == 200
+    final = ChatFinalEvent.model_validate(parse_sse(response.text)[-1][1])
+    preview = final.recommendation_preview
+    assert preview is not None
+    assert preview.selection_basis == "message"
+    assert preview.selected_goal == expected_goal
+    plan = preview.primary or preview.safe_alternative
+    assert plan is not None
+    assert expected_title in plan.title
+
+
+def test_contraindication_preview_filters_foods_and_emits_exact_plan_notice() -> None:
+    with TestClient(create_app(mock_settings()), raise_server_exceptions=False) as client:
+        response = request(client, "我尿酸高，也想减重，应该怎么搭配？")
+
+    assert response.status_code == 200
+    final = ChatFinalEvent.model_validate(parse_sse(response.text)[-1][1])
+    assert final.safety.risk_level == "S1"
+    assert "high_purine" in final.safety.blocked_food_tags
+    assert final.recommendation_preview is not None
+    assert final.recommendation_preview.primary is None
+    assert final.recommendation_preview.safe_alternative is not None
+    assert "建议您在使用本方案前咨询专业医师或注册营养师" in final.answer
+
+
 def test_out_of_scope_uses_deterministic_guard_without_citations() -> None:
     with TestClient(create_app(mock_settings()), raise_server_exceptions=False) as client:
         response = request(client, "如何修复汽车发动机？")

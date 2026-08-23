@@ -2,12 +2,13 @@ from __future__ import annotations
 
 from dataclasses import replace
 
+import pytest
 from fastapi.testclient import TestClient
 from healthpick_api.config import Settings
 from healthpick_api.main import create_app
 from healthpick_api.profile import ProfilePatch
 from healthpick_api.recommendation import PlanRule, RecommendationCatalog
-from healthpick_api.recommendation.service import RecommendationService
+from healthpick_api.recommendation.service import PLAN_USAGE_NOTICE, RecommendationService
 
 
 def rule(rule_id: str, content: dict, *, source: str = "B") -> PlanRule:
@@ -99,7 +100,7 @@ def test_exact_45_is_ready_but_age_outside_verified_source_scope_is_blocked() ->
 
     assert exact_45.status == "ready"
     assert exact_45.primary is not None
-    assert "精确年龄已验证：45 岁" in exact_45.primary.match_reasons
+    assert any("精确年龄 45 岁" in reason for reason in exact_45.primary.match_reasons)
     assert age_56.status == "blocked"
     assert age_56.blocked_reasons == ["age_outside_plan_scope"]
 
@@ -132,8 +133,18 @@ def test_medical_or_allergy_constraint_never_receives_personalized_targets() -> 
     assert kidney.blocked_reasons == ["safety_s2_general_only"]
     assert allergy.primary is None
     assert kidney.primary is None
+    assert allergy.safe_alternative is not None
+    assert kidney.safe_alternative is not None
+    assert allergy.safe_alternative.blocked_food_tags == ["shellfish"]
+    assert all(
+        "kcal" not in target and "g/kg" not in target
+        for target in allergy.safe_alternative.key_targets
+    )
+    assert allergy.professional_notice == PLAN_USAGE_NOTICE
+    assert kidney.professional_notice == PLAN_USAGE_NOTICE
     assert exact_45_kidney.blocked_reasons == ["safety_s2_general_only"]
     assert exact_45_kidney.primary is None
+    assert exact_45_kidney.safe_alternative is not None
 
 
 def test_verified_fat_loss_rules_create_one_deterministic_primary_plan() -> None:
@@ -149,12 +160,60 @@ def test_verified_fat_loss_rules_create_one_deterministic_primary_plan() -> None
     assert result.generated_by == "deterministic_rules"
     assert result.alternate is None
     assert result.primary is not None
-    assert result.primary.title == "轻盈减脂"
+    assert result.primary.title == "轻盈减脂方案"
     assert result.primary.selection_score == 95
     assert len(result.primary.actions) == 3
     assert "每日能量缺口：300–500 kcal" in result.primary.key_targets
     assert "蛋白质范围：1.2–1.6 g/kg" in result.primary.key_targets
     assert {item.source for item in result.primary.evidence} == {"A", "B"}
+    assert 1 <= len(result.primary.match_reasons) <= 2
+    assert all(reason.endswith("。") for reason in result.primary.match_reasons)
+
+
+@pytest.mark.parametrize(
+    ("message", "expected_goal", "expected_title"),
+    [
+        ("我想减重，三餐应该怎么搭配？", "fat_loss", "轻盈减脂方案"),
+        ("我在健身，训练前后应该怎么吃？", "muscle_gain", "力量增肌方案"),
+        ("我血糖有点高，应该怎样选择低 GI 食物？", "stable_glucose", "稳糖调理方案"),
+    ],
+)
+def test_message_intent_creates_non_persistent_preview(
+    message: str,
+    expected_goal: str,
+    expected_title: str,
+) -> None:
+    service = verified_service()
+    preview = service.preview_for_message(message)
+
+    assert preview is not None
+    assert preview.selection_basis == "message"
+    assert preview.selected_goal == expected_goal
+    assert preview.primary is not None or preview.safe_alternative is not None
+    plan = preview.primary or preview.safe_alternative
+    assert plan is not None
+    assert expected_title in plan.title
+    assert any("尚未写入健康档案" in reason for reason in plan.match_reasons)
+
+
+def test_message_intent_with_allergy_returns_filtered_general_alternative() -> None:
+    service = verified_service()
+    preview = service.preview_for_message(
+        "我对海鲜过敏，但我想减重，应该怎么搭配？",
+        ProfilePatch(allergies=["shellfish"]),
+    )
+
+    assert preview is not None
+    assert preview.status == "blocked"
+    assert preview.primary is None
+    assert preview.safe_alternative is not None
+    assert preview.safe_alternative.blocked_food_tags == ["shellfish"]
+    assert all("虾" not in item for item in preview.safe_alternative.substitutions)
+    assert preview.professional_notice == PLAN_USAGE_NOTICE
+
+
+def test_conflicting_message_goals_require_clarification_instead_of_guessing() -> None:
+    assert verified_service().preview_for_message("我既想减脂又想增肌") is None
 
 
 def test_verified_muscle_and_glucose_rules_create_goal_specific_targets() -> None:
@@ -207,7 +266,7 @@ def test_recommendation_endpoint_returns_the_live_reviewed_candidate() -> None:
     assert response.status_code == 200
     payload = response.json()
     assert payload["status"] == "ready"
-    assert payload["primary"]["title"] == "轻盈减脂"
+    assert payload["primary"]["title"] == "轻盈减脂方案"
     assert payload["primary"]["key_targets"][0] == "每日能量缺口：300–500 kcal"
     assert payload["requires_second_person_review"] is False
 
@@ -228,5 +287,5 @@ def test_recommendation_endpoint_supports_verified_exact_age_45() -> None:
     assert response.status_code == 200
     payload = response.json()
     assert payload["status"] == "ready"
-    assert payload["primary"]["title"] == "轻盈减脂"
-    assert "精确年龄已验证：45 岁" in payload["primary"]["match_reasons"]
+    assert payload["primary"]["title"] == "轻盈减脂方案"
+    assert any("精确年龄 45 岁" in reason for reason in payload["primary"]["match_reasons"])

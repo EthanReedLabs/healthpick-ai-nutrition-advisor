@@ -28,6 +28,8 @@ from healthpick_api.providers import (
     ProviderRequestError,
     build_llm_provider,
 )
+from healthpick_api.recommendation import RecommendationEvaluation
+from healthpick_api.recommendation.service import RecommendationService
 from healthpick_api.retrieval import KeywordRetriever, KnowledgeIndex, RetrievalTrace
 from healthpick_api.routing import QueryRouter, RouteDecision
 from healthpick_api.safety import (
@@ -94,6 +96,7 @@ class ChatPipeline:
         index: KnowledgeIndex,
         conversations: ConversationStore | None = None,
         safety: SafetyService | None = None,
+        recommendations: RecommendationService | None = None,
         generation_timeout_seconds: float = 30,
     ) -> None:
         self.provider = provider
@@ -103,6 +106,7 @@ class ChatPipeline:
         self.validator = EvidenceValidator(index)
         self.conversations = conversations or EphemeralConversationStore()
         self.safety = safety or SafetyService()
+        self.recommendations = recommendations or RecommendationService.load_default()
         self.output_safety = OutputSafetyValidator()
         self.generation_timeout_seconds = generation_timeout_seconds
 
@@ -159,6 +163,12 @@ class ChatPipeline:
                 session_mode=self.conversations.mode,
             )
 
+        recommendation_preview = self.recommendations.preview_for_message(
+            payload.message,
+            payload.profile_patch,
+            safety=safety,
+        )
+
         retrieval = self.retriever.search(payload.message, decision, limit=6)
         if not retrieval.hits:
             raise ChatPipelineError(
@@ -183,7 +193,10 @@ class ChatPipeline:
                 request_id=request_id,
             )
         )
-        answer = ensure_required_notice(result.content, safety)
+        answer = _ensure_recommendation_notice(
+            ensure_required_notice(result.content, safety),
+            recommendation_preview,
+        )
         validation = self._validate_generated_answer(
             answer=answer,
             citations=bundle.citations,
@@ -216,7 +229,10 @@ class ChatPipeline:
                     request_id=request_id,
                 )
             )
-            answer = ensure_required_notice(result.content, safety)
+            answer = _ensure_recommendation_notice(
+                ensure_required_notice(result.content, safety),
+                recommendation_preview,
+            )
             validation = self._validate_generated_answer(
                 answer=answer,
                 citations=bundle.citations,
@@ -236,6 +252,10 @@ class ChatPipeline:
                 decision=decision,
                 safety=safety,
                 query=payload.message,
+            )
+            fallback_answer = _ensure_recommendation_notice(
+                fallback_answer,
+                recommendation_preview,
             )
             fallback_validation = self._validate_generated_answer(
                 answer=fallback_answer,
@@ -275,6 +295,7 @@ class ChatPipeline:
                 name=result.model if result is not None else "deterministic_evidence_fallback",
                 mode=result.mode if result is not None else self.provider.mode,
             ),
+            recommendation_preview=recommendation_preview,
             retrieval_trace=RetrievalTraceView(
                 mode=retrieval.trace.mode,
                 route=_public_route(decision),  # type: ignore[arg-type]
@@ -635,3 +656,14 @@ def _deterministic_safety_answer(safety: SafetyResult) -> str:
         "我不能提供停药、换药、剂量调整、极端减重或高风险个体化营养处方。"
         "请联系医生或药师评估；我可以继续提供不涉及治疗调整的一般饮食信息。"
     )
+
+
+def _ensure_recommendation_notice(
+    answer: str,
+    preview: RecommendationEvaluation | None,
+) -> str:
+    notice = preview.professional_notice if preview else None
+    normalized = answer.rstrip()
+    if not notice or notice in normalized:
+        return normalized
+    return f"{normalized}\n\n{notice}。"

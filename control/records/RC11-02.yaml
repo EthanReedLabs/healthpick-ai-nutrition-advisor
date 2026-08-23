@@ -1,0 +1,30 @@
+schema_version: 1
+task_id: RC11-02
+phase_id: PHASE-10
+outcome: passed
+started_at: "2026-08-23T08:36:00+08:00"
+completed_at: "2026-08-23T08:49:00+08:00"
+recorded_at: "2026-08-23T09:02:38+08:00"
+backfilled: false
+owner: LEAD/API/SAFETY
+summary: 补齐尿酸、血压和家族病史别名；S1/S2仍关闭个体化目标，仅返回禁忌过滤后的通用安全替换和指定提示语。
+deliverables:
+  - apps/api/healthpick_api/safety/service.py
+  - apps/api/healthpick_api/routing/router.py
+  - apps/api/healthpick_api/retrieval/keyword.py
+acceptance_checks:
+  - name: 尿酸高和血压偏高命中对应安全标签
+    result: pass
+    evidence: [tests/api/test_safety.py, tests/api/test_retrieval.py]
+  - name: 安全替换不含精确个体化目标且显示指定提示
+    result: pass
+    evidence: [tests/api/test_recommendation.py, tests/api/test_chat_sse.py]
+issues:
+  - "RC11-ISSUE-02（已解决）：尿酸高等词序缺失；路由、检索、安全层同步受控别名。"
+  - "RC11-ISSUE-03（已解决）：禁忌阻断后无替换与指定提示；保持个体化关闭并新增安全替换。"
+residual_actions: []
+review:
+  status: pending_final_review
+  reviewer: Project Lead
+  reviewed_at: null
+  notes: 待RC11公网验收复核。

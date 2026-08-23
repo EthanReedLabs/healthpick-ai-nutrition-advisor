@@ -1,0 +1,28 @@
+schema_version: 1
+task_id: RC11-01
+phase_id: PHASE-10
+outcome: passed
+started_at: "2026-08-23T08:30:00+08:00"
+completed_at: "2026-08-23T08:46:00+08:00"
+recorded_at: "2026-08-23T09:02:38+08:00"
+backfilled: false
+owner: LEAD/API
+summary: 三句赛题自然诉求可直接形成未写入健康档案的结构化方案候选，冲突目标保持澄清边界。
+deliverables:
+  - apps/api/healthpick_api/recommendation/intent.py
+  - apps/api/healthpick_api/recommendation/service.py
+acceptance_checks:
+  - name: 减脂增肌稳糖三句均映射正确方案
+    result: pass
+    evidence: [docs/evidence/phase-10-rc11-local-gates.json]
+  - name: 候选不持久化档案且冲突目标不猜测
+    result: pass
+    evidence: [tests/api/test_recommendation.py]
+issues:
+  - "RC11-ISSUE-01（已解决）：自然诉求与档案推荐未连接；新增未落档单目标候选，冲突目标不猜测。"
+residual_actions: []
+review:
+  status: pending_final_review
+  reviewer: Project Lead
+  reviewed_at: null
+  notes: 待RC11公网验收复核。

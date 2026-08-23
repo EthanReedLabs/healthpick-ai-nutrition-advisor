@@ -1,0 +1,64 @@
+{
+  "schema_version": 1,
+  "control_id": "RC11-FINAL-RUBRIC-REPAIR",
+  "generated_at": "2026-08-23T09:18:28+08:00",
+  "environment": "local",
+  "base_commit": "c4d2a597e47a0e37de7613a57dcc6d539f331850",
+  "status": "PASS_LOCAL",
+  "scope": [
+    "natural_intent_recommendation_preview",
+    "contraindication_aliases",
+    "safe_general_alternative",
+    "exact_plan_usage_notice",
+    "recommendation_reason_sentences",
+    "web_preview_rendering"
+  ],
+  "gates": {
+    "python_full_pytest": "PASS",
+    "python_ruff_check": "PASS",
+    "changed_python_ruff_format_check": "PASS",
+    "web_vitest_35": "PASS",
+    "web_typescript": "PASS",
+    "web_eslint": "PASS",
+    "web_next_production_build": "PASS",
+    "openapi_export_and_type_generation": "PASS",
+    "git_diff_check": "PASS",
+    "real_llm_desktop_browser": "PASS",
+    "real_llm_mobile_375px_browser": "PASS",
+    "browser_console_errors": 0,
+    "release_docs_validation": "PASS",
+    "repository_security_scan_findings": 0
+  },
+  "functional_assertions": {
+    "three_competition_intents_return_structured_preview": true,
+    "message_preview_does_not_persist_profile_goal": true,
+    "conflicting_goals_do_not_guess": true,
+    "uric_acid_aliases_enable_high_purine_filter": true,
+    "blood_pressure_aliases_enable_high_sodium_filter": true,
+    "family_history_requires_clarification_without_diagnosis": true,
+    "s1_s2_personalized_targets_remain_disabled": true,
+    "safe_alternative_contains_no_precise_target": true,
+    "exact_plan_usage_notice_in_answer_and_card": true,
+    "recommendation_sources_remain_a_b_only": true,
+    "browser_test_conversations_cleaned": true
+  },
+  "browser_evidence": [
+    "apps/web/output/playwright/rc11-local/rc11-safe-alternative-desktop.png",
+    "apps/web/output/playwright/rc11-local/rc11-safe-alternative-mobile.png"
+  ],
+  "resolved_issues": [
+    "natural intent previously required a manually selected profile goal for a structured card",
+    "competition phrase 尿酸高 and common 血压偏高 aliases were missing",
+    "blocked recommendation returned no filtered general alternative or exact plan-use notice",
+    "curated family-history evidence hint did not deterministically rank first",
+    "overbroad router alias change temporarily broke one frozen golden expectation"
+  ],
+  "pending_external": [
+    "commit_and_push_rc11",
+    "image_only_server_deployment",
+    "public_rc11_acceptance",
+    "judge_repository_access_or_source_archive",
+    "competition_form_submission",
+    "record_actual_submission_time_and_keep_service_for_at_least_7_days"
+  ]
+}

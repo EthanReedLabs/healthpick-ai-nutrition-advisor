@@ -271,6 +271,7 @@ class ChatFinalEvent(StrictModel):
     citations: list[Citation]
     safety: SafetyResult
     model: ModelInfo
+    recommendation_preview: RecommendationEvaluation | None = None
     retrieval_trace: RetrievalTraceView | None = None
     turn_id: UUID | None = None
 

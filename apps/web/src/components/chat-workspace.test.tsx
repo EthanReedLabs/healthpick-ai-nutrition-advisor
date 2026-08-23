@@ -306,11 +306,11 @@ describe("ChatWorkspace", () => {
   it("fills the composer from a quick question without fabricating an answer", async () => {
     render(<ChatWorkspace />);
     const quickQuestion = screen.getByRole("button", {
-      name: "帮我设计一份高蛋白早餐",
+      name: "我在健身，训练前后应该怎么吃？",
     });
     fireEvent.click(quickQuestion);
     expect(screen.getByLabelText("输入营养或平台问题")).toHaveValue(
-      "帮我设计一份高蛋白早餐",
+      "我在健身，训练前后应该怎么吃？",
     );
     expect(screen.queryByText("这是模型生成的答案")).not.toBeInTheDocument();
   });
@@ -597,6 +597,75 @@ describe("ChatWorkspace", () => {
     expect(trace).toHaveTextContent("A-p01-c04");
     expect(trace).toHaveTextContent("来源隔离拒绝 20");
     expect(trace).toHaveTextContent("分数 4.125");
+  });
+
+  it("renders a non-persistent contraindication-safe intent preview", async () => {
+    queueResponses(() =>
+      sseResponse({
+        request_id: "req-safe-preview",
+        answer: "已排除高嘌呤食物。\n\n建议您在使用本方案前咨询专业医师或注册营养师。",
+        route: "nutrition",
+        citations: [],
+        safety: {
+          risk_level: "S1",
+          matched_rules: ["message_gout"],
+          blocked_food_tags: ["high_purine"],
+          allow_personalized_targets: false,
+          required_notice: "professional",
+          response_mode: "general_only",
+        },
+        model: { provider: "healthpick_mock", name: "mock-v1", mode: "mock" },
+        recommendation_preview: {
+          status: "blocked",
+          generated_by: "deterministic_rules",
+          selection_basis: "message",
+          selected_goal: "fat_loss",
+          primary: null,
+          alternate: null,
+          safe_alternative: {
+            plan_id: "safe-plan-fat_loss",
+            title: "轻盈减脂方案 · 安全替换",
+            selection_score: 70,
+            match_reasons: [
+              "根据本轮诉求展示通用安全替换。",
+              "候选食材已经过滤且尚未写入健康档案。",
+            ],
+            key_targets: ["采用 211 餐盘结构。"],
+            actions: ["选择安全替换。", "核对配料表。", "咨询专业人员。"],
+            substitutions: ["糙米 / 燕麦米 / 黑米"],
+            evidence: [
+              {
+                rule_id: "rule-A-fat_loss_guidance",
+                source: "A",
+                title: "减脂一般原则",
+                section: "4.1 减脂人群",
+                pages: [4],
+                review_status: "verified",
+              },
+            ],
+            blocked_food_tags: ["high_purine"],
+          },
+          professional_notice: "建议您在使用本方案前咨询专业医师或注册营养师",
+          blocked_reasons: ["safety_s1_general_only"],
+          blocked_rule_ids: [],
+          requires_second_person_review: false,
+        },
+      }),
+    );
+
+    render(<ChatWorkspace />);
+    fireEvent.change(screen.getByLabelText("输入营养或平台问题"), {
+      target: { value: "我尿酸高，也想减重，应该怎么搭配？" },
+    });
+    fireEvent.click(screen.getByRole("button", { name: /发送/ }));
+
+    const card = await screen.findByRole("region", {
+      name: "通用安全替换：轻盈减脂方案 · 安全替换",
+    });
+    expect(card).toHaveTextContent("INTENT PREVIEW");
+    expect(card).toHaveTextContent("尚未写入健康档案");
+    expect(card).toHaveTextContent("高嘌呤食物");
+    expect(card).toHaveTextContent("建议您在使用本方案前咨询专业医师或注册营养师");
   });
 
   it("validates an ephemeral profile and sends it with the next chat request", async () => {

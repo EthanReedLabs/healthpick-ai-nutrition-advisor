@@ -557,6 +557,7 @@ export interface components {
             /** Citations */
             citations: components["schemas"]["Citation"][];
             model: components["schemas"]["ModelInfo"];
+            recommendation_preview?: components["schemas"]["RecommendationEvaluation"] | null;
             /** Request Id */
             request_id: string;
             retrieval_trace?: components["schemas"]["RetrievalTraceView"] | null;
@@ -940,11 +941,22 @@ export interface components {
              */
             generated_by: "deterministic_rules";
             primary?: components["schemas"]["RecommendationOption"] | null;
+            /** Professional Notice */
+            professional_notice?: string | null;
             /**
              * Requires Second Person Review
              * @default false
              */
             requires_second_person_review: boolean;
+            safe_alternative?: components["schemas"]["RecommendationOption"] | null;
+            /** Selected Goal */
+            selected_goal?: ("fat_loss" | "muscle_gain" | "stable_glucose") | null;
+            /**
+             * Selection Basis
+             * @default profile
+             * @enum {string}
+             */
+            selection_basis: "profile" | "message";
             /**
              * Status
              * @enum {string}

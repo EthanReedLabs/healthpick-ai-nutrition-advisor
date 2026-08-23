@@ -1,0 +1,38 @@
+schema_version: 1
+task_id: RC11-04
+phase_id: PHASE-10
+outcome: passed
+started_at: "2026-08-23T08:46:00+08:00"
+completed_at: "2026-08-23T09:02:38+08:00"
+recorded_at: "2026-08-23T09:02:38+08:00"
+backfilled: false
+owner: LEAD/QA/DOCS
+summary: 完成本轮全量回归、构建、真实模型浏览器验收、需求追踪、测试记录、AI披露和问题解决记录；本地技术门全部通过。
+deliverables:
+  - docs/evidence/phase-10-rc11-local-gates.json
+  - apps/web/output/playwright/rc11-local/rc11-safe-alternative-desktop.png
+  - apps/web/output/playwright/rc11-local/rc11-safe-alternative-mobile.png
+  - docs/phases/phase-10-final-rubric-repair.md
+  - docs/01-requirements-traceability.md
+  - docs/07-demo-and-submission.md
+  - docs/08-basic-test-records.md
+acceptance_checks:
+  - name: Python与Web全量测试通过
+    result: pass
+    evidence: [docs/evidence/phase-10-rc11-local-gates.json]
+  - name: Ruff ESLint TypeScript Next build和差异检查通过
+    result: pass
+    evidence: [docs/evidence/phase-10-rc11-local-gates.json]
+  - name: 真实模型桌面与375px移动浏览器验收通过且控制台无错误
+    result: pass
+    evidence: [docs/evidence/phase-10-rc11-local-gates.json]
+issues:
+  - "RC11-ISSUE-04（已解决）：受控提示未稳定排首位；提高权重并增加首位回归。"
+  - "RC11-ISSUE-05（已解决）：别名扩展破坏冻结黄金路由；缩回最小词序范围。"
+residual_actions:
+  - RC11-05完成提交、镜像部署和公网复验。
+review:
+  status: pending_final_review
+  reviewer: Project Lead
+  reviewed_at: null
+  notes: 本地门通过，最终签署等待公网RC11证据。

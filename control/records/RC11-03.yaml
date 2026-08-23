@@ -1,0 +1,30 @@
+schema_version: 1
+task_id: RC11-03
+phase_id: PHASE-10
+outcome: passed
+started_at: "2026-08-23T08:43:00+08:00"
+completed_at: "2026-08-23T08:55:00+08:00"
+recorded_at: "2026-08-23T09:02:38+08:00"
+backfilled: false
+owner: LEAD/API/WEB
+summary: SSE和历史响应携带结构化候选，Web展示意图预览、安全替换、排除标签、完整推荐理由和指定提示语。
+deliverables:
+  - apps/api/healthpick_api/models.py
+  - apps/api/healthpick_api/chat/pipeline.py
+  - apps/web/src/components/chat-workspace.tsx
+  - packages/shared/openapi/healthpick.openapi.json
+  - apps/web/src/lib/api-schema.d.ts
+acceptance_checks:
+  - name: OpenAPI与前端生成类型一致
+    result: pass
+    evidence: [docs/evidence/phase-10-rc11-local-gates.json]
+  - name: 当前轮安全候选可访问展示
+    result: pass
+    evidence: [apps/web/src/components/chat-workspace.test.tsx]
+issues: []
+residual_actions: []
+review:
+  status: pending_final_review
+  reviewer: Project Lead
+  reviewed_at: null
+  notes: 待RC11公网验收复核。
