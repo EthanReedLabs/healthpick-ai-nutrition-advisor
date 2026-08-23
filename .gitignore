@@ -34,6 +34,7 @@ tmp/
 *.sqlite3
 control/records/*.lock
 output/deployment/
+output/docx-qa/
 output/runtime/
 output/playwright/phase-07-p07-05-stopped-immediate.png
 

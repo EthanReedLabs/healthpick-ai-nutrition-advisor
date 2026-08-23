@@ -124,6 +124,7 @@ npm run build
 13. [最终总纲验收](docs/governance/FINAL_ACCEPTANCE_MASTER.md)
 14. [基础功能测试记录](docs/08-basic-test-records.md)
 15. [公网七天可用性承诺](docs/evidence/phase-09-rc10-05-availability.md)
+16. [赛题正式交付文档（Word）](docs/deliverables/README.md)
 
 ## 医疗边界
 

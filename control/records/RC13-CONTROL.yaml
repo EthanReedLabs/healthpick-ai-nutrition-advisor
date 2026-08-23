@@ -1,0 +1,21 @@
+schema_version: 1
+control_id: RC13-COMPETITION-DELIVERABLES
+parent_control: control/project-control.yaml
+phase_id: PHASE-12
+title: 赛题正式交付文档生成与验收
+status: passed
+started_at: "2026-08-23T11:00:00+08:00"
+plan: docs/phases/phase-12-competition-deliverables.md
+tasks:
+  - id: RC13-01
+    status: passed
+    record: control/records/RC13-01.yaml
+    evidence: [docs/evidence/phase-12-delivery-documents-validation.json]
+issues:
+  - {id: RC13-ISSUE-01, task_id: RC13-01, severity: low, status: resolved, blocks_release: false, summary: 本机缺少soffice；已使用Microsoft Word只读导出和PyMuPDF逐页复核}
+final_gate:
+  id: RC13-FINAL
+  status: passed
+  required_tasks: [RC13-01]
+  evidence:
+    - docs/evidence/phase-12-delivery-documents-validation.json

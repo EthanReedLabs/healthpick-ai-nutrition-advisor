@@ -1,0 +1,43 @@
+schema_version: 1
+task_id: RC13-01
+phase_id: PHASE-12
+control_id: RC13-COMPETITION-DELIVERABLES
+outcome: passed
+started_at: "2026-08-23T11:00:00+08:00"
+completed_at: "2026-08-23T11:59:05+08:00"
+recorded_at: "2026-08-23T11:59:05+08:00"
+backfilled: false
+owner: LEAD/DOCS/QA
+summary: 按赛题要求形成使用说明、系统架构说明和基础功能测试记录三份独立Word交付物，并完成字数、结构和逐页视觉验收。
+deliverables:
+  - docs/deliverables/03-使用说明文档.md
+  - docs/deliverables/04-系统架构说明.md
+  - docs/deliverables/05-基础功能测试记录.md
+  - docs/deliverables/word/03-使用说明文档.docx
+  - docs/deliverables/word/04-系统架构说明.docx
+  - docs/deliverables/word/05-基础功能测试记录.docx
+  - scripts/build_competition_documents.py
+  - scripts/render_competition_docx_qa.py
+  - docs/evidence/phase-12-delivery-documents-validation.json
+acceptance_checks:
+  - name: 使用说明不少于500字且技术选型与核心逻辑不少于200字
+    result: pass
+    evidence: [docs/evidence/phase-12-delivery-documents-validation.json]
+  - name: 系统架构说明不少于300字并覆盖赛题指定内容
+    result: pass
+    evidence: [docs/evidence/phase-12-delivery-documents-validation.json]
+  - name: 基础功能测试记录不少于5组
+    result: pass
+    evidence: [docs/evidence/phase-12-delivery-documents-validation.json]
+  - name: 三份DOCX结构完整且全部页面视觉复核通过
+    result: pass
+    evidence: [docs/evidence/phase-12-delivery-documents-validation.json]
+issues:
+  - "RC13-ISSUE-01（已解决）：标准渲染脚本依赖的 soffice 未安装；未改动全局环境，改用本机 Microsoft Word 只读导出 PDF，再由 PyMuPDF 生成逐页图片，16 页视觉复核通过。"
+residual_actions:
+  - "提交表单前确认评委具备仓库访问权限，或上传平台允许的源码归档。"
+review:
+  status: accepted
+  reviewer: Automated structure gate + full-page visual inspection
+  reviewed_at: "2026-08-23T11:59:05+08:00"
+  notes: 字数和测试组数达到要求；3份DOCX结构检查通过；共16页无裁切、重叠、缺字、表格溢出或失效图片。

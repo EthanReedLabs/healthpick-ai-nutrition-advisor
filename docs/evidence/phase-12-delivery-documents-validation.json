@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "evidence_id": "PHASE12-DELIVERY-DOCS-VALIDATION",
+  "status": "PASS",
+  "validated_at": "2026-08-23T11:59:05+08:00",
+  "project_head_before_documents": "c0bb7010976c764b29e9549140bcb52f2815a329",
+  "deployed_application_source_commit": "8b0446e5e986126a8b002e2b88fdd7ff5e0ea6c8",
+  "public_url": "https://106.14.13.139",
+  "requirement_metrics": {
+    "usage_guide_chinese_characters": 2591,
+    "usage_guide_minimum": 500,
+    "technical_selection_and_core_logic_chinese_characters": 506,
+    "technical_selection_and_core_logic_minimum": 200,
+    "architecture_chinese_characters": 2883,
+    "architecture_minimum": 300,
+    "basic_test_groups": 12,
+    "basic_test_groups_minimum": 5
+  },
+  "documents": [
+    {
+      "path": "docs/deliverables/word/03-使用说明文档.docx",
+      "bytes": 46397,
+      "sha256": "4301874DA4F3C5B1820436BBF0D2E308559A835430F6B71591821ECA514A8183",
+      "rendered_pages": 5,
+      "structural_check": "PASS",
+      "visual_check": "PASS"
+    },
+    {
+      "path": "docs/deliverables/word/04-系统架构说明.docx",
+      "bytes": 187687,
+      "sha256": "5952438A26D84533EDAF1EA67863F2200F5A9F9481BD6573AE55895B06DA4033",
+      "rendered_pages": 6,
+      "structural_check": "PASS",
+      "visual_check": "PASS"
+    },
+    {
+      "path": "docs/deliverables/word/05-基础功能测试记录.docx",
+      "bytes": 46060,
+      "sha256": "A6863152F40050B7B82B6CB87A0BA9DE9D2A50B13F82A51206A06EEC9F49315D",
+      "rendered_pages": 5,
+      "structural_check": "PASS",
+      "visual_check": "PASS"
+    }
+  ],
+  "checks": [
+    {
+      "name": "DOCX ZIP integrity and required Word parts",
+      "result": "PASS",
+      "detail": "All three files contain [Content_Types].xml, word/document.xml and word/styles.xml; ZIP CRC and document XML parsing passed."
+    },
+    {
+      "name": "Unresolved output placeholders",
+      "result": "PASS",
+      "detail": "No QR, figure, TODO or TBD placeholder remains in final word/document.xml."
+    },
+    {
+      "name": "Page rendering and visual review",
+      "result": "PASS",
+      "detail": "All 16 pages were exported with Microsoft Word in read-only mode, rasterized with PyMuPDF and inspected at original detail; no clipping, overlap, missing glyph, broken table or overflow was found."
+    },
+    {
+      "name": "Competition requirement content coverage",
+      "result": "PASS",
+      "detail": "The source documents cover the public URL and QR code, usage steps, technical selection and core logic, platform reasons, front-end/back-end/data architecture, A/B versus C source isolation, recommendation, multi-turn conversation, exception handling, workflow nodes, Prompt design, medical disclaimer and AI-assisted development disclosure."
+    },
+    {
+      "name": "Canonical LibreOffice renderer",
+      "result": "NOT_AVAILABLE",
+      "detail": "The canonical render_docx.py path was attempted, but soffice is not installed. No global package or configuration was changed; Microsoft Word export was used as the documented local fallback."
+    }
+  ],
+  "source_evidence": [
+    "docs/evidence/phase-10-rc11-local-gates.json",
+    "docs/evidence/phase-10-rc11-05-public-acceptance.json",
+    "docs/evidence/phase-11-rc12-chat-feedback.json",
+    "docs/evidence/phase-11-rc12-public-acceptance.json",
+    "docs/08-basic-test-records.md",
+    "docs/AI_USAGE.md"
+  ],
+  "residual_actions": [
+    "提交表单前确认评委可访问代码仓库，或按平台要求上传源码归档。",
+    "提交表单时填写公网演示链接、三份 Word 文档和 AI 使用披露文档。"
+  ]
+}

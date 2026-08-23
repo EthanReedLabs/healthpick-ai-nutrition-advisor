@@ -8,9 +8,9 @@
 | 公网演示 | `https://106.14.13.139` | RC11 HTTPS、真实模型与浏览器验收已通过 |
 | 健康检查 | `https://106.14.13.139/healthz` | 不需要写入普通用户入口，可供技术验收 |
 | 代码仓库 | `https://github.com/EthanReedLabs/healthpick-ai-nutrition-advisor`，默认分支 `main` | 仓库当前为私有时，提交前必须给评委账号权限或另交平台允许的源码归档 |
-| 使用说明 | `README.md` | 已包含入口、步骤、技术逻辑、限制和本地运行 |
-| 架构说明 | `docs/02-architecture.md` | 已包含架构、知识挂载、推荐、多轮、异常、Prompt 和部署 |
-| 测试记录 | `docs/08-basic-test-records.md` | 不少于 5 组，另有全量机器证据 |
+| 使用说明 | `docs/deliverables/word/03-使用说明文档.docx` | 2591 个中文字符；技术选型与核心逻辑 506 个中文字符 |
+| 架构说明 | `docs/deliverables/word/04-系统架构说明.docx` | 2883 个中文字符；包含架构、知识挂载、推荐、多轮、异常、Prompt 和部署 |
+| 测试记录 | `docs/deliverables/word/05-基础功能测试记录.docx` | 12 组测试，另有全量机器证据与公网验收证据 |
 | AI 披露 | `docs/AI_USAGE.md` | 已区分 Codex 辅助、人工优化和生产百炼模型 |
 
 自定义域名属于进阶加分项。当前没有已备案、可用且由参赛者授权的域名，中国内地 ECS 使用临时未备案域名会触发 ICP 拦截，因此本项目采用受信公网 IP HTTPS，不用虚假临时域名冒充完成。
