@@ -1,0 +1,75 @@
+{
+  "schema_version": 1,
+  "evidence_id": "PHASE13-PUBLIC-REPOSITORY-VALIDATION",
+  "status": "PASS",
+  "validated_at": "2026-08-23T12:45:55+08:00",
+  "repository": {
+    "name_with_owner": "EthanReedLabs/healthpick-ai-nutrition-advisor",
+    "url": "https://github.com/EthanReedLabs/healthpick-ai-nutrition-advisor",
+    "default_branch": "main",
+    "visibility": "PUBLIC",
+    "is_private": false,
+    "validated_commit": "44b824277d89d8518054abdf5cc2cd869394e1cc"
+  },
+  "sanitization": {
+    "current_tree": {
+      "evidence": "docs/evidence/phase-13-public-repository-current-secret-scan.json",
+      "scanned_files": 629,
+      "binary_or_archive_files": 76,
+      "finding_count": 0,
+      "status": "PASS"
+    },
+    "all_reachable_history": {
+      "evidence": "docs/evidence/phase-13-public-repository-history-secret-scan.json",
+      "revision_count": 30,
+      "unique_blob_count": 976,
+      "binary_or_archive_blob_count": 76,
+      "finding_count": 0,
+      "status": "PASS"
+    },
+    "history_rewrite_required": false,
+    "credential_rotation_required": false,
+    "reason": "No real credential, private key material, authenticated connection string, forbidden environment file or secret-bearing archive member was found in the current candidate or reachable Git history."
+  },
+  "github_security": {
+    "secret_scanning": "enabled",
+    "secret_scanning_push_protection": "enabled",
+    "security_workflow": {
+      "status": "completed",
+      "conclusion": "success",
+      "run_id": 32618576635,
+      "url": "https://github.com/EthanReedLabs/healthpick-ai-nutrition-advisor/actions/runs/32618576635"
+    }
+  },
+  "public_access": {
+    "raw_readme_url": "https://raw.githubusercontent.com/EthanReedLabs/healthpick-ai-nutrition-advisor/main/README.md",
+    "http_status": 200,
+    "result": "PASS"
+  },
+  "quality_checks": [
+    {
+      "name": "Secret scanner unit tests",
+      "result": "PASS",
+      "detail": "8/8 targeted tests passed, including historical deletion and DOCX archive cases."
+    },
+    {
+      "name": "Full Python test suite",
+      "result": "PASS"
+    },
+    {
+      "name": "Changed security files Ruff check",
+      "result": "PASS"
+    }
+  ],
+  "preserved_non_secret_configuration": [
+    ".env.example and infra/ecs.env.example variable names with placeholders",
+    "Public demo URL https://106.14.13.139 required by the competition",
+    "Model identifier and provider type without API credential values"
+  ],
+  "excluded_user_changes": [
+    "docs/deliverables/word/03-使用说明文档.docx",
+    "docs/deliverables/word/04-系统架构说明.docx",
+    "docs/deliverables/word/05-基础功能测试记录.docx"
+  ],
+  "residual_actions": []
+}

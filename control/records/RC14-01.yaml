@@ -1,0 +1,44 @@
+schema_version: 1
+task_id: RC14-01
+phase_id: PHASE-13
+control_id: RC14-PUBLIC-REPOSITORY
+outcome: passed
+started_at: "2026-08-23T12:10:00+08:00"
+completed_at: "2026-08-23T12:45:55+08:00"
+recorded_at: "2026-08-23T12:45:55+08:00"
+backfilled: false
+owner: LEAD/SECURITY/RELEASE
+summary: 对当前候选和全部可达Git历史进行脱敏凭据扫描，补齐DOCX/ZIP与全历史门禁，启用GitHub安全能力并将仓库切换为公共。
+deliverables:
+  - .github/workflows/repository-security.yml
+  - .gitignore
+  - SECURITY.md
+  - scripts/audit_repository_security.py
+  - scripts/audit_git_history_security.py
+  - tests/test_repository_security_audit.py
+  - tests/test_git_history_security_audit.py
+  - docs/evidence/phase-13-public-repository-current-secret-scan.json
+  - docs/evidence/phase-13-public-repository-history-secret-scan.json
+  - docs/evidence/phase-13-public-repository-validation.json
+acceptance_checks:
+  - name: 当前提交候选无密钥或敏感连接信息
+    result: pass
+    evidence: [docs/evidence/phase-13-public-repository-current-secret-scan.json]
+  - name: 所有分支和标签可达Git历史无密钥
+    result: pass
+    evidence: [docs/evidence/phase-13-public-repository-history-secret-scan.json]
+  - name: GitHub仓库已公开且匿名访问成功
+    result: pass
+    evidence: [docs/evidence/phase-13-public-repository-validation.json]
+  - name: GitHub Secret Scanning、Push Protection和安全工作流启用
+    result: pass
+    evidence: [docs/evidence/phase-13-public-repository-validation.json]
+issues:
+  - "RC14-ISSUE-01（已解决）：全历史扫描初版对每个Blob执行全部正则，超过120秒；加入前缀预筛选和单行赋值匹配后，967+ Blob在秒级完成，覆盖规则不变。"
+  - "RC14-ISSUE-02（已控制）：三份本地Word文档被Word自动修改；未覆盖、未暂存、未提交，远程公共仓库仍保留上一版正式交付物。"
+residual_actions: []
+review:
+  status: accepted
+  reviewer: Local redacted scans + GitHub visibility/security/API/Actions checks
+  reviewed_at: "2026-08-23T12:45:55+08:00"
+  notes: 当前树0命中；30个提交、976个唯一Blob全历史0命中；匿名Raw HTTP 200；GitHub安全工作流成功。

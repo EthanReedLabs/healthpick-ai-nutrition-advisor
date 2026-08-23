@@ -1,0 +1,24 @@
+schema_version: 1
+control_id: RC14-PUBLIC-REPOSITORY
+parent_control: control/project-control.yaml
+phase_id: PHASE-13
+title: 公共仓库净化与开放
+status: passed
+started_at: "2026-08-23T12:10:00+08:00"
+plan: docs/phases/phase-13-public-repository-sanitization.md
+tasks:
+  - id: RC14-01
+    status: passed
+    record: control/records/RC14-01.yaml
+    evidence: [docs/evidence/phase-13-public-repository-validation.json]
+issues:
+  - {id: RC14-ISSUE-01, task_id: RC14-01, severity: medium, status: resolved, blocks_release: false, summary: 全历史扫描初版逐Blob正则耗时过长；通过前缀预筛选和单行匹配降至秒级}
+  - {id: RC14-ISSUE-02, task_id: RC14-01, severity: low, status: contained, blocks_release: false, summary: 本地三份Word文档存在用户未提交修改；已完全排除在安全提交之外}
+final_gate:
+  id: RC14-FINAL
+  status: passed
+  required_tasks: [RC14-01]
+  evidence:
+    - docs/evidence/phase-13-public-repository-current-secret-scan.json
+    - docs/evidence/phase-13-public-repository-history-secret-scan.json
+    - docs/evidence/phase-13-public-repository-validation.json
