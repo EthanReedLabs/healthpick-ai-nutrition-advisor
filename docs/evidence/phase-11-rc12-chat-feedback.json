@@ -34,10 +34,10 @@
     {
       "id": "RC12-ISSUE-02",
       "severity": "low",
-      "status": "contained",
+      "status": "resolved",
       "blocks_release": false,
       "symptom": "本机自动化浏览器访问开发服务时部分 Next.js 静态分块被验证通道返回 403。",
-      "resolution": "停止无关环境深挖，不把该通道记为视觉通过；以先红后绿的确定性组件回归、全量静态门和生产构建作为本地验收证据，部署后再做公网视觉复核。"
+      "resolution": "停止无关环境深挖，不把该通道记为视觉通过；部署后改在公网生产环境完成等待态与最终态视觉复核，结果见 phase-11-rc12-public-acceptance.json。"
     }
   ],
   "sediment_candidate": {

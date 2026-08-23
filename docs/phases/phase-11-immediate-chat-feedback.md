@@ -22,4 +22,4 @@
 
 ## 执行结果
 
-状态：已完成。实现与验证证据见 `docs/evidence/phase-11-rc12-chat-feedback.json`，任务完成记录见 `control/records/RC12-01.yaml`。
+状态：已完成并通过公网终验。实现与本地验证证据见 `docs/evidence/phase-11-rc12-chat-feedback.json`，公网部署与视觉复核见 `docs/evidence/phase-11-rc12-public-acceptance.md`，任务完成记录见 `control/records/RC12-01.yaml`。

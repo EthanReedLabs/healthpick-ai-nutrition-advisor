@@ -15,6 +15,8 @@ deliverables:
   - apps/web/src/app/globals.css
   - docs/phases/phase-11-immediate-chat-feedback.md
   - docs/evidence/phase-11-rc12-chat-feedback.json
+  - docs/evidence/phase-11-rc12-public-acceptance.json
+  - docs/evidence/phase-11-rc12-public-acceptance.md
 acceptance_checks:
   - name: 未完成请求期间立即显示用户问题并清空输入框
     result: pass
@@ -25,13 +27,15 @@ acceptance_checks:
   - name: Web测试规范类型和生产构建通过
     result: pass
     evidence: [docs/evidence/phase-11-rc12-chat-feedback.json]
+  - name: 公网等待态和真实回答视觉复核
+    result: pass
+    evidence: [docs/evidence/phase-11-rc12-public-acceptance.json]
 issues:
   - "RC12-ISSUE-01（已解决）：提交反馈错误绑定最终响应；改为独立 pendingMessage 状态。"
-  - "RC12-ISSUE-02（已控制、非阻断）：本机自动化浏览器静态分块 403；未计视觉通过，留待部署后公网复核。"
-residual_actions:
-  - "提交部署后在公网执行等待期视觉复核。"
+  - "RC12-ISSUE-02（已解决）：本机自动化浏览器静态分块 403 不再作为视觉证据；已在公网生产环境完成等待态、最终态与控制台复核。"
+residual_actions: []
 review:
   status: accepted
-  reviewer: Automated local gate
-  reviewed_at: "2026-08-23T10:39:37+08:00"
-  notes: 定向26/26、Web全量36/36、lint、typecheck和production build均通过。
+  reviewer: Automated local gate + public Playwright acceptance
+  reviewed_at: "2026-08-23T11:21:36+08:00"
+  notes: 定向26/26、Web全量36/36、lint、typecheck和production build均通过；公网等待态、真实千问完整回答、无重复消息和控制台0错误0警告全部通过。

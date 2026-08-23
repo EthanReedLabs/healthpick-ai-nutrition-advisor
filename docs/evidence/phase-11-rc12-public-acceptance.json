@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "evidence_id": "PHASE-11-RC12-PUBLIC-ACCEPTANCE",
+  "recorded_at": "2026-08-23T11:21:36+08:00",
+  "status": "PASS",
+  "public_url": "https://106.14.13.139/",
+  "source_commit": "8b0446e5e986126a8b002e2b88fdd7ff5e0ea6c8",
+  "deployment": {
+    "scope": "web-only image deployment",
+    "image_tag": "healthpick-web:rc12-chat-feedback-20260823",
+    "image_id": "sha256:c9a84d53659b48b6edd6b38af903f63c59a1ba2b9f198dceefdda683b62e6f77",
+    "local_manifest_digest": "sha256:c83337a5d185eb40e95b66ed0f30e22ba56f48f9f5e6f8fb68a3d9733ebffe81",
+    "archive_sha256": "774C65B15E1A67068A1E578D933B72E633D8650F8F8054B7117D7BBBC24BB0A4",
+    "archive_size_bytes": 81713664,
+    "platform": "linux/amd64",
+    "method": "Docker image transfer and docker compose up --no-build --no-deps web",
+    "server_source_upload": false,
+    "temporary_server_archive_removed": true
+  },
+  "service_acceptance": {
+    "home_http_status": 200,
+    "web": {"status": "healthy", "restart_count": 0},
+    "api": {"status": "healthy", "restart_count": 0, "changed": false},
+    "postgres": {"status": "healthy", "restart_count": 0, "changed": false},
+    "caddy": {"status": "running", "restart_count": 0, "changed": false},
+    "healthz": {"status": "ok", "environment": "production", "llm_mode": "real", "retrieval_mode": "keyword", "database": "conversation schema ready"},
+    "transparency": {"provider": "openai_compatible", "model": "qwen3.7-plus", "mode": "real", "conversation_store": "postgres", "source_boundaries": "A/B nutrition and C platform-only preserved"}
+  },
+  "visual_acceptance": [
+    {"name": "发送后输入框立即清空", "result": "PASS", "observed_value": ""},
+    {"name": "等待期间即时显示用户消息", "result": "PASS", "pending_user_bubble_count": 1},
+    {"name": "等待状态与停止按钮可见", "result": "PASS"},
+    {"name": "输入框不再显示等待光标", "result": "PASS", "cursor": "default"},
+    {"name": "真实千问回答完整返回", "result": "PASS", "model_badge": "openai_compatible · qwen3.7-plus · real"},
+    {"name": "最终态无重复用户消息", "result": "PASS"},
+    {"name": "回答含安全分级、结构化方案和 A/B 引用", "result": "PASS"},
+    {"name": "浏览器控制台", "result": "PASS", "errors": 0, "warnings": 0}
+  ],
+  "cleanup": {
+    "browser_test_conversation_deleted": true,
+    "postgres_titles_matching_rc12": 0,
+    "browser_session_closed": true,
+    "server_incoming_archive_count": 0,
+    "local_archive_retained_for_recovery": "output/deployment/rc12-chat-feedback-20260823/healthpick-web-rc12-chat-feedback-20260823.tar"
+  },
+  "artifacts": [
+    {"path": "apps/web/output/playwright/rc12-public/rc12-public-pending.png", "sha256": "9C0F40B15E99CB398CB64327420D1324C34EAE9CAD3C48D3DCAECFC3A9098754"},
+    {"path": "apps/web/output/playwright/rc12-public/rc12-public-final.png", "sha256": "B1F67BBB5DA630C1227A8B87A0DA6C0E6E0D8DAC249CCCC0C6340A0847923825"}
+  ]
+}
