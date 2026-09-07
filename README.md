@@ -2,9 +2,7 @@
 
 第二届 OPC 软件与智能体开发赛道参赛项目。HealthPick 不是普通聊天壳，而是一套可审计的健康领域 RAG 产品：Next.js Web、FastAPI API、PostgreSQL、真实 LLM Provider、A/B/C 知识硬隔离、逐条引用、医疗安全门、多轮历史、账号数据权利、自动评测和 Docker Compose 复现均已落地。
 
-## 公网访问与当前状态
-
-公开演示入口：**<https://106.14.13.139>**。浏览器直接访问即可，不需要安装软件。当前生产环境部署在阿里云 ECS，使用受信 HTTPS 公网 IP 证书；Web、API 和 PostgreSQL 均有健康检查及 `unless-stopped` 重启策略，Caddy 数据卷持久化并自动续期证书。生产回答由阿里云百炼北京地域 Token Plan 的 `qwen3.7-plus` 动态生成，页面会如实展示模型来源；检索为可审计的 `keyword` 模式，Embedding 当前明确为 `disabled`。
+## 当前状态
 
 Phase 01～08 的工程与发布验收已完成，`ACTION-05`、`ACTION-06` 等遗留动作已关闭：80 条结构化事实最终处置为 74 条通过、6 条含缺字符号规则驳回、0 条待复核；推荐引擎只使用其中 7 条已复核核心规则。本轮补充赛题说明收口由 [Phase 09 执行计划](docs/phases/phase-09-rubric-closure.md) 和 `control/records/RC10-CONTROL.yaml` 单独追踪，不改写此前验收记录。
 
